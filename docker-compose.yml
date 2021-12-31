@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+    db:
+      image: postgres:12.0-alpine
+      environment:
+          - POSTGRES_DB=postgres
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+      volumes:
+        - postgres-data:/var/lib/postgresql/data
+
+    redis:
+      image: redis:5
+      volumes:
+        - redis-data:/data
+
+    server:
+      image: kitab-bazar/server
+      build:
+        context: ./
+      tty: true
+      env_file:
+        - .env
+      command: bash -c "/code/scripts/run_develop.sh"
+      volumes:
+        - .:/code
+        - media:/media
+      ports:
+        - '8020:8020'
+      depends_on:
+        - db
+        - redis
+
+volumes:
+  media:
+  postgres-data:
+  redis-data:
