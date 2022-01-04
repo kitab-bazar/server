@@ -31,6 +31,11 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', ['*'])
 
 
 # Application definition
+APPS_DIR = os.path.join(BASE_DIR, 'apps')
+
+LOCAL_APPS = [
+    'apps.user',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,11 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+    'graphene_django',
+    'graphene_graphiql_explorer',
+    'corsheaders',
+] + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -56,7 +65,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,8 +130,67 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(APPS_DIR, 'static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery settings
+BROKER_URL = os.environ.get("REDIS_URL", "redis://redis:6379/0")
+BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
+CELERY_TIMEZONE = "Australia/Tasmania"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+
+# CORS CONFIGS
+if DEBUG:
+    CORS_ORIGIN_ALLOW_ALL = True
+else:
+    CORS_ORIGIN_REGEX_WHITELIST = [
+        r"^https://\w+\.togglecorp\.com$",
+    ]
+
+CORS_URLS_REGEX = r'(^/api/.*$)|(^/media/.*$)|(^/graphql/$)'
+
+AUTH_USER_MODEL = "user.User"
+
+GRAPHENE = {
+    'ATOMIC_MUTATIONS': True,
+    'SCHEMA': 'config.schema.schema',
+    'SCHEMA_OUTPUT': 'schema.json',
+    'SCHEMA_INDENT': 2,
+    'MIDDLEWARE': [
+        'config.auth.WhiteListMiddleware',
+    ],
+}
+
+GRAPHENE_DJANGO_EXTRAS = {
+    'DEFAULT_PAGINATION_CLASS': 'graphene_django_extras.paginations.PageGraphqlPagination',
+    'DEFAULT_PAGE_SIZE': 20,
+    'MAX_PAGE_SIZE': 50
+}
+
+GRAPHENE_NODES_WHITELIST = (
+    'login',
+    'logout',
+    'me',
+    'register',
+    'resetPassword',
+    'generateResetPasswordToken',
+    'activate',
+    # __ double underscore nodes
+    '__schema',
+    '__type',
+    '__typename',
+)
+
+CLIENT_URL = os.environ.get("CLIENT_URL", "http://localhost:3080")
+
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    DEFAULT_FROM_EMAIL = "Kitab Bazar <kitabbazar@togglecorp.com>"

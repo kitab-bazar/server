@@ -13,9 +13,40 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import json
 from django.contrib import admin
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
+from graphene_file_upload.django import FileUploadGraphQLView
+from utils.graphene.context import GQLContext
+
+
+class CustomGraphQLView(FileUploadGraphQLView):
+    """Handles multipart/form-data content type in django views"""
+    def get_context(self, request):
+        return GQLContext(request)
+
+    def parse_body(self, request):
+        """
+        Allow for variable batch
+        https://github.com/graphql-python/graphene-django/issues/967#issuecomment-640480919
+        :param request:
+        :return:
+        """
+        try:
+            body = request.body.decode("utf-8")
+            request_json = json.loads(body)
+            self.batch = isinstance(request_json, list)
+        except:  # noqa: E722
+            self.batch = False
+        return super().parse_body(request)
+
+
+CustomGraphQLView.graphiql_template = "graphene_graphiql_explorer/graphiql.html"
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('graphiql/', csrf_exempt(CustomGraphQLView.as_view(graphiql=True))),
+    path('graphql/', csrf_exempt(CustomGraphQLView.as_view())),
 ]
