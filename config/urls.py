@@ -16,6 +16,7 @@ Including another URLconf
 import json
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import gettext_lazy as _
 from graphene_file_upload.django import FileUploadGraphQLView
@@ -23,6 +24,7 @@ from utils.graphene.context import GQLContext
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls.static import static
 
 
 class CustomGraphQLView(FileUploadGraphQLView):
