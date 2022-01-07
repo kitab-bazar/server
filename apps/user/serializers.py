@@ -3,7 +3,6 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import default_token_generator
-from django.db import transaction
 from django.conf import settings
 from .tasks import generic_email_sender
 from django.utils.encoding import force_bytes, force_text
@@ -71,34 +70,33 @@ class RegisterSerializer(serializers.ModelSerializer):
         return email
 
     def save(self, **kwargs):
-        with transaction.atomic():
-            instance = User.objects.create_user(
-                first_name=self.validated_data.get('first_name', ''),
-                last_name=self.validated_data.get('last_name', ''),
-                email=self.validated_data['email'],
-                password=self.validated_data['password'],
-                is_active=False
-            )
+        instance = User.objects.create_user(
+            first_name=self.validated_data.get('first_name', ''),
+            last_name=self.validated_data.get('last_name', ''),
+            email=self.validated_data['email'],
+            password=self.validated_data['password'],
+            is_active=False
+        )
 
-            subject = _("Activate your account.")
-            message = _("Please click on the link to confirm your registration")
-            uid = urlsafe_base64_encode(force_bytes(instance.pk))
-            token = default_token_generator.make_token(instance)
-            button_url = f'{settings.CLIENT_URL}/activate/{uid}/{token}/'
+        subject = _("Activate your account.")
+        message = _("Please click on the link to confirm your registration")
+        uid = urlsafe_base64_encode(force_bytes(instance.pk))
+        token = default_token_generator.make_token(instance)
+        button_url = f'{settings.CLIENT_URL}/activate/{uid}/{token}/'
 
-            # Prepare message for email
-            html_context = {
-                "heading": _("Activate your account"),
-                "message": message,
-                "button_text": _("Activate Account"),
-                "full_name": str(instance),
-            }
-            if button_url:
-                html_context["button_url"] = button_url
-            # Send an email for account activation to user
-            transaction.on_commit(lambda: generic_email_sender.delay(
-                subject, message, [instance.email], html_context=html_context
-            ))
+        # Prepare message for email
+        html_context = {
+            "heading": _("Activate your account"),
+            "message": message,
+            "button_text": _("Activate Account"),
+            "full_name": str(instance),
+        }
+        if button_url:
+            html_context["button_url"] = button_url
+        # Send an email for account activation to user
+        generic_email_sender.delay(
+            subject, message, [instance.email], html_context=html_context
+        )
         return instance
 
 
@@ -156,9 +154,9 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
         }
         if button_url:
             html_context["button_url"] = button_url
-        transaction.on_commit(lambda: generic_email_sender.delay(
+        generic_email_sender.delay(
             subject, message, [email], html_context=html_context
-        ))
+        )
         return attrs
 
 
