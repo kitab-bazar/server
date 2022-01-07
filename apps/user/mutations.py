@@ -9,8 +9,8 @@ from apps.user.serializers import (
     GenerateResetPasswordTokenSerializer,
     ResetPasswordSerializer,
 )
-from utils.mutation import generate_input_type_for_serializer
-from utils.error_types import CustomErrorType, mutation_is_not_valid
+from utils.graphene.mutation import generate_input_type_for_serializer
+from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 from utils.permissions import is_authenticated
 
 

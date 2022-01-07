@@ -14,7 +14,7 @@ CustomErrorType = GenericScalar
 class ArrayNestedErrorType(ObjectType):
     key = graphene.String(required=True)
     messages = graphene.String(required=False)
-    object_errors = graphene.List(graphene.NonNull("utils.error_types.CustomErrorType"))
+    object_errors = graphene.List(graphene.NonNull("utils.graphene.error_types.CustomErrorType"))
 
     def keys(self):
         return ['key', 'messages', 'objectErrors']
@@ -29,7 +29,7 @@ class ArrayNestedErrorType(ObjectType):
 class _CustomErrorType(ObjectType):
     field = graphene.String(required=True)
     messages = graphene.String(required=False)
-    object_errors = graphene.List(graphene.NonNull("utils.error_types.CustomErrorType"))
+    object_errors = graphene.List(graphene.NonNull("utils.graphene.error_types.CustomErrorType"))
     array_errors = graphene.List(graphene.NonNull(ArrayNestedErrorType))
 
     def keys(self):

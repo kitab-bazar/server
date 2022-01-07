@@ -14,7 +14,7 @@ from graphene_django_extras.paginations.pagination import BaseDjangoGraphqlPagin
 from graphene_django_extras.settings import graphql_api_settings
 from graphene_django_extras.utils import get_extra_filters
 
-from utils.pagination import OrderingOnlyArgumentPagination
+from utils.graphene.pagination import OrderingOnlyArgumentPagination
 
 
 def path_has_list(info):

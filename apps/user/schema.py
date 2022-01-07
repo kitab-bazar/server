@@ -4,7 +4,7 @@ from apps.user.models import User
 from apps.user.filters import UserFilter
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
-from utils.pagination import PageGraphqlPaginationWithoutCount
+from utils.graphene.pagination import PageGraphqlPaginationWithoutCount
 from graphene_django_extras import DjangoObjectField
 
 
