@@ -19,6 +19,8 @@ from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 from graphene_file_upload.django import FileUploadGraphQLView
 from utils.graphene.context import GQLContext
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 class CustomGraphQLView(FileUploadGraphQLView):
@@ -50,3 +52,7 @@ urlpatterns = [
     path('graphiql/', csrf_exempt(CustomGraphQLView.as_view(graphiql=True))),
     path('graphql/', csrf_exempt(CustomGraphQLView.as_view())),
 ]
+
+# Static and media file urls
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
