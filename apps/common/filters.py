@@ -1,9 +1,8 @@
 import django_filters
-from utils.filters import AllowInitialFilterSetMixin
 from apps.common.models import Province, Municipality, District
 
 
-class ProvinceFilter(AllowInitialFilterSetMixin, django_filters.FilterSet):
+class ProvinceFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(method='filter_name')
 
     class Meta:
@@ -16,7 +15,7 @@ class ProvinceFilter(AllowInitialFilterSetMixin, django_filters.FilterSet):
         return queryset.filter(name__icontains=value)
 
 
-class MunicipalityFilter(AllowInitialFilterSetMixin, django_filters.FilterSet):
+class MunicipalityFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(method='filter_name')
 
     class Meta:
@@ -29,7 +28,7 @@ class MunicipalityFilter(AllowInitialFilterSetMixin, django_filters.FilterSet):
         return queryset.filter(name__icontains=value)
 
 
-class DistrictFilter(AllowInitialFilterSetMixin, django_filters.FilterSet):
+class DistrictFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(method='filter_name')
 
     class Meta:

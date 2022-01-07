@@ -3,8 +3,8 @@ import graphene
 from apps.school.models import School
 from apps.school.schema import SchoolType
 from apps.school.serializers import SchoolSerializer
-from utils.mutation import generate_input_type_for_serializer
-from utils.error_types import CustomErrorType, mutation_is_not_valid
+from utils.graphene.mutation import generate_input_type_for_serializer
+from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 
 
 SchoolInputType = generate_input_type_for_serializer(

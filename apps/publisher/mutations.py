@@ -3,8 +3,8 @@ import graphene
 from apps.publisher.models import Publisher
 from apps.publisher.schema import PublisherType
 from apps.publisher.serializers import PublisherSerializer
-from utils.mutation import generate_input_type_for_serializer
-from utils.error_types import CustomErrorType, mutation_is_not_valid
+from utils.graphene.mutation import generate_input_type_for_serializer
+from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 
 
 PublisherInputType = generate_input_type_for_serializer(

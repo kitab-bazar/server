@@ -1,9 +1,8 @@
 import django_filters
-from utils.filters import AllowInitialFilterSetMixin
 from apps.school.models import School
 
 
-class SchoolFilter(AllowInitialFilterSetMixin, django_filters.FilterSet):
+class SchoolFilter(django_filters.FilterSet):
     school_name = django_filters.CharFilter(method='filter_school_name')
     provinces = django_filters.CharFilter(method='filter_provinces')
     districts = django_filters.CharFilter(method='filter_districts')

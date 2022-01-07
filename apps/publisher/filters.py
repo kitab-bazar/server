@@ -1,9 +1,8 @@
 import django_filters
-from utils.filters import AllowInitialFilterSetMixin
 from apps.publisher.models import Publisher
 
 
-class PublisherFilter(AllowInitialFilterSetMixin, django_filters.FilterSet):
+class PublisherFilter(django_filters.FilterSet):
     publisher_name = django_filters.CharFilter(method='filter_publisher_name')
     provinces = django_filters.CharFilter(method='filter_provinces')
     districts = django_filters.CharFilter(method='filter_districts')
