@@ -1,5 +1,5 @@
 import graphene
-from graphene_django_extras import DjangoObjectType
+from graphene_django import DjangoObjectType
 from apps.user.models import User
 from apps.user.filters import UserFilter
 from utils.graphene.types import CustomDjangoListObjectType
@@ -11,7 +11,10 @@ from graphene_django_extras import DjangoObjectField
 class UserType(DjangoObjectType):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'full_name', 'email', 'phone_number']
+        fields = (
+            'id', 'first_name', 'last_name', 'full_name', 'email',
+            'is_active', 'last_login'
+        )
 
     @staticmethod
     def get_queryset(queryset, info):
@@ -22,11 +25,20 @@ class UserListType(CustomDjangoListObjectType):
     class Meta:
         model = User
         filterset_class = UserFilter
-        exclude_fields = ('password',)
+
+
+class UserMeType(DjangoObjectType):
+    class Meta:
+        model = User
+        skip_registry = True
+        fields = (
+            'id', 'first_name', 'last_name', 'full_name', 'email',
+            'is_active', 'last_login'
+        )
 
 
 class Query(graphene.ObjectType):
-    me = graphene.Field(UserType)
+    me = graphene.Field(UserMeType)
     user = DjangoObjectField(UserType)
     users = DjangoPaginatedListObjectField(
         UserListType,
