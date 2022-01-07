@@ -8,7 +8,7 @@ from django.conf import settings
 from .tasks import generic_email_sender
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 
 class UserSerializer(serializers.ModelSerializer):
