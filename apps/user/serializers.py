@@ -29,8 +29,7 @@ class LoginSerializer(serializers.Serializer):
         user = authenticate(email=email, password=password)
         if not user:
             raise serializers.ValidationError('Invalid Credentials')
-        attrs.update(dict(user=user))
-        return attrs
+        return dict(user=user)
 
 
 class UserPasswordSerializer(serializers.ModelSerializer):

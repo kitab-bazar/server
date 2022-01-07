@@ -1,4 +1,5 @@
 import graphene
+
 from apps.user import schema as user_schema, mutations as user_mutations
 
 
