@@ -250,6 +250,18 @@ django-debug-toolbar = ">=3.1"
 graphene-django = ">=2.0.0"
 
 [[package]]
+name = "django-modeltranslation"
+version = "0.17.3"
+description = "Translates Django models using a registration approach."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+django = ">=2.2"
+six = ">=1.15.0,<2.0.0"
+
+[[package]]
 name = "djangorestframework"
 version = "3.13.1"
 description = "Web APIs for Django, made easy."
@@ -672,6 +684,9 @@ django-filter = [
 django-graphiql-debug-toolbar = [
     {file = "django-graphiql-debug-toolbar-0.2.0.tar.gz", hash = "sha256:aec7a9e096594123d9fc359a583da794a0020b5391d941dda584ce1e667e0afd"},
     {file = "django_graphiql_debug_toolbar-0.2.0-py3-none-any.whl", hash = "sha256:85bf4e4bdf6b699aa07567bcd28f16454742bf24b3c3334c502bc0be40777777"},
+]
+django-modeltranslation = [
+    {file = "django-modeltranslation-0.17.3.tar.gz", hash = "sha256:fdbb32edcf92b82c934b336c5fd0e0ecf68bd9ce56fc55b172a617edf9c252cd"},
 ]
 djangorestframework = [
     {file = "djangorestframework-3.13.1-py3-none-any.whl", hash = "sha256:24c4bf58ed7e85d1fe4ba250ab2da926d263cd57d64b03e8dcef0ac683f8b1aa"},
