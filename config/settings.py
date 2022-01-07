@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 import environ
 from pathlib import Path
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,9 +48,14 @@ APPS_DIR = os.path.join(BASE_DIR, 'apps')
 
 LOCAL_APPS = [
     'apps.user',
+    'apps.common',
+    'apps.institution',
+    'apps.publisher',
+    'apps.school',
 ]
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,6 +71,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -196,6 +203,12 @@ GRAPHENE_NODES_WHITELIST = (
     'resetPassword',
     'generateResetPasswordToken',
     'activate',
+    'province',
+    'district',
+    'municipality',
+    'provinces',
+    'districts',
+    'municipalities',
     # __ double underscore nodes
     '__schema',
     '__type',
@@ -207,3 +220,13 @@ CLIENT_URL = env('CLIENT_URL')
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     DEFAULT_FROM_EMAIL = "Kitab Bazar <kitabbazar@togglecorp.com>"
+
+USE_I18N = True
+USE_L10N = True
+LOCALEURL_USE_ACCEPT_LANGUAGE = True
+LANGUAGES = [
+    ('en', _('English')),
+    ('ne', _('Nepali')),
+]
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ne'
+MODELTRANSLATION_LANGUAGES = ('en', 'ne')
