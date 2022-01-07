@@ -13,12 +13,18 @@ from apps.user.serializers import (
     UserPasswordSerializer,
     GenerateResetPasswordTokenSerializer,
     ResetPasswordSerializer,
+    ProfileSerializer,
 )
 
 
 RegisterInputType = generate_input_type_for_serializer(
     'RegisterInputType',
     RegisterSerializer
+)
+
+ProfileInputType = generate_input_type_for_serializer(
+    'ProfileInputType',
+    ProfileSerializer
 )
 
 
@@ -32,8 +38,10 @@ class Register(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, data):
-        serializer = RegisterSerializer(data=data,
-                                        context={'request': info.context.request})
+        serializer = RegisterSerializer(
+            data=data,
+            context={'request': info.context.request}
+        )
         if errors := mutation_is_not_valid(serializer):
             return Register(errors=errors, ok=False)
         instance = serializer.save()
@@ -60,8 +68,10 @@ class Login(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, data):
-        serializer = LoginSerializer(data=data,
-                                     context={'request': info.context.request})
+        serializer = LoginSerializer(
+            data=data,
+            context={'request': info.context.request}
+        )
         errors = mutation_is_not_valid(serializer)
         if errors:
             return Login(
@@ -92,8 +102,10 @@ class Activate(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, data):
-        serializer = ActivateSerializer(data=data,
-                                        context={'request': info.context.request})
+        serializer = ActivateSerializer(
+            data=data,
+            context={'request': info.context.request}
+        )
         errors = mutation_is_not_valid(serializer)
         if errors:
             return Activate(errors=errors, ok=False)
@@ -116,10 +128,12 @@ class ChangeUserPassword(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, data):
-        serializer = UserPasswordSerializer(instance=info.context.user,
-                                            data=data,
-                                            context={'request': info.context.request},
-                                            partial=True)
+        serializer = UserPasswordSerializer(
+            instance=info.context.user,
+            data=data,
+            context={'request': info.context.request},
+            partial=True
+        )
         if errors := mutation_is_not_valid(serializer):
             return ChangeUserPassword(errors=errors, ok=False)
         serializer.save()

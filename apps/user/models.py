@@ -44,6 +44,13 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     """ Custom User Model """
 
+    class UserType(models.TextChoices):
+        ADMIN = 'admin', 'Admin'
+        PUBLISHER = 'publisher', 'Publisher'
+        INSTITUTIONAL_USER = 'institutional_user', 'Institutional User'
+        SCHOOL_ADMIN = 'school_admin', 'School Admin'
+        INDIVIDUAL_USER = 'individual_user', 'Individual User'
+
     # Delete unused fields
     username = None
 
@@ -72,6 +79,16 @@ class User(AbstractUser):
         blank=True,
         verbose_name=ugettext("Full Name")
     )
+    phone_number = models.IntegerField(blank=True, null=True)
+    user_type = models.CharField(
+        choices=UserType.choices, max_length=40,
+        default=UserType.INDIVIDUAL_USER,
+        verbose_name=ugettext("User Type")
+    )
+    profile = models.OneToOneField(
+        "user.Profile", null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="profile",
+    )
 
     class Meta:
         verbose_name = ugettext("User")
@@ -94,3 +111,32 @@ class User(AbstractUser):
         last_name = self.first_name if self.first_name else ""
         self.full_name = f'{first_name} {last_name}'
         super().save(*args, **kwargs)
+
+
+class Profile(models.Model):
+
+    institution = models.ForeignKey(
+        'institution.Institution', verbose_name=ugettext('Institution'), related_name='%(app_label)s_%(class)s_institution',
+        on_delete=models.CASCADE, null=True, blank=True
+    )
+    publisher = models.ForeignKey(
+        'publisher.Publisher', verbose_name=ugettext('Publisher'), related_name='%(app_label)s_%(class)s_publisher',
+        on_delete=models.CASCADE, null=True, blank=True
+    )
+    school = models.ForeignKey(
+        'school.School', verbose_name=ugettext('School'), related_name='%(app_label)s_%(class)s_school',
+        on_delete=models.CASCADE, null=True, blank=True
+    )
+
+    class Meta:
+        verbose_name = ugettext("Profile")
+        verbose_name_plural = ugettext("Profiles")
+
+    def __str__(self):
+        if self.institution:
+            return User.UserType.INSTITUTIONAL_USER.label
+        elif self.publisher:
+            return User.UserType.PUBLISHER.label
+        elif self.school:
+            return User.UserType.SCHOOL.label
+        return User.UserType.INDIVIDUAL_USER.label

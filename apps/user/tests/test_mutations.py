@@ -1,6 +1,7 @@
 from utils.graphene.tests import GraphQLTestCase
 from apps.user.factories import UserFactory
 from django.contrib.auth.hashers import check_password
+from apps.user.models import User
 
 
 class TestUser(GraphQLTestCase):
@@ -49,8 +50,11 @@ class TestUser(GraphQLTestCase):
         '''
         super().setUp()
 
-    def test_register(self):
-        minput = {"firstName": "Rosy", "lastName": "Rosy", "email": "rosy@gmail.com", "password": "nsPzXEVKGCIriVu"}
+    def test_register_individual_user(self):
+        minput = {
+            "firstName": "Rosy", "lastName": "Rosy", "email": "rosy@gmail.com",
+            "password": "nsPzXEVKGCIriVu", "userType": User.UserType.INDIVIDUAL_USER.name, "profile": {}
+        }
         content = self.query_check(self.register_mutation, minput=minput, okay=True)
         first_name = content['data']['register']['result']['firstName']
         last_name = content['data']['register']['result']['lastName']
