@@ -219,7 +219,7 @@ class DjangoPaginatedListObjectField(DjangoFilterPaginateListField):
         if getattr(self, "pagination", None):
             ordering = kwargs.pop(self.pagination.ordering_param, None) or self.pagination.ordering
             ordering = ','.join([to_snake_case(each) for each in ordering.strip(',').replace(' ', '').split(',')])
-            self.pagination.ordering = ordering
+            kwargs[self.pagination.ordering_param] = ordering
 
         if root and path_has_list(info):
             if not getattr(self, 'related_name', None):
