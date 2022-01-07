@@ -10,24 +10,36 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(
+    DEBUG=(bool, True),
+    SECRET_KEY=(str, 'django-insecure-2s$6zbn2r_0=pao&lf3wz8q%9s*hsi=*)ng=llpkr&3h=#2#85'),
+    DJANGO_ALLOWED_HOST=(str, '*'),
+    DB_NAME=(str, 'postgres'),
+    DB_USER=(str, 'postgres'),
+    DB_PWD=(str, 'postgres'),
+    DB_HOST=(str, 'db'),
+    DB_PORT=(int, 5432),
+    REDIS_URL=(str, 'redis://redis:6379/0'),
+    CORS_ORIGIN_REGEX_WHITELIST=(str, r"^https://\w+\.togglecorp\.com$"),
+    TIME_ZONE=(str, 'Asia/Kathmandu'),
+    CLIENT_URL=(str, 'http://localhost:3080')
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY',
-    'django-insecure-2s$6zbn2r_0=pao&lf3wz8q%9s*hsi=*)ng=llpkr&3h=#2#85'
-)
+SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', ['*'])
+ALLOWED_HOSTS = [env('DJANGO_ALLOWED_HOST')]
 
 
 # Application definition
@@ -87,11 +99,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME", "postgres"),
-        "USER": os.environ.get("DB_USER", "postgres"),
-        "PASSWORD": os.environ.get("DB_PWD", "postgres"),
-        "HOST": os.environ.get("DB_HOST", "db"),
-        "PORT": os.environ.get("DB_PORT", 5432),
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PWD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 
@@ -119,7 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = env('TIME_ZONE')
 
 USE_I18N = True
 
@@ -140,9 +152,9 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery settings
-BROKER_URL = os.environ.get("REDIS_URL", "redis://redis:6379/0")
+BROKER_URL = env("REDIS_URL")
 BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
-CELERY_TIMEZONE = "Australia/Tasmania"
+CELERY_TIMEZONE = env('TIME_ZONE')
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
@@ -151,9 +163,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 if DEBUG:
     CORS_ORIGIN_ALLOW_ALL = True
 else:
-    CORS_ORIGIN_REGEX_WHITELIST = [
-        r"^https://\w+\.togglecorp\.com$",
-    ]
+    CORS_ORIGIN_REGEX_WHITELIST = [env('CORS_ORIGIN_REGEX_WHITELIST')]
 
 CORS_URLS_REGEX = r'(^/api/.*$)|(^/media/.*$)|(^/graphql/$)'
 
@@ -189,7 +199,7 @@ GRAPHENE_NODES_WHITELIST = (
     '__typename',
 )
 
-CLIENT_URL = os.environ.get("CLIENT_URL", "http://localhost:3080")
+CLIENT_URL = env('CLIENT_URL')
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
