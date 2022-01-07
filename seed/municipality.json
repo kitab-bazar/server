@@ -1,0 +1,5420 @@
+[
+    {
+        "id": 1001,
+        "name_en": "Aathrai Tribeni",
+        "name_ne": "आठराई त्रिवेणी",
+        "district_id": 1,
+        "province_id": 1
+    },
+    {
+        "id": 1002,
+        "name_en": "Maiwakhola",
+        "name_ne": "मैवाखोला",
+        "district_id": 1,
+        "province_id": 1
+    },
+    {
+        "id": 1003,
+        "name_en": "Meringden",
+        "name_ne": "मेरिङदेन",
+        "district_id": 1,
+        "province_id": 1
+    },
+    {
+        "id": 1004,
+        "name_en": "Mikwakhola",
+        "name_ne": "मिक्वाखोला",
+        "district_id": 1,
+        "province_id": 1
+    },
+    {
+        "id": 1005,
+        "name_en": "Phaktanglung",
+        "name_ne": "फक्ताङलुङ",
+        "district_id": 1,
+        "province_id": 1
+    },
+    {
+        "id": 1006,
+        "name_en": "Phungling",
+        "name_ne": "फुङलिङ",
+        "district_id": 1,
+        "province_id": 1
+    },
+    {
+        "id": 1007,
+        "name_en": "Sidingba",
+        "name_ne": "सिदिङ्वा",
+        "district_id": 1,
+        "province_id": 1
+    },
+    {
+        "id": 1008,
+        "name_en": "Sirijangha",
+        "name_ne": "सिरीजङ्घा",
+        "district_id": 1,
+        "province_id": 1
+    },
+    {
+        "id": 1009,
+        "name_en": "Yangwarak",
+        "name_ne": "पाथीभरा याङ्वरक",
+        "district_id": 1,
+        "province_id": 1
+    },
+    {
+        "id": 2001,
+        "name_en": "Falelung",
+        "name_ne": "फालेलुङ",
+        "district_id": 2,
+        "province_id": 1
+    },
+    {
+        "id": 2002,
+        "name_en": "Falgunanda",
+        "name_ne": "फाल्गुनन्द",
+        "district_id": 2,
+        "province_id": 1
+    },
+    {
+        "id": 2003,
+        "name_en": "Hilihang",
+        "name_ne": "हिलिहाङ",
+        "district_id": 2,
+        "province_id": 1
+    },
+    {
+        "id": 2004,
+        "name_en": "Kummayak",
+        "name_ne": "कुम्मायक",
+        "district_id": 2,
+        "province_id": 1
+    },
+    {
+        "id": 2005,
+        "name_en": "Miklajung",
+        "name_ne": "मिक्लाजुङ",
+        "district_id": 2,
+        "province_id": 1
+    },
+    {
+        "id": 2006,
+        "name_en": "Phidim",
+        "name_ne": "फिदिम",
+        "district_id": 2,
+        "province_id": 1
+    },
+    {
+        "id": 2007,
+        "name_en": "Tumbewa",
+        "name_ne": "तुम्वेवा",
+        "district_id": 2,
+        "province_id": 1
+    },
+    {
+        "id": 2008,
+        "name_en": "Yangwarak",
+        "name_ne": "याङवरक",
+        "district_id": 2,
+        "province_id": 1
+    },
+    {
+        "id": 3001,
+        "name_en": "Chulachuli",
+        "name_ne": "चुलाचुली",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 3002,
+        "name_en": "Deumai",
+        "name_ne": "देउमाई",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 3003,
+        "name_en": "Fakphokthum",
+        "name_ne": "फाकफोकथुम",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 3004,
+        "name_en": "Illam",
+        "name_ne": "ईलाम",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 3005,
+        "name_en": "Mai",
+        "name_ne": "माई",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 3006,
+        "name_en": "Maijogmai",
+        "name_ne": "माईजोगमाई",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 3007,
+        "name_en": "Mangsebung",
+        "name_ne": "माङसेबुङ्ग",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 3008,
+        "name_en": "Rong",
+        "name_ne": "रोङ",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 3009,
+        "name_en": "Sandakpur",
+        "name_ne": "सन्दकपुर",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 3010,
+        "name_en": "Suryodaya",
+        "name_ne": "सूर्योदय",
+        "district_id": 3,
+        "province_id": 1
+    },
+    {
+        "id": 4001,
+        "name_en": "Arjundhara",
+        "name_ne": "अर्जुनधारा",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4002,
+        "name_en": "Barhadashi",
+        "name_ne": "बाह्रदशी",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4003,
+        "name_en": "Bhadrapur",
+        "name_ne": "भद्रपुर",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4004,
+        "name_en": "Birtamod",
+        "name_ne": "विर्तामोड",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4005,
+        "name_en": "Buddhashanti",
+        "name_ne": "बुद्धशान्ति",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4006,
+        "name_en": "Damak",
+        "name_ne": "दमक",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4007,
+        "name_en": "Gauradhaha",
+        "name_ne": "गौरादह",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4008,
+        "name_en": "Gauriganj",
+        "name_ne": "गौरिगंज",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4009,
+        "name_en": "Haldibari",
+        "name_ne": "हल्दीबारी",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4010,
+        "name_en": "Jhapa",
+        "name_ne": "झापा",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4011,
+        "name_en": "Kachankawal",
+        "name_ne": "कचनकवल",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4012,
+        "name_en": "Kamal",
+        "name_ne": "कमल",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4013,
+        "name_en": "Kankai",
+        "name_ne": "कन्काई",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4014,
+        "name_en": "Mechinagar",
+        "name_ne": "मेचीनगर",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 4015,
+        "name_en": "Shivasataxi",
+        "name_ne": "शिवसताक्षी",
+        "district_id": 4,
+        "province_id": 1
+    },
+    {
+        "id": 5001,
+        "name_en": "Belbari",
+        "name_ne": "बेलवारी",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5002,
+        "name_en": "Biratnagar",
+        "name_ne": "विराटनगर",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5003,
+        "name_en": "Budhiganga",
+        "name_ne": "बुढीगंगा",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5004,
+        "name_en": "Dhanpalthan",
+        "name_ne": "धनपालथान",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5005,
+        "name_en": "Gramthan",
+        "name_ne": "ग्रामथान",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5006,
+        "name_en": "Jahada",
+        "name_ne": "जहदा",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5007,
+        "name_en": "Kanepokhari",
+        "name_ne": "कानेपोखरी",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5008,
+        "name_en": "Katahari",
+        "name_ne": "कटहरी",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5009,
+        "name_en": "Kerabari",
+        "name_ne": "केराबारी",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5010,
+        "name_en": "Letang",
+        "name_ne": "लेटाङ",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5011,
+        "name_en": "Miklajung",
+        "name_ne": "मिक्लाजुङ",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5012,
+        "name_en": "Patahrishanishchare",
+        "name_ne": "पथरी शनिश्चरे",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5013,
+        "name_en": "Rangeli",
+        "name_ne": "रंगेली",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5014,
+        "name_en": "Ratuwamai",
+        "name_ne": "रतुवामाई",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5015,
+        "name_en": "Sundarharaicha",
+        "name_ne": "सुन्दरहरैंचा",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5016,
+        "name_en": "Sunwarshi",
+        "name_ne": "सुनवर्षी",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 5017,
+        "name_en": "Uralabari",
+        "name_ne": "उर्लाबारी",
+        "district_id": 5,
+        "province_id": 1
+    },
+    {
+        "id": 6001,
+        "name_en": "Barah",
+        "name_ne": "बराहक्षेत्र",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6002,
+        "name_en": "Barju",
+        "name_ne": "बर्जु",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6003,
+        "name_en": "Bhokraha",
+        "name_ne": "भोक्राहा नरसिंह",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6004,
+        "name_en": "Dewanganj",
+        "name_ne": "देवानगञ्ज",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6005,
+        "name_en": "Dharan",
+        "name_ne": "धरान",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6006,
+        "name_en": "Duhabi",
+        "name_ne": "दुहवी",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6007,
+        "name_en": "Gadhi",
+        "name_ne": "गढी",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6008,
+        "name_en": "Harinagara",
+        "name_ne": "हरिनगर",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6009,
+        "name_en": "Inaruwa",
+        "name_ne": "इनरुवा",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6010,
+        "name_en": "Itahari",
+        "name_ne": "ईटहरी",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6011,
+        "name_en": "Koshi",
+        "name_ne": "कोशी",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6012,
+        "name_en": "Ramdhuni",
+        "name_ne": "रामधुनी",
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 6099,
+        "name_en": "Koshi Tappu Wildlife Reserve",
+        "name_ne": null,
+        "district_id": 6,
+        "province_id": 1
+    },
+    {
+        "id": 7001,
+        "name_en": "Chaubise",
+        "name_ne": "चौबिसे",
+        "district_id": 7,
+        "province_id": 1
+    },
+    {
+        "id": 7002,
+        "name_en": "Chhathar Jorpati",
+        "name_ne": "छथर जोरपाटी",
+        "district_id": 7,
+        "province_id": 1
+    },
+    {
+        "id": 7003,
+        "name_en": "Dhankuta",
+        "name_ne": "धनकुटा",
+        "district_id": 7,
+        "province_id": 1
+    },
+    {
+        "id": 7004,
+        "name_en": "Khalsa Chhintang Shahidbhumi",
+        "name_ne": "सहिदभूमि",
+        "district_id": 7,
+        "province_id": 1
+    },
+    {
+        "id": 7005,
+        "name_en": "Mahalaxmi",
+        "name_ne": "महालक्ष्मी",
+        "district_id": 7,
+        "province_id": 1
+    },
+    {
+        "id": 7006,
+        "name_en": "Pakhribas",
+        "name_ne": "पाख्रिवास",
+        "district_id": 7,
+        "province_id": 1
+    },
+    {
+        "id": 7007,
+        "name_en": "Sangurigadhi",
+        "name_ne": "साँगुरीगढी",
+        "district_id": 7,
+        "province_id": 1
+    },
+    {
+        "id": 8001,
+        "name_en": "Aathrai",
+        "name_ne": "आठराई",
+        "district_id": 8,
+        "province_id": 1
+    },
+    {
+        "id": 8002,
+        "name_en": "Chhathar",
+        "name_ne": "छथर",
+        "district_id": 8,
+        "province_id": 1
+    },
+    {
+        "id": 8003,
+        "name_en": "Laligurans",
+        "name_ne": "लालीगुराँस",
+        "district_id": 8,
+        "province_id": 1
+    },
+    {
+        "id": 8004,
+        "name_en": "Menchayam",
+        "name_ne": "मेन्छयायेम",
+        "district_id": 8,
+        "province_id": 1
+    },
+    {
+        "id": 8005,
+        "name_en": "Myanglung",
+        "name_ne": "म्याङलुङ",
+        "district_id": 8,
+        "province_id": 1
+    },
+    {
+        "id": 8006,
+        "name_en": "Phedap",
+        "name_ne": "फेदाप",
+        "district_id": 8,
+        "province_id": 1
+    },
+    {
+        "id": 9001,
+        "name_en": "Bhotkhola",
+        "name_ne": "भोटखोला",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 9002,
+        "name_en": "Chainpur",
+        "name_ne": "चैनपुर",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 9003,
+        "name_en": "Chichila",
+        "name_ne": "चिचिला",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 9004,
+        "name_en": "Dharmadevi",
+        "name_ne": "धर्मदेवी",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 9005,
+        "name_en": "Khandbari",
+        "name_ne": "खाँदवारी",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 9006,
+        "name_en": "Madi",
+        "name_ne": "मादी",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 9007,
+        "name_en": "Makalu",
+        "name_ne": "मकालु",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 9008,
+        "name_en": "Panchakhapan",
+        "name_ne": "पाँचखपन",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 9009,
+        "name_en": "Sabhapokhari",
+        "name_ne": "सभापोखरी",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 9010,
+        "name_en": "Silichong",
+        "name_ne": "सिलीचोङ",
+        "district_id": 10,
+        "province_id": 1
+    },
+    {
+        "id": 10001,
+        "name_en": "Aamchowk",
+        "name_ne": "आमचोक",
+        "district_id": 9,
+        "province_id": 1
+    },
+    {
+        "id": 10002,
+        "name_en": "Arun",
+        "name_ne": "अरुण",
+        "district_id": 9,
+        "province_id": 1
+    },
+    {
+        "id": 10003,
+        "name_en": "Bhojpur",
+        "name_ne": "भोजपुर",
+        "district_id": 9,
+        "province_id": 1
+    },
+    {
+        "id": 10004,
+        "name_en": "Hatuwagadhi",
+        "name_ne": "हतुवागढी",
+        "district_id": 9,
+        "province_id": 1
+    },
+    {
+        "id": 10005,
+        "name_en": "Pauwadungma",
+        "name_ne": "पौवादुङमा",
+        "district_id": 9,
+        "province_id": 1
+    },
+    {
+        "id": 10006,
+        "name_en": "Ramprasad Rai",
+        "name_ne": "रामप्रसाद राई",
+        "district_id": 9,
+        "province_id": 1
+    },
+    {
+        "id": 10007,
+        "name_en": "Salpasilichho",
+        "name_ne": "साल्पासिलिछो",
+        "district_id": 9,
+        "province_id": 1
+    },
+    {
+        "id": 10008,
+        "name_en": "Shadananda",
+        "name_ne": "षडानन्द",
+        "district_id": 9,
+        "province_id": 1
+    },
+    {
+        "id": 10009,
+        "name_en": "Tyamkemaiyung",
+        "name_ne": "टेम्केमैयुङ",
+        "district_id": 9,
+        "province_id": 1
+    },
+    {
+        "id": 11001,
+        "name_en": "Dudhkaushika",
+        "name_ne": "थुलुङ दुधकोशी",
+        "district_id": 11,
+        "province_id": 1
+    },
+    {
+        "id": 11002,
+        "name_en": "Dudhkoshi",
+        "name_ne": "माप्य दुधकोशी",
+        "district_id": 11,
+        "province_id": 1
+    },
+    {
+        "id": 11003,
+        "name_en": "Khumbupasanglahmu",
+        "name_ne": "खुम्वु पासाङल्हामु",
+        "district_id": 11,
+        "province_id": 1
+    },
+    {
+        "id": 11004,
+        "name_en": "Likhupike",
+        "name_ne": "लिखु पिके",
+        "district_id": 11,
+        "province_id": 1
+    },
+    {
+        "id": 11005,
+        "name_en": "Mahakulung",
+        "name_ne": "माहाकुलुङ",
+        "district_id": 11,
+        "province_id": 1
+    },
+    {
+        "id": 11006,
+        "name_en": "Nechasalyan",
+        "name_ne": "नेचासल्यान",
+        "district_id": 11,
+        "province_id": 1
+    },
+    {
+        "id": 11007,
+        "name_en": "Solududhakunda",
+        "name_ne": "सोलुदुधकुण्ड",
+        "district_id": 11,
+        "province_id": 1
+    },
+    {
+        "id": 11008,
+        "name_en": "Sotang",
+        "name_ne": "सोताङ",
+        "district_id": 11,
+        "province_id": 1
+    },
+    {
+        "id": 12001,
+        "name_en": "Champadevi",
+        "name_ne": "चम्पादेवी",
+        "district_id": 13,
+        "province_id": 1
+    },
+    {
+        "id": 12002,
+        "name_en": "Chisankhugadhi",
+        "name_ne": "चिशंखुगढी",
+        "district_id": 13,
+        "province_id": 1
+    },
+    {
+        "id": 12003,
+        "name_en": "Khijidemba",
+        "name_ne": "खिजीदेम्वा",
+        "district_id": 13,
+        "province_id": 1
+    },
+    {
+        "id": 12004,
+        "name_en": "Likhu",
+        "name_ne": "लिखु",
+        "district_id": 13,
+        "province_id": 1
+    },
+    {
+        "id": 12005,
+        "name_en": "Manebhanjyang",
+        "name_ne": "मानेभञ्ज्याङ",
+        "district_id": 13,
+        "province_id": 1
+    },
+    {
+        "id": 12006,
+        "name_en": "Molung",
+        "name_ne": "मोलुङ",
+        "district_id": 13,
+        "province_id": 1
+    },
+    {
+        "id": 12007,
+        "name_en": "Siddhicharan",
+        "name_ne": "सिद्धिचरण",
+        "district_id": 13,
+        "province_id": 1
+    },
+    {
+        "id": 12008,
+        "name_en": "Sunkoshi",
+        "name_ne": "सुनकोशी",
+        "district_id": 13,
+        "province_id": 1
+    },
+    {
+        "id": 13001,
+        "name_en": "Ainselukhark",
+        "name_ne": "ऐसेलुखर्क",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 13002,
+        "name_en": "Barahapokhari",
+        "name_ne": "बराहपोखरी",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 13003,
+        "name_en": "Diprung",
+        "name_ne": "दिप्रुङ चुइचुम्मा",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 13004,
+        "name_en": "Halesi Tuwachung",
+        "name_ne": "हलेसी तुवाचुङ",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 13005,
+        "name_en": "Jantedhunga",
+        "name_ne": "जन्तेढुङ्गा",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 13006,
+        "name_en": "Kepilasagadhi",
+        "name_ne": "केपिलासगढी",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 13007,
+        "name_en": "Khotehang",
+        "name_ne": "खोटेहाङ",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 13008,
+        "name_en": "Lamidanda",
+        "name_ne": "रावा बेसी",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 13009,
+        "name_en": "Rupakot Majhuwagadhi",
+        "name_ne": "दिक्तेल रुपाकोट मझुवागढी",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 13010,
+        "name_en": "Sakela",
+        "name_ne": "साकेला",
+        "district_id": 12,
+        "province_id": 1
+    },
+    {
+        "id": 14001,
+        "name_en": "Belaka",
+        "name_ne": "वेलका",
+        "district_id": 14,
+        "province_id": 1
+    },
+    {
+        "id": 14002,
+        "name_en": "Chaudandigadhi",
+        "name_ne": "चौदण्डीगढी",
+        "district_id": 14,
+        "province_id": 1
+    },
+    {
+        "id": 14003,
+        "name_en": "Katari",
+        "name_ne": "कटारी",
+        "district_id": 14,
+        "province_id": 1
+    },
+    {
+        "id": 14004,
+        "name_en": "Rautamai",
+        "name_ne": "रौतामाई",
+        "district_id": 14,
+        "province_id": 1
+    },
+    {
+        "id": 14005,
+        "name_en": "Sunkoshi",
+        "name_ne": "लिम्चुङबुङ",
+        "district_id": 14,
+        "province_id": 1
+    },
+    {
+        "id": 14006,
+        "name_en": "Tapli",
+        "name_ne": "ताप्ली",
+        "district_id": 14,
+        "province_id": 1
+    },
+    {
+        "id": 14007,
+        "name_en": "Triyuga",
+        "name_ne": "त्रियुगा",
+        "district_id": 14,
+        "province_id": 1
+    },
+    {
+        "id": 14008,
+        "name_en": "Udayapurgadhi",
+        "name_ne": "उदयपुरगढी",
+        "district_id": 14,
+        "province_id": 1
+    },
+    {
+        "id": 14099,
+        "name_en": "Koshi Tappu Wildlife Reserve",
+        "name_ne": null,
+        "district_id": 14,
+        "province_id": 1
+    },
+    {
+        "id": 15001,
+        "name_en": "Agnisair Krishna Savaran",
+        "name_ne": "अग्निसाइर कृष्णासवरन",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15002,
+        "name_en": "Balan Bihul",
+        "name_ne": "बलान-विहुल",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15003,
+        "name_en": "Belhi Chapena",
+        "name_ne": "राजगढ़",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15004,
+        "name_en": "Bishnupur",
+        "name_ne": "बिष्णुपुर",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15005,
+        "name_en": "Bode Barsain",
+        "name_ne": "बोदेबरसाईन",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15006,
+        "name_en": "Chhinnamasta",
+        "name_ne": "छिन्नमस्ता",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15007,
+        "name_en": "Dakneshwori",
+        "name_ne": "डाक्नेश्वरी",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15008,
+        "name_en": "Hanumannagar Kankalini",
+        "name_ne": "हनुमाननगर कङ्‌कालिनी",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15009,
+        "name_en": "Kanchanrup",
+        "name_ne": "कञ्चनरुप",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15010,
+        "name_en": "Khadak",
+        "name_ne": "खडक",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15011,
+        "name_en": "Mahadeva",
+        "name_ne": "महादेवा",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15012,
+        "name_en": "Rajbiraj",
+        "name_ne": "राजविराज",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15013,
+        "name_en": "Rupani",
+        "name_ne": "रुपनी",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15014,
+        "name_en": "Saptakoshi",
+        "name_ne": "सप्तकोशी",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15015,
+        "name_en": "Shambhunath",
+        "name_ne": "शम्भुनाथ",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15016,
+        "name_en": "Surunga",
+        "name_ne": "सुरुङ्‍गा",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15017,
+        "name_en": "Tilathi Koiladi",
+        "name_ne": "तिलाठी कोईलाडी",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15018,
+        "name_en": "Tirahut",
+        "name_ne": "तिरहुत",
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 15099,
+        "name_en": "Koshi Tappu",
+        "name_ne": null,
+        "district_id": 16,
+        "province_id": 2
+    },
+    {
+        "id": 16001,
+        "name_en": "Arnama",
+        "name_ne": "अर्नमा",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16002,
+        "name_en": "Aurahi",
+        "name_ne": "औरही",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16003,
+        "name_en": "Bariyarpatti",
+        "name_ne": "बरियारपट्टी",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16004,
+        "name_en": "Bhagawanpur",
+        "name_ne": "भगवानपुर",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16005,
+        "name_en": "Bishnupur",
+        "name_ne": "विष्णुपुर",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16006,
+        "name_en": "Dhangadhimai",
+        "name_ne": "धनगढीमाई",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16007,
+        "name_en": "Golbazar",
+        "name_ne": "गोलबजार",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16008,
+        "name_en": "Kalyanpur",
+        "name_ne": "कल्याणपुर",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16009,
+        "name_en": "Karjanha",
+        "name_ne": "कर्जन्हा",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16010,
+        "name_en": "Lahan",
+        "name_ne": "लहान",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16011,
+        "name_en": "Laxmipur Patari",
+        "name_ne": "लक्ष्मीपुर पतारी",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16012,
+        "name_en": "Mirchaiya",
+        "name_ne": "मिर्चैयाँ",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16013,
+        "name_en": "Naraha",
+        "name_ne": "नरहा",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16014,
+        "name_en": "Nawarajpur",
+        "name_ne": "नवराजपुर",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16015,
+        "name_en": "Sakhuwanankarkatti",
+        "name_ne": "सखुवानान्कारकट्टी",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16016,
+        "name_en": "Siraha",
+        "name_ne": "सिरहा",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 16017,
+        "name_en": "Sukhipur",
+        "name_ne": "सुखीपुर",
+        "district_id": 15,
+        "province_id": 2
+    },
+    {
+        "id": 17001,
+        "name_en": "Aaurahi",
+        "name_ne": "औरही",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17002,
+        "name_en": "Bateshwor",
+        "name_ne": "बटेश्वर",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17003,
+        "name_en": "Bideha",
+        "name_ne": "विदेह",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17004,
+        "name_en": "Chhireshwornath",
+        "name_ne": "क्षिरेश्वरनाथ",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17005,
+        "name_en": "Dhanauji",
+        "name_ne": "धनौजी",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17006,
+        "name_en": "Dhanusadham",
+        "name_ne": "धनुषाधाम",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17007,
+        "name_en": "Ganeshman Charnath",
+        "name_ne": "गणेशमान चारनाथ",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17008,
+        "name_en": "Hansapur",
+        "name_ne": "हंसपुर",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17009,
+        "name_en": "Janaknandani",
+        "name_ne": "जनकनन्दिनी",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17010,
+        "name_en": "Janakpur",
+        "name_ne": "जनकपुर",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17011,
+        "name_en": "Kamala",
+        "name_ne": "कमला सिद्धीदात्री",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17012,
+        "name_en": "Lakshminiya",
+        "name_ne": "लक्ष्मीनिया",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17013,
+        "name_en": "Mithila",
+        "name_ne": "मिथिला",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17014,
+        "name_en": "Mithila Bihari",
+        "name_ne": "मिथिला बिहारी",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17015,
+        "name_en": "Mukhiyapatti Musarmiya",
+        "name_ne": "मुखियापट्टी मुसहरमिया",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17016,
+        "name_en": "Nagarain",
+        "name_ne": "नगराइन",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17017,
+        "name_en": "Sabaila",
+        "name_ne": "सबैला",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 17018,
+        "name_en": "Sahidnagar",
+        "name_ne": "शहीदनगर",
+        "district_id": 17,
+        "province_id": 2
+    },
+    {
+        "id": 18001,
+        "name_en": "Aurahi",
+        "name_ne": "औरही",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18002,
+        "name_en": "Balwa",
+        "name_ne": "बलवा",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18003,
+        "name_en": "Bardibas",
+        "name_ne": "बर्दिबास",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18004,
+        "name_en": "Bhangaha",
+        "name_ne": "भँगाहा",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18005,
+        "name_en": "Ekdanra",
+        "name_ne": "एकडारा",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18006,
+        "name_en": "Gaushala",
+        "name_ne": "गौशाला",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18007,
+        "name_en": "Jaleswor",
+        "name_ne": "जलेश्वर",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18008,
+        "name_en": "Loharpatti",
+        "name_ne": "लोहरपट्टी",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18009,
+        "name_en": "Mahottari",
+        "name_ne": "महोत्तरी",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18010,
+        "name_en": "Manra Siswa",
+        "name_ne": "मनरा शिसवा",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18011,
+        "name_en": "Matihani",
+        "name_ne": "मटिहानी",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18012,
+        "name_en": "Pipra",
+        "name_ne": "पिपरा",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18013,
+        "name_en": "Ramgopalpur",
+        "name_ne": "रामगोपालपुर",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18014,
+        "name_en": "Samsi",
+        "name_ne": "साम्सी",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 18015,
+        "name_en": "Sonama",
+        "name_ne": "सोनमा",
+        "district_id": 18,
+        "province_id": 2
+    },
+    {
+        "id": 19001,
+        "name_en": "Bagmati",
+        "name_ne": "बागमती",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19002,
+        "name_en": "Balara",
+        "name_ne": "बलरा",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19003,
+        "name_en": "Barahathawa",
+        "name_ne": "बरहथवा",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19004,
+        "name_en": "Basbariya",
+        "name_ne": "बसबरीया",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19005,
+        "name_en": "Bishnu",
+        "name_ne": "विष्णु",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19006,
+        "name_en": "Bramhapuri",
+        "name_ne": "ब्रह्मपुरी",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19007,
+        "name_en": "Chakraghatta",
+        "name_ne": "चक्रघट्टा",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19008,
+        "name_en": "Chandranagar",
+        "name_ne": "चन्द्रनगर",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19009,
+        "name_en": "Dhankaul",
+        "name_ne": "धनकौल",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19010,
+        "name_en": "Godaita",
+        "name_ne": "गोडैटा",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19011,
+        "name_en": "Haripur",
+        "name_ne": "हरिपुर",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19012,
+        "name_en": "Haripurwa",
+        "name_ne": "हरिपुर्वा",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19013,
+        "name_en": "Hariwan",
+        "name_ne": "हरिपुर्वा",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19014,
+        "name_en": "Ishworpur",
+        "name_ne": "ईश्वरपुर",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19015,
+        "name_en": "Kabilasi",
+        "name_ne": "कविलासी",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19016,
+        "name_en": "Kaudena",
+        "name_ne": "कौडेना",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19017,
+        "name_en": "Lalbandi",
+        "name_ne": "लालबन्दी",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19018,
+        "name_en": "Malangawa",
+        "name_ne": "मलंगवा",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19019,
+        "name_en": "Parsa",
+        "name_ne": "पर्सा",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 19020,
+        "name_en": "Ramnagar",
+        "name_ne": "रामनगर",
+        "district_id": 19,
+        "province_id": 2
+    },
+    {
+        "id": 20001,
+        "name_en": "Dudhouli",
+        "name_ne": "दुधौली",
+        "district_id": 20,
+        "province_id": 3
+    },
+    {
+        "id": 20002,
+        "name_en": "Ghanglekh",
+        "name_ne": "घ्याङलेख",
+        "district_id": 20,
+        "province_id": 3
+    },
+    {
+        "id": 20003,
+        "name_en": "Golanjor",
+        "name_ne": "गोलन्जोर",
+        "district_id": 20,
+        "province_id": 3
+    },
+    {
+        "id": 20004,
+        "name_en": "Hariharpurgadhi",
+        "name_ne": "हरिहरपुरगढी",
+        "district_id": 20,
+        "province_id": 3
+    },
+    {
+        "id": 20005,
+        "name_en": "Kamalamai",
+        "name_ne": "कमलामार्इ",
+        "district_id": 20,
+        "province_id": 3
+    },
+    {
+        "id": 20006,
+        "name_en": "Marin",
+        "name_ne": "मरिण",
+        "district_id": 20,
+        "province_id": 3
+    },
+    {
+        "id": 20007,
+        "name_en": "Phikkal",
+        "name_ne": "फिक्कल",
+        "district_id": 20,
+        "province_id": 3
+    },
+    {
+        "id": 20008,
+        "name_en": "Sunkoshi",
+        "name_ne": "सुनकोशी",
+        "district_id": 20,
+        "province_id": 3
+    },
+    {
+        "id": 20009,
+        "name_en": "Tinpatan",
+        "name_ne": "तीनपाटन",
+        "district_id": 20,
+        "province_id": 3
+    },
+    {
+        "id": 21001,
+        "name_en": "Doramba",
+        "name_ne": "दोरम्बा",
+        "district_id": 21,
+        "province_id": 3
+    },
+    {
+        "id": 21002,
+        "name_en": "Gokulganga",
+        "name_ne": "गोकुलगङ्गा",
+        "district_id": 21,
+        "province_id": 3
+    },
+    {
+        "id": 21003,
+        "name_en": "Khadadevi",
+        "name_ne": "खाँडादेवी",
+        "district_id": 21,
+        "province_id": 3
+    },
+    {
+        "id": 21004,
+        "name_en": "Likhu",
+        "name_ne": "लिखु तामाकोशी",
+        "district_id": 21,
+        "province_id": 3
+    },
+    {
+        "id": 21005,
+        "name_en": "Manthali",
+        "name_ne": "मन्थली",
+        "district_id": 21,
+        "province_id": 3
+    },
+    {
+        "id": 21006,
+        "name_en": "Ramechhap",
+        "name_ne": "रामेछाप",
+        "district_id": 21,
+        "province_id": 3
+    },
+    {
+        "id": 21007,
+        "name_en": "Sunapati",
+        "name_ne": "सुनापती",
+        "district_id": 21,
+        "province_id": 3
+    },
+    {
+        "id": 21008,
+        "name_en": "Umakunda",
+        "name_ne": "उमाकुण्ड",
+        "district_id": 21,
+        "province_id": 3
+    },
+    {
+        "id": 22001,
+        "name_en": "Baiteshwor",
+        "name_ne": "वैतेश्वर",
+        "district_id": 22,
+        "province_id": 3
+    },
+    {
+        "id": 22002,
+        "name_en": "Bhimeshwor",
+        "name_ne": "भीमेश्वर",
+        "district_id": 22,
+        "province_id": 3
+    },
+    {
+        "id": 22003,
+        "name_en": "Bigu",
+        "name_ne": "विगु",
+        "district_id": 22,
+        "province_id": 3
+    },
+    {
+        "id": 22004,
+        "name_en": "Gaurishankar",
+        "name_ne": "गौरिशंकर",
+        "district_id": 22,
+        "province_id": 3
+    },
+    {
+        "id": 22005,
+        "name_en": "Jiri",
+        "name_ne": "जिरी",
+        "district_id": 22,
+        "province_id": 3
+    },
+    {
+        "id": 22006,
+        "name_en": "Kalinchok",
+        "name_ne": "कालिन्चोक",
+        "district_id": 22,
+        "province_id": 3
+    },
+    {
+        "id": 22007,
+        "name_en": "Melung",
+        "name_ne": "मेलुङ",
+        "district_id": 22,
+        "province_id": 3
+    },
+    {
+        "id": 22008,
+        "name_en": "Sailung",
+        "name_ne": "शैलुङ",
+        "district_id": 22,
+        "province_id": 3
+    },
+    {
+        "id": 22009,
+        "name_en": "Tamakoshi",
+        "name_ne": "तामाकोशी",
+        "district_id": 22,
+        "province_id": 3
+    },
+    {
+        "id": 23001,
+        "name_en": "Balefi",
+        "name_ne": "बलेफी",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23002,
+        "name_en": "Barhabise",
+        "name_ne": "वाह्रविसे",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23003,
+        "name_en": "Bhotekoshi",
+        "name_ne": "भोटेकोशी",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23004,
+        "name_en": "Chautara SangachokGadhi",
+        "name_ne": "चौतारा साँगाचोकगढी",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23005,
+        "name_en": "Helambu",
+        "name_ne": "हेलम्बु",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23006,
+        "name_en": "Indrawati",
+        "name_ne": "र्इन्द्रावती",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23007,
+        "name_en": "Jugal",
+        "name_ne": "जुगल",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23008,
+        "name_en": "Lisangkhu Pakhar",
+        "name_ne": "लिसंखु पाखर",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23009,
+        "name_en": "Melamchi",
+        "name_ne": "मेलम्ची",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23010,
+        "name_en": "Panchpokhari Thangpal",
+        "name_ne": "पाँचपोखरी थाङपाल",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23011,
+        "name_en": "Sunkoshi",
+        "name_ne": "सुनकोशी",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 23012,
+        "name_en": "Tripurasundari",
+        "name_ne": "त्रिपुरासुन्दरी",
+        "district_id": 24,
+        "province_id": 3
+    },
+    {
+        "id": 24001,
+        "name_en": "Banepa",
+        "name_ne": "बनेपा",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24002,
+        "name_en": "Bethanchowk",
+        "name_ne": "बेथानचोक",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24003,
+        "name_en": "Bhumlu",
+        "name_ne": "भुम्लु",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24004,
+        "name_en": "Chaurideurali",
+        "name_ne": "चौंरीदेउराली",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24005,
+        "name_en": "Dhulikhel",
+        "name_ne": "धुलिखेल",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24006,
+        "name_en": "Khanikhola",
+        "name_ne": "खानीखोला",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24007,
+        "name_en": "Mahabharat",
+        "name_ne": "महाभारत",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24008,
+        "name_en": "Mandandeupur",
+        "name_ne": "मण्डनदेउपुर",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24009,
+        "name_en": "Namobuddha",
+        "name_ne": "नमोबुद्ध",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24010,
+        "name_en": "Panauti",
+        "name_ne": "पनौती",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24011,
+        "name_en": "Panchkhal",
+        "name_ne": "पाँचखाल",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24012,
+        "name_en": "Roshi",
+        "name_ne": "रोशी",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 24013,
+        "name_en": "Temal",
+        "name_ne": "तेमाल",
+        "district_id": 30,
+        "province_id": 3
+    },
+    {
+        "id": 25001,
+        "name_en": "Bagmati",
+        "name_ne": "वाग्मती",
+        "district_id": 28,
+        "province_id": 3
+    },
+    {
+        "id": 25002,
+        "name_en": "Godawari",
+        "name_ne": "गोदावरी",
+        "district_id": 28,
+        "province_id": 3
+    },
+    {
+        "id": 25003,
+        "name_en": "Konjyosom",
+        "name_ne": "कोन्ज्योसोम",
+        "district_id": 28,
+        "province_id": 3
+    },
+    {
+        "id": 25004,
+        "name_en": "Lalitpur",
+        "name_ne": "ललितपुर",
+        "district_id": 28,
+        "province_id": 3
+    },
+    {
+        "id": 25005,
+        "name_en": "Mahalaxmi",
+        "name_ne": "महालक्ष्मी",
+        "district_id": 28,
+        "province_id": 3
+    },
+    {
+        "id": 25006,
+        "name_en": "Mahankal",
+        "name_ne": "महाङ्काल",
+        "district_id": 28,
+        "province_id": 3
+    },
+    {
+        "id": 26001,
+        "name_en": "Bhaktapur",
+        "name_ne": "भक्तपुर",
+        "district_id": 29,
+        "province_id": 3
+    },
+    {
+        "id": 26002,
+        "name_en": "Changunarayan",
+        "name_ne": "चाँगुनारायण",
+        "district_id": 29,
+        "province_id": 3
+    },
+    {
+        "id": 26003,
+        "name_en": "Madhyapur Thimi",
+        "name_ne": "मध्यपुर थिमी",
+        "district_id": 29,
+        "province_id": 3
+    },
+    {
+        "id": 26004,
+        "name_en": "Suryabinayak",
+        "name_ne": "सूर्यविनायक",
+        "district_id": 29,
+        "province_id": 3
+    },
+    {
+        "id": 27001,
+        "name_en": "Budhanilakantha",
+        "name_ne": "बुढानिलकण्ठ",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27002,
+        "name_en": "Chandragiri",
+        "name_ne": "चन्द्रागिरी",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27003,
+        "name_en": "Dakshinkali",
+        "name_ne": "दक्षिणकाली",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27004,
+        "name_en": "Gokarneshwor",
+        "name_ne": "गोकर्णेश्वर",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27005,
+        "name_en": "Kageshwori Manahora",
+        "name_ne": "कागेश्वरी मनोहरा",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27006,
+        "name_en": "Kathmandu",
+        "name_ne": "काठमाण्डौं",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27007,
+        "name_en": "Kirtipur",
+        "name_ne": "कीर्तिपुर",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27008,
+        "name_en": "Nagarjun",
+        "name_ne": "नागार्जुन",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27009,
+        "name_en": "Shankharapur",
+        "name_ne": "शङ्खरापुर",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27010,
+        "name_en": "Tarakeshwor",
+        "name_ne": "तारकेश्वर",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 27011,
+        "name_en": "Tokha",
+        "name_ne": "टोखा",
+        "district_id": 27,
+        "province_id": 3
+    },
+    {
+        "id": 28001,
+        "name_en": "Belkotgadhi",
+        "name_ne": "बेलकोटगढी",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28002,
+        "name_en": "Bidur",
+        "name_ne": "विदुर",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28003,
+        "name_en": "Dupcheshwar",
+        "name_ne": "दुप्चेश्वर",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28004,
+        "name_en": "Kakani",
+        "name_ne": "ककनी",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28005,
+        "name_en": "Kispang",
+        "name_ne": "किस्पाङ",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28006,
+        "name_en": "Likhu",
+        "name_ne": "लिखु",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28007,
+        "name_en": "Meghang",
+        "name_ne": "म्यागङ",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28008,
+        "name_en": "Panchakanya",
+        "name_ne": "पञ्चकन्या",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28009,
+        "name_en": "Shivapuri",
+        "name_ne": "शिवपुरी",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28010,
+        "name_en": "Suryagadhi",
+        "name_ne": "सुर्यगढी",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28011,
+        "name_en": "Tadi",
+        "name_ne": "तादी",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28012,
+        "name_en": "Tarkeshwar",
+        "name_ne": "तारकेश्वर",
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28088,
+        "name_en": "Shivapuri Watershed and Wildlife Reserve",
+        "name_ne": null,
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 28099,
+        "name_en": "Langtang National Park",
+        "name_ne": null,
+        "district_id": 25,
+        "province_id": 3
+    },
+    {
+        "id": 29001,
+        "name_en": "Gosaikunda",
+        "name_ne": "गोसाईकुण्ड",
+        "district_id": 23,
+        "province_id": 3
+    },
+    {
+        "id": 29002,
+        "name_en": "Kalika",
+        "name_ne": "कालिका",
+        "district_id": 23,
+        "province_id": 3
+    },
+    {
+        "id": 29003,
+        "name_en": "Naukunda",
+        "name_ne": "नौकुण्ड",
+        "district_id": 23,
+        "province_id": 3
+    },
+    {
+        "id": 29004,
+        "name_en": "Parbati Kunda",
+        "name_ne": "आमाछोदिङमो",
+        "district_id": 23,
+        "province_id": 3
+    },
+    {
+        "id": 29005,
+        "name_en": "Uttargaya",
+        "name_ne": "उत्तरगया",
+        "district_id": 23,
+        "province_id": 3
+    },
+    {
+        "id": 30001,
+        "name_en": "Benighat Rorang",
+        "name_ne": "बेनीघाट रोराङ्ग",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30002,
+        "name_en": "Dhunibesi",
+        "name_ne": "धुनीबेंशी",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30003,
+        "name_en": "Gajuri",
+        "name_ne": "गजुरी",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30004,
+        "name_en": "Galchi",
+        "name_ne": "गल्छी",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30005,
+        "name_en": "Gangajamuna",
+        "name_ne": "गङ्गाजमुना",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30006,
+        "name_en": "Jwalamukhi",
+        "name_ne": "ज्वालामूखी",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30007,
+        "name_en": "Khaniyabash",
+        "name_ne": "खनियाबास",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30008,
+        "name_en": "Netrawati",
+        "name_ne": "नेत्रावती डबजोङ",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30009,
+        "name_en": "Nilakantha",
+        "name_ne": "नीलकण्ठ",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30010,
+        "name_en": "Rubi Valley",
+        "name_ne": "रुवी भ्याली",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30011,
+        "name_en": "Siddhalek",
+        "name_ne": "सिद्धलेक",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30012,
+        "name_en": "Thakre",
+        "name_ne": "थाक्रे",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 30013,
+        "name_en": "Tripura Sundari",
+        "name_ne": "त्रिपुरासुन्दरी",
+        "district_id": 26,
+        "province_id": 3
+    },
+    {
+        "id": 31001,
+        "name_en": "Bagmati",
+        "name_ne": "वाग्मती",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31002,
+        "name_en": "Bakaiya",
+        "name_ne": "बकैया",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31003,
+        "name_en": "Bhimphedi",
+        "name_ne": "भिमफेदी",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31004,
+        "name_en": "Hetauda",
+        "name_ne": "हेटौँडा",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31005,
+        "name_en": "Indrasarowar",
+        "name_ne": "र्इन्द्रसरोवर",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31006,
+        "name_en": "Kailash",
+        "name_ne": "कैलाश",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31007,
+        "name_en": "Makawanpurgadhi",
+        "name_ne": "मकवानपुरगढी",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31008,
+        "name_en": "Manahari",
+        "name_ne": "मनहरी",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31009,
+        "name_en": "Raksirang",
+        "name_ne": "राक्सिराङ्ग",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31010,
+        "name_en": "Thaha",
+        "name_ne": "थाहा",
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31088,
+        "name_en": "Parsa Wildlife Reserve",
+        "name_ne": null,
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 31099,
+        "name_en": "Chitawan National Park",
+        "name_ne": null,
+        "district_id": 31,
+        "province_id": 3
+    },
+    {
+        "id": 32001,
+        "name_en": "Baudhimai",
+        "name_ne": "बौधीमाई",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32002,
+        "name_en": "Brindaban",
+        "name_ne": "बृन्दावन",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32003,
+        "name_en": "Chandrapur",
+        "name_ne": "चन्द्रपुर",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32004,
+        "name_en": "Dewahhi Gonahi",
+        "name_ne": "देवाही गोनाही",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32005,
+        "name_en": "Durga Bhagwati",
+        "name_ne": "दुर्गा भगवती",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32006,
+        "name_en": "Gadhimai",
+        "name_ne": "गढीमाई",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32007,
+        "name_en": "Garuda",
+        "name_ne": "गरुडा",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32008,
+        "name_en": "Gaur",
+        "name_ne": "गौर",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32009,
+        "name_en": "Gujara",
+        "name_ne": "गुजरा",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32010,
+        "name_en": "Ishanath",
+        "name_ne": "ईशनाथ",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32011,
+        "name_en": "Katahariya",
+        "name_ne": "कटहरिया",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32012,
+        "name_en": "Madhav Narayan",
+        "name_ne": "माधव नारायण",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32013,
+        "name_en": "Maulapur",
+        "name_ne": "मौलापुर",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32014,
+        "name_en": "Paroha",
+        "name_ne": "परोहा",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32015,
+        "name_en": "Phatuwa Bijayapur",
+        "name_ne": "फतुवाबिजयपुर",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32016,
+        "name_en": "Rajdevi",
+        "name_ne": "",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32017,
+        "name_en": "Rajpur",
+        "name_ne": "राजपुर",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 32018,
+        "name_en": "Yemunamai",
+        "name_ne": "यमुनामाई",
+        "district_id": 32,
+        "province_id": 2
+    },
+    {
+        "id": 33001,
+        "name_en": "Adarshkotwal",
+        "name_ne": "आदर्श कोटवाल",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33002,
+        "name_en": "Baragadhi",
+        "name_ne": "बारागढी",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33003,
+        "name_en": "Bishrampur",
+        "name_ne": "विश्रामपुर",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33004,
+        "name_en": "Devtal",
+        "name_ne": "देवताल",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33005,
+        "name_en": "Jitpur Simara",
+        "name_ne": "जीतपुर सिमरा",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33006,
+        "name_en": "Kalaiya",
+        "name_ne": "कलैया",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33007,
+        "name_en": "Karaiyamai",
+        "name_ne": "करैयामाई",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33008,
+        "name_en": "Kolhabi",
+        "name_ne": "कोल्हवी",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33009,
+        "name_en": "Mahagadhimai",
+        "name_ne": "महागढीमाई",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33010,
+        "name_en": "Nijgadh",
+        "name_ne": "निजगढ",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33011,
+        "name_en": "Pacharauta",
+        "name_ne": "पचरौता",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33012,
+        "name_en": "Parwanipur",
+        "name_ne": "परवानीपुर",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33013,
+        "name_en": "Pheta",
+        "name_ne": "फेटा",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33014,
+        "name_en": "Prasauni",
+        "name_ne": "प्रसौनी",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33015,
+        "name_en": "Simraungadh",
+        "name_ne": "सिम्रौनगढ",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33016,
+        "name_en": "Suwarna",
+        "name_ne": "सुवर्ण",
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 33099,
+        "name_en": "Parsa Wildlife Reserve",
+        "name_ne": null,
+        "district_id": 33,
+        "province_id": 2
+    },
+    {
+        "id": 34001,
+        "name_en": "Bahudaramai",
+        "name_ne": "बहुदरमाई",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34002,
+        "name_en": "Bindabasini",
+        "name_ne": "बिन्दबासिनी",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34003,
+        "name_en": "Birgunj",
+        "name_ne": "बिरगंज",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34004,
+        "name_en": "Chhipaharmai",
+        "name_ne": "छिपहरमाई",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34005,
+        "name_en": "Dhobini",
+        "name_ne": "धोबीनी",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34006,
+        "name_en": "Jagarnathpur",
+        "name_ne": "जगरनाथपुर",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34007,
+        "name_en": "Jirabhawani",
+        "name_ne": "जिराभवानी",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34008,
+        "name_en": "Kalikamai",
+        "name_ne": "कालिकामाई",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34009,
+        "name_en": "Pakahamainpur",
+        "name_ne": "पकाहा मैनपुर",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34010,
+        "name_en": "Parsagadhi",
+        "name_ne": "पर्सागढी",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34011,
+        "name_en": "Paterwasugauli",
+        "name_ne": "पटेर्वा सुगौली",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34012,
+        "name_en": "Pokhariya",
+        "name_ne": "पोखरिया",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34013,
+        "name_en": "SakhuwaPrasauni",
+        "name_ne": "सखुवा प्रसौनी",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34014,
+        "name_en": "Thori",
+        "name_ne": "ठोरी",
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 34099,
+        "name_en": "Chitwan National Park",
+        "name_ne": null,
+        "district_id": 34,
+        "province_id": 2
+    },
+    {
+        "id": 35001,
+        "name_en": "Bharatpur",
+        "name_ne": "भरतपुर",
+        "district_id": 35,
+        "province_id": 3
+    },
+    {
+        "id": 35002,
+        "name_en": "Ichchhyakamana",
+        "name_ne": "इच्छाकामना",
+        "district_id": 35,
+        "province_id": 3
+    },
+    {
+        "id": 35003,
+        "name_en": "Kalika",
+        "name_ne": "कालिका",
+        "district_id": 35,
+        "province_id": 3
+    },
+    {
+        "id": 35004,
+        "name_en": "Khairahani",
+        "name_ne": "खैरहनी",
+        "district_id": 35,
+        "province_id": 3
+    },
+    {
+        "id": 35005,
+        "name_en": "Madi",
+        "name_ne": "माडी",
+        "district_id": 35,
+        "province_id": 3
+    },
+    {
+        "id": 35006,
+        "name_en": "Rapti",
+        "name_ne": "राप्ती",
+        "district_id": 35,
+        "province_id": 3
+    },
+    {
+        "id": 35007,
+        "name_en": "Ratnanagar",
+        "name_ne": "रत्ननगर",
+        "district_id": 35,
+        "province_id": 3
+    },
+    {
+        "id": 35099,
+        "name_en": "Chitawan National Park",
+        "name_ne": null,
+        "district_id": 35,
+        "province_id": 3
+    },
+    {
+        "id": 36001,
+        "name_en": "Aarughat",
+        "name_ne": "आरूघाट",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36002,
+        "name_en": "Ajirkot",
+        "name_ne": "अजिरकोट",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36003,
+        "name_en": "Bhimsen",
+        "name_ne": "भिमसेनथापा",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36004,
+        "name_en": "Chum Nubri",
+        "name_ne": "चुमनुव्री",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36005,
+        "name_en": "Dharche",
+        "name_ne": "धार्चे",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36006,
+        "name_en": "Gandaki",
+        "name_ne": "गण्डकी",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36007,
+        "name_en": "Gorkha",
+        "name_ne": "गोरखा",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36008,
+        "name_en": "Palungtar",
+        "name_ne": "पालुङटार",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36009,
+        "name_en": "Sahid Lakhan",
+        "name_ne": "शहिद लखन",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36010,
+        "name_en": "Siranchok",
+        "name_ne": "सिरानचोक",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 36011,
+        "name_en": "Sulikot",
+        "name_ne": "बारपाक सुलिकोट",
+        "district_id": 44,
+        "province_id": 4
+    },
+    {
+        "id": 37001,
+        "name_en": "Besishahar",
+        "name_ne": "बेसीशहर",
+        "district_id": 45,
+        "province_id": 4
+    },
+    {
+        "id": 37002,
+        "name_en": "Dordi",
+        "name_ne": "दोर्दी",
+        "district_id": 45,
+        "province_id": 4
+    },
+    {
+        "id": 37003,
+        "name_en": "Dudhpokhari",
+        "name_ne": "दूधपोखरी",
+        "district_id": 45,
+        "province_id": 4
+    },
+    {
+        "id": 37004,
+        "name_en": "Kwholasothar",
+        "name_ne": "क्व्होलासोथार",
+        "district_id": 45,
+        "province_id": 4
+    },
+    {
+        "id": 37005,
+        "name_en": "MadhyaNepal",
+        "name_ne": "मध्यनेपाल",
+        "district_id": 45,
+        "province_id": 4
+    },
+    {
+        "id": 37006,
+        "name_en": "Marsyangdi",
+        "name_ne": "मर्स्याङदी",
+        "district_id": 45,
+        "province_id": 4
+    },
+    {
+        "id": 37007,
+        "name_en": "Rainas",
+        "name_ne": "रार्इनास",
+        "district_id": 45,
+        "province_id": 4
+    },
+    {
+        "id": 37008,
+        "name_en": "Sundarbazar",
+        "name_ne": "सुन्दरबजार",
+        "district_id": 45,
+        "province_id": 4
+    },
+    {
+        "id": 38001,
+        "name_en": "Anbukhaireni",
+        "name_ne": "आँबुखैरेनी",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 38002,
+        "name_en": "Bandipur",
+        "name_ne": "बन्दिपुर",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 38003,
+        "name_en": "Bhanu",
+        "name_ne": "भानु",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 38004,
+        "name_en": "Bhimad",
+        "name_ne": "भिमाद",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 38005,
+        "name_en": "Byas",
+        "name_ne": "व्यास",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 38006,
+        "name_en": "Devghat",
+        "name_ne": "देवघाट",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 38007,
+        "name_en": "Ghiring",
+        "name_ne": "घिरिङ",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 38008,
+        "name_en": "Myagde",
+        "name_ne": "म्याग्दे",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 38009,
+        "name_en": "Rhishing",
+        "name_ne": "ऋषिङ्ग",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 38010,
+        "name_en": "Shuklagandaki",
+        "name_ne": "शुक्लागण्डकी",
+        "district_id": 43,
+        "province_id": 4
+    },
+    {
+        "id": 39001,
+        "name_en": "Aandhikhola",
+        "name_ne": "आँधिखोला",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39002,
+        "name_en": "Arjunchaupari",
+        "name_ne": "अर्जुनचौपारी",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39003,
+        "name_en": "Bhirkot",
+        "name_ne": "भीरकोट",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39004,
+        "name_en": "Biruwa",
+        "name_ne": "बिरुवा",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39005,
+        "name_en": "Chapakot",
+        "name_ne": "चापाकोट",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39006,
+        "name_en": "Galyang",
+        "name_ne": "गल्याङ",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39007,
+        "name_en": "Harinas",
+        "name_ne": "हरिनास",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39008,
+        "name_en": "Kaligandagi",
+        "name_ne": "कालीगण्डकी",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39009,
+        "name_en": "Phedikhola",
+        "name_ne": "फेदीखोला",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39010,
+        "name_en": "Putalibazar",
+        "name_ne": "पुतलीबजार",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 39011,
+        "name_en": "Waling",
+        "name_ne": "वालिङ",
+        "district_id": 42,
+        "province_id": 4
+    },
+    {
+        "id": 40001,
+        "name_en": "Annapurna",
+        "name_ne": "अन्नपूर्ण",
+        "district_id": 46,
+        "province_id": 4
+    },
+    {
+        "id": 40002,
+        "name_en": "Machhapuchchhre",
+        "name_ne": "माछापुच्छ्रे",
+        "district_id": 46,
+        "province_id": 4
+    },
+    {
+        "id": 40003,
+        "name_en": "Madi",
+        "name_ne": "मादी",
+        "district_id": 46,
+        "province_id": 4
+    },
+    {
+        "id": 40004,
+        "name_en": "Pokhara Lekhnath",
+        "name_ne": "पोखरा लेखनाथ",
+        "district_id": 46,
+        "province_id": 4
+    },
+    {
+        "id": 40005,
+        "name_en": "Rupa",
+        "name_ne": "रूपा",
+        "district_id": 46,
+        "province_id": 4
+    },
+    {
+        "id": 41001,
+        "name_en": "Chame",
+        "name_ne": "चामे",
+        "district_id": 47,
+        "province_id": 4
+    },
+    {
+        "id": 41002,
+        "name_en": "Narphu",
+        "name_ne": "नार्पा भूमि",
+        "district_id": 47,
+        "province_id": 4
+    },
+    {
+        "id": 41003,
+        "name_en": "Nashong",
+        "name_ne": "नासोँ",
+        "district_id": 47,
+        "province_id": 4
+    },
+    {
+        "id": 41004,
+        "name_en": "Neshyang",
+        "name_ne": "मनाङ ङिस्याङ",
+        "district_id": 47,
+        "province_id": 4
+    },
+    {
+        "id": 42001,
+        "name_en": "Barhagaun Muktikhsetra",
+        "name_ne": "वारागुङ मुक्तिक्षेत्र",
+        "district_id": 48,
+        "province_id": 4
+    },
+    {
+        "id": 42002,
+        "name_en": "Dalome",
+        "name_ne": "लो-घेकर दामोदरकुण्ड",
+        "district_id": 48,
+        "province_id": 4
+    },
+    {
+        "id": 42003,
+        "name_en": "Gharapjhong",
+        "name_ne": "घरपझोङ",
+        "district_id": 48,
+        "province_id": 4
+    },
+    {
+        "id": 42004,
+        "name_en": "Lomanthang",
+        "name_ne": "लोमन्थाङ",
+        "district_id": 48,
+        "province_id": 4
+    },
+    {
+        "id": 42005,
+        "name_en": "Thasang",
+        "name_ne": "थासाङ",
+        "district_id": 48,
+        "province_id": 4
+    },
+    {
+        "id": 43001,
+        "name_en": "Annapurna",
+        "name_ne": "अन्नपूर्ण",
+        "district_id": 49,
+        "province_id": 4
+    },
+    {
+        "id": 43002,
+        "name_en": "Beni",
+        "name_ne": "बेनी",
+        "district_id": 49,
+        "province_id": 4
+    },
+    {
+        "id": 43003,
+        "name_en": "Dhaulagiri",
+        "name_ne": "धवलागिरी",
+        "district_id": 49,
+        "province_id": 4
+    },
+    {
+        "id": 43004,
+        "name_en": "Malika",
+        "name_ne": "मालिका",
+        "district_id": 49,
+        "province_id": 4
+    },
+    {
+        "id": 43005,
+        "name_en": "Mangala",
+        "name_ne": "मंगला",
+        "district_id": 49,
+        "province_id": 4
+    },
+    {
+        "id": 43006,
+        "name_en": "Raghuganga",
+        "name_ne": "रघुगंगा",
+        "district_id": 49,
+        "province_id": 4
+    },
+    {
+        "id": 43099,
+        "name_en": "Dhorpatan Hunting Reserve",
+        "name_ne": null,
+        "district_id": 49,
+        "province_id": 4
+    },
+    {
+        "id": 44001,
+        "name_en": "Bihadi",
+        "name_ne": "विहादी",
+        "district_id": 51,
+        "province_id": 4
+    },
+    {
+        "id": 44002,
+        "name_en": "Jaljala",
+        "name_ne": "जलजला",
+        "district_id": 51,
+        "province_id": 4
+    },
+    {
+        "id": 44003,
+        "name_en": "Kushma",
+        "name_ne": "कुश्मा",
+        "district_id": 51,
+        "province_id": 4
+    },
+    {
+        "id": 44004,
+        "name_en": "Mahashila",
+        "name_ne": "महाशिला",
+        "district_id": 51,
+        "province_id": 4
+    },
+    {
+        "id": 44005,
+        "name_en": "Modi",
+        "name_ne": "मोदी",
+        "district_id": 51,
+        "province_id": 4
+    },
+    {
+        "id": 44006,
+        "name_en": "Painyu",
+        "name_ne": "पैयूं",
+        "district_id": 51,
+        "province_id": 4
+    },
+    {
+        "id": 44007,
+        "name_en": "Phalebas",
+        "name_ne": "फलेवास",
+        "district_id": 51,
+        "province_id": 4
+    },
+    {
+        "id": 45001,
+        "name_en": "Badigad",
+        "name_ne": "वडिगाड",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45002,
+        "name_en": "Baglung",
+        "name_ne": "बागलुङ",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45003,
+        "name_en": "Bareng",
+        "name_ne": "वरेङ",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45004,
+        "name_en": "Dhorpatan",
+        "name_ne": "ढोरपाटन",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45005,
+        "name_en": "Galkot",
+        "name_ne": "गल्कोट",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45006,
+        "name_en": "Jaimuni",
+        "name_ne": "जैमिनी",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45007,
+        "name_en": "Kanthekhola",
+        "name_ne": "काठेखोला",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45008,
+        "name_en": "Nisikhola",
+        "name_ne": "निसीखोला",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45009,
+        "name_en": "Taman Khola",
+        "name_ne": "तमानखोला",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45010,
+        "name_en": "Tara Khola",
+        "name_ne": "ताराखोला",
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 45099,
+        "name_en": "Dhorpatan Hunting Reserve",
+        "name_ne": null,
+        "district_id": 50,
+        "province_id": 4
+    },
+    {
+        "id": 46001,
+        "name_en": "Chandrakot",
+        "name_ne": "चन्द्रकोट",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46002,
+        "name_en": "Chatrakot",
+        "name_ne": "छत्रकोट",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46003,
+        "name_en": "Dhurkot",
+        "name_ne": "धुर्कोट",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46004,
+        "name_en": "Gulmidarbar",
+        "name_ne": "गुल्मी दरबार",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46005,
+        "name_en": "Isma",
+        "name_ne": "इस्मा",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46006,
+        "name_en": "Kaligandaki",
+        "name_ne": "कालीगण्डकी",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46007,
+        "name_en": "Madane",
+        "name_ne": "मदाने",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46008,
+        "name_en": "Malika",
+        "name_ne": "मालिका",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46009,
+        "name_en": "Musikot",
+        "name_ne": "मुसिकोट",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46010,
+        "name_en": "Resunga",
+        "name_ne": "रेसुङ्गा",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46011,
+        "name_en": "Ruru",
+        "name_ne": "रुरु",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 46012,
+        "name_en": "Satyawati",
+        "name_ne": "सत्यवती",
+        "district_id": 41,
+        "province_id": 5
+    },
+    {
+        "id": 47001,
+        "name_en": "Bagnaskali",
+        "name_ne": "बगनासकाली",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 47002,
+        "name_en": "Mathagadhi",
+        "name_ne": "माथागढी",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 47003,
+        "name_en": "Nisdi",
+        "name_ne": "निस्दी",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 47004,
+        "name_en": "Purbakhola",
+        "name_ne": "पुर्वखोला",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 47005,
+        "name_en": "Rainadevi Chhahara",
+        "name_ne": "रैनादेवी छहरा",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 47006,
+        "name_en": "Rambha",
+        "name_ne": "रम्भा",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 47007,
+        "name_en": "Rampur",
+        "name_ne": "रामपुर",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 47008,
+        "name_en": "Ribdikot",
+        "name_ne": "रिब्दीकोट",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 47009,
+        "name_en": "Tansen",
+        "name_ne": "तानसेन",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 47010,
+        "name_en": "Tinau",
+        "name_ne": "तिनाउ",
+        "district_id": 39,
+        "province_id": 5
+    },
+    {
+        "id": 48001,
+        "name_en": "Bardaghat",
+        "name_ne": "बर्दघाट",
+        "district_id": 482,
+        "province_id": 5
+    },
+    {
+        "id": 48002,
+        "name_en": "Palhi Nandan",
+        "name_ne": "पाल्हीनन्दन",
+        "district_id": 482,
+        "province_id": 5
+    },
+    {
+        "id": 48003,
+        "name_en": "Pratappur",
+        "name_ne": "प्रतापपुर",
+        "district_id": 482,
+        "province_id": 5
+    },
+    {
+        "id": 48004,
+        "name_en": "Ramgram",
+        "name_ne": "रामग्राम",
+        "district_id": 482,
+        "province_id": 5
+    },
+    {
+        "id": 48005,
+        "name_en": "Sarawal",
+        "name_ne": "सरावल",
+        "district_id": 482,
+        "province_id": 5
+    },
+    {
+        "id": 48006,
+        "name_en": "Sunwal",
+        "name_ne": "सुनवल",
+        "district_id": 482,
+        "province_id": 5
+    },
+    {
+        "id": 48007,
+        "name_en": "Susta",
+        "name_ne": "सुस्ता",
+        "district_id": 482,
+        "province_id": 5
+    },
+    {
+        "id": 49001,
+        "name_en": "Butwal",
+        "name_ne": "बुटवल",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49002,
+        "name_en": "Devdaha",
+        "name_ne": "देवदह",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49003,
+        "name_en": "Gaidahawa",
+        "name_ne": "गैडहवा",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49004,
+        "name_en": "Kanchan",
+        "name_ne": "कन्चन",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49005,
+        "name_en": "Kotahimai",
+        "name_ne": "कोटहीमार्इ",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49006,
+        "name_en": "Lumbini Sanskritik",
+        "name_ne": "लुम्बिनी सांस्कृतिक",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49007,
+        "name_en": "Marchawari",
+        "name_ne": "मर्चवारी",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49008,
+        "name_en": "Mayadevi",
+        "name_ne": "मायादेवी",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49009,
+        "name_en": "Omsatiya",
+        "name_ne": "ओमसतिया",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49010,
+        "name_en": "Rohini",
+        "name_ne": "रोहिणी",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49011,
+        "name_en": "Sainamaina",
+        "name_ne": "सैनामैना",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49012,
+        "name_en": "Sammarimai",
+        "name_ne": "सम्मरीमार्इ",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49013,
+        "name_en": "Siddharthanagar",
+        "name_ne": "सिद्धार्थनगर",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49014,
+        "name_en": "Siyari",
+        "name_ne": "सियारी",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49015,
+        "name_en": "Sudhdhodhan",
+        "name_ne": "सुद्धोधन",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49016,
+        "name_en": "Tillotama",
+        "name_ne": "तिलोत्तमा",
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 49099,
+        "name_en": "Lumbini Sanskritik Development Area",
+        "name_ne": null,
+        "district_id": 37,
+        "province_id": 5
+    },
+    {
+        "id": 50001,
+        "name_en": "Banganga",
+        "name_ne": "बाणगंगा",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 50002,
+        "name_en": "Bijayanagar",
+        "name_ne": "विजयनगर",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 50003,
+        "name_en": "Buddhabhumi",
+        "name_ne": "बुद्धभुमी",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 50004,
+        "name_en": "Kapilbastu",
+        "name_ne": "कपिलवस्तु",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 50005,
+        "name_en": "Krishnanagar",
+        "name_ne": "कृष्णनगर",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 50006,
+        "name_en": "Maharajgunj",
+        "name_ne": "महाराजगंज",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 50007,
+        "name_en": "Mayadevi",
+        "name_ne": "मायादेवी",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 50008,
+        "name_en": "Shivaraj",
+        "name_ne": "शिवराज",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 50009,
+        "name_en": "Suddhodhan",
+        "name_ne": "शुद्धोधन",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 50010,
+        "name_en": "Yashodhara",
+        "name_ne": "यसोधरा",
+        "district_id": 38,
+        "province_id": 5
+    },
+    {
+        "id": 51001,
+        "name_en": "Bhumekasthan",
+        "name_ne": "भुमिकास्थान",
+        "district_id": 40,
+        "province_id": 5
+    },
+    {
+        "id": 51002,
+        "name_en": "Chhatradev",
+        "name_ne": "छत्रदेव",
+        "district_id": 40,
+        "province_id": 5
+    },
+    {
+        "id": 51003,
+        "name_en": "Malarani",
+        "name_ne": "मालारानी",
+        "district_id": 40,
+        "province_id": 5
+    },
+    {
+        "id": 51004,
+        "name_en": "Panini",
+        "name_ne": "पाणिनी",
+        "district_id": 40,
+        "province_id": 5
+    },
+    {
+        "id": 51005,
+        "name_en": "Sandhikharka",
+        "name_ne": "सन्धिखर्क",
+        "district_id": 40,
+        "province_id": 5
+    },
+    {
+        "id": 51006,
+        "name_en": "Sitganga",
+        "name_ne": "शितगंगा",
+        "district_id": 40,
+        "province_id": 5
+    },
+    {
+        "id": 52001,
+        "name_en": "Ayirabati",
+        "name_ne": "ऐरावती",
+        "district_id": 53,
+        "province_id": 5
+    },
+    {
+        "id": 52002,
+        "name_en": "Gaumukhi",
+        "name_ne": "गौमुखी",
+        "district_id": 53,
+        "province_id": 5
+    },
+    {
+        "id": 52003,
+        "name_en": "Jhimruk",
+        "name_ne": "झिमरुक",
+        "district_id": 53,
+        "province_id": 5
+    },
+    {
+        "id": 52004,
+        "name_en": "Mallarani",
+        "name_ne": "मल्लरानी",
+        "district_id": 53,
+        "province_id": 5
+    },
+    {
+        "id": 52005,
+        "name_en": "Mandavi",
+        "name_ne": "माण्डवी",
+        "district_id": 53,
+        "province_id": 5
+    },
+    {
+        "id": 52006,
+        "name_en": "Naubahini",
+        "name_ne": "नौबहिनी",
+        "district_id": 53,
+        "province_id": 5
+    },
+    {
+        "id": 52007,
+        "name_en": "Pyuthan",
+        "name_ne": "प्यूठान",
+        "district_id": 53,
+        "province_id": 5
+    },
+    {
+        "id": 52008,
+        "name_en": "Sarumarani",
+        "name_ne": "सरुमारानी",
+        "district_id": 53,
+        "province_id": 5
+    },
+    {
+        "id": 52009,
+        "name_en": "Sworgadwary",
+        "name_ne": "स्वर्गद्वारी",
+        "district_id": 53,
+        "province_id": 5
+    },
+    {
+        "id": 53001,
+        "name_en": "Duikholi",
+        "name_ne": "परिवर्तन",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 53002,
+        "name_en": "Lungri",
+        "name_ne": "लुङग्री",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 53003,
+        "name_en": "Madi",
+        "name_ne": "माडी",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 53004,
+        "name_en": "Rolpa",
+        "name_ne": "रोल्पा",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 53005,
+        "name_en": "Runtigadi",
+        "name_ne": "रुन्टीगढी",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 53006,
+        "name_en": "Sukidaha",
+        "name_ne": "गंगादेव",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 53007,
+        "name_en": "Sunchhahari",
+        "name_ne": "सुनछहरी",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 53008,
+        "name_en": "Suwarnabati",
+        "name_ne": "सुनिलस्मृति",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 53009,
+        "name_en": "Thawang",
+        "name_ne": "थबाङ",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 53010,
+        "name_en": "Tribeni",
+        "name_ne": "त्रिवेणी",
+        "district_id": 54,
+        "province_id": 5
+    },
+    {
+        "id": 54001,
+        "name_en": "Aathbiskot",
+        "name_ne": "आठबिसकोट",
+        "district_id": 542,
+        "province_id": 6
+    },
+    {
+        "id": 54002,
+        "name_en": "Banfikot",
+        "name_ne": "बाँफिकोट",
+        "district_id": 542,
+        "province_id": 6
+    },
+    {
+        "id": 54003,
+        "name_en": "Chaurjahari",
+        "name_ne": "चौरजहारी",
+        "district_id": 542,
+        "province_id": 6
+    },
+    {
+        "id": 54004,
+        "name_en": "Musikot",
+        "name_ne": "मुसिकोट",
+        "district_id": 542,
+        "province_id": 6
+    },
+    {
+        "id": 54005,
+        "name_en": "Sani Bheri",
+        "name_ne": "सानी भेरी",
+        "district_id": 542,
+        "province_id": 6
+    },
+    {
+        "id": 54006,
+        "name_en": "Tribeni",
+        "name_ne": "त्रिवेणी",
+        "district_id": 542,
+        "province_id": 6
+    },
+    {
+        "id": 55001,
+        "name_en": "Bagchaur",
+        "name_ne": "बागचौर",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 55002,
+        "name_en": "Bangad Kupinde",
+        "name_ne": "बनगाड कुपिण्डे",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 55003,
+        "name_en": "Chhatreshwori",
+        "name_ne": "छत्रेश्वरी",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 55004,
+        "name_en": "Darma",
+        "name_ne": "दार्मा",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 55005,
+        "name_en": "Dhorchaur",
+        "name_ne": "सिद्ध कुमाख",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 55006,
+        "name_en": "Kalimati",
+        "name_ne": "कालिमाटी",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 55007,
+        "name_en": "Kapurkot",
+        "name_ne": "कपुरकोट",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 55008,
+        "name_en": "Kumakhmalika",
+        "name_ne": "कुमाख",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 55009,
+        "name_en": "Sharada",
+        "name_ne": "शारदा",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 55010,
+        "name_en": "Tribeni",
+        "name_ne": "त्रिवेणी",
+        "district_id": 55,
+        "province_id": 6
+    },
+    {
+        "id": 56001,
+        "name_en": "Babai",
+        "name_ne": "बबई",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 56002,
+        "name_en": "Banglachuli",
+        "name_ne": "बंगलाचुली",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 56003,
+        "name_en": "Dangisharan",
+        "name_ne": "दंगीशरण",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 56004,
+        "name_en": "Gadhawa",
+        "name_ne": "गढवा",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 56005,
+        "name_en": "Ghorahi",
+        "name_ne": "घोराही",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 56006,
+        "name_en": "Lamahi",
+        "name_ne": "लमही",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 56007,
+        "name_en": "Rajpur",
+        "name_ne": "राजपुर",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 56008,
+        "name_en": "Rapti",
+        "name_ne": "राप्ती",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 56009,
+        "name_en": "Shantinagar",
+        "name_ne": "शान्तिनगर",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 56010,
+        "name_en": "Tulsipur",
+        "name_ne": "तुल्सीपुर",
+        "district_id": 52,
+        "province_id": 5
+    },
+    {
+        "id": 57001,
+        "name_en": "Baijanath",
+        "name_ne": "बैजनाथ",
+        "district_id": 66,
+        "province_id": 5
+    },
+    {
+        "id": 57002,
+        "name_en": "Duduwa",
+        "name_ne": "डुडुवा",
+        "district_id": 66,
+        "province_id": 5
+    },
+    {
+        "id": 57003,
+        "name_en": "Janki",
+        "name_ne": "जानकी",
+        "district_id": 66,
+        "province_id": 5
+    },
+    {
+        "id": 57004,
+        "name_en": "Khajura",
+        "name_ne": "खजुरा",
+        "district_id": 66,
+        "province_id": 5
+    },
+    {
+        "id": 57005,
+        "name_en": "Kohalpur",
+        "name_ne": "कोहलपुर",
+        "district_id": 66,
+        "province_id": 5
+    },
+    {
+        "id": 57006,
+        "name_en": "Narainapur",
+        "name_ne": "नरैनापुर",
+        "district_id": 66,
+        "province_id": 5
+    },
+    {
+        "id": 57007,
+        "name_en": "Nepalgunj",
+        "name_ne": "नेपालगंज",
+        "district_id": 66,
+        "province_id": 5
+    },
+    {
+        "id": 57008,
+        "name_en": "Rapti Sonari",
+        "name_ne": "राप्तीसोनारी",
+        "district_id": 66,
+        "province_id": 5
+    },
+    {
+        "id": 58001,
+        "name_en": "Badhaiyatal",
+        "name_ne": "बढैयाताल",
+        "district_id": 65,
+        "province_id": 5
+    },
+    {
+        "id": 58002,
+        "name_en": "Bansagadhi",
+        "name_ne": "बाँसगढी",
+        "district_id": 65,
+        "province_id": 5
+    },
+    {
+        "id": 58003,
+        "name_en": "Barbardiya",
+        "name_ne": "बारबर्दिया",
+        "district_id": 65,
+        "province_id": 5
+    },
+    {
+        "id": 58004,
+        "name_en": "Geruwa",
+        "name_ne": "गेरुवा",
+        "district_id": 65,
+        "province_id": 5
+    },
+    {
+        "id": 58005,
+        "name_en": "Gulariya",
+        "name_ne": "गुलरिया",
+        "district_id": 65,
+        "province_id": 5
+    },
+    {
+        "id": 58006,
+        "name_en": "Madhuwan",
+        "name_ne": "मधुवन",
+        "district_id": 65,
+        "province_id": 5
+    },
+    {
+        "id": 58007,
+        "name_en": "Rajapur",
+        "name_ne": "राजापुर",
+        "district_id": 65,
+        "province_id": 5
+    },
+    {
+        "id": 58008,
+        "name_en": "Thakurbaba",
+        "name_ne": "ठाकुरबाबा",
+        "district_id": 65,
+        "province_id": 5
+    },
+    {
+        "id": 58099,
+        "name_en": "Bardiya National Park",
+        "name_ne": null,
+        "district_id": 65,
+        "province_id": 5
+    },
+    {
+        "id": 59001,
+        "name_en": "Barahtal",
+        "name_ne": "बराहताल",
+        "district_id": 64,
+        "province_id": 6
+    },
+    {
+        "id": 59002,
+        "name_en": "Bheriganga",
+        "name_ne": "भेरीगंगा",
+        "district_id": 64,
+        "province_id": 6
+    },
+    {
+        "id": 59003,
+        "name_en": "Birendranagar",
+        "name_ne": "बीरेन्द्रनगर",
+        "district_id": 64,
+        "province_id": 6
+    },
+    {
+        "id": 59004,
+        "name_en": "Chaukune",
+        "name_ne": "चौकुने",
+        "district_id": 64,
+        "province_id": 6
+    },
+    {
+        "id": 59005,
+        "name_en": "Chingad",
+        "name_ne": "चिङ्गाड",
+        "district_id": 64,
+        "province_id": 6
+    },
+    {
+        "id": 59006,
+        "name_en": "Gurbhakot",
+        "name_ne": "गुर्भाकोट",
+        "district_id": 64,
+        "province_id": 6
+    },
+    {
+        "id": 59007,
+        "name_en": "Lekbeshi",
+        "name_ne": "लेकबेशी",
+        "district_id": 64,
+        "province_id": 6
+    },
+    {
+        "id": 59008,
+        "name_en": "Panchpuri",
+        "name_ne": "पञ्चपुरी",
+        "district_id": 64,
+        "province_id": 6
+    },
+    {
+        "id": 59009,
+        "name_en": "Simta",
+        "name_ne": "सिम्ता",
+        "district_id": 64,
+        "province_id": 6
+    },
+    {
+        "id": 60001,
+        "name_en": "Aathabis",
+        "name_ne": "आठबीस",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60002,
+        "name_en": "Bhagawatimai",
+        "name_ne": "भगवतीमाई",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60003,
+        "name_en": "Bhairabi",
+        "name_ne": "भैरवी",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60004,
+        "name_en": "Chamunda Bindrasaini",
+        "name_ne": "चामुण्डा बिन्द्रासैनी",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60005,
+        "name_en": "Dullu",
+        "name_ne": "दुल्लु",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60006,
+        "name_en": "Dungeshwor",
+        "name_ne": "डुङ्गेश्वर",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60007,
+        "name_en": "Gurans",
+        "name_ne": "गुराँस",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60008,
+        "name_en": "Mahabu",
+        "name_ne": "महाबु",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60009,
+        "name_en": "Narayan",
+        "name_ne": "नारायण",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60010,
+        "name_en": "Naumule",
+        "name_ne": "नौमुले",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 60011,
+        "name_en": "Thantikandh",
+        "name_ne": "ठाँटीकाँध",
+        "district_id": 63,
+        "province_id": 6
+    },
+    {
+        "id": 61001,
+        "name_en": "Barekot",
+        "name_ne": "बारेकोट",
+        "district_id": 62,
+        "province_id": 6
+    },
+    {
+        "id": 61002,
+        "name_en": "Bheri",
+        "name_ne": "भेरी",
+        "district_id": 62,
+        "province_id": 6
+    },
+    {
+        "id": 61003,
+        "name_en": "Chhedagad",
+        "name_ne": "छेडागाड",
+        "district_id": 62,
+        "province_id": 6
+    },
+    {
+        "id": 61004,
+        "name_en": "Junichande",
+        "name_ne": "जुनीचाँदे",
+        "district_id": 62,
+        "province_id": 6
+    },
+    {
+        "id": 61005,
+        "name_en": "Kuse",
+        "name_ne": "कुसे",
+        "district_id": 62,
+        "province_id": 6
+    },
+    {
+        "id": 61006,
+        "name_en": "Shiwalaya",
+        "name_ne": "शिवालय",
+        "district_id": 62,
+        "province_id": 6
+    },
+    {
+        "id": 61007,
+        "name_en": "Tribeni Nalagad",
+        "name_ne": "नलगाड",
+        "district_id": 62,
+        "province_id": 6
+    },
+    {
+        "id": 62001,
+        "name_en": "Chharka Tangsong",
+        "name_ne": "छार्का ताङसोङ",
+        "district_id": 57,
+        "province_id": 6
+    },
+    {
+        "id": 62002,
+        "name_en": "Dolpo Buddha",
+        "name_ne": "डोल्पो बुद्ध",
+        "district_id": 57,
+        "province_id": 6
+    },
+    {
+        "id": 62003,
+        "name_en": "Jagadulla",
+        "name_ne": "जगदुल्ला",
+        "district_id": 57,
+        "province_id": 6
+    },
+    {
+        "id": 62004,
+        "name_en": "Kaike",
+        "name_ne": "काईके",
+        "district_id": 57,
+        "province_id": 6
+    },
+    {
+        "id": 62005,
+        "name_en": "Mudkechula",
+        "name_ne": "मुड्केचुला",
+        "district_id": 57,
+        "province_id": 6
+    },
+    {
+        "id": 62006,
+        "name_en": "Shey Phoksundo",
+        "name_ne": "शे फोक्सुण्डो",
+        "district_id": 57,
+        "province_id": 6
+    },
+    {
+        "id": 62007,
+        "name_en": "Thuli Bheri",
+        "name_ne": "ठुली भेरी",
+        "district_id": 57,
+        "province_id": 6
+    },
+    {
+        "id": 62008,
+        "name_en": "Tripurasundari",
+        "name_ne": "त्रिपुरासुन्दरी",
+        "district_id": 57,
+        "province_id": 6
+    },
+    {
+        "id": 63001,
+        "name_en": "Chandannath",
+        "name_ne": "चन्दननाथ",
+        "district_id": 60,
+        "province_id": 6
+    },
+    {
+        "id": 63002,
+        "name_en": "Guthichaur",
+        "name_ne": "गुठिचौर",
+        "district_id": 60,
+        "province_id": 6
+    },
+    {
+        "id": 63003,
+        "name_en": "Hima",
+        "name_ne": "हिमा",
+        "district_id": 60,
+        "province_id": 6
+    },
+    {
+        "id": 63004,
+        "name_en": "Kanakasundari",
+        "name_ne": "कनकासुन्दरी",
+        "district_id": 60,
+        "province_id": 6
+    },
+    {
+        "id": 63005,
+        "name_en": "Patrasi",
+        "name_ne": "पातारासी",
+        "district_id": 60,
+        "province_id": 6
+    },
+    {
+        "id": 63006,
+        "name_en": "Sinja",
+        "name_ne": "सिंजा",
+        "district_id": 60,
+        "province_id": 6
+    },
+    {
+        "id": 63007,
+        "name_en": "Tatopani",
+        "name_ne": "तातोपानी",
+        "district_id": 60,
+        "province_id": 6
+    },
+    {
+        "id": 63008,
+        "name_en": "Tila",
+        "name_ne": "तिला",
+        "district_id": 60,
+        "province_id": 6
+    },
+    {
+        "id": 64001,
+        "name_en": "Kalika",
+        "name_ne": "शुभ कालीका",
+        "district_id": 61,
+        "province_id": 6
+    },
+    {
+        "id": 64002,
+        "name_en": "Khandachakra",
+        "name_ne": "खाँडाचक्र",
+        "district_id": 61,
+        "province_id": 6
+    },
+    {
+        "id": 64003,
+        "name_en": "Mahawai",
+        "name_ne": "महावै",
+        "district_id": 61,
+        "province_id": 6
+    },
+    {
+        "id": 64004,
+        "name_en": "Naraharinath",
+        "name_ne": "नरहरिनाथ",
+        "district_id": 61,
+        "province_id": 6
+    },
+    {
+        "id": 64005,
+        "name_en": "Pachaljharana",
+        "name_ne": "पचालझरना",
+        "district_id": 61,
+        "province_id": 6
+    },
+    {
+        "id": 64006,
+        "name_en": "Palata",
+        "name_ne": "पलाता",
+        "district_id": 61,
+        "province_id": 6
+    },
+    {
+        "id": 64007,
+        "name_en": "Raskot",
+        "name_ne": "रास्कोट",
+        "district_id": 61,
+        "province_id": 6
+    },
+    {
+        "id": 64008,
+        "name_en": "Sanni Tribeni",
+        "name_ne": "सान्नी त्रिवेणी",
+        "district_id": 61,
+        "province_id": 6
+    },
+    {
+        "id": 64009,
+        "name_en": "Tilagufa",
+        "name_ne": "तिलागुफा",
+        "district_id": 61,
+        "province_id": 6
+    },
+    {
+        "id": 65001,
+        "name_en": "Chhayanath Rara",
+        "name_ne": "छायाँनाथ रारा",
+        "district_id": 58,
+        "province_id": 6
+    },
+    {
+        "id": 65002,
+        "name_en": "Khatyad",
+        "name_ne": "खत्याड",
+        "district_id": 58,
+        "province_id": 6
+    },
+    {
+        "id": 65003,
+        "name_en": "Mugum Karmarong",
+        "name_ne": "मुगुम कार्मारोंग",
+        "district_id": 58,
+        "province_id": 6
+    },
+    {
+        "id": 65004,
+        "name_en": "Soru",
+        "name_ne": "सोरु",
+        "district_id": 58,
+        "province_id": 6
+    },
+    {
+        "id": 66001,
+        "name_en": "Adanchuli",
+        "name_ne": "अदानचुली",
+        "district_id": 59,
+        "province_id": 6
+    },
+    {
+        "id": 66002,
+        "name_en": "Chankheli",
+        "name_ne": "चंखेली",
+        "district_id": 59,
+        "province_id": 6
+    },
+    {
+        "id": 66003,
+        "name_en": "Kharpunath",
+        "name_ne": "खार्पुनाथ",
+        "district_id": 59,
+        "province_id": 6
+    },
+    {
+        "id": 66004,
+        "name_en": "Namkha",
+        "name_ne": "नाम्खा",
+        "district_id": 59,
+        "province_id": 6
+    },
+    {
+        "id": 66005,
+        "name_en": "Sarkegad",
+        "name_ne": "सर्केगाड",
+        "district_id": 59,
+        "province_id": 6
+    },
+    {
+        "id": 66006,
+        "name_en": "Simkot",
+        "name_ne": "सिमकोट",
+        "district_id": 59,
+        "province_id": 6
+    },
+    {
+        "id": 66007,
+        "name_en": "Tanjakot",
+        "name_ne": "ताँजाकोट",
+        "district_id": 59,
+        "province_id": 6
+    },
+    {
+        "id": 67001,
+        "name_en": "Badimalika",
+        "name_ne": "बडिमालिका",
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 67002,
+        "name_en": "Budhiganga",
+        "name_ne": "बुढीगंगा",
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 67003,
+        "name_en": "Budhinanda",
+        "name_ne": "बुढीनन्दा",
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 67004,
+        "name_en": "Chhededaha",
+        "name_ne": "खप्तड छेडेदह",
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 67005,
+        "name_en": "Gaumul",
+        "name_ne": "गौमुल",
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 67006,
+        "name_en": "Himali",
+        "name_ne": "हिमाली",
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 67007,
+        "name_en": "Pandav Gupha",
+        "name_ne": "जगन्नाथ",
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 67008,
+        "name_en": "Swami Kartik",
+        "name_ne": "स्वामीकार्तिक खापर",
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 67009,
+        "name_en": "Tribeni",
+        "name_ne": "त्रिवेणी",
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 67099,
+        "name_en": "Khaptad National Park",
+        "name_ne": null,
+        "district_id": 70,
+        "province_id": 7
+    },
+    {
+        "id": 68001,
+        "name_en": "Bithadchir",
+        "name_ne": "वित्थडचिर",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68002,
+        "name_en": "Bungal",
+        "name_ne": "बुंगल",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68003,
+        "name_en": "Chabispathivera",
+        "name_ne": "छबिसपाथिभेरा",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68004,
+        "name_en": "Durgathali",
+        "name_ne": "दुर्गाथली",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68005,
+        "name_en": "JayaPrithivi",
+        "name_ne": "जयपृथ्वी",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68006,
+        "name_en": "Kanda",
+        "name_ne": "साइपाल",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68007,
+        "name_en": "Kedarseu",
+        "name_ne": "केदारस्युँ",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68008,
+        "name_en": "Khaptadchhanna",
+        "name_ne": "खप्तडछान्ना",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68009,
+        "name_en": "Masta",
+        "name_ne": "मष्टा",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68010,
+        "name_en": "Surma",
+        "name_ne": "सूर्मा",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68011,
+        "name_en": "Talkot",
+        "name_ne": "तलकोट",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68012,
+        "name_en": "Thalara",
+        "name_ne": "थलारा",
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 68099,
+        "name_en": "Khaptad National Park",
+        "name_ne": null,
+        "district_id": 71,
+        "province_id": 7
+    },
+    {
+        "id": 69001,
+        "name_en": "Bannigadhi Jayagadh",
+        "name_ne": "बान्नीगढ़ी जयगढ़",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69002,
+        "name_en": "Chaurpati",
+        "name_ne": "चौरपाटी",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69003,
+        "name_en": "Dhakari",
+        "name_ne": "ढकारी",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69004,
+        "name_en": "Kamalbazar",
+        "name_ne": "कमलबजार",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69005,
+        "name_en": "Mangalsen",
+        "name_ne": "मंगलसेन",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69006,
+        "name_en": "Mellekh",
+        "name_ne": "मेल्लेख",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69007,
+        "name_en": "Panchadewal Binayak",
+        "name_ne": "पंचदेवल विनायक",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69008,
+        "name_en": "Ramaroshan",
+        "name_ne": "रामारोशन",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69009,
+        "name_en": "Sanphebagar",
+        "name_ne": "साँफेबगर",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69010,
+        "name_en": "Turmakhad",
+        "name_ne": "तुर्माखाँद",
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 69099,
+        "name_en": "Khaptad National Park",
+        "name_ne": null,
+        "district_id": 69,
+        "province_id": 7
+    },
+    {
+        "id": 70001,
+        "name_en": "Adharsha",
+        "name_ne": "आदर्श",
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 70002,
+        "name_en": "Badikedar",
+        "name_ne": "बडीकेदार",
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 70003,
+        "name_en": "Bogtan",
+        "name_ne": "बोगटान",
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 70004,
+        "name_en": "Dipayal Silgadi",
+        "name_ne": "दिपायल सिलगढ़ी",
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 70005,
+        "name_en": "Jorayal",
+        "name_ne": "जोरायल",
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 70006,
+        "name_en": "K I Singh",
+        "name_ne": "के.आई.सिं",
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 70007,
+        "name_en": "Purbichauki",
+        "name_ne": "पूर्वीचौकी",
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 70008,
+        "name_en": "Sayal",
+        "name_ne": "सायल",
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 70009,
+        "name_en": "Shikhar",
+        "name_ne": "शिखर",
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 70099,
+        "name_en": "Khaptad National Park",
+        "name_ne": null,
+        "district_id": 68,
+        "province_id": 7
+    },
+    {
+        "id": 71001,
+        "name_en": "Bardagoriya",
+        "name_ne": "बर्दगोरिया",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71002,
+        "name_en": "Bhajani",
+        "name_ne": "भजनी",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71003,
+        "name_en": "Chure",
+        "name_ne": "चुरे",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71004,
+        "name_en": "Dhangadhi",
+        "name_ne": "धनगढी",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71005,
+        "name_en": "Gauriganga",
+        "name_ne": "गौरीगंगा",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71006,
+        "name_en": "Ghodaghodi",
+        "name_ne": "घोडाघोडी",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71007,
+        "name_en": "Godawari",
+        "name_ne": "गोदावरी",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71008,
+        "name_en": "Janaki",
+        "name_ne": "जानकी",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71009,
+        "name_en": "Joshipur",
+        "name_ne": "जोशीपुर",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71010,
+        "name_en": "Kailari",
+        "name_ne": "कैलारी",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71011,
+        "name_en": "Lamkichuha",
+        "name_ne": "लम्किचुहा",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71012,
+        "name_en": "Mohanyal",
+        "name_ne": "मोहन्याल",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 71013,
+        "name_en": "Tikapur",
+        "name_ne": "टिकापुर",
+        "district_id": 67,
+        "province_id": 7
+    },
+    {
+        "id": 72001,
+        "name_en": "Bedkot",
+        "name_ne": "बेदकोट",
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 72002,
+        "name_en": "Belauri",
+        "name_ne": "बेलौरी",
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 72003,
+        "name_en": "Beldandi",
+        "name_ne": "बेलडाँडी",
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 72004,
+        "name_en": "Bhimdatta",
+        "name_ne": "भीमदत्त",
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 72005,
+        "name_en": "Krishnapur",
+        "name_ne": "कृष्णपुर",
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 72006,
+        "name_en": "Laljhadi",
+        "name_ne": "लालझाडी",
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 72007,
+        "name_en": "Mahakali",
+        "name_ne": "माहाकाली",
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 72008,
+        "name_en": "Punarbas",
+        "name_ne": "पुनर्वास",
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 72009,
+        "name_en": "Shuklaphanta",
+        "name_ne": "शुक्लाफाँटा",
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 72099,
+        "name_en": "Shuklaphanta National Park",
+        "name_ne": null,
+        "district_id": 75,
+        "province_id": 7
+    },
+    {
+        "id": 73001,
+        "name_en": "Ajaymeru",
+        "name_ne": "अजयमेरु",
+        "district_id": 74,
+        "province_id": 7
+    },
+    {
+        "id": 73002,
+        "name_en": "Alital",
+        "name_ne": "आलिताल",
+        "district_id": 74,
+        "province_id": 7
+    },
+    {
+        "id": 73003,
+        "name_en": "Amargadhi",
+        "name_ne": "अमरगढी",
+        "district_id": 74,
+        "province_id": 7
+    },
+    {
+        "id": 73004,
+        "name_en": "Bhageshwar",
+        "name_ne": "भागेश्वर",
+        "district_id": 74,
+        "province_id": 7
+    },
+    {
+        "id": 73005,
+        "name_en": "Ganayapdhura",
+        "name_ne": "गन्यापधुरा",
+        "district_id": 74,
+        "province_id": 7
+    },
+    {
+        "id": 73006,
+        "name_en": "Nawadurga",
+        "name_ne": "नवदुर्गा",
+        "district_id": 74,
+        "province_id": 7
+    },
+    {
+        "id": 73007,
+        "name_en": "Parashuram",
+        "name_ne": "परशुराम",
+        "district_id": 74,
+        "province_id": 7
+    },
+    {
+        "id": 74001,
+        "name_en": "Dasharathchanda",
+        "name_ne": "दशरथचन्द",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 74002,
+        "name_en": "Dilasaini",
+        "name_ne": "डीलासैनी",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 74003,
+        "name_en": "Dogadakedar",
+        "name_ne": "दोगडाकेदार",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 74004,
+        "name_en": "Melauli",
+        "name_ne": "मेलौली",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 74005,
+        "name_en": "Pancheshwar",
+        "name_ne": "पन्चेश्वर",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 74006,
+        "name_en": "Patan",
+        "name_ne": "पाटन",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 74007,
+        "name_en": "Purchaudi",
+        "name_ne": "पुर्चौडी",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 74008,
+        "name_en": "Shivanath",
+        "name_ne": "शिवनाथ",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 74009,
+        "name_en": "Sigas",
+        "name_ne": "सिगास",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 74010,
+        "name_en": "Surnaya",
+        "name_ne": "सुर्नया",
+        "district_id": 73,
+        "province_id": 7
+    },
+    {
+        "id": 75001,
+        "name_en": "Apihimal",
+        "name_ne": "अपिहिमाल",
+        "district_id": 72,
+        "province_id": 7
+    },
+    {
+        "id": 75002,
+        "name_en": "Byas",
+        "name_ne": "व्याँस",
+        "district_id": 72,
+        "province_id": 7
+    },
+    {
+        "id": 75003,
+        "name_en": "Dunhu",
+        "name_ne": "दुहुँ",
+        "district_id": 72,
+        "province_id": 7
+    },
+    {
+        "id": 75004,
+        "name_en": "Lekam",
+        "name_ne": "लेकम",
+        "district_id": 72,
+        "province_id": 7
+    },
+    {
+        "id": 75005,
+        "name_en": "Mahakali",
+        "name_ne": "महाकाली",
+        "district_id": 72,
+        "province_id": 7
+    },
+    {
+        "id": 75006,
+        "name_en": "Malikaarjun",
+        "name_ne": "मालिकार्जुन",
+        "district_id": 72,
+        "province_id": 7
+    },
+    {
+        "id": 75007,
+        "name_en": "Marma",
+        "name_ne": "मार्मा",
+        "district_id": 72,
+        "province_id": 7
+    },
+    {
+        "id": 75008,
+        "name_en": "Naugad",
+        "name_ne": "नौगाड",
+        "district_id": 72,
+        "province_id": 7
+    },
+    {
+        "id": 75009,
+        "name_en": "Shailyashikhar",
+        "name_ne": "शैल्यशिखर",
+        "district_id": 72,
+        "province_id": 7
+    },
+    {
+        "id": 76001,
+        "name_en": "Binayee Tribeni",
+        "name_ne": "विनयी-त्रिवेणी",
+        "district_id": 481,
+        "province_id": 4
+    },
+    {
+        "id": 76002,
+        "name_en": "Bulingtar",
+        "name_ne": "बुलिङटार",
+        "district_id": 481,
+        "province_id": 4
+    },
+    {
+        "id": 76003,
+        "name_en": "Bungdikali",
+        "name_ne": "बौदीकाली",
+        "district_id": 481,
+        "province_id": 4
+    },
+    {
+        "id": 76004,
+        "name_en": "Devchuli",
+        "name_ne": "देवचुली",
+        "district_id": 481,
+        "province_id": 4
+    },
+    {
+        "id": 76005,
+        "name_en": "Gaidakot",
+        "name_ne": "गैंडाकोट",
+        "district_id": 481,
+        "province_id": 4
+    },
+    {
+        "id": 76006,
+        "name_en": "Hupsekot",
+        "name_ne": "हुप्सेकोट",
+        "district_id": 481,
+        "province_id": 4
+    },
+    {
+        "id": 76007,
+        "name_en": "Kawasoti",
+        "name_ne": "कावासोती",
+        "district_id": 481,
+        "province_id": 4
+    },
+    {
+        "id": 76008,
+        "name_en": "Madhyabindu",
+        "name_ne": "मध्यविन्दु",
+        "district_id": 481,
+        "province_id": 4
+    },
+    {
+        "id": 76099,
+        "name_en": "Chitawan National Park",
+        "name_ne": null,
+        "district_id": 481,
+        "province_id": 4
+    },
+    {
+        "id": 77001,
+        "name_en": "Bhume",
+        "name_ne": "भूमे",
+        "district_id": 541,
+        "province_id": 5
+    },
+    {
+        "id": 77002,
+        "name_en": "Putha Uttarganga",
+        "name_ne": "पुथा उत्तरगंगा",
+        "district_id": 541,
+        "province_id": 5
+    },
+    {
+        "id": 77003,
+        "name_en": "Sisne",
+        "name_ne": "सिस्ने",
+        "district_id": 541,
+        "province_id": 5
+    },
+    {
+        "id": 77099,
+        "name_en": "Dhorpatan Hunting Reserve",
+        "name_ne": null,
+        "district_id": 541,
+        "province_id": 5
+    }
+]
