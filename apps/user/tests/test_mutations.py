@@ -14,6 +14,7 @@ class TestUser(GraphQLTestCase):
                         id
                         firstName
                         lastName
+                        fullName
                     }
                 }
             }
@@ -51,8 +52,11 @@ class TestUser(GraphQLTestCase):
     def test_register(self):
         minput = {"firstName": "Rosy", "lastName": "Rosy", "email": "rosy@gmail.com", "password": "nsPzXEVKGCIriVu"}
         content = self.query_check(self.register_mutation, minput=minput, okay=True)
-        self.assertEqual(content['data']['register']['result']['firstName'], minput['firstName'], content)
-        self.assertEqual(content['data']['register']['result']['lastName'], minput['lastName'], content)
+        first_name = content['data']['register']['result']['firstName']
+        last_name = content['data']['register']['result']['lastName']
+        self.assertEqual(first_name, minput['firstName'], content)
+        self.assertEqual(last_name, minput['lastName'], content)
+        self.assertEqual(content['data']['register']['result']['fullName'], f'{first_name} {last_name}', content)
         self.assertEqual(content['data']['register']['result']['email'], minput['email'], content)
 
     def test_login(self):

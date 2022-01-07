@@ -46,8 +46,6 @@ class User(AbstractUser):
 
     # Delete unused fields
     username = None
-    first_name = None
-    last_name = None
 
     # Use email as username
     USERNAME_FIELD = "email"
@@ -63,6 +61,12 @@ class User(AbstractUser):
         verbose_name=_("First name")
     )
     last_name = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Last name")
+    )
+    full_name = models.CharField(
         max_length=255,
         null=True,
         blank=True,
@@ -84,3 +88,7 @@ class User(AbstractUser):
             if self.first_name and self.last_name
             else self.email
         )
+
+    def save(self, *args, **kwargs):
+        self.full_name = f'{self.first_name} {self.last_name}'
+        super().save(*args, **kwargs)

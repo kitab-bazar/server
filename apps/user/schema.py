@@ -11,7 +11,7 @@ from graphene_django_extras import DjangoObjectField
 class UserType(DjangoObjectType):
     class Meta:
         model = User
-        exclude_fields = ('password',)
+        fields = ['first_name', 'last_name', 'full_name', 'email', 'phone_number']
 
     @staticmethod
     def get_queryset(queryset, info):
