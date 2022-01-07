@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.utils.translation import gettext
+from django.utils.translation import gettext as _
 
-PERMISSION_DENIED_MESSAGE = 'You do not have permission to perform this action.'
+PERMISSION_DENIED_MESSAGE = _('You do not have permission to perform this action.')
 
 
 class WhiteListMiddleware:
@@ -13,5 +13,5 @@ class WhiteListMiddleware:
         # furthermore, this check must only happen in the root node, and not in deeper nodes
         if root is None:
             if not info.context.user.is_authenticated and info.field_name not in settings.GRAPHENE_NODES_WHITELIST:
-                raise PermissionDenied(gettext(PERMISSION_DENIED_MESSAGE))
+                raise PermissionDenied(PERMISSION_DENIED_MESSAGE)
         return next(root, info, **args)
