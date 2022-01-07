@@ -70,7 +70,7 @@ class User(AbstractUser):
         max_length=255,
         null=True,
         blank=True,
-        verbose_name=_("Last name")
+        verbose_name=_("Full Name")
     )
 
     class Meta:
