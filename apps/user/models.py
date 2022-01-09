@@ -90,5 +90,7 @@ class User(AbstractUser):
         )
 
     def save(self, *args, **kwargs):
-        self.full_name = f'{self.first_name} {self.last_name}'
+        first_name = self.first_name if self.first_name else ""
+        last_name = self.first_name if self.first_name else ""
+        self.full_name = f'{first_name} {last_name}'
         super().save(*args, **kwargs)

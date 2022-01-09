@@ -4,8 +4,7 @@ from apps.user.models import User
 from apps.user.filters import UserFilter
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
-from utils.graphene.pagination import PageGraphqlPaginationWithoutCount
-from graphene_django_extras import DjangoObjectField
+from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
 
 class UserType(DjangoObjectType):
@@ -42,7 +41,7 @@ class Query(graphene.ObjectType):
     user = DjangoObjectField(UserType)
     users = DjangoPaginatedListObjectField(
         UserListType,
-        pagination=PageGraphqlPaginationWithoutCount(
+        pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
     )
