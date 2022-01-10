@@ -43,7 +43,7 @@ class UserMeType(DjangoObjectType):
         skip_registry = True
         fields = (
             'id', 'first_name', 'last_name', 'full_name', 'email',
-            'is_active', 'last_login'
+            'is_active', 'last_login', 'user_type'
         )
 
 
