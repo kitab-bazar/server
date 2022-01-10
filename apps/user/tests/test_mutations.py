@@ -31,7 +31,7 @@ class TestUser(GraphQLTestCase):
         }
         '''
         self.change_password_mutation = '''
-            mutation Mutation($input: UserPasswordInputType!) {
+            mutation Mutation($input: ChangePasswordInputType!) {
                 changePassword(data: $input) {
                     ok
                     result {
@@ -75,6 +75,14 @@ class TestUser(GraphQLTestCase):
         user = UserFactory.create()
         self.force_login(user)
         new_password = "INZbHBhOyCqurWt"
+
+        # Test should not change password if old password not matched
+        minput = {"oldPassword": 'random-passsword', "newPassword": new_password}
+        self.query_check(self.change_password_mutation, minput=minput, okay=False)
+        user.refresh_from_db()
+        self.assertFalse(check_password(new_password, user.password))
+
+        # Test should change password
         minput = {"oldPassword": user.password_text, "newPassword": new_password}
         self.query_check(self.change_password_mutation, minput=minput, okay=True)
         user.refresh_from_db()

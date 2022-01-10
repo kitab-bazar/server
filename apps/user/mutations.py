@@ -1,5 +1,10 @@
-from django.contrib.auth import login, logout
 import graphene
+
+from django.contrib.auth import login, logout
+
+from utils.graphene.mutation import generate_input_type_for_serializer
+from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
+
 from apps.user.schema import UserType
 from apps.user.serializers import (
     LoginSerializer,
@@ -9,9 +14,6 @@ from apps.user.serializers import (
     GenerateResetPasswordTokenSerializer,
     ResetPasswordSerializer,
 )
-from utils.graphene.mutation import generate_input_type_for_serializer
-from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
-from utils.permissions import is_authenticated
 
 
 RegisterInputType = generate_input_type_for_serializer(
@@ -98,22 +100,21 @@ class Activate(graphene.Mutation):
         return Activate(errors=None, ok=True)
 
 
-UserPasswordInputType = generate_input_type_for_serializer(
-    'UserPasswordInputType',
+ChangePasswordInputType = generate_input_type_for_serializer(
+    'ChangePasswordInputType',
     UserPasswordSerializer
 )
 
 
 class ChangeUserPassword(graphene.Mutation):
     class Arguments:
-        data = UserPasswordInputType(required=True)
+        data = ChangePasswordInputType(required=True)
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
     result = graphene.Field(UserType)
 
     @staticmethod
-    @is_authenticated()
     def mutate(root, info, data):
         serializer = UserPasswordSerializer(instance=info.context.user,
                                             data=data,
