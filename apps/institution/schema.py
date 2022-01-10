@@ -4,13 +4,16 @@ from apps.institution.models import Institution
 from apps.institution.filters import InstitutionFilter
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
-from utils.graphene.pagination import PageGraphqlPaginationWithoutCount
-from graphene_django_extras import DjangoObjectField
+from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
 
 class InstitutionType(DjangoObjectType):
     class Meta:
         model = Institution
+        fields = (
+            'id', 'institution_name', 'institution_email', 'province', 'district',
+            'municipality', 'ward_number', 'local_address', 'vat_number', 'pan_number'
+        )
 
     @staticmethod
     def get_queryset(queryset, info):
@@ -27,7 +30,7 @@ class Query(graphene.ObjectType):
     institution = DjangoObjectField(InstitutionType)
     institutions = DjangoPaginatedListObjectField(
         InstitutionListType,
-        pagination=PageGraphqlPaginationWithoutCount(
+        pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
     )

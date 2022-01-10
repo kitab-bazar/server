@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
         ('school', '0001_initial'),
         ('institution', '0001_initial'),
         ('publisher', '0001_initial'),
-        ('user', '0001_initial'),
+        ('user', '0002_user_full_name'),
     ]
 
     operations = [

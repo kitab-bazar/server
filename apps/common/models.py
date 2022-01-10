@@ -75,8 +75,6 @@ class AddressAbstractModel(models.Model):
     )
     ward_number = models.IntegerField(verbose_name=_('Ward Number'))
     local_address = models.CharField(verbose_name=_('Local address'), max_length=255, null=True, blank=True)
-    local_address_en = models.CharField(verbose_name=_('Local address'), max_length=255, null=True, blank=True)
-    local_address_ne = models.CharField(verbose_name=_('Local address'), max_length=255, null=True, blank=True)
 
     class Meta:
         abstract = True

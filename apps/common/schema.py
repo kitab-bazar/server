@@ -4,17 +4,13 @@ from apps.common.models import District, Province, Municipality
 from apps.common.filters import DistrictFilter, ProvinceFilter, MunicipalityFilter
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
-from utils.graphene.pagination import PageGraphqlPaginationWithoutCount
-from graphene_django_extras import DjangoObjectField
+from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
 
 class ProvinceType(DjangoObjectType):
     class Meta:
         model = Province
-        fields = (
-            'id',
-            'name',
-        )
+        fields = ('id', 'name',)
 
     @staticmethod
     def get_queryset(queryset, info):
@@ -30,10 +26,7 @@ class ProvinceListType(CustomDjangoListObjectType):
 class MunicipalityType(DjangoObjectType):
     class Meta:
         model = Municipality
-        fields = (
-            'id',
-            'name',
-        )
+        fields = ('id', 'name', 'province', 'district')
 
     @staticmethod
     def get_queryset(queryset, info):
@@ -49,10 +42,7 @@ class MunicipalityListType(CustomDjangoListObjectType):
 class DistrictType(DjangoObjectType):
     class Meta:
         model = District
-        fields = (
-            'id',
-            'name',
-        )
+        fields = ('id', 'name', 'province',)
 
     @staticmethod
     def get_queryset(queryset, info):
@@ -69,21 +59,21 @@ class Query(graphene.ObjectType):
     province = DjangoObjectField(ProvinceType)
     provinces = DjangoPaginatedListObjectField(
         ProvinceListType,
-        pagination=PageGraphqlPaginationWithoutCount(
+        pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
     )
     municipality = DjangoObjectField(MunicipalityType)
     municipalities = DjangoPaginatedListObjectField(
         MunicipalityListType,
-        pagination=PageGraphqlPaginationWithoutCount(
+        pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
     )
     district = DjangoObjectField(DistrictType)
     districts = DjangoPaginatedListObjectField(
         DistrictListType,
-        pagination=PageGraphqlPaginationWithoutCount(
+        pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
     )

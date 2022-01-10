@@ -10,7 +10,7 @@ from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 class ProfileType(DjangoObjectType):
     class Meta:
         model = Profile
-        fields = ('profile', )
+        fields = ('id', 'institution', 'publisher', 'school')
 
     @staticmethod
     def get_queryset(queryset, info):
@@ -36,6 +36,8 @@ class UserListType(CustomDjangoListObjectType):
 
 
 class UserMeType(DjangoObjectType):
+    profile = graphene.Field(ProfileType)
+
     class Meta:
         model = User
         skip_registry = True
