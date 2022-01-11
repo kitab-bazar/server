@@ -3,7 +3,7 @@ from apps.publisher.models import Publisher
 
 
 class PublisherFilter(django_filters.FilterSet):
-    publisher_name = django_filters.CharFilter(method='filter_publisher_name')
+    name = django_filters.CharFilter(method='filter_name')
     provinces = django_filters.CharFilter(method='filter_provinces')
     districts = django_filters.CharFilter(method='filter_districts')
     municipalities = django_filters.CharFilter(method='filter_municipalities')
@@ -15,14 +15,14 @@ class PublisherFilter(django_filters.FilterSet):
     class Meta:
         model = Publisher
         fields = [
-            'publisher_name', 'provinces', 'districts', 'municipalities', 'ward_number',
+            'name', 'provinces', 'districts', 'municipalities', 'ward_number',
             'local_address', 'pan_number', 'vat_number'
         ]
 
-    def filter_publisher_name(self, queryset, name, value):
+    def filter_name(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(publisher_name__icontains=value)
+        return queryset.filter(name__icontains=value)
 
     def filter_provinces(self, queryset, name, value):
         if not value:

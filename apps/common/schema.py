@@ -1,10 +1,12 @@
 import graphene
 from graphene_django import DjangoObjectType
-from apps.common.models import District, Province, Municipality
-from apps.common.filters import DistrictFilter, ProvinceFilter, MunicipalityFilter
+from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
+
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
-from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
+
+from apps.common.models import District, Province, Municipality
+from apps.common.filters import DistrictFilter, ProvinceFilter, MunicipalityFilter
 
 
 class ProvinceType(DjangoObjectType):

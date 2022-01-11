@@ -1,14 +1,15 @@
 from django.contrib import admin
+
 from apps.publisher.models import Publisher
 
 
 class PublisherAdmin(admin.ModelAdmin):
     list_display = [
-        'id', 'publisher_name', 'publisher_email', 'district', 'province',
+        'id', 'name', 'email', 'district', 'province',
         'municipality', 'local_address'
     ]
-    list_display_links = ['id', 'publisher_name']
-    search_fields = ['id', 'publisher_name', ]
+    list_display_links = ['id', 'name']
+    search_fields = ['id', 'name', ]
     autocomplete_fields = ['district', 'province', 'municipality']
 
     def get_queryset(self, request):

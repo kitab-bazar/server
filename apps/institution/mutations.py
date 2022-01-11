@@ -1,12 +1,14 @@
-from django.utils.translation import gettext
 import graphene
+from django.utils.translation import ugettext as _
+
+from utils.graphene.mutation import generate_input_type_for_serializer
+from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
+
 from apps.institution.models import Institution
 from apps.institution.schema import InstitutionType
 from apps.institution.serializers import (
     InstitutionSerializer,
 )
-from utils.graphene.mutation import generate_input_type_for_serializer
-from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 
 
 InstitutionInputType = generate_input_type_for_serializer(
@@ -46,7 +48,7 @@ class UpdateInstitute(graphene.Mutation):
             instance = Institution.objects.get(id=data['id'])
         except Institution.DoesNotExist:
             return UpdateInstitute(errors=[
-                dict(field='nonFieldErrors', messages=gettext('Institution does not exist.'))
+                dict(field='nonFieldErrors', messages=_('Institution does not exist.'))
             ])
         serializer = InstitutionSerializer(
             instance=instance, data=data,
@@ -72,7 +74,7 @@ class DeleteInstitute(graphene.Mutation):
             instance = Institution.objects.get(id=id)
         except Institution.DoesNotExist:
             return DeleteInstitute(errors=[
-                dict(field='nonFieldErrors', messages=gettext('Institution does not exist.'))
+                dict(field='nonFieldErrors', messages=_('Institution does not exist.'))
             ])
         instance.delete()
         instance.id = id

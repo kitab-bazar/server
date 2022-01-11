@@ -25,7 +25,7 @@ class MunicipalityFactory(DjangoModelFactory):
     name_en = fuzzy.FuzzyText(length=15)
     name_ne = fuzzy.FuzzyText(length=15)
     province = factory.SubFactory(ProvinceFactory)
-    province = factory.SubFactory(DistrictFactory)
+    district = factory.SubFactory(DistrictFactory)
 
     class Meta:
         model = Municipality

@@ -1,17 +1,19 @@
 import graphene
 from graphene_django import DjangoObjectType
-from apps.school.models import School
-from apps.school.filters import SchoolFilter
+from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
+
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
-from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
+
+from apps.school.models import School
+from apps.school.filters import SchoolFilter
 
 
 class SchoolType(DjangoObjectType):
     class Meta:
         model = School
         fields = (
-            'id', 'school_name', 'school_email', 'province', 'district',
+            'id', 'Name', 'Email', 'province', 'district',
             'municipality', 'ward_number', 'local_address', 'vat_number', 'pan_number'
         )
 

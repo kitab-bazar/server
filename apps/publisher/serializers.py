@@ -1,5 +1,6 @@
-from apps.publisher.models import Publisher
 from rest_framework import serializers
+
+from apps.publisher.models import Publisher
 
 
 class PublisherSerializer(serializers.ModelSerializer):

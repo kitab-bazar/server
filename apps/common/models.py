@@ -94,3 +94,17 @@ class VatPanAbstractModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class NameEmailAbstractModel(models.Model):
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Name")
+    )
+    email = models.EmailField(
+        max_length=255,
+        verbose_name=_("Email")
+    )
+
+    class Meta:
+        abstract = True

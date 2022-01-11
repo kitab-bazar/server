@@ -1,5 +1,6 @@
-from apps.institution.models import Institution
 from rest_framework import serializers
+
+from apps.institution.models import Institution
 
 
 class InstitutionSerializer(serializers.ModelSerializer):

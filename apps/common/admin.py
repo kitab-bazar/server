@@ -1,6 +1,7 @@
 from django.contrib import admin
-from apps.common.models import Province, District, Municipality
 from modeltranslation.admin import TranslationAdmin
+
+from apps.common.models import Province, District, Municipality
 
 
 class ProvinceAdmin(TranslationAdmin):

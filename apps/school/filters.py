@@ -3,7 +3,7 @@ from apps.school.models import School
 
 
 class SchoolFilter(django_filters.FilterSet):
-    school_name = django_filters.CharFilter(method='filter_school_name')
+    name = django_filters.CharFilter(method='filter_name')
     provinces = django_filters.CharFilter(method='filter_provinces')
     districts = django_filters.CharFilter(method='filter_districts')
     municipalities = django_filters.CharFilter(method='filter_municipalities')
@@ -15,14 +15,14 @@ class SchoolFilter(django_filters.FilterSet):
     class Meta:
         model = School
         fields = [
-            'school_name', 'provinces', 'districts', 'municipalities', 'ward_number',
+            'name', 'provinces', 'districts', 'municipalities', 'ward_number',
             'local_address', 'pan_number', 'vat_number'
         ]
 
-    def filter_school_name(self, queryset, name, value):
+    def filter_name(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(school_name__icontains=value)
+        return queryset.filter(name__icontains=value)
 
     def filter_provinces(self, queryset, name, value):
         if not value:

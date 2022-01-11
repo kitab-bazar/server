@@ -1,10 +1,12 @@
-from django.utils.translation import gettext
 import graphene
+from django.utils.translation import ugettext as _
+
+from utils.graphene.mutation import generate_input_type_for_serializer
+from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
+
 from apps.school.models import School
 from apps.school.schema import SchoolType
 from apps.school.serializers import SchoolSerializer
-from utils.graphene.mutation import generate_input_type_for_serializer
-from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 
 
 SchoolInputType = generate_input_type_for_serializer(
@@ -44,7 +46,7 @@ class UpdateSchool(graphene.Mutation):
             instance = School.objects.get(id=data['id'])
         except School.DoesNotExist:
             return UpdateSchool(errors=[
-                dict(field='nonFieldErrors', messages=gettext('School does not exist.'))
+                dict(field='nonFieldErrors', messages=_('School does not exist.'))
             ])
         serializer = SchoolSerializer(
             instance=instance, data=data,
@@ -70,7 +72,7 @@ class DeleteSchool(graphene.Mutation):
             instance = School.objects.get(id=id)
         except School.DoesNotExist:
             return DeleteSchool(errors=[
-                dict(field='nonFieldErrors', messages=gettext('School does not exist.'))
+                dict(field='nonFieldErrors', messages=_('School does not exist.'))
             ])
         instance.delete()
         instance.id = id

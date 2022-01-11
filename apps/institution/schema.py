@@ -1,17 +1,19 @@
 import graphene
 from graphene_django import DjangoObjectType
-from apps.institution.models import Institution
-from apps.institution.filters import InstitutionFilter
+from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
+
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
-from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
+
+from apps.institution.models import Institution
+from apps.institution.filters import InstitutionFilter
 
 
 class InstitutionType(DjangoObjectType):
     class Meta:
         model = Institution
         fields = (
-            'id', 'institution_name', 'institution_email', 'province', 'district',
+            'id', 'name', 'email', 'province', 'district',
             'municipality', 'ward_number', 'local_address', 'vat_number', 'pan_number'
         )
 
