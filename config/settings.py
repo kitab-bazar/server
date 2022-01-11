@@ -27,7 +27,7 @@ env = environ.Env(
     DB_HOST=(str, 'db'),
     DB_PORT=(int, 5432),
     REDIS_URL=(str, 'redis://redis:6379/0'),
-    CORS_ORIGIN_REGEX_WHITELIST=(str, r"^https://\w+\.togglecorp\.com$"),
+    CORS_ORIGIN_REGEX_WHITELIST=(str, 'r\"^https://\w+\.togglecorp\.com$\"'), # noqa W605
     TIME_ZONE=(str, 'Asia/Kathmandu'),
     CLIENT_URL=(str, 'http://localhost:3080')
 )
@@ -172,6 +172,7 @@ if DEBUG:
 else:
     CORS_ORIGIN_REGEX_WHITELIST = [env('CORS_ORIGIN_REGEX_WHITELIST')]
 
+CORS_ALLOW_CREDENTIALS = True
 CORS_URLS_REGEX = r'(^/api/.*$)|(^/media/.*$)|(^/graphql/$)'
 
 AUTH_USER_MODEL = "user.User"
