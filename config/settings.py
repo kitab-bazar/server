@@ -216,6 +216,11 @@ GRAPHENE_NODES_WHITELIST = (
     '__schema',
     '__type',
     '__typename',
+    'books',
+    'book',
+    'tags',
+    'categories',
+    'authors',
 )
 
 CLIENT_URL = env('CLIENT_URL')
