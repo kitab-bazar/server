@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'graphene_django',
     'graphene_graphiql_explorer',
     'corsheaders',
+    'phonenumber_field',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [

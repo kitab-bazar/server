@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class UserManager(BaseUserManager):
@@ -79,7 +80,7 @@ class User(AbstractUser):
         blank=True,
         verbose_name=ugettext("Full Name")
     )
-    phone_number = models.IntegerField(blank=True, null=True)
+    phone_number = PhoneNumberField(null=True, blank=True, unique=True)
     user_type = models.CharField(
         choices=UserType.choices, max_length=40,
         default=UserType.INDIVIDUAL_USER,
