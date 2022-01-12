@@ -67,7 +67,7 @@ class User(AbstractUser):
         verbose_name=_("Last name")
     )
     full_name = models.CharField(
-        max_length=255,
+        max_length=520,
         null=True,
         blank=True,
         verbose_name=_("Full Name")
