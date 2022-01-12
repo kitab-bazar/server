@@ -39,7 +39,7 @@ class BookFilter(django_filters.FilterSet):
     def filter_publisher(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(tags__in=value)
+        return queryset.filter(publisher=value)
 
 
 class TagFilter(django_filters.FilterSet):
