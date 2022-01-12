@@ -34,6 +34,7 @@ class CreatePublisher(graphene.Mutation):
 
 class UpdatePublisher(graphene.Mutation):
     class Arguments:
+        id = graphene.ID(required=True)
         data = PublisherInputType(required=True)
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))

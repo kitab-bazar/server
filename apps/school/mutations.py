@@ -34,6 +34,7 @@ class CreateSchool(graphene.Mutation):
 
 class UpdateSchool(graphene.Mutation):
     class Arguments:
+        id = graphene.ID(required=True)
         data = SchoolInputType(required=True)
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))

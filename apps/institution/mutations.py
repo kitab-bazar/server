@@ -36,6 +36,7 @@ class CreateInstitute(graphene.Mutation):
 
 class UpdateInstitute(graphene.Mutation):
     class Arguments:
+        id = graphene.ID(required=True)
         data = InstitutionInputType(required=True)
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
