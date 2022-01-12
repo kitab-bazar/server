@@ -13,7 +13,7 @@ class SchoolType(DjangoObjectType):
     class Meta:
         model = School
         fields = (
-            'id', 'Name', 'Email', 'province', 'district',
+            'id', 'name', 'email', 'province', 'district',
             'municipality', 'ward_number', 'local_address', 'vat_number', 'pan_number'
         )
 
