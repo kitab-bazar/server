@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(
     DEBUG=(bool, True),
-    SECRET_KEY=(str, 'django-insecure-2s$6zbn2r_0=pao&lf3wz8q%9s*hsi=*)ng=llpkr&3h=#2#85'),
+    SECRET_KEY=(str),
     DJANGO_ALLOWED_HOST=(str, '*'),
     DB_NAME=(str, 'postgres'),
     DB_USER=(str, 'postgres'),
