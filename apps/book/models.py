@@ -53,6 +53,9 @@ class Book(models.Model):
 
     # Basic Fields
     title = models.CharField(max_length=255, verbose_name=_('Title'))
+    image = models.FileField(
+        upload_to='books/', max_length=255, null=True, blank=True, default=None,
+    )
     description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
     categories = models.ManyToManyField(
         'book.Category', verbose_name=_('Category'), related_name='%(app_label)s_%(class)s_categories',

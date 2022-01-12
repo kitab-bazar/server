@@ -55,10 +55,10 @@ class BookType(DjangoObjectType):
     class Meta:
         model = Book
         fields = (
-            'categories', 'authors', 'tags', 'isbn', 'number_of_pages', 'price',
-            'language', 'weight', 'published_date', 'edition', 'publisher',
-            'meta_title', 'meta_keywords', 'meta_description', 'og_title', 'og_description',
-            'og_image', 'og_locale', 'og_type', 'title', 'description'
+            'id', 'categories', 'authors', 'tags', 'isbn', 'number_of_pages', 'price',
+            'image', 'language', 'weight', 'published_date', 'edition', 'publisher',
+            'meta_title', 'meta_keywords', 'meta_description', 'og_title',
+            'og_description', 'og_image', 'og_locale', 'og_type', 'title', 'description'
         )
 
     @staticmethod

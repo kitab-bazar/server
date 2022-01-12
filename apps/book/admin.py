@@ -36,7 +36,7 @@ class BookAdmin(TranslationAdmin):
             )
         }),
         ('Content', {
-            'fields': ('title', 'description')
+            'fields': ('title', 'image', 'description')
         }),
         ('SEO information', {
             'fields': (
