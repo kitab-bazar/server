@@ -92,14 +92,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=self.validated_data.get('last_name', ''),
             email=self.validated_data['email'],
             password=self.validated_data['password'],
-            is_active=False
-        )
-        instance = User.objects.create_user(
-            first_name=self.validated_data.get('first_name', ''),
-            last_name=self.validated_data.get('last_name', ''),
-            email=self.validated_data['email'],
-            password=self.validated_data['password'],
             user_type=self.validated_data['user_type'],
+            phone_number=self.validated_data['phone_number'],
             is_active=False
         )
         if instance.user_type == User.UserType.INSTITUTIONAL_USER.value:
