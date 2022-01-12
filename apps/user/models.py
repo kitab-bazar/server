@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext
 
 
 class UserManager(BaseUserManager):
@@ -53,29 +53,29 @@ class User(AbstractUser):
     # removes email from REQUIRED_FIELDS
     REQUIRED_FIELDS = []
 
-    email = models.EmailField(_("Email address"), unique=True)
+    email = models.EmailField(ugettext("Email address"), unique=True)
     first_name = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name=_("First name")
+        verbose_name=ugettext("First name")
     )
     last_name = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name=_("Last name")
+        verbose_name=ugettext("Last name")
     )
     full_name = models.CharField(
         max_length=520,
         null=True,
         blank=True,
-        verbose_name=_("Full Name")
+        verbose_name=ugettext("Full Name")
     )
 
     class Meta:
-        verbose_name = _("User")
-        verbose_name_plural = _("Users")
+        verbose_name = ugettext("User")
+        verbose_name_plural = ugettext("Users")
 
     # Use the model manager with no username
     objects = UserManager()

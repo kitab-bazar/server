@@ -1,9 +1,9 @@
 from typing import List, Callable
 import logging
 from django.core.exceptions import PermissionDenied
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext
 
-PERMISSION_DENIED_MESSAGE = _('You do not have permission to perform this action.')
+PERMISSION_DENIED_MESSAGE = ugettext('You do not have permission to perform this action.')
 
 logger = logging.getLogger(__name__)
 

@@ -7,7 +7,7 @@ from django.conf import settings
 from .tasks import generic_email_sender
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -78,17 +78,17 @@ class RegisterSerializer(serializers.ModelSerializer):
             is_active=False
         )
 
-        subject = _("Activate your account.")
-        message = _("Please click on the link to confirm your registration")
+        subject = ugettext("Activate your account.")
+        message = ugettext("Please click on the link to confirm your registration")
         uid = urlsafe_base64_encode(force_bytes(instance.pk))
         token = default_token_generator.make_token(instance)
         button_url = f'{settings.CLIENT_URL}/activate/{uid}/{token}/'
 
         # Prepare message for email
         html_context = {
-            "heading": _("Activate your account"),
+            "heading": ugettext("Activate your account"),
             "message": message,
-            "button_text": _("Activate Account"),
+            "button_text": ugettext("Activate Account"),
             "full_name": str(instance),
         }
         if button_url:
@@ -117,7 +117,7 @@ class ActivateSerializer(serializers.Serializer):
             user.is_active = True
             user.save()
             return attrs
-        raise serializers.ValidationError(_('Activation link is not valid.'))
+        raise serializers.ValidationError(ugettext('Activation link is not valid.'))
 
 
 class GenerateResetPasswordTokenSerializer(serializers.Serializer):
@@ -137,7 +137,7 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             # Get base url by profile type
             button_url = f'{settings.CLIENT_URL}/reset-password/{uid}/{token}/'
-            message = _(
+            message = ugettext(
                 "We received a request to reset your account password. "
                 "If you wish to do so, please click below. Otherwise, you may "
                 "safely disregard this email."
@@ -145,12 +145,12 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
         # if no user exists for this email
         except User.DoesNotExist:
             # explanatory email message
-            raise serializers.ValidationError(_('User with this email does not exist.'))
-        subject = _("Reset password")
+            raise serializers.ValidationError(ugettext('User with this email does not exist.'))
+        subject = ugettext("Reset password")
         html_context = {
-            "heading": _("Reset Password"),
+            "heading": ugettext("Reset Password"),
             "message": message,
-            "button_text": _("Reset Password"),
+            "button_text": ugettext("Reset Password"),
         }
         if button_url:
             html_context["button_url"] = button_url
@@ -188,4 +188,4 @@ class ResetPasswordSerializer(serializers.Serializer):
             user.set_password(new_password)
             user.save()
             return attrs
-        raise serializers.ValidationError(_('The token is invalid.'))
+        raise serializers.ValidationError(ugettext('The token is invalid.'))
