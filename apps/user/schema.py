@@ -1,20 +1,10 @@
 import graphene
 from graphene_django import DjangoObjectType
-from apps.user.models import User, Profile
+from apps.user.models import User
 from apps.user.filters import UserFilter
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
-
-
-class ProfileType(DjangoObjectType):
-    class Meta:
-        model = Profile
-        fields = ('id', 'institution', 'publisher', 'school')
-
-    @staticmethod
-    def get_queryset(queryset, info):
-        return queryset
 
 
 class UserType(DjangoObjectType):
@@ -36,14 +26,14 @@ class UserListType(CustomDjangoListObjectType):
 
 
 class UserMeType(DjangoObjectType):
-    profile = graphene.Field(ProfileType)
 
     class Meta:
         model = User
         skip_registry = True
         fields = (
             'id', 'first_name', 'last_name', 'full_name', 'email',
-            'is_active', 'last_login', 'user_type'
+            'is_active', 'last_login', 'user_type', 'institution',
+            'publisher', 'school'
         )
 
 

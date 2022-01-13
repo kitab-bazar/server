@@ -1,4 +1,4 @@
-from apps.user.models import User, Profile
+from apps.user.models import User
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
@@ -41,10 +41,6 @@ class UserPasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
     new_password = serializers.CharField(required=True, write_only=True)
 
-    class Meta:
-        model = User
-        fields = ['old_password', 'new_password']
-
     def validate_old_password(self, password):
         if not self.instance.check_password(password):
             raise serializers.ValidationError('The password is invalid.')
@@ -59,23 +55,18 @@ class UserPasswordSerializer(serializers.Serializer):
         self.instance.save()
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(required=True, write_only=True)
     institution = InstitutionSerializer(required=False)
     school = SchoolSerializer(required=False)
     publisher = PublisherSerializer(required=False)
 
     class Meta:
-        model = Profile
-        fields = ['institution', 'publisher', 'school']
-
-
-class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(required=True, write_only=True)
-    profile = ProfileSerializer(allow_null=True)
-
-    class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'password', 'phone_number', 'user_type', 'profile']
+        fields = [
+            'email', 'first_name', 'last_name', 'password', 'phone_number', 'user_type',
+            'institution', 'publisher', 'school'
+        ]
 
     def validate_password(self, password):
         validate_password(password)
@@ -92,30 +83,36 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=self.validated_data.get('last_name', ''),
             email=self.validated_data['email'],
             password=self.validated_data['password'],
-            user_type=self.validated_data['user_type'],
-            phone_number=self.validated_data['phone_number'],
+            user_type=self.validated_data.get('user_type', None),
+            phone_number=self.validated_data.get('phone_number', None),
             is_active=False
         )
         if instance.user_type == User.UserType.INSTITUTIONAL_USER.value:
-            institution_data = self.validated_data['profile']['institution']
-            institute = Institution.objects.create(**institution_data)
-            profile = Profile.objects.create(institution=institute)
-            instance.profile = profile
-            profile.save()
+            institution_data = self.validated_data['institution']
+            municipality = institution_data['municipality']
+            institution_data['district'] = municipality.district
+            institution_data['province'] = municipality.province
+            institution = Institution.objects.create(**institution_data)
+            instance.institution = institution
+            instance.save()
 
         elif instance.user_type == User.UserType.PUBLISHER.value:
-            publisher_data = self.validated_data['profile']['publisher']
+            publisher_data = self.validated_data['publisher']
+            municipality = publisher_data['municipality']
+            publisher_data['district'] = municipality.district
+            publisher_data['province'] = municipality.province
             publisher = Publisher.objects.create(**publisher_data)
-            profile = Profile.objects.create(publisher=publisher)
-            instance.profile = profile
-            profile.save()
+            instance.publisher = publisher
+            instance.save()
 
         elif instance.user_type == User.UserType.SCHOOL_ADMIN.value:
-            school_data = self.validated_data['profile']['school']
+            school_data = self.validated_data['school']
+            municipality = school_data['municipality']
+            school_data['district'] = municipality.district
+            school_data['province'] = municipality.province
             school = School.objects.create(**school_data)
-            profile = Profile.objects.create(school=school)
-            instance.profile = profile
-            profile.save()
+            instance.school = school
+            instance.save()
 
         subject = ugettext("Activate your account.")
         message = ugettext("Please click on the link to confirm your registration")

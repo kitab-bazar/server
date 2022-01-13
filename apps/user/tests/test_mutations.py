@@ -53,7 +53,7 @@ class TestUser(GraphQLTestCase):
     def test_register_individual_user(self):
         minput = {
             "firstName": "Rosy", "lastName": "Rosy", "email": "rosy@gmail.com",
-            "password": "nsPzXEVKGCIriVu", "userType": User.UserType.INDIVIDUAL_USER.name, "profile": {}
+            "password": "nsPzXEVKGCIriVu", "userType": User.UserType.INDIVIDUAL_USER.name,
         }
         content = self.query_check(self.register_mutation, minput=minput, okay=True)
         first_name = content['data']['register']['result']['firstName']

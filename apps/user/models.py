@@ -86,9 +86,17 @@ class User(AbstractUser):
         default=UserType.INDIVIDUAL_USER,
         verbose_name=ugettext("User Type")
     )
-    profile = models.OneToOneField(
-        "user.Profile", null=True, blank=True, on_delete=models.SET_NULL,
-        related_name="profile",
+    institution = models.ForeignKey(
+        'institution.Institution', verbose_name=ugettext('Institution'), related_name='%(app_label)s_%(class)s_institution',
+        on_delete=models.CASCADE, null=True, blank=True
+    )
+    publisher = models.ForeignKey(
+        'publisher.Publisher', verbose_name=ugettext('Publisher'), related_name='%(app_label)s_%(class)s_publisher',
+        on_delete=models.CASCADE, null=True, blank=True
+    )
+    school = models.ForeignKey(
+        'school.School', verbose_name=ugettext('School'), related_name='%(app_label)s_%(class)s_school',
+        on_delete=models.CASCADE, null=True, blank=True
     )
 
     class Meta:
@@ -112,32 +120,3 @@ class User(AbstractUser):
         last_name = self.first_name if self.first_name else ""
         self.full_name = f'{first_name} {last_name}'
         super().save(*args, **kwargs)
-
-
-class Profile(models.Model):
-
-    institution = models.ForeignKey(
-        'institution.Institution', verbose_name=ugettext('Institution'), related_name='%(app_label)s_%(class)s_institution',
-        on_delete=models.CASCADE, null=True, blank=True
-    )
-    publisher = models.ForeignKey(
-        'publisher.Publisher', verbose_name=ugettext('Publisher'), related_name='%(app_label)s_%(class)s_publisher',
-        on_delete=models.CASCADE, null=True, blank=True
-    )
-    school = models.ForeignKey(
-        'school.School', verbose_name=ugettext('School'), related_name='%(app_label)s_%(class)s_school',
-        on_delete=models.CASCADE, null=True, blank=True
-    )
-
-    class Meta:
-        verbose_name = ugettext("Profile")
-        verbose_name_plural = ugettext("Profiles")
-
-    def __str__(self):
-        if self.institution:
-            return User.UserType.INSTITUTIONAL_USER.label
-        elif self.publisher:
-            return User.UserType.PUBLISHER.label
-        elif self.school:
-            return User.UserType.SCHOOL.label
-        return User.UserType.INDIVIDUAL_USER.label

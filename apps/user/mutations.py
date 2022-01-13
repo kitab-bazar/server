@@ -13,18 +13,12 @@ from apps.user.serializers import (
     UserPasswordSerializer,
     GenerateResetPasswordTokenSerializer,
     ResetPasswordSerializer,
-    ProfileSerializer,
 )
 
 
 RegisterInputType = generate_input_type_for_serializer(
     'RegisterInputType',
     RegisterSerializer
-)
-
-ProfileInputType = generate_input_type_for_serializer(
-    'ProfileInputType',
-    ProfileSerializer
 )
 
 
