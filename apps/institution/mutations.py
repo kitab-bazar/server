@@ -1,8 +1,9 @@
 import graphene
-from django.utils.translation import ugettext as _
-
-from utils.graphene.mutation import generate_input_type_for_serializer
-from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
+from utils.graphene.mutation import (
+    generate_input_type_for_serializer,
+    GrapheneMutation,
+    DeleteMutation
+)
 
 from apps.institution.models import Institution
 from apps.institution.schema import InstitutionType
@@ -17,72 +18,43 @@ InstitutionInputType = generate_input_type_for_serializer(
 )
 
 
-class CreateInstitute(graphene.Mutation):
+class CreateInstitution(GrapheneMutation):
     class Arguments:
         data = InstitutionInputType(required=True)
-
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
+    model = Institution
+    serializer_class = InstitutionSerializer
     result = graphene.Field(InstitutionType)
 
-    @staticmethod
-    def mutate(root, info, data):
-        serializer = InstitutionSerializer(data=data, context={'request': info.context.request})
-        if errors := mutation_is_not_valid(serializer):
-            return CreateInstitute(errors=errors, ok=False)
-        instance = serializer.save()
-        return CreateInstitute(result=instance, errors=None, ok=True)
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
 
 
-class UpdateInstitute(graphene.Mutation):
+class UpdateInstitution(GrapheneMutation):
     class Arguments:
-        id = graphene.ID(required=True)
         data = InstitutionInputType(required=True)
-
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
+        id = graphene.ID(required=True)
+    model = Institution
+    serializer_class = InstitutionSerializer
     result = graphene.Field(InstitutionType)
 
-    @staticmethod
-    def mutate(root, info, data):
-        try:
-            instance = Institution.objects.get(id=data['id'])
-        except Institution.DoesNotExist:
-            return UpdateInstitute(errors=[
-                dict(field='nonFieldErrors', messages=_('Institution does not exist.'))
-            ])
-        serializer = InstitutionSerializer(
-            instance=instance, data=data,
-            context={'request': info.context.request}, partial=True
-        )
-        if errors := mutation_is_not_valid(serializer):
-            return UpdateInstitute(errors=errors, ok=False)
-        instance = serializer.save()
-        return UpdateInstitute(result=instance, errors=None, ok=True)
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
 
 
-class DeleteInstitute(graphene.Mutation):
+class DeleteInstitution(DeleteMutation):
     class Arguments:
         id = graphene.ID(required=True)
-
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
+    model = Institution
     result = graphene.Field(InstitutionType)
 
-    @staticmethod
-    def mutate(root, info, id):
-        try:
-            instance = Institution.objects.get(id=id)
-        except Institution.DoesNotExist:
-            return DeleteInstitute(errors=[
-                dict(field='nonFieldErrors', messages=_('Institution does not exist.'))
-            ])
-        instance.delete()
-        instance.id = id
-        return DeleteInstitute(result=instance, errors=None, ok=True)
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
 
 
 class Mutation(graphene.ObjectType):
-    create_institution = CreateInstitute.Field()
-    update_institution = UpdateInstitute.Field()
-    delete_institution = DeleteInstitute.Field()
+    create_institution = CreateInstitution.Field()
+    update_institution = UpdateInstitution.Field()
+    delete_institution = DeleteInstitution.Field()
