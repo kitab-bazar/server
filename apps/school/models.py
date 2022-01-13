@@ -28,11 +28,15 @@ class School(models.Model):
     local_address = models.CharField(verbose_name=_('Local address'), max_length=255, null=True, blank=True)
     pan_number = models.CharField(
         max_length=255,
+        null=True,
+        blank=True,
         unique=True,
         verbose_name=_("Pan number")
     )
     vat_number = models.CharField(
         max_length=255,
+        null=True,
+        blank=True,
         unique=True,
         verbose_name=_("Vat number")
     )
