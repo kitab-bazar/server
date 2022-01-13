@@ -14,10 +14,6 @@ class ProvinceType(DjangoObjectType):
         model = Province
         fields = ('id', 'name',)
 
-    @staticmethod
-    def get_queryset(queryset, info):
-        return queryset
-
 
 class ProvinceListType(CustomDjangoListObjectType):
     class Meta:
@@ -32,7 +28,7 @@ class MunicipalityType(DjangoObjectType):
 
     @staticmethod
     def get_queryset(queryset, info):
-        return queryset
+        return queryset.select_related('province', 'district')
 
 
 class MunicipalityListType(CustomDjangoListObjectType):
@@ -48,7 +44,7 @@ class DistrictType(DjangoObjectType):
 
     @staticmethod
     def get_queryset(queryset, info):
-        return queryset
+        return queryset.select_related('province')
 
 
 class DistrictListType(CustomDjangoListObjectType):
