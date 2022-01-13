@@ -8,7 +8,6 @@ from apps.common.factories import ProvinceFactory, DistrictFactory, Municipality
 
 class PublisherFactory(DjangoModelFactory):
     name = fuzzy.FuzzyText(length=15)
-    email = fuzzy.FuzzyText(length=15)
     pan_number = fuzzy.FuzzyText(length=15)
     vat_number = fuzzy.FuzzyText(length=15)
     province = factory.SubFactory(ProvinceFactory)
