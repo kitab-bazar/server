@@ -1,5 +1,6 @@
 import datetime
 import pytz
+import factory
 from factory import fuzzy
 from factory.django import DjangoModelFactory
 from apps.book.models import Book, Tag, Author, Category
@@ -50,3 +51,27 @@ class BookFactory(DjangoModelFactory):
 
     class Meta:
         model = Book
+
+    @factory.post_generation
+    def authors(self, create, extracted, **kwargs):
+        if not create:
+            return
+        if extracted:
+            for author in extracted:
+                self.authors.add(author)
+
+    @factory.post_generation
+    def tags(self, create, extracted, **kwargs):
+        if not create:
+            return
+        if extracted:
+            for tag in extracted:
+                self.tags.add(tag)
+
+    @factory.post_generation
+    def categories(self, create, extracted, **kwargs):
+        if not create:
+            return
+        if extracted:
+            for category in extracted:
+                self.categories.add(category)

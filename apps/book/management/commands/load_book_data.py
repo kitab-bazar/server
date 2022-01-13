@@ -9,46 +9,32 @@ class Command(BaseCommand):
     help = 'Create some fake book data'
 
     def handle(self, *args, **options):
-        tag1 = TagFactory.create()
-        tag2 = TagFactory.create()
-        tag3 = TagFactory.create()
+        # Create tags, authors can categories
+        tag1, tag2, tag3 = TagFactory.create_batch(3)
+        author1, author2, author3 = AuthorFactory.create_batch(3)
+        category1, category2, category3 = CategoryFactory.create_batch(3)
 
-        author1 = AuthorFactory.create()
-        author2 = AuthorFactory.create()
-        author3 = AuthorFactory.create()
-
-        category1 = CategoryFactory.create()
-        category2 = CategoryFactory.create()
-        category3 = CategoryFactory.create()
-
+        # Get province, district, municipality, make sure geo data is loaded
         province = Province.objects.first()
         district = District.objects.first()
         municipality = Municipality.objects.first()
-
-        publisher1 = PublisherFactory.create(province=province, district=district, municipality=municipality)
-        publisher2 = PublisherFactory.create(province=province, district=district, municipality=municipality)
-        publisher3 = PublisherFactory.create(province=province, district=district, municipality=municipality)
+        publisher1, publisher2, publisher3 = PublisherFactory.create_batch(
+            3, province=province, district=district, municipality=municipality
+        )
 
         # Create books
-        for i in range(20):
-            book = BookFactory.create(publisher=publisher1)
-            book.tags.add(tag1)
-            book.authors.add(author1)
-            book.categories.add(category1)
-            book.publisher = publisher1
-            book.save()
+        BookFactory.create_batch(
+            20, publisher=publisher1, tags=[tag1],
+            categories=[category1], authors=[author1]
+        )
 
-        for i in range(20):
-            book = BookFactory.create(publisher=publisher3)
-            book.tags.add(tag2)
-            book.authors.add(author2)
-            book.categories.add(category2)
-            book.save()
+        BookFactory.create_batch(
+            20, publisher=publisher2, tags=[tag2],
+            categories=[category2], authors=[author2]
+        )
 
-        for i in range(20):
-            book = BookFactory.create(publisher=publisher2)
-            book.tags.add(tag3)
-            book.authors.add(author3)
-            book.categories.add(category3)
-            book.save()
+        BookFactory.create_batch(
+            20, publisher=publisher2, tags=[tag2],
+            categories=[category2], authors=[author2]
+        )
         self.stdout.write(self.style.SUCCESS('Books created.'))
