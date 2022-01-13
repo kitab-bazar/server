@@ -1,7 +1,7 @@
 import graphene
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
-    GrapheneMutation,
+    CreateUpdateGrapheneMutation,
     DeleteMutation
 )
 
@@ -16,7 +16,7 @@ PublisherInputType = generate_input_type_for_serializer(
 )
 
 
-class CreatePublisher(GrapheneMutation):
+class CreatePublisher(CreateUpdateGrapheneMutation):
     class Arguments:
         data = PublisherInputType(required=True)
     model = Publisher
@@ -28,7 +28,7 @@ class CreatePublisher(GrapheneMutation):
         return True
 
 
-class UpdatePublisher(GrapheneMutation):
+class UpdatePublisher(CreateUpdateGrapheneMutation):
     class Arguments:
         data = PublisherInputType(required=True)
         id = graphene.ID(required=True)

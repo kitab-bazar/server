@@ -206,7 +206,7 @@ class BaseGrapheneMutation(graphene.Mutation):
         return cls.perform_mutate(root, info, **kwargs)
 
 
-class GrapheneMutation(BaseGrapheneMutation):
+class CreateUpdateGrapheneMutation(BaseGrapheneMutation):
     ok = graphene.Boolean()
 
     @classmethod
@@ -216,7 +216,7 @@ class GrapheneMutation(BaseGrapheneMutation):
         return cls(result=instance, errors=errors, ok=not errors)
 
 
-class DeleteMutation(GrapheneMutation):
+class DeleteMutation(CreateUpdateGrapheneMutation):
     ok = graphene.Boolean()
 
     @classmethod

@@ -1,7 +1,7 @@
 import graphene
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
-    GrapheneMutation,
+    CreateUpdateGrapheneMutation,
     DeleteMutation
 )
 
@@ -18,7 +18,7 @@ InstitutionInputType = generate_input_type_for_serializer(
 )
 
 
-class CreateInstitution(GrapheneMutation):
+class CreateInstitution(CreateUpdateGrapheneMutation):
     class Arguments:
         data = InstitutionInputType(required=True)
     model = Institution
@@ -30,7 +30,7 @@ class CreateInstitution(GrapheneMutation):
         return True
 
 
-class UpdateInstitution(GrapheneMutation):
+class UpdateInstitution(CreateUpdateGrapheneMutation):
     class Arguments:
         data = InstitutionInputType(required=True)
         id = graphene.ID(required=True)
