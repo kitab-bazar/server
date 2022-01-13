@@ -1,6 +1,7 @@
+import os.path
 from PIL import Image
+from django.core.files.images import ImageFile
 
-from django.conf import settings
 from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
@@ -65,7 +66,7 @@ class Book(models.Model):
     # Basic Fields
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     image = models.FileField(
-        upload_to=BOOK_UPLOAD_DIR, max_length=255, null=True, blank=True, default=None,
+        upload_to='books/images/', max_length=255, null=True, blank=True, default=None,
     )
     description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
     categories = models.ManyToManyField(
@@ -104,21 +105,28 @@ class Book(models.Model):
     og_title = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Open graph title'))
     og_description = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Open graph description'))
     og_image = models.FileField(
-        upload_to=BOOK_UPLOAD_DIR, max_length=255, null=True, blank=True, default=None,
+        upload_to='books/og_image/', max_length=255, null=True, blank=True, default=None,
     )
     og_locale = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Open graph locale'))
     og_type = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Open graph type'))
 
+    # Session to check if image changed to generate og image
+    __image_name = None
+
     class Meta:
         verbose_name = _('Book')
         verbose_name_plural = _('Books')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__image_name = self.image.name
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
         super(Book, self).save(*args, **kwargs)
-        if self.image:
+        if self.image and self.image.name != self.__image_name:
             # Read book image
             image = Image.open(self.image.path, 'r')
 
@@ -131,10 +139,10 @@ class Book(models.Model):
 
             # Upload image
             filename = f'og_{self.image.name.split("/")[-1]}'
-            og_image_name = f'{Book.BOOK_UPLOAD_DIR}{filename}'
-            image_path = f'{settings.MEDIA_ROOT}/{og_image_name}'
-            og_image.save(image_path)
+            temp_image = open(os.path.join('/tmp', filename), 'wb')
+            og_image.save(temp_image, 'PNG')
 
-            # Save image name
-            self.og_image.name = og_image_name
+            # Save image nam
+            thumb_data = open(os.path.join('/tmp', filename), 'rb')
+            self.og_image.save(filename, ImageFile(thumb_data), save=False)
             super(Book, self).save(*args, **kwargs)
