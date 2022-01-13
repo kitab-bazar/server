@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from apps.common.models import Province, District, Municipality
-from apps.book.factories import BoookFactory, TagFactory, AuthorFactory, CategoryFactory
+from apps.book.factories import BookFactory, TagFactory, AuthorFactory, CategoryFactory
 from apps.publisher.factories import PublisherFactory
 
 
@@ -31,7 +31,7 @@ class Command(BaseCommand):
 
         # Create books
         for i in range(20):
-            book = BoookFactory.create(publisher=publisher1)
+            book = BookFactory.create(publisher=publisher1)
             book.tags.add(tag1)
             book.authors.add(author1)
             book.categories.add(category1)
@@ -39,14 +39,14 @@ class Command(BaseCommand):
             book.save()
 
         for i in range(20):
-            book = BoookFactory.create(publisher=publisher3)
+            book = BookFactory.create(publisher=publisher3)
             book.tags.add(tag2)
             book.authors.add(author2)
             book.categories.add(category2)
             book.save()
 
         for i in range(20):
-            book = BoookFactory.create(publisher=publisher2)
+            book = BookFactory.create(publisher=publisher2)
             book.tags.add(tag3)
             book.authors.add(author3)
             book.categories.add(category3)

@@ -25,7 +25,7 @@ class BookAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'book_authors', 'book_tags', 'book_categories', 'publisher']
     autocomplete_fields = ('categories', 'tags', 'authors', 'publisher')
     search_fields = [
-        'id', 'title', 'authors__name', 'categories__name', 'publisher__publisher_name', 'tags__name',
+        'id', 'title', 'authors__name', 'categories__name', 'publisher__name', 'tags__name',
     ]
     list_display_links = ['id', 'title']
     fieldsets = (

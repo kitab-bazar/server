@@ -26,7 +26,7 @@ class CategoryFactory(DjangoModelFactory):
         model = Category
 
 
-class BoookFactory(DjangoModelFactory):
+class BookFactory(DjangoModelFactory):
 
     isbn = fuzzy.FuzzyText(length=15)
     number_of_pages = fuzzy.FuzzyInteger(1, 20)
