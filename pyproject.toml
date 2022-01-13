@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "kitab-bazar-server"
+version = "1"
+description = "Book selling web application"
+authors = ["dev <dev.togglecorp.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^3.2.10"
+psycopg2 = "^2.9.3"
+graphene-django = "^2.15.0"
+graphene-graphiql-explorer = "^0.0.1"
+graphene-file-upload = "^1.3.0"
+graphene-django-extras = { git = "https://github.com/the-deep/graphene-django-extras.git", branch = "v0.4.9-patch.1" }
+django-cors-headers = "==3.7.0"
+django-filter = "==2.4.0"
+celery = "^5.2.3"
+redis = "^4.1.0"
+django-enumfield = "^2.0.2"
+factory-boy = "^3.2.1"
+django-environ = "^0.8.1"
+
+[tool.poetry.dev-dependencies]
+django-graphiql-debug-toolbar = "^0.2.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
