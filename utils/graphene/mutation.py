@@ -6,6 +6,8 @@ from graphene_django.registry import get_global_registry
 from graphene_django.rest_framework.serializer_converter import (
     get_graphene_type_from_serializer_field,
 )
+from graphene.types.generic import GenericScalar
+from utils.graphene.error_types import mutation_is_not_valid
 from rest_framework import serializers
 
 
@@ -147,6 +149,84 @@ def generate_input_type_for_serializer(
         is_input=True
     )
     return type(name, (graphene.InputObjectType,), data_members)
+
+
+class BaseGrapheneMutation(graphene.Mutation):
+    # output fields
+    errors = graphene.List(graphene.NonNull(GenericScalar))
+
+    @classmethod
+    def filter_queryset(cls, qs, info):
+        # customize me in the mutation if required
+        return qs
+
+    # Graphene standard method
+    @classmethod
+    def get_queryset(cls, info):
+        return cls.filter_queryset(cls.model._meta.default_manager.all(), info)
+
+    @classmethod
+    def get_object(cls, info, **kwargs):
+        obj = cls.get_queryset(info).get(id=kwargs['id'])
+        return obj
+
+    @classmethod
+    def check_permissions(cls, info, **kwargs):
+        raise Exception('This needs to be implemented in inheritances class')
+
+    @classmethod
+    def perform_mutate(cls, root, info, **kwargs):
+        raise Exception('This needs to be implemented in inheritances class')
+
+    @classmethod
+    def _save_item(cls, item, info, **kwargs):
+        id = kwargs.pop('id', None)
+        if id:
+            serializer = cls.serializer_class(
+                instance=cls.get_object(info, id=id, **kwargs),
+                data=item,
+                context={'request': info.context},
+                partial=True,
+            )
+        else:
+            serializer = cls.serializer_class(
+                data=item,
+                context={'request': info.context}
+            )
+        errors = mutation_is_not_valid(serializer)
+        if errors:
+            return None, errors
+        instance = serializer.save()
+        return instance, None
+
+    # Graphene standard method
+    @classmethod
+    def mutate(cls, root, info, **kwargs):
+        cls.check_permissions(info, **kwargs)
+        return cls.perform_mutate(root, info, **kwargs)
+
+
+class CreateUpdateGrapheneMutation(BaseGrapheneMutation):
+    ok = graphene.Boolean()
+
+    @classmethod
+    def perform_mutate(cls, root, info, **kwargs):
+        data = kwargs['data']
+        instance, errors = cls._save_item(data, info, **kwargs)
+        return cls(result=instance, errors=errors, ok=not errors)
+
+
+class DeleteMutation(CreateUpdateGrapheneMutation):
+    ok = graphene.Boolean()
+
+    @classmethod
+    def perform_mutate(cls, root, info, **kwargs):
+        instance = cls.get_object(info, **kwargs)
+        old_id = instance.id
+        instance.delete()
+        # add old id so that client can use it if required
+        instance.id = old_id
+        return cls(result=instance, errors=None, ok=True)
 
 
 # override the default implementation

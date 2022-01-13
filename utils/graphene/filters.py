@@ -95,7 +95,7 @@ IDFilter = _generate_filter_class(
     filter_type=django_filters.NumberFilter,
 )
 
-# IDListFilter = _generate_list_filter_class(graphene.ID)
+IDListFilter = _generate_list_filter_class(graphene.ID)
 StringListFilter = _generate_list_filter_class(graphene.String)
 GenericFilter = _generate_filter_class(GenericScalar)
 

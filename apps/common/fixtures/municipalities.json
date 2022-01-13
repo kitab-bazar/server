@@ -1,0 +1,8516 @@
+[
+{
+    "model": "common.municipality",
+    "pk": 1001,
+    "fields": {
+        "name": "Aathrai Tribeni",
+        "name_en": "Aathrai Tribeni",
+        "name_ne": "आठराई त्रिवेणी",
+        "province": 1,
+        "district": 1
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 1002,
+    "fields": {
+        "name": "Maiwakhola",
+        "name_en": "Maiwakhola",
+        "name_ne": "मैवाखोला",
+        "province": 1,
+        "district": 1
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 1003,
+    "fields": {
+        "name": "Meringden",
+        "name_en": "Meringden",
+        "name_ne": "मेरिङदेन",
+        "province": 1,
+        "district": 1
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 1004,
+    "fields": {
+        "name": "Mikwakhola",
+        "name_en": "Mikwakhola",
+        "name_ne": "मिक्वाखोला",
+        "province": 1,
+        "district": 1
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 1005,
+    "fields": {
+        "name": "Phaktanglung",
+        "name_en": "Phaktanglung",
+        "name_ne": "फक्ताङलुङ",
+        "province": 1,
+        "district": 1
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 1006,
+    "fields": {
+        "name": "Phungling",
+        "name_en": "Phungling",
+        "name_ne": "फुङलिङ",
+        "province": 1,
+        "district": 1
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 1007,
+    "fields": {
+        "name": "Sidingba",
+        "name_en": "Sidingba",
+        "name_ne": "सिदिङ्वा",
+        "province": 1,
+        "district": 1
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 1008,
+    "fields": {
+        "name": "Sirijangha",
+        "name_en": "Sirijangha",
+        "name_ne": "सिरीजङ्घा",
+        "province": 1,
+        "district": 1
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 1009,
+    "fields": {
+        "name": "Yangwarak",
+        "name_en": "Yangwarak",
+        "name_ne": "पाथीभरा याङ्वरक",
+        "province": 1,
+        "district": 1
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 2001,
+    "fields": {
+        "name": "Falelung",
+        "name_en": "Falelung",
+        "name_ne": "फालेलुङ",
+        "province": 1,
+        "district": 2
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 2002,
+    "fields": {
+        "name": "Falgunanda",
+        "name_en": "Falgunanda",
+        "name_ne": "फाल्गुनन्द",
+        "province": 1,
+        "district": 2
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 2003,
+    "fields": {
+        "name": "Hilihang",
+        "name_en": "Hilihang",
+        "name_ne": "हिलिहाङ",
+        "province": 1,
+        "district": 2
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 2004,
+    "fields": {
+        "name": "Kummayak",
+        "name_en": "Kummayak",
+        "name_ne": "कुम्मायक",
+        "province": 1,
+        "district": 2
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 2005,
+    "fields": {
+        "name": "Miklajung",
+        "name_en": "Miklajung",
+        "name_ne": "मिक्लाजुङ",
+        "province": 1,
+        "district": 2
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 2006,
+    "fields": {
+        "name": "Phidim",
+        "name_en": "Phidim",
+        "name_ne": "फिदिम",
+        "province": 1,
+        "district": 2
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 2007,
+    "fields": {
+        "name": "Tumbewa",
+        "name_en": "Tumbewa",
+        "name_ne": "तुम्वेवा",
+        "province": 1,
+        "district": 2
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 2008,
+    "fields": {
+        "name": "Yangwarak",
+        "name_en": "Yangwarak",
+        "name_ne": "याङवरक",
+        "province": 1,
+        "district": 2
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3001,
+    "fields": {
+        "name": "Chulachuli",
+        "name_en": "Chulachuli",
+        "name_ne": "चुलाचुली",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3002,
+    "fields": {
+        "name": "Deumai",
+        "name_en": "Deumai",
+        "name_ne": "देउमाई",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3003,
+    "fields": {
+        "name": "Fakphokthum",
+        "name_en": "Fakphokthum",
+        "name_ne": "फाकफोकथुम",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3004,
+    "fields": {
+        "name": "Illam",
+        "name_en": "Illam",
+        "name_ne": "ईलाम",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3005,
+    "fields": {
+        "name": "Mai",
+        "name_en": "Mai",
+        "name_ne": "माई",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3006,
+    "fields": {
+        "name": "Maijogmai",
+        "name_en": "Maijogmai",
+        "name_ne": "माईजोगमाई",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3007,
+    "fields": {
+        "name": "Mangsebung",
+        "name_en": "Mangsebung",
+        "name_ne": "माङसेबुङ्ग",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3008,
+    "fields": {
+        "name": "Rong",
+        "name_en": "Rong",
+        "name_ne": "रोङ",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3009,
+    "fields": {
+        "name": "Sandakpur",
+        "name_en": "Sandakpur",
+        "name_ne": "सन्दकपुर",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 3010,
+    "fields": {
+        "name": "Suryodaya",
+        "name_en": "Suryodaya",
+        "name_ne": "सूर्योदय",
+        "province": 1,
+        "district": 3
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4001,
+    "fields": {
+        "name": "Arjundhara",
+        "name_en": "Arjundhara",
+        "name_ne": "अर्जुनधारा",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4002,
+    "fields": {
+        "name": "Barhadashi",
+        "name_en": "Barhadashi",
+        "name_ne": "बाह्रदशी",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4003,
+    "fields": {
+        "name": "Bhadrapur",
+        "name_en": "Bhadrapur",
+        "name_ne": "भद्रपुर",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4004,
+    "fields": {
+        "name": "Birtamod",
+        "name_en": "Birtamod",
+        "name_ne": "विर्तामोड",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4005,
+    "fields": {
+        "name": "Buddhashanti",
+        "name_en": "Buddhashanti",
+        "name_ne": "बुद्धशान्ति",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4006,
+    "fields": {
+        "name": "Damak",
+        "name_en": "Damak",
+        "name_ne": "दमक",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4007,
+    "fields": {
+        "name": "Gauradhaha",
+        "name_en": "Gauradhaha",
+        "name_ne": "गौरादह",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4008,
+    "fields": {
+        "name": "Gauriganj",
+        "name_en": "Gauriganj",
+        "name_ne": "गौरिगंज",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4009,
+    "fields": {
+        "name": "Haldibari",
+        "name_en": "Haldibari",
+        "name_ne": "हल्दीबारी",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4010,
+    "fields": {
+        "name": "Jhapa",
+        "name_en": "Jhapa",
+        "name_ne": "झापा",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4011,
+    "fields": {
+        "name": "Kachankawal",
+        "name_en": "Kachankawal",
+        "name_ne": "कचनकवल",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4012,
+    "fields": {
+        "name": "Kamal",
+        "name_en": "Kamal",
+        "name_ne": "कमल",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4013,
+    "fields": {
+        "name": "Kankai",
+        "name_en": "Kankai",
+        "name_ne": "कन्काई",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4014,
+    "fields": {
+        "name": "Mechinagar",
+        "name_en": "Mechinagar",
+        "name_ne": "मेचीनगर",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 4015,
+    "fields": {
+        "name": "Shivasataxi",
+        "name_en": "Shivasataxi",
+        "name_ne": "शिवसताक्षी",
+        "province": 1,
+        "district": 4
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5001,
+    "fields": {
+        "name": "Belbari",
+        "name_en": "Belbari",
+        "name_ne": "बेलवारी",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5002,
+    "fields": {
+        "name": "Biratnagar",
+        "name_en": "Biratnagar",
+        "name_ne": "विराटनगर",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5003,
+    "fields": {
+        "name": "Budhiganga",
+        "name_en": "Budhiganga",
+        "name_ne": "बुढीगंगा",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5004,
+    "fields": {
+        "name": "Dhanpalthan",
+        "name_en": "Dhanpalthan",
+        "name_ne": "धनपालथान",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5005,
+    "fields": {
+        "name": "Gramthan",
+        "name_en": "Gramthan",
+        "name_ne": "ग्रामथान",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5006,
+    "fields": {
+        "name": "Jahada",
+        "name_en": "Jahada",
+        "name_ne": "जहदा",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5007,
+    "fields": {
+        "name": "Kanepokhari",
+        "name_en": "Kanepokhari",
+        "name_ne": "कानेपोखरी",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5008,
+    "fields": {
+        "name": "Katahari",
+        "name_en": "Katahari",
+        "name_ne": "कटहरी",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5009,
+    "fields": {
+        "name": "Kerabari",
+        "name_en": "Kerabari",
+        "name_ne": "केराबारी",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5010,
+    "fields": {
+        "name": "Letang",
+        "name_en": "Letang",
+        "name_ne": "लेटाङ",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5011,
+    "fields": {
+        "name": "Miklajung",
+        "name_en": "Miklajung",
+        "name_ne": "मिक्लाजुङ",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5012,
+    "fields": {
+        "name": "Patahrishanishchare",
+        "name_en": "Patahrishanishchare",
+        "name_ne": "पथरी शनिश्चरे",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5013,
+    "fields": {
+        "name": "Rangeli",
+        "name_en": "Rangeli",
+        "name_ne": "रंगेली",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5014,
+    "fields": {
+        "name": "Ratuwamai",
+        "name_en": "Ratuwamai",
+        "name_ne": "रतुवामाई",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5015,
+    "fields": {
+        "name": "Sundarharaicha",
+        "name_en": "Sundarharaicha",
+        "name_ne": "सुन्दरहरैंचा",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5016,
+    "fields": {
+        "name": "Sunwarshi",
+        "name_en": "Sunwarshi",
+        "name_ne": "सुनवर्षी",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 5017,
+    "fields": {
+        "name": "Uralabari",
+        "name_en": "Uralabari",
+        "name_ne": "उर्लाबारी",
+        "province": 1,
+        "district": 5
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6001,
+    "fields": {
+        "name": "Barah",
+        "name_en": "Barah",
+        "name_ne": "बराहक्षेत्र",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6002,
+    "fields": {
+        "name": "Barju",
+        "name_en": "Barju",
+        "name_ne": "बर्जु",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6003,
+    "fields": {
+        "name": "Bhokraha",
+        "name_en": "Bhokraha",
+        "name_ne": "भोक्राहा नरसिंह",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6004,
+    "fields": {
+        "name": "Dewanganj",
+        "name_en": "Dewanganj",
+        "name_ne": "देवानगञ्ज",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6005,
+    "fields": {
+        "name": "Dharan",
+        "name_en": "Dharan",
+        "name_ne": "धरान",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6006,
+    "fields": {
+        "name": "Duhabi",
+        "name_en": "Duhabi",
+        "name_ne": "दुहवी",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6007,
+    "fields": {
+        "name": "Gadhi",
+        "name_en": "Gadhi",
+        "name_ne": "गढी",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6008,
+    "fields": {
+        "name": "Harinagara",
+        "name_en": "Harinagara",
+        "name_ne": "हरिनगर",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6009,
+    "fields": {
+        "name": "Inaruwa",
+        "name_en": "Inaruwa",
+        "name_ne": "इनरुवा",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6010,
+    "fields": {
+        "name": "Itahari",
+        "name_en": "Itahari",
+        "name_ne": "ईटहरी",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6011,
+    "fields": {
+        "name": "Koshi",
+        "name_en": "Koshi",
+        "name_ne": "कोशी",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6012,
+    "fields": {
+        "name": "Ramdhuni",
+        "name_en": "Ramdhuni",
+        "name_ne": "रामधुनी",
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 6099,
+    "fields": {
+        "name": "Koshi Tappu Wildlife Reserve",
+        "name_en": "Koshi Tappu Wildlife Reserve",
+        "name_ne": null,
+        "province": 1,
+        "district": 6
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 7001,
+    "fields": {
+        "name": "Chaubise",
+        "name_en": "Chaubise",
+        "name_ne": "चौबिसे",
+        "province": 1,
+        "district": 7
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 7002,
+    "fields": {
+        "name": "Chhathar Jorpati",
+        "name_en": "Chhathar Jorpati",
+        "name_ne": "छथर जोरपाटी",
+        "province": 1,
+        "district": 7
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 7003,
+    "fields": {
+        "name": "Dhankuta",
+        "name_en": "Dhankuta",
+        "name_ne": "धनकुटा",
+        "province": 1,
+        "district": 7
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 7004,
+    "fields": {
+        "name": "Khalsa Chhintang Shahidbhumi",
+        "name_en": "Khalsa Chhintang Shahidbhumi",
+        "name_ne": "सहिदभूमि",
+        "province": 1,
+        "district": 7
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 7005,
+    "fields": {
+        "name": "Mahalaxmi",
+        "name_en": "Mahalaxmi",
+        "name_ne": "महालक्ष्मी",
+        "province": 1,
+        "district": 7
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 7006,
+    "fields": {
+        "name": "Pakhribas",
+        "name_en": "Pakhribas",
+        "name_ne": "पाख्रिवास",
+        "province": 1,
+        "district": 7
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 7007,
+    "fields": {
+        "name": "Sangurigadhi",
+        "name_en": "Sangurigadhi",
+        "name_ne": "साँगुरीगढी",
+        "province": 1,
+        "district": 7
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 8001,
+    "fields": {
+        "name": "Aathrai",
+        "name_en": "Aathrai",
+        "name_ne": "आठराई",
+        "province": 1,
+        "district": 8
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 8002,
+    "fields": {
+        "name": "Chhathar",
+        "name_en": "Chhathar",
+        "name_ne": "छथर",
+        "province": 1,
+        "district": 8
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 8003,
+    "fields": {
+        "name": "Laligurans",
+        "name_en": "Laligurans",
+        "name_ne": "लालीगुराँस",
+        "province": 1,
+        "district": 8
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 8004,
+    "fields": {
+        "name": "Menchayam",
+        "name_en": "Menchayam",
+        "name_ne": "मेन्छयायेम",
+        "province": 1,
+        "district": 8
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 8005,
+    "fields": {
+        "name": "Myanglung",
+        "name_en": "Myanglung",
+        "name_ne": "म्याङलुङ",
+        "province": 1,
+        "district": 8
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 8006,
+    "fields": {
+        "name": "Phedap",
+        "name_en": "Phedap",
+        "name_ne": "फेदाप",
+        "province": 1,
+        "district": 8
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9001,
+    "fields": {
+        "name": "Bhotkhola",
+        "name_en": "Bhotkhola",
+        "name_ne": "भोटखोला",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9002,
+    "fields": {
+        "name": "Chainpur",
+        "name_en": "Chainpur",
+        "name_ne": "चैनपुर",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9003,
+    "fields": {
+        "name": "Chichila",
+        "name_en": "Chichila",
+        "name_ne": "चिचिला",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9004,
+    "fields": {
+        "name": "Dharmadevi",
+        "name_en": "Dharmadevi",
+        "name_ne": "धर्मदेवी",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9005,
+    "fields": {
+        "name": "Khandbari",
+        "name_en": "Khandbari",
+        "name_ne": "खाँदवारी",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9006,
+    "fields": {
+        "name": "Madi",
+        "name_en": "Madi",
+        "name_ne": "मादी",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9007,
+    "fields": {
+        "name": "Makalu",
+        "name_en": "Makalu",
+        "name_ne": "मकालु",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9008,
+    "fields": {
+        "name": "Panchakhapan",
+        "name_en": "Panchakhapan",
+        "name_ne": "पाँचखपन",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9009,
+    "fields": {
+        "name": "Sabhapokhari",
+        "name_en": "Sabhapokhari",
+        "name_ne": "सभापोखरी",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 9010,
+    "fields": {
+        "name": "Silichong",
+        "name_en": "Silichong",
+        "name_ne": "सिलीचोङ",
+        "province": 1,
+        "district": 10
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 10001,
+    "fields": {
+        "name": "Aamchowk",
+        "name_en": "Aamchowk",
+        "name_ne": "आमचोक",
+        "province": 1,
+        "district": 9
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 10002,
+    "fields": {
+        "name": "Arun",
+        "name_en": "Arun",
+        "name_ne": "अरुण",
+        "province": 1,
+        "district": 9
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 10003,
+    "fields": {
+        "name": "Bhojpur",
+        "name_en": "Bhojpur",
+        "name_ne": "भोजपुर",
+        "province": 1,
+        "district": 9
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 10004,
+    "fields": {
+        "name": "Hatuwagadhi",
+        "name_en": "Hatuwagadhi",
+        "name_ne": "हतुवागढी",
+        "province": 1,
+        "district": 9
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 10005,
+    "fields": {
+        "name": "Pauwadungma",
+        "name_en": "Pauwadungma",
+        "name_ne": "पौवादुङमा",
+        "province": 1,
+        "district": 9
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 10006,
+    "fields": {
+        "name": "Ramprasad Rai",
+        "name_en": "Ramprasad Rai",
+        "name_ne": "रामप्रसाद राई",
+        "province": 1,
+        "district": 9
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 10007,
+    "fields": {
+        "name": "Salpasilichho",
+        "name_en": "Salpasilichho",
+        "name_ne": "साल्पासिलिछो",
+        "province": 1,
+        "district": 9
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 10008,
+    "fields": {
+        "name": "Shadananda",
+        "name_en": "Shadananda",
+        "name_ne": "षडानन्द",
+        "province": 1,
+        "district": 9
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 10009,
+    "fields": {
+        "name": "Tyamkemaiyung",
+        "name_en": "Tyamkemaiyung",
+        "name_ne": "टेम्केमैयुङ",
+        "province": 1,
+        "district": 9
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 11001,
+    "fields": {
+        "name": "Dudhkaushika",
+        "name_en": "Dudhkaushika",
+        "name_ne": "थुलुङ दुधकोशी",
+        "province": 1,
+        "district": 11
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 11002,
+    "fields": {
+        "name": "Dudhkoshi",
+        "name_en": "Dudhkoshi",
+        "name_ne": "माप्य दुधकोशी",
+        "province": 1,
+        "district": 11
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 11003,
+    "fields": {
+        "name": "Khumbupasanglahmu",
+        "name_en": "Khumbupasanglahmu",
+        "name_ne": "खुम्वु पासाङल्हामु",
+        "province": 1,
+        "district": 11
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 11004,
+    "fields": {
+        "name": "Likhupike",
+        "name_en": "Likhupike",
+        "name_ne": "लिखु पिके",
+        "province": 1,
+        "district": 11
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 11005,
+    "fields": {
+        "name": "Mahakulung",
+        "name_en": "Mahakulung",
+        "name_ne": "माहाकुलुङ",
+        "province": 1,
+        "district": 11
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 11006,
+    "fields": {
+        "name": "Nechasalyan",
+        "name_en": "Nechasalyan",
+        "name_ne": "नेचासल्यान",
+        "province": 1,
+        "district": 11
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 11007,
+    "fields": {
+        "name": "Solududhakunda",
+        "name_en": "Solududhakunda",
+        "name_ne": "सोलुदुधकुण्ड",
+        "province": 1,
+        "district": 11
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 11008,
+    "fields": {
+        "name": "Sotang",
+        "name_en": "Sotang",
+        "name_ne": "सोताङ",
+        "province": 1,
+        "district": 11
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 12001,
+    "fields": {
+        "name": "Champadevi",
+        "name_en": "Champadevi",
+        "name_ne": "चम्पादेवी",
+        "province": 1,
+        "district": 13
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 12002,
+    "fields": {
+        "name": "Chisankhugadhi",
+        "name_en": "Chisankhugadhi",
+        "name_ne": "चिशंखुगढी",
+        "province": 1,
+        "district": 13
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 12003,
+    "fields": {
+        "name": "Khijidemba",
+        "name_en": "Khijidemba",
+        "name_ne": "खिजीदेम्वा",
+        "province": 1,
+        "district": 13
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 12004,
+    "fields": {
+        "name": "Likhu",
+        "name_en": "Likhu",
+        "name_ne": "लिखु",
+        "province": 1,
+        "district": 13
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 12005,
+    "fields": {
+        "name": "Manebhanjyang",
+        "name_en": "Manebhanjyang",
+        "name_ne": "मानेभञ्ज्याङ",
+        "province": 1,
+        "district": 13
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 12006,
+    "fields": {
+        "name": "Molung",
+        "name_en": "Molung",
+        "name_ne": "मोलुङ",
+        "province": 1,
+        "district": 13
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 12007,
+    "fields": {
+        "name": "Siddhicharan",
+        "name_en": "Siddhicharan",
+        "name_ne": "सिद्धिचरण",
+        "province": 1,
+        "district": 13
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 12008,
+    "fields": {
+        "name": "Sunkoshi",
+        "name_en": "Sunkoshi",
+        "name_ne": "सुनकोशी",
+        "province": 1,
+        "district": 13
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13001,
+    "fields": {
+        "name": "Ainselukhark",
+        "name_en": "Ainselukhark",
+        "name_ne": "ऐसेलुखर्क",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13002,
+    "fields": {
+        "name": "Barahapokhari",
+        "name_en": "Barahapokhari",
+        "name_ne": "बराहपोखरी",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13003,
+    "fields": {
+        "name": "Diprung",
+        "name_en": "Diprung",
+        "name_ne": "दिप्रुङ चुइचुम्मा",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13004,
+    "fields": {
+        "name": "Halesi Tuwachung",
+        "name_en": "Halesi Tuwachung",
+        "name_ne": "हलेसी तुवाचुङ",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13005,
+    "fields": {
+        "name": "Jantedhunga",
+        "name_en": "Jantedhunga",
+        "name_ne": "जन्तेढुङ्गा",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13006,
+    "fields": {
+        "name": "Kepilasagadhi",
+        "name_en": "Kepilasagadhi",
+        "name_ne": "केपिलासगढी",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13007,
+    "fields": {
+        "name": "Khotehang",
+        "name_en": "Khotehang",
+        "name_ne": "खोटेहाङ",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13008,
+    "fields": {
+        "name": "Lamidanda",
+        "name_en": "Lamidanda",
+        "name_ne": "रावा बेसी",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13009,
+    "fields": {
+        "name": "Rupakot Majhuwagadhi",
+        "name_en": "Rupakot Majhuwagadhi",
+        "name_ne": "दिक्तेल रुपाकोट मझुवागढी",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 13010,
+    "fields": {
+        "name": "Sakela",
+        "name_en": "Sakela",
+        "name_ne": "साकेला",
+        "province": 1,
+        "district": 12
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 14001,
+    "fields": {
+        "name": "Belaka",
+        "name_en": "Belaka",
+        "name_ne": "वेलका",
+        "province": 1,
+        "district": 14
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 14002,
+    "fields": {
+        "name": "Chaudandigadhi",
+        "name_en": "Chaudandigadhi",
+        "name_ne": "चौदण्डीगढी",
+        "province": 1,
+        "district": 14
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 14003,
+    "fields": {
+        "name": "Katari",
+        "name_en": "Katari",
+        "name_ne": "कटारी",
+        "province": 1,
+        "district": 14
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 14004,
+    "fields": {
+        "name": "Rautamai",
+        "name_en": "Rautamai",
+        "name_ne": "रौतामाई",
+        "province": 1,
+        "district": 14
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 14005,
+    "fields": {
+        "name": "Sunkoshi",
+        "name_en": "Sunkoshi",
+        "name_ne": "लिम्चुङबुङ",
+        "province": 1,
+        "district": 14
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 14006,
+    "fields": {
+        "name": "Tapli",
+        "name_en": "Tapli",
+        "name_ne": "ताप्ली",
+        "province": 1,
+        "district": 14
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 14007,
+    "fields": {
+        "name": "Triyuga",
+        "name_en": "Triyuga",
+        "name_ne": "त्रियुगा",
+        "province": 1,
+        "district": 14
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 14008,
+    "fields": {
+        "name": "Udayapurgadhi",
+        "name_en": "Udayapurgadhi",
+        "name_ne": "उदयपुरगढी",
+        "province": 1,
+        "district": 14
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 14099,
+    "fields": {
+        "name": "Koshi Tappu Wildlife Reserve",
+        "name_en": "Koshi Tappu Wildlife Reserve",
+        "name_ne": null,
+        "province": 1,
+        "district": 14
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15001,
+    "fields": {
+        "name": "Agnisair Krishna Savaran",
+        "name_en": "Agnisair Krishna Savaran",
+        "name_ne": "अग्निसाइर कृष्णासवरन",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15002,
+    "fields": {
+        "name": "Balan Bihul",
+        "name_en": "Balan Bihul",
+        "name_ne": "बलान-विहुल",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15003,
+    "fields": {
+        "name": "Belhi Chapena",
+        "name_en": "Belhi Chapena",
+        "name_ne": "राजगढ़",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15004,
+    "fields": {
+        "name": "Bishnupur",
+        "name_en": "Bishnupur",
+        "name_ne": "बिष्णुपुर",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15005,
+    "fields": {
+        "name": "Bode Barsain",
+        "name_en": "Bode Barsain",
+        "name_ne": "बोदेबरसाईन",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15006,
+    "fields": {
+        "name": "Chhinnamasta",
+        "name_en": "Chhinnamasta",
+        "name_ne": "छिन्नमस्ता",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15007,
+    "fields": {
+        "name": "Dakneshwori",
+        "name_en": "Dakneshwori",
+        "name_ne": "डाक्नेश्वरी",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15008,
+    "fields": {
+        "name": "Hanumannagar Kankalini",
+        "name_en": "Hanumannagar Kankalini",
+        "name_ne": "हनुमाननगर कङ्‌कालिनी",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15009,
+    "fields": {
+        "name": "Kanchanrup",
+        "name_en": "Kanchanrup",
+        "name_ne": "कञ्चनरुप",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15010,
+    "fields": {
+        "name": "Khadak",
+        "name_en": "Khadak",
+        "name_ne": "खडक",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15011,
+    "fields": {
+        "name": "Mahadeva",
+        "name_en": "Mahadeva",
+        "name_ne": "महादेवा",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15012,
+    "fields": {
+        "name": "Rajbiraj",
+        "name_en": "Rajbiraj",
+        "name_ne": "राजविराज",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15013,
+    "fields": {
+        "name": "Rupani",
+        "name_en": "Rupani",
+        "name_ne": "रुपनी",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15014,
+    "fields": {
+        "name": "Saptakoshi",
+        "name_en": "Saptakoshi",
+        "name_ne": "सप्तकोशी",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15015,
+    "fields": {
+        "name": "Shambhunath",
+        "name_en": "Shambhunath",
+        "name_ne": "शम्भुनाथ",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15016,
+    "fields": {
+        "name": "Surunga",
+        "name_en": "Surunga",
+        "name_ne": "सुरुङ्‍गा",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15017,
+    "fields": {
+        "name": "Tilathi Koiladi",
+        "name_en": "Tilathi Koiladi",
+        "name_ne": "तिलाठी कोईलाडी",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15018,
+    "fields": {
+        "name": "Tirahut",
+        "name_en": "Tirahut",
+        "name_ne": "तिरहुत",
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 15099,
+    "fields": {
+        "name": "Koshi Tappu",
+        "name_en": "Koshi Tappu",
+        "name_ne": null,
+        "province": 2,
+        "district": 16
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16001,
+    "fields": {
+        "name": "Arnama",
+        "name_en": "Arnama",
+        "name_ne": "अर्नमा",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16002,
+    "fields": {
+        "name": "Aurahi",
+        "name_en": "Aurahi",
+        "name_ne": "औरही",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16003,
+    "fields": {
+        "name": "Bariyarpatti",
+        "name_en": "Bariyarpatti",
+        "name_ne": "बरियारपट्टी",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16004,
+    "fields": {
+        "name": "Bhagawanpur",
+        "name_en": "Bhagawanpur",
+        "name_ne": "भगवानपुर",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16005,
+    "fields": {
+        "name": "Bishnupur",
+        "name_en": "Bishnupur",
+        "name_ne": "विष्णुपुर",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16006,
+    "fields": {
+        "name": "Dhangadhimai",
+        "name_en": "Dhangadhimai",
+        "name_ne": "धनगढीमाई",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16007,
+    "fields": {
+        "name": "Golbazar",
+        "name_en": "Golbazar",
+        "name_ne": "गोलबजार",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16008,
+    "fields": {
+        "name": "Kalyanpur",
+        "name_en": "Kalyanpur",
+        "name_ne": "कल्याणपुर",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16009,
+    "fields": {
+        "name": "Karjanha",
+        "name_en": "Karjanha",
+        "name_ne": "कर्जन्हा",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16010,
+    "fields": {
+        "name": "Lahan",
+        "name_en": "Lahan",
+        "name_ne": "लहान",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16011,
+    "fields": {
+        "name": "Laxmipur Patari",
+        "name_en": "Laxmipur Patari",
+        "name_ne": "लक्ष्मीपुर पतारी",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16012,
+    "fields": {
+        "name": "Mirchaiya",
+        "name_en": "Mirchaiya",
+        "name_ne": "मिर्चैयाँ",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16013,
+    "fields": {
+        "name": "Naraha",
+        "name_en": "Naraha",
+        "name_ne": "नरहा",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16014,
+    "fields": {
+        "name": "Nawarajpur",
+        "name_en": "Nawarajpur",
+        "name_ne": "नवराजपुर",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16015,
+    "fields": {
+        "name": "Sakhuwanankarkatti",
+        "name_en": "Sakhuwanankarkatti",
+        "name_ne": "सखुवानान्कारकट्टी",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16016,
+    "fields": {
+        "name": "Siraha",
+        "name_en": "Siraha",
+        "name_ne": "सिरहा",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 16017,
+    "fields": {
+        "name": "Sukhipur",
+        "name_en": "Sukhipur",
+        "name_ne": "सुखीपुर",
+        "province": 2,
+        "district": 15
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17001,
+    "fields": {
+        "name": "Aaurahi",
+        "name_en": "Aaurahi",
+        "name_ne": "औरही",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17002,
+    "fields": {
+        "name": "Bateshwor",
+        "name_en": "Bateshwor",
+        "name_ne": "बटेश्वर",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17003,
+    "fields": {
+        "name": "Bideha",
+        "name_en": "Bideha",
+        "name_ne": "विदेह",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17004,
+    "fields": {
+        "name": "Chhireshwornath",
+        "name_en": "Chhireshwornath",
+        "name_ne": "क्षिरेश्वरनाथ",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17005,
+    "fields": {
+        "name": "Dhanauji",
+        "name_en": "Dhanauji",
+        "name_ne": "धनौजी",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17006,
+    "fields": {
+        "name": "Dhanusadham",
+        "name_en": "Dhanusadham",
+        "name_ne": "धनुषाधाम",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17007,
+    "fields": {
+        "name": "Ganeshman Charnath",
+        "name_en": "Ganeshman Charnath",
+        "name_ne": "गणेशमान चारनाथ",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17008,
+    "fields": {
+        "name": "Hansapur",
+        "name_en": "Hansapur",
+        "name_ne": "हंसपुर",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17009,
+    "fields": {
+        "name": "Janaknandani",
+        "name_en": "Janaknandani",
+        "name_ne": "जनकनन्दिनी",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17010,
+    "fields": {
+        "name": "Janakpur",
+        "name_en": "Janakpur",
+        "name_ne": "जनकपुर",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17011,
+    "fields": {
+        "name": "Kamala",
+        "name_en": "Kamala",
+        "name_ne": "कमला सिद्धीदात्री",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17012,
+    "fields": {
+        "name": "Lakshminiya",
+        "name_en": "Lakshminiya",
+        "name_ne": "लक्ष्मीनिया",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17013,
+    "fields": {
+        "name": "Mithila",
+        "name_en": "Mithila",
+        "name_ne": "मिथिला",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17014,
+    "fields": {
+        "name": "Mithila Bihari",
+        "name_en": "Mithila Bihari",
+        "name_ne": "मिथिला बिहारी",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17015,
+    "fields": {
+        "name": "Mukhiyapatti Musarmiya",
+        "name_en": "Mukhiyapatti Musarmiya",
+        "name_ne": "मुखियापट्टी मुसहरमिया",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17016,
+    "fields": {
+        "name": "Nagarain",
+        "name_en": "Nagarain",
+        "name_ne": "नगराइन",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17017,
+    "fields": {
+        "name": "Sabaila",
+        "name_en": "Sabaila",
+        "name_ne": "सबैला",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 17018,
+    "fields": {
+        "name": "Sahidnagar",
+        "name_en": "Sahidnagar",
+        "name_ne": "शहीदनगर",
+        "province": 2,
+        "district": 17
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18001,
+    "fields": {
+        "name": "Aurahi",
+        "name_en": "Aurahi",
+        "name_ne": "औरही",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18002,
+    "fields": {
+        "name": "Balwa",
+        "name_en": "Balwa",
+        "name_ne": "बलवा",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18003,
+    "fields": {
+        "name": "Bardibas",
+        "name_en": "Bardibas",
+        "name_ne": "बर्दिबास",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18004,
+    "fields": {
+        "name": "Bhangaha",
+        "name_en": "Bhangaha",
+        "name_ne": "भँगाहा",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18005,
+    "fields": {
+        "name": "Ekdanra",
+        "name_en": "Ekdanra",
+        "name_ne": "एकडारा",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18006,
+    "fields": {
+        "name": "Gaushala",
+        "name_en": "Gaushala",
+        "name_ne": "गौशाला",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18007,
+    "fields": {
+        "name": "Jaleswor",
+        "name_en": "Jaleswor",
+        "name_ne": "जलेश्वर",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18008,
+    "fields": {
+        "name": "Loharpatti",
+        "name_en": "Loharpatti",
+        "name_ne": "लोहरपट्टी",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18009,
+    "fields": {
+        "name": "Mahottari",
+        "name_en": "Mahottari",
+        "name_ne": "महोत्तरी",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18010,
+    "fields": {
+        "name": "Manra Siswa",
+        "name_en": "Manra Siswa",
+        "name_ne": "मनरा शिसवा",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18011,
+    "fields": {
+        "name": "Matihani",
+        "name_en": "Matihani",
+        "name_ne": "मटिहानी",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18012,
+    "fields": {
+        "name": "Pipra",
+        "name_en": "Pipra",
+        "name_ne": "पिपरा",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18013,
+    "fields": {
+        "name": "Ramgopalpur",
+        "name_en": "Ramgopalpur",
+        "name_ne": "रामगोपालपुर",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18014,
+    "fields": {
+        "name": "Samsi",
+        "name_en": "Samsi",
+        "name_ne": "साम्सी",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 18015,
+    "fields": {
+        "name": "Sonama",
+        "name_en": "Sonama",
+        "name_ne": "सोनमा",
+        "province": 2,
+        "district": 18
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19001,
+    "fields": {
+        "name": "Bagmati",
+        "name_en": "Bagmati",
+        "name_ne": "बागमती",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19002,
+    "fields": {
+        "name": "Balara",
+        "name_en": "Balara",
+        "name_ne": "बलरा",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19003,
+    "fields": {
+        "name": "Barahathawa",
+        "name_en": "Barahathawa",
+        "name_ne": "बरहथवा",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19004,
+    "fields": {
+        "name": "Basbariya",
+        "name_en": "Basbariya",
+        "name_ne": "बसबरीया",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19005,
+    "fields": {
+        "name": "Bishnu",
+        "name_en": "Bishnu",
+        "name_ne": "विष्णु",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19006,
+    "fields": {
+        "name": "Bramhapuri",
+        "name_en": "Bramhapuri",
+        "name_ne": "ब्रह्मपुरी",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19007,
+    "fields": {
+        "name": "Chakraghatta",
+        "name_en": "Chakraghatta",
+        "name_ne": "चक्रघट्टा",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19008,
+    "fields": {
+        "name": "Chandranagar",
+        "name_en": "Chandranagar",
+        "name_ne": "चन्द्रनगर",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19009,
+    "fields": {
+        "name": "Dhankaul",
+        "name_en": "Dhankaul",
+        "name_ne": "धनकौल",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19010,
+    "fields": {
+        "name": "Godaita",
+        "name_en": "Godaita",
+        "name_ne": "गोडैटा",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19011,
+    "fields": {
+        "name": "Haripur",
+        "name_en": "Haripur",
+        "name_ne": "हरिपुर",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19012,
+    "fields": {
+        "name": "Haripurwa",
+        "name_en": "Haripurwa",
+        "name_ne": "हरिपुर्वा",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19013,
+    "fields": {
+        "name": "Hariwan",
+        "name_en": "Hariwan",
+        "name_ne": "हरिपुर्वा",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19014,
+    "fields": {
+        "name": "Ishworpur",
+        "name_en": "Ishworpur",
+        "name_ne": "ईश्वरपुर",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19015,
+    "fields": {
+        "name": "Kabilasi",
+        "name_en": "Kabilasi",
+        "name_ne": "कविलासी",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19016,
+    "fields": {
+        "name": "Kaudena",
+        "name_en": "Kaudena",
+        "name_ne": "कौडेना",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19017,
+    "fields": {
+        "name": "Lalbandi",
+        "name_en": "Lalbandi",
+        "name_ne": "लालबन्दी",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19018,
+    "fields": {
+        "name": "Malangawa",
+        "name_en": "Malangawa",
+        "name_ne": "मलंगवा",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19019,
+    "fields": {
+        "name": "Parsa",
+        "name_en": "Parsa",
+        "name_ne": "पर्सा",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 19020,
+    "fields": {
+        "name": "Ramnagar",
+        "name_en": "Ramnagar",
+        "name_ne": "रामनगर",
+        "province": 2,
+        "district": 19
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 20001,
+    "fields": {
+        "name": "Dudhouli",
+        "name_en": "Dudhouli",
+        "name_ne": "दुधौली",
+        "province": 3,
+        "district": 20
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 20002,
+    "fields": {
+        "name": "Ghanglekh",
+        "name_en": "Ghanglekh",
+        "name_ne": "घ्याङलेख",
+        "province": 3,
+        "district": 20
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 20003,
+    "fields": {
+        "name": "Golanjor",
+        "name_en": "Golanjor",
+        "name_ne": "गोलन्जोर",
+        "province": 3,
+        "district": 20
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 20004,
+    "fields": {
+        "name": "Hariharpurgadhi",
+        "name_en": "Hariharpurgadhi",
+        "name_ne": "हरिहरपुरगढी",
+        "province": 3,
+        "district": 20
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 20005,
+    "fields": {
+        "name": "Kamalamai",
+        "name_en": "Kamalamai",
+        "name_ne": "कमलामार्इ",
+        "province": 3,
+        "district": 20
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 20006,
+    "fields": {
+        "name": "Marin",
+        "name_en": "Marin",
+        "name_ne": "मरिण",
+        "province": 3,
+        "district": 20
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 20007,
+    "fields": {
+        "name": "Phikkal",
+        "name_en": "Phikkal",
+        "name_ne": "फिक्कल",
+        "province": 3,
+        "district": 20
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 20008,
+    "fields": {
+        "name": "Sunkoshi",
+        "name_en": "Sunkoshi",
+        "name_ne": "सुनकोशी",
+        "province": 3,
+        "district": 20
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 20009,
+    "fields": {
+        "name": "Tinpatan",
+        "name_en": "Tinpatan",
+        "name_ne": "तीनपाटन",
+        "province": 3,
+        "district": 20
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 21001,
+    "fields": {
+        "name": "Doramba",
+        "name_en": "Doramba",
+        "name_ne": "दोरम्बा",
+        "province": 3,
+        "district": 21
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 21002,
+    "fields": {
+        "name": "Gokulganga",
+        "name_en": "Gokulganga",
+        "name_ne": "गोकुलगङ्गा",
+        "province": 3,
+        "district": 21
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 21003,
+    "fields": {
+        "name": "Khadadevi",
+        "name_en": "Khadadevi",
+        "name_ne": "खाँडादेवी",
+        "province": 3,
+        "district": 21
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 21004,
+    "fields": {
+        "name": "Likhu",
+        "name_en": "Likhu",
+        "name_ne": "लिखु तामाकोशी",
+        "province": 3,
+        "district": 21
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 21005,
+    "fields": {
+        "name": "Manthali",
+        "name_en": "Manthali",
+        "name_ne": "मन्थली",
+        "province": 3,
+        "district": 21
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 21006,
+    "fields": {
+        "name": "Ramechhap",
+        "name_en": "Ramechhap",
+        "name_ne": "रामेछाप",
+        "province": 3,
+        "district": 21
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 21007,
+    "fields": {
+        "name": "Sunapati",
+        "name_en": "Sunapati",
+        "name_ne": "सुनापती",
+        "province": 3,
+        "district": 21
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 21008,
+    "fields": {
+        "name": "Umakunda",
+        "name_en": "Umakunda",
+        "name_ne": "उमाकुण्ड",
+        "province": 3,
+        "district": 21
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 22001,
+    "fields": {
+        "name": "Baiteshwor",
+        "name_en": "Baiteshwor",
+        "name_ne": "वैतेश्वर",
+        "province": 3,
+        "district": 22
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 22002,
+    "fields": {
+        "name": "Bhimeshwor",
+        "name_en": "Bhimeshwor",
+        "name_ne": "भीमेश्वर",
+        "province": 3,
+        "district": 22
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 22003,
+    "fields": {
+        "name": "Bigu",
+        "name_en": "Bigu",
+        "name_ne": "विगु",
+        "province": 3,
+        "district": 22
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 22004,
+    "fields": {
+        "name": "Gaurishankar",
+        "name_en": "Gaurishankar",
+        "name_ne": "गौरिशंकर",
+        "province": 3,
+        "district": 22
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 22005,
+    "fields": {
+        "name": "Jiri",
+        "name_en": "Jiri",
+        "name_ne": "जिरी",
+        "province": 3,
+        "district": 22
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 22006,
+    "fields": {
+        "name": "Kalinchok",
+        "name_en": "Kalinchok",
+        "name_ne": "कालिन्चोक",
+        "province": 3,
+        "district": 22
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 22007,
+    "fields": {
+        "name": "Melung",
+        "name_en": "Melung",
+        "name_ne": "मेलुङ",
+        "province": 3,
+        "district": 22
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 22008,
+    "fields": {
+        "name": "Sailung",
+        "name_en": "Sailung",
+        "name_ne": "शैलुङ",
+        "province": 3,
+        "district": 22
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 22009,
+    "fields": {
+        "name": "Tamakoshi",
+        "name_en": "Tamakoshi",
+        "name_ne": "तामाकोशी",
+        "province": 3,
+        "district": 22
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23001,
+    "fields": {
+        "name": "Balefi",
+        "name_en": "Balefi",
+        "name_ne": "बलेफी",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23002,
+    "fields": {
+        "name": "Barhabise",
+        "name_en": "Barhabise",
+        "name_ne": "वाह्रविसे",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23003,
+    "fields": {
+        "name": "Bhotekoshi",
+        "name_en": "Bhotekoshi",
+        "name_ne": "भोटेकोशी",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23004,
+    "fields": {
+        "name": "Chautara SangachokGadhi",
+        "name_en": "Chautara SangachokGadhi",
+        "name_ne": "चौतारा साँगाचोकगढी",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23005,
+    "fields": {
+        "name": "Helambu",
+        "name_en": "Helambu",
+        "name_ne": "हेलम्बु",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23006,
+    "fields": {
+        "name": "Indrawati",
+        "name_en": "Indrawati",
+        "name_ne": "र्इन्द्रावती",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23007,
+    "fields": {
+        "name": "Jugal",
+        "name_en": "Jugal",
+        "name_ne": "जुगल",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23008,
+    "fields": {
+        "name": "Lisangkhu Pakhar",
+        "name_en": "Lisangkhu Pakhar",
+        "name_ne": "लिसंखु पाखर",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23009,
+    "fields": {
+        "name": "Melamchi",
+        "name_en": "Melamchi",
+        "name_ne": "मेलम्ची",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23010,
+    "fields": {
+        "name": "Panchpokhari Thangpal",
+        "name_en": "Panchpokhari Thangpal",
+        "name_ne": "पाँचपोखरी थाङपाल",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23011,
+    "fields": {
+        "name": "Sunkoshi",
+        "name_en": "Sunkoshi",
+        "name_ne": "सुनकोशी",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 23012,
+    "fields": {
+        "name": "Tripurasundari",
+        "name_en": "Tripurasundari",
+        "name_ne": "त्रिपुरासुन्दरी",
+        "province": 3,
+        "district": 24
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24001,
+    "fields": {
+        "name": "Banepa",
+        "name_en": "Banepa",
+        "name_ne": "बनेपा",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24002,
+    "fields": {
+        "name": "Bethanchowk",
+        "name_en": "Bethanchowk",
+        "name_ne": "बेथानचोक",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24003,
+    "fields": {
+        "name": "Bhumlu",
+        "name_en": "Bhumlu",
+        "name_ne": "भुम्लु",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24004,
+    "fields": {
+        "name": "Chaurideurali",
+        "name_en": "Chaurideurali",
+        "name_ne": "चौंरीदेउराली",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24005,
+    "fields": {
+        "name": "Dhulikhel",
+        "name_en": "Dhulikhel",
+        "name_ne": "धुलिखेल",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24006,
+    "fields": {
+        "name": "Khanikhola",
+        "name_en": "Khanikhola",
+        "name_ne": "खानीखोला",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24007,
+    "fields": {
+        "name": "Mahabharat",
+        "name_en": "Mahabharat",
+        "name_ne": "महाभारत",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24008,
+    "fields": {
+        "name": "Mandandeupur",
+        "name_en": "Mandandeupur",
+        "name_ne": "मण्डनदेउपुर",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24009,
+    "fields": {
+        "name": "Namobuddha",
+        "name_en": "Namobuddha",
+        "name_ne": "नमोबुद्ध",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24010,
+    "fields": {
+        "name": "Panauti",
+        "name_en": "Panauti",
+        "name_ne": "पनौती",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24011,
+    "fields": {
+        "name": "Panchkhal",
+        "name_en": "Panchkhal",
+        "name_ne": "पाँचखाल",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24012,
+    "fields": {
+        "name": "Roshi",
+        "name_en": "Roshi",
+        "name_ne": "रोशी",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 24013,
+    "fields": {
+        "name": "Temal",
+        "name_en": "Temal",
+        "name_ne": "तेमाल",
+        "province": 3,
+        "district": 30
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 25001,
+    "fields": {
+        "name": "Bagmati",
+        "name_en": "Bagmati",
+        "name_ne": "वाग्मती",
+        "province": 3,
+        "district": 28
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 25002,
+    "fields": {
+        "name": "Godawari",
+        "name_en": "Godawari",
+        "name_ne": "गोदावरी",
+        "province": 3,
+        "district": 28
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 25003,
+    "fields": {
+        "name": "Konjyosom",
+        "name_en": "Konjyosom",
+        "name_ne": "कोन्ज्योसोम",
+        "province": 3,
+        "district": 28
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 25004,
+    "fields": {
+        "name": "Lalitpur",
+        "name_en": "Lalitpur",
+        "name_ne": "ललितपुर",
+        "province": 3,
+        "district": 28
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 25005,
+    "fields": {
+        "name": "Mahalaxmi",
+        "name_en": "Mahalaxmi",
+        "name_ne": "महालक्ष्मी",
+        "province": 3,
+        "district": 28
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 25006,
+    "fields": {
+        "name": "Mahankal",
+        "name_en": "Mahankal",
+        "name_ne": "महाङ्काल",
+        "province": 3,
+        "district": 28
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 26001,
+    "fields": {
+        "name": "Bhaktapur",
+        "name_en": "Bhaktapur",
+        "name_ne": "भक्तपुर",
+        "province": 3,
+        "district": 29
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 26002,
+    "fields": {
+        "name": "Changunarayan",
+        "name_en": "Changunarayan",
+        "name_ne": "चाँगुनारायण",
+        "province": 3,
+        "district": 29
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 26003,
+    "fields": {
+        "name": "Madhyapur Thimi",
+        "name_en": "Madhyapur Thimi",
+        "name_ne": "मध्यपुर थिमी",
+        "province": 3,
+        "district": 29
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 26004,
+    "fields": {
+        "name": "Suryabinayak",
+        "name_en": "Suryabinayak",
+        "name_ne": "सूर्यविनायक",
+        "province": 3,
+        "district": 29
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27001,
+    "fields": {
+        "name": "Budhanilakantha",
+        "name_en": "Budhanilakantha",
+        "name_ne": "बुढानिलकण्ठ",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27002,
+    "fields": {
+        "name": "Chandragiri",
+        "name_en": "Chandragiri",
+        "name_ne": "चन्द्रागिरी",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27003,
+    "fields": {
+        "name": "Dakshinkali",
+        "name_en": "Dakshinkali",
+        "name_ne": "दक्षिणकाली",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27004,
+    "fields": {
+        "name": "Gokarneshwor",
+        "name_en": "Gokarneshwor",
+        "name_ne": "गोकर्णेश्वर",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27005,
+    "fields": {
+        "name": "Kageshwori Manahora",
+        "name_en": "Kageshwori Manahora",
+        "name_ne": "कागेश्वरी मनोहरा",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27006,
+    "fields": {
+        "name": "Kathmandu",
+        "name_en": "Kathmandu",
+        "name_ne": "काठमाण्डौं",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27007,
+    "fields": {
+        "name": "Kirtipur",
+        "name_en": "Kirtipur",
+        "name_ne": "कीर्तिपुर",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27008,
+    "fields": {
+        "name": "Nagarjun",
+        "name_en": "Nagarjun",
+        "name_ne": "नागार्जुन",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27009,
+    "fields": {
+        "name": "Shankharapur",
+        "name_en": "Shankharapur",
+        "name_ne": "शङ्खरापुर",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27010,
+    "fields": {
+        "name": "Tarakeshwor",
+        "name_en": "Tarakeshwor",
+        "name_ne": "तारकेश्वर",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 27011,
+    "fields": {
+        "name": "Tokha",
+        "name_en": "Tokha",
+        "name_ne": "टोखा",
+        "province": 3,
+        "district": 27
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28001,
+    "fields": {
+        "name": "Belkotgadhi",
+        "name_en": "Belkotgadhi",
+        "name_ne": "बेलकोटगढी",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28002,
+    "fields": {
+        "name": "Bidur",
+        "name_en": "Bidur",
+        "name_ne": "विदुर",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28003,
+    "fields": {
+        "name": "Dupcheshwar",
+        "name_en": "Dupcheshwar",
+        "name_ne": "दुप्चेश्वर",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28004,
+    "fields": {
+        "name": "Kakani",
+        "name_en": "Kakani",
+        "name_ne": "ककनी",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28005,
+    "fields": {
+        "name": "Kispang",
+        "name_en": "Kispang",
+        "name_ne": "किस्पाङ",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28006,
+    "fields": {
+        "name": "Likhu",
+        "name_en": "Likhu",
+        "name_ne": "लिखु",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28007,
+    "fields": {
+        "name": "Meghang",
+        "name_en": "Meghang",
+        "name_ne": "म्यागङ",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28008,
+    "fields": {
+        "name": "Panchakanya",
+        "name_en": "Panchakanya",
+        "name_ne": "पञ्चकन्या",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28009,
+    "fields": {
+        "name": "Shivapuri",
+        "name_en": "Shivapuri",
+        "name_ne": "शिवपुरी",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28010,
+    "fields": {
+        "name": "Suryagadhi",
+        "name_en": "Suryagadhi",
+        "name_ne": "सुर्यगढी",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28011,
+    "fields": {
+        "name": "Tadi",
+        "name_en": "Tadi",
+        "name_ne": "तादी",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28012,
+    "fields": {
+        "name": "Tarkeshwar",
+        "name_en": "Tarkeshwar",
+        "name_ne": "तारकेश्वर",
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28088,
+    "fields": {
+        "name": "Shivapuri Watershed and Wildlife Reserve",
+        "name_en": "Shivapuri Watershed and Wildlife Reserve",
+        "name_ne": null,
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 28099,
+    "fields": {
+        "name": "Langtang National Park",
+        "name_en": "Langtang National Park",
+        "name_ne": null,
+        "province": 3,
+        "district": 25
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 29001,
+    "fields": {
+        "name": "Gosaikunda",
+        "name_en": "Gosaikunda",
+        "name_ne": "गोसाईकुण्ड",
+        "province": 3,
+        "district": 23
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 29002,
+    "fields": {
+        "name": "Kalika",
+        "name_en": "Kalika",
+        "name_ne": "कालिका",
+        "province": 3,
+        "district": 23
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 29003,
+    "fields": {
+        "name": "Naukunda",
+        "name_en": "Naukunda",
+        "name_ne": "नौकुण्ड",
+        "province": 3,
+        "district": 23
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 29004,
+    "fields": {
+        "name": "Parbati Kunda",
+        "name_en": "Parbati Kunda",
+        "name_ne": "आमाछोदिङमो",
+        "province": 3,
+        "district": 23
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 29005,
+    "fields": {
+        "name": "Uttargaya",
+        "name_en": "Uttargaya",
+        "name_ne": "उत्तरगया",
+        "province": 3,
+        "district": 23
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30001,
+    "fields": {
+        "name": "Benighat Rorang",
+        "name_en": "Benighat Rorang",
+        "name_ne": "बेनीघाट रोराङ्ग",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30002,
+    "fields": {
+        "name": "Dhunibesi",
+        "name_en": "Dhunibesi",
+        "name_ne": "धुनीबेंशी",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30003,
+    "fields": {
+        "name": "Gajuri",
+        "name_en": "Gajuri",
+        "name_ne": "गजुरी",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30004,
+    "fields": {
+        "name": "Galchi",
+        "name_en": "Galchi",
+        "name_ne": "गल्छी",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30005,
+    "fields": {
+        "name": "Gangajamuna",
+        "name_en": "Gangajamuna",
+        "name_ne": "गङ्गाजमुना",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30006,
+    "fields": {
+        "name": "Jwalamukhi",
+        "name_en": "Jwalamukhi",
+        "name_ne": "ज्वालामूखी",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30007,
+    "fields": {
+        "name": "Khaniyabash",
+        "name_en": "Khaniyabash",
+        "name_ne": "खनियाबास",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30008,
+    "fields": {
+        "name": "Netrawati",
+        "name_en": "Netrawati",
+        "name_ne": "नेत्रावती डबजोङ",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30009,
+    "fields": {
+        "name": "Nilakantha",
+        "name_en": "Nilakantha",
+        "name_ne": "नीलकण्ठ",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30010,
+    "fields": {
+        "name": "Rubi Valley",
+        "name_en": "Rubi Valley",
+        "name_ne": "रुवी भ्याली",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30011,
+    "fields": {
+        "name": "Siddhalek",
+        "name_en": "Siddhalek",
+        "name_ne": "सिद्धलेक",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30012,
+    "fields": {
+        "name": "Thakre",
+        "name_en": "Thakre",
+        "name_ne": "थाक्रे",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 30013,
+    "fields": {
+        "name": "Tripura Sundari",
+        "name_en": "Tripura Sundari",
+        "name_ne": "त्रिपुरासुन्दरी",
+        "province": 3,
+        "district": 26
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31001,
+    "fields": {
+        "name": "Bagmati",
+        "name_en": "Bagmati",
+        "name_ne": "वाग्मती",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31002,
+    "fields": {
+        "name": "Bakaiya",
+        "name_en": "Bakaiya",
+        "name_ne": "बकैया",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31003,
+    "fields": {
+        "name": "Bhimphedi",
+        "name_en": "Bhimphedi",
+        "name_ne": "भिमफेदी",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31004,
+    "fields": {
+        "name": "Hetauda",
+        "name_en": "Hetauda",
+        "name_ne": "हेटौँडा",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31005,
+    "fields": {
+        "name": "Indrasarowar",
+        "name_en": "Indrasarowar",
+        "name_ne": "र्इन्द्रसरोवर",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31006,
+    "fields": {
+        "name": "Kailash",
+        "name_en": "Kailash",
+        "name_ne": "कैलाश",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31007,
+    "fields": {
+        "name": "Makawanpurgadhi",
+        "name_en": "Makawanpurgadhi",
+        "name_ne": "मकवानपुरगढी",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31008,
+    "fields": {
+        "name": "Manahari",
+        "name_en": "Manahari",
+        "name_ne": "मनहरी",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31009,
+    "fields": {
+        "name": "Raksirang",
+        "name_en": "Raksirang",
+        "name_ne": "राक्सिराङ्ग",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31010,
+    "fields": {
+        "name": "Thaha",
+        "name_en": "Thaha",
+        "name_ne": "थाहा",
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31088,
+    "fields": {
+        "name": "Parsa Wildlife Reserve",
+        "name_en": "Parsa Wildlife Reserve",
+        "name_ne": null,
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 31099,
+    "fields": {
+        "name": "Chitawan National Park",
+        "name_en": "Chitawan National Park",
+        "name_ne": null,
+        "province": 3,
+        "district": 31
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32001,
+    "fields": {
+        "name": "Baudhimai",
+        "name_en": "Baudhimai",
+        "name_ne": "बौधीमाई",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32002,
+    "fields": {
+        "name": "Brindaban",
+        "name_en": "Brindaban",
+        "name_ne": "बृन्दावन",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32003,
+    "fields": {
+        "name": "Chandrapur",
+        "name_en": "Chandrapur",
+        "name_ne": "चन्द्रपुर",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32004,
+    "fields": {
+        "name": "Dewahhi Gonahi",
+        "name_en": "Dewahhi Gonahi",
+        "name_ne": "देवाही गोनाही",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32005,
+    "fields": {
+        "name": "Durga Bhagwati",
+        "name_en": "Durga Bhagwati",
+        "name_ne": "दुर्गा भगवती",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32006,
+    "fields": {
+        "name": "Gadhimai",
+        "name_en": "Gadhimai",
+        "name_ne": "गढीमाई",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32007,
+    "fields": {
+        "name": "Garuda",
+        "name_en": "Garuda",
+        "name_ne": "गरुडा",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32008,
+    "fields": {
+        "name": "Gaur",
+        "name_en": "Gaur",
+        "name_ne": "गौर",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32009,
+    "fields": {
+        "name": "Gujara",
+        "name_en": "Gujara",
+        "name_ne": "गुजरा",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32010,
+    "fields": {
+        "name": "Ishanath",
+        "name_en": "Ishanath",
+        "name_ne": "ईशनाथ",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32011,
+    "fields": {
+        "name": "Katahariya",
+        "name_en": "Katahariya",
+        "name_ne": "कटहरिया",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32012,
+    "fields": {
+        "name": "Madhav Narayan",
+        "name_en": "Madhav Narayan",
+        "name_ne": "माधव नारायण",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32013,
+    "fields": {
+        "name": "Maulapur",
+        "name_en": "Maulapur",
+        "name_ne": "मौलापुर",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32014,
+    "fields": {
+        "name": "Paroha",
+        "name_en": "Paroha",
+        "name_ne": "परोहा",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32015,
+    "fields": {
+        "name": "Phatuwa Bijayapur",
+        "name_en": "Phatuwa Bijayapur",
+        "name_ne": "फतुवाबिजयपुर",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32016,
+    "fields": {
+        "name": "Rajdevi",
+        "name_en": "Rajdevi",
+        "name_ne": "",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32017,
+    "fields": {
+        "name": "Rajpur",
+        "name_en": "Rajpur",
+        "name_ne": "राजपुर",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 32018,
+    "fields": {
+        "name": "Yemunamai",
+        "name_en": "Yemunamai",
+        "name_ne": "यमुनामाई",
+        "province": 2,
+        "district": 32
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33001,
+    "fields": {
+        "name": "Adarshkotwal",
+        "name_en": "Adarshkotwal",
+        "name_ne": "आदर्श कोटवाल",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33002,
+    "fields": {
+        "name": "Baragadhi",
+        "name_en": "Baragadhi",
+        "name_ne": "बारागढी",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33003,
+    "fields": {
+        "name": "Bishrampur",
+        "name_en": "Bishrampur",
+        "name_ne": "विश्रामपुर",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33004,
+    "fields": {
+        "name": "Devtal",
+        "name_en": "Devtal",
+        "name_ne": "देवताल",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33005,
+    "fields": {
+        "name": "Jitpur Simara",
+        "name_en": "Jitpur Simara",
+        "name_ne": "जीतपुर सिमरा",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33006,
+    "fields": {
+        "name": "Kalaiya",
+        "name_en": "Kalaiya",
+        "name_ne": "कलैया",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33007,
+    "fields": {
+        "name": "Karaiyamai",
+        "name_en": "Karaiyamai",
+        "name_ne": "करैयामाई",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33008,
+    "fields": {
+        "name": "Kolhabi",
+        "name_en": "Kolhabi",
+        "name_ne": "कोल्हवी",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33009,
+    "fields": {
+        "name": "Mahagadhimai",
+        "name_en": "Mahagadhimai",
+        "name_ne": "महागढीमाई",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33010,
+    "fields": {
+        "name": "Nijgadh",
+        "name_en": "Nijgadh",
+        "name_ne": "निजगढ",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33011,
+    "fields": {
+        "name": "Pacharauta",
+        "name_en": "Pacharauta",
+        "name_ne": "पचरौता",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33012,
+    "fields": {
+        "name": "Parwanipur",
+        "name_en": "Parwanipur",
+        "name_ne": "परवानीपुर",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33013,
+    "fields": {
+        "name": "Pheta",
+        "name_en": "Pheta",
+        "name_ne": "फेटा",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33014,
+    "fields": {
+        "name": "Prasauni",
+        "name_en": "Prasauni",
+        "name_ne": "प्रसौनी",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33015,
+    "fields": {
+        "name": "Simraungadh",
+        "name_en": "Simraungadh",
+        "name_ne": "सिम्रौनगढ",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33016,
+    "fields": {
+        "name": "Suwarna",
+        "name_en": "Suwarna",
+        "name_ne": "सुवर्ण",
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 33099,
+    "fields": {
+        "name": "Parsa Wildlife Reserve",
+        "name_en": "Parsa Wildlife Reserve",
+        "name_ne": null,
+        "province": 2,
+        "district": 33
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34001,
+    "fields": {
+        "name": "Bahudaramai",
+        "name_en": "Bahudaramai",
+        "name_ne": "बहुदरमाई",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34002,
+    "fields": {
+        "name": "Bindabasini",
+        "name_en": "Bindabasini",
+        "name_ne": "बिन्दबासिनी",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34003,
+    "fields": {
+        "name": "Birgunj",
+        "name_en": "Birgunj",
+        "name_ne": "बिरगंज",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34004,
+    "fields": {
+        "name": "Chhipaharmai",
+        "name_en": "Chhipaharmai",
+        "name_ne": "छिपहरमाई",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34005,
+    "fields": {
+        "name": "Dhobini",
+        "name_en": "Dhobini",
+        "name_ne": "धोबीनी",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34006,
+    "fields": {
+        "name": "Jagarnathpur",
+        "name_en": "Jagarnathpur",
+        "name_ne": "जगरनाथपुर",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34007,
+    "fields": {
+        "name": "Jirabhawani",
+        "name_en": "Jirabhawani",
+        "name_ne": "जिराभवानी",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34008,
+    "fields": {
+        "name": "Kalikamai",
+        "name_en": "Kalikamai",
+        "name_ne": "कालिकामाई",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34009,
+    "fields": {
+        "name": "Pakahamainpur",
+        "name_en": "Pakahamainpur",
+        "name_ne": "पकाहा मैनपुर",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34010,
+    "fields": {
+        "name": "Parsagadhi",
+        "name_en": "Parsagadhi",
+        "name_ne": "पर्सागढी",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34011,
+    "fields": {
+        "name": "Paterwasugauli",
+        "name_en": "Paterwasugauli",
+        "name_ne": "पटेर्वा सुगौली",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34012,
+    "fields": {
+        "name": "Pokhariya",
+        "name_en": "Pokhariya",
+        "name_ne": "पोखरिया",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34013,
+    "fields": {
+        "name": "SakhuwaPrasauni",
+        "name_en": "SakhuwaPrasauni",
+        "name_ne": "सखुवा प्रसौनी",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34014,
+    "fields": {
+        "name": "Thori",
+        "name_en": "Thori",
+        "name_ne": "ठोरी",
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 34099,
+    "fields": {
+        "name": "Chitwan National Park",
+        "name_en": "Chitwan National Park",
+        "name_ne": null,
+        "province": 2,
+        "district": 34
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 35001,
+    "fields": {
+        "name": "Bharatpur",
+        "name_en": "Bharatpur",
+        "name_ne": "भरतपुर",
+        "province": 3,
+        "district": 35
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 35002,
+    "fields": {
+        "name": "Ichchhyakamana",
+        "name_en": "Ichchhyakamana",
+        "name_ne": "इच्छाकामना",
+        "province": 3,
+        "district": 35
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 35003,
+    "fields": {
+        "name": "Kalika",
+        "name_en": "Kalika",
+        "name_ne": "कालिका",
+        "province": 3,
+        "district": 35
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 35004,
+    "fields": {
+        "name": "Khairahani",
+        "name_en": "Khairahani",
+        "name_ne": "खैरहनी",
+        "province": 3,
+        "district": 35
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 35005,
+    "fields": {
+        "name": "Madi",
+        "name_en": "Madi",
+        "name_ne": "माडी",
+        "province": 3,
+        "district": 35
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 35006,
+    "fields": {
+        "name": "Rapti",
+        "name_en": "Rapti",
+        "name_ne": "राप्ती",
+        "province": 3,
+        "district": 35
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 35007,
+    "fields": {
+        "name": "Ratnanagar",
+        "name_en": "Ratnanagar",
+        "name_ne": "रत्ननगर",
+        "province": 3,
+        "district": 35
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 35099,
+    "fields": {
+        "name": "Chitawan National Park",
+        "name_en": "Chitawan National Park",
+        "name_ne": null,
+        "province": 3,
+        "district": 35
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36001,
+    "fields": {
+        "name": "Aarughat",
+        "name_en": "Aarughat",
+        "name_ne": "आरूघाट",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36002,
+    "fields": {
+        "name": "Ajirkot",
+        "name_en": "Ajirkot",
+        "name_ne": "अजिरकोट",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36003,
+    "fields": {
+        "name": "Bhimsen",
+        "name_en": "Bhimsen",
+        "name_ne": "भिमसेनथापा",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36004,
+    "fields": {
+        "name": "Chum Nubri",
+        "name_en": "Chum Nubri",
+        "name_ne": "चुमनुव्री",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36005,
+    "fields": {
+        "name": "Dharche",
+        "name_en": "Dharche",
+        "name_ne": "धार्चे",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36006,
+    "fields": {
+        "name": "Gandaki",
+        "name_en": "Gandaki",
+        "name_ne": "गण्डकी",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36007,
+    "fields": {
+        "name": "Gorkha",
+        "name_en": "Gorkha",
+        "name_ne": "गोरखा",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36008,
+    "fields": {
+        "name": "Palungtar",
+        "name_en": "Palungtar",
+        "name_ne": "पालुङटार",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36009,
+    "fields": {
+        "name": "Sahid Lakhan",
+        "name_en": "Sahid Lakhan",
+        "name_ne": "शहिद लखन",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36010,
+    "fields": {
+        "name": "Siranchok",
+        "name_en": "Siranchok",
+        "name_ne": "सिरानचोक",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 36011,
+    "fields": {
+        "name": "Sulikot",
+        "name_en": "Sulikot",
+        "name_ne": "बारपाक सुलिकोट",
+        "province": 4,
+        "district": 44
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 37001,
+    "fields": {
+        "name": "Besishahar",
+        "name_en": "Besishahar",
+        "name_ne": "बेसीशहर",
+        "province": 4,
+        "district": 45
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 37002,
+    "fields": {
+        "name": "Dordi",
+        "name_en": "Dordi",
+        "name_ne": "दोर्दी",
+        "province": 4,
+        "district": 45
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 37003,
+    "fields": {
+        "name": "Dudhpokhari",
+        "name_en": "Dudhpokhari",
+        "name_ne": "दूधपोखरी",
+        "province": 4,
+        "district": 45
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 37004,
+    "fields": {
+        "name": "Kwholasothar",
+        "name_en": "Kwholasothar",
+        "name_ne": "क्व्होलासोथार",
+        "province": 4,
+        "district": 45
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 37005,
+    "fields": {
+        "name": "MadhyaNepal",
+        "name_en": "MadhyaNepal",
+        "name_ne": "मध्यनेपाल",
+        "province": 4,
+        "district": 45
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 37006,
+    "fields": {
+        "name": "Marsyangdi",
+        "name_en": "Marsyangdi",
+        "name_ne": "मर्स्याङदी",
+        "province": 4,
+        "district": 45
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 37007,
+    "fields": {
+        "name": "Rainas",
+        "name_en": "Rainas",
+        "name_ne": "रार्इनास",
+        "province": 4,
+        "district": 45
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 37008,
+    "fields": {
+        "name": "Sundarbazar",
+        "name_en": "Sundarbazar",
+        "name_ne": "सुन्दरबजार",
+        "province": 4,
+        "district": 45
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38001,
+    "fields": {
+        "name": "Anbukhaireni",
+        "name_en": "Anbukhaireni",
+        "name_ne": "आँबुखैरेनी",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38002,
+    "fields": {
+        "name": "Bandipur",
+        "name_en": "Bandipur",
+        "name_ne": "बन्दिपुर",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38003,
+    "fields": {
+        "name": "Bhanu",
+        "name_en": "Bhanu",
+        "name_ne": "भानु",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38004,
+    "fields": {
+        "name": "Bhimad",
+        "name_en": "Bhimad",
+        "name_ne": "भिमाद",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38005,
+    "fields": {
+        "name": "Byas",
+        "name_en": "Byas",
+        "name_ne": "व्यास",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38006,
+    "fields": {
+        "name": "Devghat",
+        "name_en": "Devghat",
+        "name_ne": "देवघाट",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38007,
+    "fields": {
+        "name": "Ghiring",
+        "name_en": "Ghiring",
+        "name_ne": "घिरिङ",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38008,
+    "fields": {
+        "name": "Myagde",
+        "name_en": "Myagde",
+        "name_ne": "म्याग्दे",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38009,
+    "fields": {
+        "name": "Rhishing",
+        "name_en": "Rhishing",
+        "name_ne": "ऋषिङ्ग",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 38010,
+    "fields": {
+        "name": "Shuklagandaki",
+        "name_en": "Shuklagandaki",
+        "name_ne": "शुक्लागण्डकी",
+        "province": 4,
+        "district": 43
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39001,
+    "fields": {
+        "name": "Aandhikhola",
+        "name_en": "Aandhikhola",
+        "name_ne": "आँधिखोला",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39002,
+    "fields": {
+        "name": "Arjunchaupari",
+        "name_en": "Arjunchaupari",
+        "name_ne": "अर्जुनचौपारी",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39003,
+    "fields": {
+        "name": "Bhirkot",
+        "name_en": "Bhirkot",
+        "name_ne": "भीरकोट",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39004,
+    "fields": {
+        "name": "Biruwa",
+        "name_en": "Biruwa",
+        "name_ne": "बिरुवा",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39005,
+    "fields": {
+        "name": "Chapakot",
+        "name_en": "Chapakot",
+        "name_ne": "चापाकोट",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39006,
+    "fields": {
+        "name": "Galyang",
+        "name_en": "Galyang",
+        "name_ne": "गल्याङ",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39007,
+    "fields": {
+        "name": "Harinas",
+        "name_en": "Harinas",
+        "name_ne": "हरिनास",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39008,
+    "fields": {
+        "name": "Kaligandagi",
+        "name_en": "Kaligandagi",
+        "name_ne": "कालीगण्डकी",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39009,
+    "fields": {
+        "name": "Phedikhola",
+        "name_en": "Phedikhola",
+        "name_ne": "फेदीखोला",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39010,
+    "fields": {
+        "name": "Putalibazar",
+        "name_en": "Putalibazar",
+        "name_ne": "पुतलीबजार",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 39011,
+    "fields": {
+        "name": "Waling",
+        "name_en": "Waling",
+        "name_ne": "वालिङ",
+        "province": 4,
+        "district": 42
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 40001,
+    "fields": {
+        "name": "Annapurna",
+        "name_en": "Annapurna",
+        "name_ne": "अन्नपूर्ण",
+        "province": 4,
+        "district": 46
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 40002,
+    "fields": {
+        "name": "Machhapuchchhre",
+        "name_en": "Machhapuchchhre",
+        "name_ne": "माछापुच्छ्रे",
+        "province": 4,
+        "district": 46
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 40003,
+    "fields": {
+        "name": "Madi",
+        "name_en": "Madi",
+        "name_ne": "मादी",
+        "province": 4,
+        "district": 46
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 40004,
+    "fields": {
+        "name": "Pokhara Lekhnath",
+        "name_en": "Pokhara Lekhnath",
+        "name_ne": "पोखरा लेखनाथ",
+        "province": 4,
+        "district": 46
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 40005,
+    "fields": {
+        "name": "Rupa",
+        "name_en": "Rupa",
+        "name_ne": "रूपा",
+        "province": 4,
+        "district": 46
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 41001,
+    "fields": {
+        "name": "Chame",
+        "name_en": "Chame",
+        "name_ne": "चामे",
+        "province": 4,
+        "district": 47
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 41002,
+    "fields": {
+        "name": "Narphu",
+        "name_en": "Narphu",
+        "name_ne": "नार्पा भूमि",
+        "province": 4,
+        "district": 47
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 41003,
+    "fields": {
+        "name": "Nashong",
+        "name_en": "Nashong",
+        "name_ne": "नासोँ",
+        "province": 4,
+        "district": 47
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 41004,
+    "fields": {
+        "name": "Neshyang",
+        "name_en": "Neshyang",
+        "name_ne": "मनाङ ङिस्याङ",
+        "province": 4,
+        "district": 47
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 42001,
+    "fields": {
+        "name": "Barhagaun Muktikhsetra",
+        "name_en": "Barhagaun Muktikhsetra",
+        "name_ne": "वारागुङ मुक्तिक्षेत्र",
+        "province": 4,
+        "district": 48
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 42002,
+    "fields": {
+        "name": "Dalome",
+        "name_en": "Dalome",
+        "name_ne": "लो-घेकर दामोदरकुण्ड",
+        "province": 4,
+        "district": 48
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 42003,
+    "fields": {
+        "name": "Gharapjhong",
+        "name_en": "Gharapjhong",
+        "name_ne": "घरपझोङ",
+        "province": 4,
+        "district": 48
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 42004,
+    "fields": {
+        "name": "Lomanthang",
+        "name_en": "Lomanthang",
+        "name_ne": "लोमन्थाङ",
+        "province": 4,
+        "district": 48
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 42005,
+    "fields": {
+        "name": "Thasang",
+        "name_en": "Thasang",
+        "name_ne": "थासाङ",
+        "province": 4,
+        "district": 48
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 43001,
+    "fields": {
+        "name": "Annapurna",
+        "name_en": "Annapurna",
+        "name_ne": "अन्नपूर्ण",
+        "province": 4,
+        "district": 49
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 43002,
+    "fields": {
+        "name": "Beni",
+        "name_en": "Beni",
+        "name_ne": "बेनी",
+        "province": 4,
+        "district": 49
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 43003,
+    "fields": {
+        "name": "Dhaulagiri",
+        "name_en": "Dhaulagiri",
+        "name_ne": "धवलागिरी",
+        "province": 4,
+        "district": 49
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 43004,
+    "fields": {
+        "name": "Malika",
+        "name_en": "Malika",
+        "name_ne": "मालिका",
+        "province": 4,
+        "district": 49
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 43005,
+    "fields": {
+        "name": "Mangala",
+        "name_en": "Mangala",
+        "name_ne": "मंगला",
+        "province": 4,
+        "district": 49
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 43006,
+    "fields": {
+        "name": "Raghuganga",
+        "name_en": "Raghuganga",
+        "name_ne": "रघुगंगा",
+        "province": 4,
+        "district": 49
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 43099,
+    "fields": {
+        "name": "Dhorpatan Hunting Reserve",
+        "name_en": "Dhorpatan Hunting Reserve",
+        "name_ne": null,
+        "province": 4,
+        "district": 49
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 44001,
+    "fields": {
+        "name": "Bihadi",
+        "name_en": "Bihadi",
+        "name_ne": "विहादी",
+        "province": 4,
+        "district": 51
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 44002,
+    "fields": {
+        "name": "Jaljala",
+        "name_en": "Jaljala",
+        "name_ne": "जलजला",
+        "province": 4,
+        "district": 51
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 44003,
+    "fields": {
+        "name": "Kushma",
+        "name_en": "Kushma",
+        "name_ne": "कुश्मा",
+        "province": 4,
+        "district": 51
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 44004,
+    "fields": {
+        "name": "Mahashila",
+        "name_en": "Mahashila",
+        "name_ne": "महाशिला",
+        "province": 4,
+        "district": 51
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 44005,
+    "fields": {
+        "name": "Modi",
+        "name_en": "Modi",
+        "name_ne": "मोदी",
+        "province": 4,
+        "district": 51
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 44006,
+    "fields": {
+        "name": "Painyu",
+        "name_en": "Painyu",
+        "name_ne": "पैयूं",
+        "province": 4,
+        "district": 51
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 44007,
+    "fields": {
+        "name": "Phalebas",
+        "name_en": "Phalebas",
+        "name_ne": "फलेवास",
+        "province": 4,
+        "district": 51
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45001,
+    "fields": {
+        "name": "Badigad",
+        "name_en": "Badigad",
+        "name_ne": "वडिगाड",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45002,
+    "fields": {
+        "name": "Baglung",
+        "name_en": "Baglung",
+        "name_ne": "बागलुङ",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45003,
+    "fields": {
+        "name": "Bareng",
+        "name_en": "Bareng",
+        "name_ne": "वरेङ",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45004,
+    "fields": {
+        "name": "Dhorpatan",
+        "name_en": "Dhorpatan",
+        "name_ne": "ढोरपाटन",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45005,
+    "fields": {
+        "name": "Galkot",
+        "name_en": "Galkot",
+        "name_ne": "गल्कोट",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45006,
+    "fields": {
+        "name": "Jaimuni",
+        "name_en": "Jaimuni",
+        "name_ne": "जैमिनी",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45007,
+    "fields": {
+        "name": "Kanthekhola",
+        "name_en": "Kanthekhola",
+        "name_ne": "काठेखोला",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45008,
+    "fields": {
+        "name": "Nisikhola",
+        "name_en": "Nisikhola",
+        "name_ne": "निसीखोला",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45009,
+    "fields": {
+        "name": "Taman Khola",
+        "name_en": "Taman Khola",
+        "name_ne": "तमानखोला",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45010,
+    "fields": {
+        "name": "Tara Khola",
+        "name_en": "Tara Khola",
+        "name_ne": "ताराखोला",
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 45099,
+    "fields": {
+        "name": "Dhorpatan Hunting Reserve",
+        "name_en": "Dhorpatan Hunting Reserve",
+        "name_ne": null,
+        "province": 4,
+        "district": 50
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46001,
+    "fields": {
+        "name": "Chandrakot",
+        "name_en": "Chandrakot",
+        "name_ne": "चन्द्रकोट",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46002,
+    "fields": {
+        "name": "Chatrakot",
+        "name_en": "Chatrakot",
+        "name_ne": "छत्रकोट",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46003,
+    "fields": {
+        "name": "Dhurkot",
+        "name_en": "Dhurkot",
+        "name_ne": "धुर्कोट",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46004,
+    "fields": {
+        "name": "Gulmidarbar",
+        "name_en": "Gulmidarbar",
+        "name_ne": "गुल्मी दरबार",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46005,
+    "fields": {
+        "name": "Isma",
+        "name_en": "Isma",
+        "name_ne": "इस्मा",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46006,
+    "fields": {
+        "name": "Kaligandaki",
+        "name_en": "Kaligandaki",
+        "name_ne": "कालीगण्डकी",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46007,
+    "fields": {
+        "name": "Madane",
+        "name_en": "Madane",
+        "name_ne": "मदाने",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46008,
+    "fields": {
+        "name": "Malika",
+        "name_en": "Malika",
+        "name_ne": "मालिका",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46009,
+    "fields": {
+        "name": "Musikot",
+        "name_en": "Musikot",
+        "name_ne": "मुसिकोट",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46010,
+    "fields": {
+        "name": "Resunga",
+        "name_en": "Resunga",
+        "name_ne": "रेसुङ्गा",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46011,
+    "fields": {
+        "name": "Ruru",
+        "name_en": "Ruru",
+        "name_ne": "रुरु",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 46012,
+    "fields": {
+        "name": "Satyawati",
+        "name_en": "Satyawati",
+        "name_ne": "सत्यवती",
+        "province": 5,
+        "district": 41
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47001,
+    "fields": {
+        "name": "Bagnaskali",
+        "name_en": "Bagnaskali",
+        "name_ne": "बगनासकाली",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47002,
+    "fields": {
+        "name": "Mathagadhi",
+        "name_en": "Mathagadhi",
+        "name_ne": "माथागढी",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47003,
+    "fields": {
+        "name": "Nisdi",
+        "name_en": "Nisdi",
+        "name_ne": "निस्दी",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47004,
+    "fields": {
+        "name": "Purbakhola",
+        "name_en": "Purbakhola",
+        "name_ne": "पुर्वखोला",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47005,
+    "fields": {
+        "name": "Rainadevi Chhahara",
+        "name_en": "Rainadevi Chhahara",
+        "name_ne": "रैनादेवी छहरा",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47006,
+    "fields": {
+        "name": "Rambha",
+        "name_en": "Rambha",
+        "name_ne": "रम्भा",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47007,
+    "fields": {
+        "name": "Rampur",
+        "name_en": "Rampur",
+        "name_ne": "रामपुर",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47008,
+    "fields": {
+        "name": "Ribdikot",
+        "name_en": "Ribdikot",
+        "name_ne": "रिब्दीकोट",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47009,
+    "fields": {
+        "name": "Tansen",
+        "name_en": "Tansen",
+        "name_ne": "तानसेन",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 47010,
+    "fields": {
+        "name": "Tinau",
+        "name_en": "Tinau",
+        "name_ne": "तिनाउ",
+        "province": 5,
+        "district": 39
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 48001,
+    "fields": {
+        "name": "Bardaghat",
+        "name_en": "Bardaghat",
+        "name_ne": "बर्दघाट",
+        "province": 5,
+        "district": 482
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 48002,
+    "fields": {
+        "name": "Palhi Nandan",
+        "name_en": "Palhi Nandan",
+        "name_ne": "पाल्हीनन्दन",
+        "province": 5,
+        "district": 482
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 48003,
+    "fields": {
+        "name": "Pratappur",
+        "name_en": "Pratappur",
+        "name_ne": "प्रतापपुर",
+        "province": 5,
+        "district": 482
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 48004,
+    "fields": {
+        "name": "Ramgram",
+        "name_en": "Ramgram",
+        "name_ne": "रामग्राम",
+        "province": 5,
+        "district": 482
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 48005,
+    "fields": {
+        "name": "Sarawal",
+        "name_en": "Sarawal",
+        "name_ne": "सरावल",
+        "province": 5,
+        "district": 482
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 48006,
+    "fields": {
+        "name": "Sunwal",
+        "name_en": "Sunwal",
+        "name_ne": "सुनवल",
+        "province": 5,
+        "district": 482
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 48007,
+    "fields": {
+        "name": "Susta",
+        "name_en": "Susta",
+        "name_ne": "सुस्ता",
+        "province": 5,
+        "district": 482
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49001,
+    "fields": {
+        "name": "Butwal",
+        "name_en": "Butwal",
+        "name_ne": "बुटवल",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49002,
+    "fields": {
+        "name": "Devdaha",
+        "name_en": "Devdaha",
+        "name_ne": "देवदह",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49003,
+    "fields": {
+        "name": "Gaidahawa",
+        "name_en": "Gaidahawa",
+        "name_ne": "गैडहवा",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49004,
+    "fields": {
+        "name": "Kanchan",
+        "name_en": "Kanchan",
+        "name_ne": "कन्चन",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49005,
+    "fields": {
+        "name": "Kotahimai",
+        "name_en": "Kotahimai",
+        "name_ne": "कोटहीमार्इ",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49006,
+    "fields": {
+        "name": "Lumbini Sanskritik",
+        "name_en": "Lumbini Sanskritik",
+        "name_ne": "लुम्बिनी सांस्कृतिक",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49007,
+    "fields": {
+        "name": "Marchawari",
+        "name_en": "Marchawari",
+        "name_ne": "मर्चवारी",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49008,
+    "fields": {
+        "name": "Mayadevi",
+        "name_en": "Mayadevi",
+        "name_ne": "मायादेवी",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49009,
+    "fields": {
+        "name": "Omsatiya",
+        "name_en": "Omsatiya",
+        "name_ne": "ओमसतिया",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49010,
+    "fields": {
+        "name": "Rohini",
+        "name_en": "Rohini",
+        "name_ne": "रोहिणी",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49011,
+    "fields": {
+        "name": "Sainamaina",
+        "name_en": "Sainamaina",
+        "name_ne": "सैनामैना",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49012,
+    "fields": {
+        "name": "Sammarimai",
+        "name_en": "Sammarimai",
+        "name_ne": "सम्मरीमार्इ",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49013,
+    "fields": {
+        "name": "Siddharthanagar",
+        "name_en": "Siddharthanagar",
+        "name_ne": "सिद्धार्थनगर",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49014,
+    "fields": {
+        "name": "Siyari",
+        "name_en": "Siyari",
+        "name_ne": "सियारी",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49015,
+    "fields": {
+        "name": "Sudhdhodhan",
+        "name_en": "Sudhdhodhan",
+        "name_ne": "सुद्धोधन",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49016,
+    "fields": {
+        "name": "Tillotama",
+        "name_en": "Tillotama",
+        "name_ne": "तिलोत्तमा",
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 49099,
+    "fields": {
+        "name": "Lumbini Sanskritik Development Area",
+        "name_en": "Lumbini Sanskritik Development Area",
+        "name_ne": null,
+        "province": 5,
+        "district": 37
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50001,
+    "fields": {
+        "name": "Banganga",
+        "name_en": "Banganga",
+        "name_ne": "बाणगंगा",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50002,
+    "fields": {
+        "name": "Bijayanagar",
+        "name_en": "Bijayanagar",
+        "name_ne": "विजयनगर",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50003,
+    "fields": {
+        "name": "Buddhabhumi",
+        "name_en": "Buddhabhumi",
+        "name_ne": "बुद्धभुमी",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50004,
+    "fields": {
+        "name": "Kapilbastu",
+        "name_en": "Kapilbastu",
+        "name_ne": "कपिलवस्तु",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50005,
+    "fields": {
+        "name": "Krishnanagar",
+        "name_en": "Krishnanagar",
+        "name_ne": "कृष्णनगर",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50006,
+    "fields": {
+        "name": "Maharajgunj",
+        "name_en": "Maharajgunj",
+        "name_ne": "महाराजगंज",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50007,
+    "fields": {
+        "name": "Mayadevi",
+        "name_en": "Mayadevi",
+        "name_ne": "मायादेवी",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50008,
+    "fields": {
+        "name": "Shivaraj",
+        "name_en": "Shivaraj",
+        "name_ne": "शिवराज",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50009,
+    "fields": {
+        "name": "Suddhodhan",
+        "name_en": "Suddhodhan",
+        "name_ne": "शुद्धोधन",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 50010,
+    "fields": {
+        "name": "Yashodhara",
+        "name_en": "Yashodhara",
+        "name_ne": "यसोधरा",
+        "province": 5,
+        "district": 38
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 51001,
+    "fields": {
+        "name": "Bhumekasthan",
+        "name_en": "Bhumekasthan",
+        "name_ne": "भुमिकास्थान",
+        "province": 5,
+        "district": 40
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 51002,
+    "fields": {
+        "name": "Chhatradev",
+        "name_en": "Chhatradev",
+        "name_ne": "छत्रदेव",
+        "province": 5,
+        "district": 40
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 51003,
+    "fields": {
+        "name": "Malarani",
+        "name_en": "Malarani",
+        "name_ne": "मालारानी",
+        "province": 5,
+        "district": 40
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 51004,
+    "fields": {
+        "name": "Panini",
+        "name_en": "Panini",
+        "name_ne": "पाणिनी",
+        "province": 5,
+        "district": 40
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 51005,
+    "fields": {
+        "name": "Sandhikharka",
+        "name_en": "Sandhikharka",
+        "name_ne": "सन्धिखर्क",
+        "province": 5,
+        "district": 40
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 51006,
+    "fields": {
+        "name": "Sitganga",
+        "name_en": "Sitganga",
+        "name_ne": "शितगंगा",
+        "province": 5,
+        "district": 40
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 52001,
+    "fields": {
+        "name": "Ayirabati",
+        "name_en": "Ayirabati",
+        "name_ne": "ऐरावती",
+        "province": 5,
+        "district": 53
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 52002,
+    "fields": {
+        "name": "Gaumukhi",
+        "name_en": "Gaumukhi",
+        "name_ne": "गौमुखी",
+        "province": 5,
+        "district": 53
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 52003,
+    "fields": {
+        "name": "Jhimruk",
+        "name_en": "Jhimruk",
+        "name_ne": "झिमरुक",
+        "province": 5,
+        "district": 53
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 52004,
+    "fields": {
+        "name": "Mallarani",
+        "name_en": "Mallarani",
+        "name_ne": "मल्लरानी",
+        "province": 5,
+        "district": 53
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 52005,
+    "fields": {
+        "name": "Mandavi",
+        "name_en": "Mandavi",
+        "name_ne": "माण्डवी",
+        "province": 5,
+        "district": 53
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 52006,
+    "fields": {
+        "name": "Naubahini",
+        "name_en": "Naubahini",
+        "name_ne": "नौबहिनी",
+        "province": 5,
+        "district": 53
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 52007,
+    "fields": {
+        "name": "Pyuthan",
+        "name_en": "Pyuthan",
+        "name_ne": "प्यूठान",
+        "province": 5,
+        "district": 53
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 52008,
+    "fields": {
+        "name": "Sarumarani",
+        "name_en": "Sarumarani",
+        "name_ne": "सरुमारानी",
+        "province": 5,
+        "district": 53
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 52009,
+    "fields": {
+        "name": "Sworgadwary",
+        "name_en": "Sworgadwary",
+        "name_ne": "स्वर्गद्वारी",
+        "province": 5,
+        "district": 53
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53001,
+    "fields": {
+        "name": "Duikholi",
+        "name_en": "Duikholi",
+        "name_ne": "परिवर्तन",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53002,
+    "fields": {
+        "name": "Lungri",
+        "name_en": "Lungri",
+        "name_ne": "लुङग्री",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53003,
+    "fields": {
+        "name": "Madi",
+        "name_en": "Madi",
+        "name_ne": "माडी",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53004,
+    "fields": {
+        "name": "Rolpa",
+        "name_en": "Rolpa",
+        "name_ne": "रोल्पा",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53005,
+    "fields": {
+        "name": "Runtigadi",
+        "name_en": "Runtigadi",
+        "name_ne": "रुन्टीगढी",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53006,
+    "fields": {
+        "name": "Sukidaha",
+        "name_en": "Sukidaha",
+        "name_ne": "गंगादेव",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53007,
+    "fields": {
+        "name": "Sunchhahari",
+        "name_en": "Sunchhahari",
+        "name_ne": "सुनछहरी",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53008,
+    "fields": {
+        "name": "Suwarnabati",
+        "name_en": "Suwarnabati",
+        "name_ne": "सुनिलस्मृति",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53009,
+    "fields": {
+        "name": "Thawang",
+        "name_en": "Thawang",
+        "name_ne": "थबाङ",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 53010,
+    "fields": {
+        "name": "Tribeni",
+        "name_en": "Tribeni",
+        "name_ne": "त्रिवेणी",
+        "province": 5,
+        "district": 54
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 54001,
+    "fields": {
+        "name": "Aathbiskot",
+        "name_en": "Aathbiskot",
+        "name_ne": "आठबिसकोट",
+        "province": 6,
+        "district": 542
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 54002,
+    "fields": {
+        "name": "Banfikot",
+        "name_en": "Banfikot",
+        "name_ne": "बाँफिकोट",
+        "province": 6,
+        "district": 542
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 54003,
+    "fields": {
+        "name": "Chaurjahari",
+        "name_en": "Chaurjahari",
+        "name_ne": "चौरजहारी",
+        "province": 6,
+        "district": 542
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 54004,
+    "fields": {
+        "name": "Musikot",
+        "name_en": "Musikot",
+        "name_ne": "मुसिकोट",
+        "province": 6,
+        "district": 542
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 54005,
+    "fields": {
+        "name": "Sani Bheri",
+        "name_en": "Sani Bheri",
+        "name_ne": "सानी भेरी",
+        "province": 6,
+        "district": 542
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 54006,
+    "fields": {
+        "name": "Tribeni",
+        "name_en": "Tribeni",
+        "name_ne": "त्रिवेणी",
+        "province": 6,
+        "district": 542
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55001,
+    "fields": {
+        "name": "Bagchaur",
+        "name_en": "Bagchaur",
+        "name_ne": "बागचौर",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55002,
+    "fields": {
+        "name": "Bangad Kupinde",
+        "name_en": "Bangad Kupinde",
+        "name_ne": "बनगाड कुपिण्डे",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55003,
+    "fields": {
+        "name": "Chhatreshwori",
+        "name_en": "Chhatreshwori",
+        "name_ne": "छत्रेश्वरी",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55004,
+    "fields": {
+        "name": "Darma",
+        "name_en": "Darma",
+        "name_ne": "दार्मा",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55005,
+    "fields": {
+        "name": "Dhorchaur",
+        "name_en": "Dhorchaur",
+        "name_ne": "सिद्ध कुमाख",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55006,
+    "fields": {
+        "name": "Kalimati",
+        "name_en": "Kalimati",
+        "name_ne": "कालिमाटी",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55007,
+    "fields": {
+        "name": "Kapurkot",
+        "name_en": "Kapurkot",
+        "name_ne": "कपुरकोट",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55008,
+    "fields": {
+        "name": "Kumakhmalika",
+        "name_en": "Kumakhmalika",
+        "name_ne": "कुमाख",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55009,
+    "fields": {
+        "name": "Sharada",
+        "name_en": "Sharada",
+        "name_ne": "शारदा",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 55010,
+    "fields": {
+        "name": "Tribeni",
+        "name_en": "Tribeni",
+        "name_ne": "त्रिवेणी",
+        "province": 6,
+        "district": 55
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56001,
+    "fields": {
+        "name": "Babai",
+        "name_en": "Babai",
+        "name_ne": "बबई",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56002,
+    "fields": {
+        "name": "Banglachuli",
+        "name_en": "Banglachuli",
+        "name_ne": "बंगलाचुली",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56003,
+    "fields": {
+        "name": "Dangisharan",
+        "name_en": "Dangisharan",
+        "name_ne": "दंगीशरण",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56004,
+    "fields": {
+        "name": "Gadhawa",
+        "name_en": "Gadhawa",
+        "name_ne": "गढवा",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56005,
+    "fields": {
+        "name": "Ghorahi",
+        "name_en": "Ghorahi",
+        "name_ne": "घोराही",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56006,
+    "fields": {
+        "name": "Lamahi",
+        "name_en": "Lamahi",
+        "name_ne": "लमही",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56007,
+    "fields": {
+        "name": "Rajpur",
+        "name_en": "Rajpur",
+        "name_ne": "राजपुर",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56008,
+    "fields": {
+        "name": "Rapti",
+        "name_en": "Rapti",
+        "name_ne": "राप्ती",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56009,
+    "fields": {
+        "name": "Shantinagar",
+        "name_en": "Shantinagar",
+        "name_ne": "शान्तिनगर",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 56010,
+    "fields": {
+        "name": "Tulsipur",
+        "name_en": "Tulsipur",
+        "name_ne": "तुल्सीपुर",
+        "province": 5,
+        "district": 52
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 57001,
+    "fields": {
+        "name": "Baijanath",
+        "name_en": "Baijanath",
+        "name_ne": "बैजनाथ",
+        "province": 5,
+        "district": 66
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 57002,
+    "fields": {
+        "name": "Duduwa",
+        "name_en": "Duduwa",
+        "name_ne": "डुडुवा",
+        "province": 5,
+        "district": 66
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 57003,
+    "fields": {
+        "name": "Janki",
+        "name_en": "Janki",
+        "name_ne": "जानकी",
+        "province": 5,
+        "district": 66
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 57004,
+    "fields": {
+        "name": "Khajura",
+        "name_en": "Khajura",
+        "name_ne": "खजुरा",
+        "province": 5,
+        "district": 66
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 57005,
+    "fields": {
+        "name": "Kohalpur",
+        "name_en": "Kohalpur",
+        "name_ne": "कोहलपुर",
+        "province": 5,
+        "district": 66
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 57006,
+    "fields": {
+        "name": "Narainapur",
+        "name_en": "Narainapur",
+        "name_ne": "नरैनापुर",
+        "province": 5,
+        "district": 66
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 57007,
+    "fields": {
+        "name": "Nepalgunj",
+        "name_en": "Nepalgunj",
+        "name_ne": "नेपालगंज",
+        "province": 5,
+        "district": 66
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 57008,
+    "fields": {
+        "name": "Rapti Sonari",
+        "name_en": "Rapti Sonari",
+        "name_ne": "राप्तीसोनारी",
+        "province": 5,
+        "district": 66
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 58001,
+    "fields": {
+        "name": "Badhaiyatal",
+        "name_en": "Badhaiyatal",
+        "name_ne": "बढैयाताल",
+        "province": 5,
+        "district": 65
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 58002,
+    "fields": {
+        "name": "Bansagadhi",
+        "name_en": "Bansagadhi",
+        "name_ne": "बाँसगढी",
+        "province": 5,
+        "district": 65
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 58003,
+    "fields": {
+        "name": "Barbardiya",
+        "name_en": "Barbardiya",
+        "name_ne": "बारबर्दिया",
+        "province": 5,
+        "district": 65
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 58004,
+    "fields": {
+        "name": "Geruwa",
+        "name_en": "Geruwa",
+        "name_ne": "गेरुवा",
+        "province": 5,
+        "district": 65
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 58005,
+    "fields": {
+        "name": "Gulariya",
+        "name_en": "Gulariya",
+        "name_ne": "गुलरिया",
+        "province": 5,
+        "district": 65
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 58006,
+    "fields": {
+        "name": "Madhuwan",
+        "name_en": "Madhuwan",
+        "name_ne": "मधुवन",
+        "province": 5,
+        "district": 65
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 58007,
+    "fields": {
+        "name": "Rajapur",
+        "name_en": "Rajapur",
+        "name_ne": "राजापुर",
+        "province": 5,
+        "district": 65
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 58008,
+    "fields": {
+        "name": "Thakurbaba",
+        "name_en": "Thakurbaba",
+        "name_ne": "ठाकुरबाबा",
+        "province": 5,
+        "district": 65
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 58099,
+    "fields": {
+        "name": "Bardiya National Park",
+        "name_en": "Bardiya National Park",
+        "name_ne": null,
+        "province": 5,
+        "district": 65
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 59001,
+    "fields": {
+        "name": "Barahtal",
+        "name_en": "Barahtal",
+        "name_ne": "बराहताल",
+        "province": 6,
+        "district": 64
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 59002,
+    "fields": {
+        "name": "Bheriganga",
+        "name_en": "Bheriganga",
+        "name_ne": "भेरीगंगा",
+        "province": 6,
+        "district": 64
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 59003,
+    "fields": {
+        "name": "Birendranagar",
+        "name_en": "Birendranagar",
+        "name_ne": "बीरेन्द्रनगर",
+        "province": 6,
+        "district": 64
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 59004,
+    "fields": {
+        "name": "Chaukune",
+        "name_en": "Chaukune",
+        "name_ne": "चौकुने",
+        "province": 6,
+        "district": 64
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 59005,
+    "fields": {
+        "name": "Chingad",
+        "name_en": "Chingad",
+        "name_ne": "चिङ्गाड",
+        "province": 6,
+        "district": 64
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 59006,
+    "fields": {
+        "name": "Gurbhakot",
+        "name_en": "Gurbhakot",
+        "name_ne": "गुर्भाकोट",
+        "province": 6,
+        "district": 64
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 59007,
+    "fields": {
+        "name": "Lekbeshi",
+        "name_en": "Lekbeshi",
+        "name_ne": "लेकबेशी",
+        "province": 6,
+        "district": 64
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 59008,
+    "fields": {
+        "name": "Panchpuri",
+        "name_en": "Panchpuri",
+        "name_ne": "पञ्चपुरी",
+        "province": 6,
+        "district": 64
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 59009,
+    "fields": {
+        "name": "Simta",
+        "name_en": "Simta",
+        "name_ne": "सिम्ता",
+        "province": 6,
+        "district": 64
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60001,
+    "fields": {
+        "name": "Aathabis",
+        "name_en": "Aathabis",
+        "name_ne": "आठबीस",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60002,
+    "fields": {
+        "name": "Bhagawatimai",
+        "name_en": "Bhagawatimai",
+        "name_ne": "भगवतीमाई",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60003,
+    "fields": {
+        "name": "Bhairabi",
+        "name_en": "Bhairabi",
+        "name_ne": "भैरवी",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60004,
+    "fields": {
+        "name": "Chamunda Bindrasaini",
+        "name_en": "Chamunda Bindrasaini",
+        "name_ne": "चामुण्डा बिन्द्रासैनी",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60005,
+    "fields": {
+        "name": "Dullu",
+        "name_en": "Dullu",
+        "name_ne": "दुल्लु",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60006,
+    "fields": {
+        "name": "Dungeshwor",
+        "name_en": "Dungeshwor",
+        "name_ne": "डुङ्गेश्वर",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60007,
+    "fields": {
+        "name": "Gurans",
+        "name_en": "Gurans",
+        "name_ne": "गुराँस",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60008,
+    "fields": {
+        "name": "Mahabu",
+        "name_en": "Mahabu",
+        "name_ne": "महाबु",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60009,
+    "fields": {
+        "name": "Narayan",
+        "name_en": "Narayan",
+        "name_ne": "नारायण",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60010,
+    "fields": {
+        "name": "Naumule",
+        "name_en": "Naumule",
+        "name_ne": "नौमुले",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 60011,
+    "fields": {
+        "name": "Thantikandh",
+        "name_en": "Thantikandh",
+        "name_ne": "ठाँटीकाँध",
+        "province": 6,
+        "district": 63
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 61001,
+    "fields": {
+        "name": "Barekot",
+        "name_en": "Barekot",
+        "name_ne": "बारेकोट",
+        "province": 6,
+        "district": 62
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 61002,
+    "fields": {
+        "name": "Bheri",
+        "name_en": "Bheri",
+        "name_ne": "भेरी",
+        "province": 6,
+        "district": 62
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 61003,
+    "fields": {
+        "name": "Chhedagad",
+        "name_en": "Chhedagad",
+        "name_ne": "छेडागाड",
+        "province": 6,
+        "district": 62
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 61004,
+    "fields": {
+        "name": "Junichande",
+        "name_en": "Junichande",
+        "name_ne": "जुनीचाँदे",
+        "province": 6,
+        "district": 62
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 61005,
+    "fields": {
+        "name": "Kuse",
+        "name_en": "Kuse",
+        "name_ne": "कुसे",
+        "province": 6,
+        "district": 62
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 61006,
+    "fields": {
+        "name": "Shiwalaya",
+        "name_en": "Shiwalaya",
+        "name_ne": "शिवालय",
+        "province": 6,
+        "district": 62
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 61007,
+    "fields": {
+        "name": "Tribeni Nalagad",
+        "name_en": "Tribeni Nalagad",
+        "name_ne": "नलगाड",
+        "province": 6,
+        "district": 62
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 62001,
+    "fields": {
+        "name": "Chharka Tangsong",
+        "name_en": "Chharka Tangsong",
+        "name_ne": "छार्का ताङसोङ",
+        "province": 6,
+        "district": 57
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 62002,
+    "fields": {
+        "name": "Dolpo Buddha",
+        "name_en": "Dolpo Buddha",
+        "name_ne": "डोल्पो बुद्ध",
+        "province": 6,
+        "district": 57
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 62003,
+    "fields": {
+        "name": "Jagadulla",
+        "name_en": "Jagadulla",
+        "name_ne": "जगदुल्ला",
+        "province": 6,
+        "district": 57
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 62004,
+    "fields": {
+        "name": "Kaike",
+        "name_en": "Kaike",
+        "name_ne": "काईके",
+        "province": 6,
+        "district": 57
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 62005,
+    "fields": {
+        "name": "Mudkechula",
+        "name_en": "Mudkechula",
+        "name_ne": "मुड्केचुला",
+        "province": 6,
+        "district": 57
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 62006,
+    "fields": {
+        "name": "Shey Phoksundo",
+        "name_en": "Shey Phoksundo",
+        "name_ne": "शे फोक्सुण्डो",
+        "province": 6,
+        "district": 57
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 62007,
+    "fields": {
+        "name": "Thuli Bheri",
+        "name_en": "Thuli Bheri",
+        "name_ne": "ठुली भेरी",
+        "province": 6,
+        "district": 57
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 62008,
+    "fields": {
+        "name": "Tripurasundari",
+        "name_en": "Tripurasundari",
+        "name_ne": "त्रिपुरासुन्दरी",
+        "province": 6,
+        "district": 57
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 63001,
+    "fields": {
+        "name": "Chandannath",
+        "name_en": "Chandannath",
+        "name_ne": "चन्दननाथ",
+        "province": 6,
+        "district": 60
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 63002,
+    "fields": {
+        "name": "Guthichaur",
+        "name_en": "Guthichaur",
+        "name_ne": "गुठिचौर",
+        "province": 6,
+        "district": 60
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 63003,
+    "fields": {
+        "name": "Hima",
+        "name_en": "Hima",
+        "name_ne": "हिमा",
+        "province": 6,
+        "district": 60
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 63004,
+    "fields": {
+        "name": "Kanakasundari",
+        "name_en": "Kanakasundari",
+        "name_ne": "कनकासुन्दरी",
+        "province": 6,
+        "district": 60
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 63005,
+    "fields": {
+        "name": "Patrasi",
+        "name_en": "Patrasi",
+        "name_ne": "पातारासी",
+        "province": 6,
+        "district": 60
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 63006,
+    "fields": {
+        "name": "Sinja",
+        "name_en": "Sinja",
+        "name_ne": "सिंजा",
+        "province": 6,
+        "district": 60
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 63007,
+    "fields": {
+        "name": "Tatopani",
+        "name_en": "Tatopani",
+        "name_ne": "तातोपानी",
+        "province": 6,
+        "district": 60
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 63008,
+    "fields": {
+        "name": "Tila",
+        "name_en": "Tila",
+        "name_ne": "तिला",
+        "province": 6,
+        "district": 60
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 64001,
+    "fields": {
+        "name": "Kalika",
+        "name_en": "Kalika",
+        "name_ne": "शुभ कालीका",
+        "province": 6,
+        "district": 61
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 64002,
+    "fields": {
+        "name": "Khandachakra",
+        "name_en": "Khandachakra",
+        "name_ne": "खाँडाचक्र",
+        "province": 6,
+        "district": 61
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 64003,
+    "fields": {
+        "name": "Mahawai",
+        "name_en": "Mahawai",
+        "name_ne": "महावै",
+        "province": 6,
+        "district": 61
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 64004,
+    "fields": {
+        "name": "Naraharinath",
+        "name_en": "Naraharinath",
+        "name_ne": "नरहरिनाथ",
+        "province": 6,
+        "district": 61
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 64005,
+    "fields": {
+        "name": "Pachaljharana",
+        "name_en": "Pachaljharana",
+        "name_ne": "पचालझरना",
+        "province": 6,
+        "district": 61
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 64006,
+    "fields": {
+        "name": "Palata",
+        "name_en": "Palata",
+        "name_ne": "पलाता",
+        "province": 6,
+        "district": 61
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 64007,
+    "fields": {
+        "name": "Raskot",
+        "name_en": "Raskot",
+        "name_ne": "रास्कोट",
+        "province": 6,
+        "district": 61
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 64008,
+    "fields": {
+        "name": "Sanni Tribeni",
+        "name_en": "Sanni Tribeni",
+        "name_ne": "सान्नी त्रिवेणी",
+        "province": 6,
+        "district": 61
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 64009,
+    "fields": {
+        "name": "Tilagufa",
+        "name_en": "Tilagufa",
+        "name_ne": "तिलागुफा",
+        "province": 6,
+        "district": 61
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 65001,
+    "fields": {
+        "name": "Chhayanath Rara",
+        "name_en": "Chhayanath Rara",
+        "name_ne": "छायाँनाथ रारा",
+        "province": 6,
+        "district": 58
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 65002,
+    "fields": {
+        "name": "Khatyad",
+        "name_en": "Khatyad",
+        "name_ne": "खत्याड",
+        "province": 6,
+        "district": 58
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 65003,
+    "fields": {
+        "name": "Mugum Karmarong",
+        "name_en": "Mugum Karmarong",
+        "name_ne": "मुगुम कार्मारोंग",
+        "province": 6,
+        "district": 58
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 65004,
+    "fields": {
+        "name": "Soru",
+        "name_en": "Soru",
+        "name_ne": "सोरु",
+        "province": 6,
+        "district": 58
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 66001,
+    "fields": {
+        "name": "Adanchuli",
+        "name_en": "Adanchuli",
+        "name_ne": "अदानचुली",
+        "province": 6,
+        "district": 59
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 66002,
+    "fields": {
+        "name": "Chankheli",
+        "name_en": "Chankheli",
+        "name_ne": "चंखेली",
+        "province": 6,
+        "district": 59
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 66003,
+    "fields": {
+        "name": "Kharpunath",
+        "name_en": "Kharpunath",
+        "name_ne": "खार्पुनाथ",
+        "province": 6,
+        "district": 59
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 66004,
+    "fields": {
+        "name": "Namkha",
+        "name_en": "Namkha",
+        "name_ne": "नाम्खा",
+        "province": 6,
+        "district": 59
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 66005,
+    "fields": {
+        "name": "Sarkegad",
+        "name_en": "Sarkegad",
+        "name_ne": "सर्केगाड",
+        "province": 6,
+        "district": 59
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 66006,
+    "fields": {
+        "name": "Simkot",
+        "name_en": "Simkot",
+        "name_ne": "सिमकोट",
+        "province": 6,
+        "district": 59
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 66007,
+    "fields": {
+        "name": "Tanjakot",
+        "name_en": "Tanjakot",
+        "name_ne": "ताँजाकोट",
+        "province": 6,
+        "district": 59
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67001,
+    "fields": {
+        "name": "Badimalika",
+        "name_en": "Badimalika",
+        "name_ne": "बडिमालिका",
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67002,
+    "fields": {
+        "name": "Budhiganga",
+        "name_en": "Budhiganga",
+        "name_ne": "बुढीगंगा",
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67003,
+    "fields": {
+        "name": "Budhinanda",
+        "name_en": "Budhinanda",
+        "name_ne": "बुढीनन्दा",
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67004,
+    "fields": {
+        "name": "Chhededaha",
+        "name_en": "Chhededaha",
+        "name_ne": "खप्तड छेडेदह",
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67005,
+    "fields": {
+        "name": "Gaumul",
+        "name_en": "Gaumul",
+        "name_ne": "गौमुल",
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67006,
+    "fields": {
+        "name": "Himali",
+        "name_en": "Himali",
+        "name_ne": "हिमाली",
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67007,
+    "fields": {
+        "name": "Pandav Gupha",
+        "name_en": "Pandav Gupha",
+        "name_ne": "जगन्नाथ",
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67008,
+    "fields": {
+        "name": "Swami Kartik",
+        "name_en": "Swami Kartik",
+        "name_ne": "स्वामीकार्तिक खापर",
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67009,
+    "fields": {
+        "name": "Tribeni",
+        "name_en": "Tribeni",
+        "name_ne": "त्रिवेणी",
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 67099,
+    "fields": {
+        "name": "Khaptad National Park",
+        "name_en": "Khaptad National Park",
+        "name_ne": null,
+        "province": 7,
+        "district": 70
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68001,
+    "fields": {
+        "name": "Bithadchir",
+        "name_en": "Bithadchir",
+        "name_ne": "वित्थडचिर",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68002,
+    "fields": {
+        "name": "Bungal",
+        "name_en": "Bungal",
+        "name_ne": "बुंगल",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68003,
+    "fields": {
+        "name": "Chabispathivera",
+        "name_en": "Chabispathivera",
+        "name_ne": "छबिसपाथिभेरा",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68004,
+    "fields": {
+        "name": "Durgathali",
+        "name_en": "Durgathali",
+        "name_ne": "दुर्गाथली",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68005,
+    "fields": {
+        "name": "JayaPrithivi",
+        "name_en": "JayaPrithivi",
+        "name_ne": "जयपृथ्वी",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68006,
+    "fields": {
+        "name": "Kanda",
+        "name_en": "Kanda",
+        "name_ne": "साइपाल",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68007,
+    "fields": {
+        "name": "Kedarseu",
+        "name_en": "Kedarseu",
+        "name_ne": "केदारस्युँ",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68008,
+    "fields": {
+        "name": "Khaptadchhanna",
+        "name_en": "Khaptadchhanna",
+        "name_ne": "खप्तडछान्ना",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68009,
+    "fields": {
+        "name": "Masta",
+        "name_en": "Masta",
+        "name_ne": "मष्टा",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68010,
+    "fields": {
+        "name": "Surma",
+        "name_en": "Surma",
+        "name_ne": "सूर्मा",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68011,
+    "fields": {
+        "name": "Talkot",
+        "name_en": "Talkot",
+        "name_ne": "तलकोट",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68012,
+    "fields": {
+        "name": "Thalara",
+        "name_en": "Thalara",
+        "name_ne": "थलारा",
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 68099,
+    "fields": {
+        "name": "Khaptad National Park",
+        "name_en": "Khaptad National Park",
+        "name_ne": null,
+        "province": 7,
+        "district": 71
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69001,
+    "fields": {
+        "name": "Bannigadhi Jayagadh",
+        "name_en": "Bannigadhi Jayagadh",
+        "name_ne": "बान्नीगढ़ी जयगढ़",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69002,
+    "fields": {
+        "name": "Chaurpati",
+        "name_en": "Chaurpati",
+        "name_ne": "चौरपाटी",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69003,
+    "fields": {
+        "name": "Dhakari",
+        "name_en": "Dhakari",
+        "name_ne": "ढकारी",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69004,
+    "fields": {
+        "name": "Kamalbazar",
+        "name_en": "Kamalbazar",
+        "name_ne": "कमलबजार",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69005,
+    "fields": {
+        "name": "Mangalsen",
+        "name_en": "Mangalsen",
+        "name_ne": "मंगलसेन",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69006,
+    "fields": {
+        "name": "Mellekh",
+        "name_en": "Mellekh",
+        "name_ne": "मेल्लेख",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69007,
+    "fields": {
+        "name": "Panchadewal Binayak",
+        "name_en": "Panchadewal Binayak",
+        "name_ne": "पंचदेवल विनायक",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69008,
+    "fields": {
+        "name": "Ramaroshan",
+        "name_en": "Ramaroshan",
+        "name_ne": "रामारोशन",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69009,
+    "fields": {
+        "name": "Sanphebagar",
+        "name_en": "Sanphebagar",
+        "name_ne": "साँफेबगर",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69010,
+    "fields": {
+        "name": "Turmakhad",
+        "name_en": "Turmakhad",
+        "name_ne": "तुर्माखाँद",
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 69099,
+    "fields": {
+        "name": "Khaptad National Park",
+        "name_en": "Khaptad National Park",
+        "name_ne": null,
+        "province": 7,
+        "district": 69
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70001,
+    "fields": {
+        "name": "Adharsha",
+        "name_en": "Adharsha",
+        "name_ne": "आदर्श",
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70002,
+    "fields": {
+        "name": "Badikedar",
+        "name_en": "Badikedar",
+        "name_ne": "बडीकेदार",
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70003,
+    "fields": {
+        "name": "Bogtan",
+        "name_en": "Bogtan",
+        "name_ne": "बोगटान",
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70004,
+    "fields": {
+        "name": "Dipayal Silgadi",
+        "name_en": "Dipayal Silgadi",
+        "name_ne": "दिपायल सिलगढ़ी",
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70005,
+    "fields": {
+        "name": "Jorayal",
+        "name_en": "Jorayal",
+        "name_ne": "जोरायल",
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70006,
+    "fields": {
+        "name": "K I Singh",
+        "name_en": "K I Singh",
+        "name_ne": "के.आई.सिं",
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70007,
+    "fields": {
+        "name": "Purbichauki",
+        "name_en": "Purbichauki",
+        "name_ne": "पूर्वीचौकी",
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70008,
+    "fields": {
+        "name": "Sayal",
+        "name_en": "Sayal",
+        "name_ne": "सायल",
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70009,
+    "fields": {
+        "name": "Shikhar",
+        "name_en": "Shikhar",
+        "name_ne": "शिखर",
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 70099,
+    "fields": {
+        "name": "Khaptad National Park",
+        "name_en": "Khaptad National Park",
+        "name_ne": null,
+        "province": 7,
+        "district": 68
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71001,
+    "fields": {
+        "name": "Bardagoriya",
+        "name_en": "Bardagoriya",
+        "name_ne": "बर्दगोरिया",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71002,
+    "fields": {
+        "name": "Bhajani",
+        "name_en": "Bhajani",
+        "name_ne": "भजनी",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71003,
+    "fields": {
+        "name": "Chure",
+        "name_en": "Chure",
+        "name_ne": "चुरे",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71004,
+    "fields": {
+        "name": "Dhangadhi",
+        "name_en": "Dhangadhi",
+        "name_ne": "धनगढी",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71005,
+    "fields": {
+        "name": "Gauriganga",
+        "name_en": "Gauriganga",
+        "name_ne": "गौरीगंगा",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71006,
+    "fields": {
+        "name": "Ghodaghodi",
+        "name_en": "Ghodaghodi",
+        "name_ne": "घोडाघोडी",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71007,
+    "fields": {
+        "name": "Godawari",
+        "name_en": "Godawari",
+        "name_ne": "गोदावरी",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71008,
+    "fields": {
+        "name": "Janaki",
+        "name_en": "Janaki",
+        "name_ne": "जानकी",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71009,
+    "fields": {
+        "name": "Joshipur",
+        "name_en": "Joshipur",
+        "name_ne": "जोशीपुर",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71010,
+    "fields": {
+        "name": "Kailari",
+        "name_en": "Kailari",
+        "name_ne": "कैलारी",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71011,
+    "fields": {
+        "name": "Lamkichuha",
+        "name_en": "Lamkichuha",
+        "name_ne": "लम्किचुहा",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71012,
+    "fields": {
+        "name": "Mohanyal",
+        "name_en": "Mohanyal",
+        "name_ne": "मोहन्याल",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 71013,
+    "fields": {
+        "name": "Tikapur",
+        "name_en": "Tikapur",
+        "name_ne": "टिकापुर",
+        "province": 7,
+        "district": 67
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72001,
+    "fields": {
+        "name": "Bedkot",
+        "name_en": "Bedkot",
+        "name_ne": "बेदकोट",
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72002,
+    "fields": {
+        "name": "Belauri",
+        "name_en": "Belauri",
+        "name_ne": "बेलौरी",
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72003,
+    "fields": {
+        "name": "Beldandi",
+        "name_en": "Beldandi",
+        "name_ne": "बेलडाँडी",
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72004,
+    "fields": {
+        "name": "Bhimdatta",
+        "name_en": "Bhimdatta",
+        "name_ne": "भीमदत्त",
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72005,
+    "fields": {
+        "name": "Krishnapur",
+        "name_en": "Krishnapur",
+        "name_ne": "कृष्णपुर",
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72006,
+    "fields": {
+        "name": "Laljhadi",
+        "name_en": "Laljhadi",
+        "name_ne": "लालझाडी",
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72007,
+    "fields": {
+        "name": "Mahakali",
+        "name_en": "Mahakali",
+        "name_ne": "माहाकाली",
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72008,
+    "fields": {
+        "name": "Punarbas",
+        "name_en": "Punarbas",
+        "name_ne": "पुनर्वास",
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72009,
+    "fields": {
+        "name": "Shuklaphanta",
+        "name_en": "Shuklaphanta",
+        "name_ne": "शुक्लाफाँटा",
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 72099,
+    "fields": {
+        "name": "Shuklaphanta National Park",
+        "name_en": "Shuklaphanta National Park",
+        "name_ne": null,
+        "province": 7,
+        "district": 75
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 73001,
+    "fields": {
+        "name": "Ajaymeru",
+        "name_en": "Ajaymeru",
+        "name_ne": "अजयमेरु",
+        "province": 7,
+        "district": 74
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 73002,
+    "fields": {
+        "name": "Alital",
+        "name_en": "Alital",
+        "name_ne": "आलिताल",
+        "province": 7,
+        "district": 74
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 73003,
+    "fields": {
+        "name": "Amargadhi",
+        "name_en": "Amargadhi",
+        "name_ne": "अमरगढी",
+        "province": 7,
+        "district": 74
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 73004,
+    "fields": {
+        "name": "Bhageshwar",
+        "name_en": "Bhageshwar",
+        "name_ne": "भागेश्वर",
+        "province": 7,
+        "district": 74
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 73005,
+    "fields": {
+        "name": "Ganayapdhura",
+        "name_en": "Ganayapdhura",
+        "name_ne": "गन्यापधुरा",
+        "province": 7,
+        "district": 74
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 73006,
+    "fields": {
+        "name": "Nawadurga",
+        "name_en": "Nawadurga",
+        "name_ne": "नवदुर्गा",
+        "province": 7,
+        "district": 74
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 73007,
+    "fields": {
+        "name": "Parashuram",
+        "name_en": "Parashuram",
+        "name_ne": "परशुराम",
+        "province": 7,
+        "district": 74
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74001,
+    "fields": {
+        "name": "Dasharathchanda",
+        "name_en": "Dasharathchanda",
+        "name_ne": "दशरथचन्द",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74002,
+    "fields": {
+        "name": "Dilasaini",
+        "name_en": "Dilasaini",
+        "name_ne": "डीलासैनी",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74003,
+    "fields": {
+        "name": "Dogadakedar",
+        "name_en": "Dogadakedar",
+        "name_ne": "दोगडाकेदार",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74004,
+    "fields": {
+        "name": "Melauli",
+        "name_en": "Melauli",
+        "name_ne": "मेलौली",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74005,
+    "fields": {
+        "name": "Pancheshwar",
+        "name_en": "Pancheshwar",
+        "name_ne": "पन्चेश्वर",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74006,
+    "fields": {
+        "name": "Patan",
+        "name_en": "Patan",
+        "name_ne": "पाटन",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74007,
+    "fields": {
+        "name": "Purchaudi",
+        "name_en": "Purchaudi",
+        "name_ne": "पुर्चौडी",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74008,
+    "fields": {
+        "name": "Shivanath",
+        "name_en": "Shivanath",
+        "name_ne": "शिवनाथ",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74009,
+    "fields": {
+        "name": "Sigas",
+        "name_en": "Sigas",
+        "name_ne": "सिगास",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 74010,
+    "fields": {
+        "name": "Surnaya",
+        "name_en": "Surnaya",
+        "name_ne": "सुर्नया",
+        "province": 7,
+        "district": 73
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 75001,
+    "fields": {
+        "name": "Apihimal",
+        "name_en": "Apihimal",
+        "name_ne": "अपिहिमाल",
+        "province": 7,
+        "district": 72
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 75002,
+    "fields": {
+        "name": "Byas",
+        "name_en": "Byas",
+        "name_ne": "व्याँस",
+        "province": 7,
+        "district": 72
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 75003,
+    "fields": {
+        "name": "Dunhu",
+        "name_en": "Dunhu",
+        "name_ne": "दुहुँ",
+        "province": 7,
+        "district": 72
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 75004,
+    "fields": {
+        "name": "Lekam",
+        "name_en": "Lekam",
+        "name_ne": "लेकम",
+        "province": 7,
+        "district": 72
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 75005,
+    "fields": {
+        "name": "Mahakali",
+        "name_en": "Mahakali",
+        "name_ne": "महाकाली",
+        "province": 7,
+        "district": 72
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 75006,
+    "fields": {
+        "name": "Malikaarjun",
+        "name_en": "Malikaarjun",
+        "name_ne": "मालिकार्जुन",
+        "province": 7,
+        "district": 72
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 75007,
+    "fields": {
+        "name": "Marma",
+        "name_en": "Marma",
+        "name_ne": "मार्मा",
+        "province": 7,
+        "district": 72
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 75008,
+    "fields": {
+        "name": "Naugad",
+        "name_en": "Naugad",
+        "name_ne": "नौगाड",
+        "province": 7,
+        "district": 72
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 75009,
+    "fields": {
+        "name": "Shailyashikhar",
+        "name_en": "Shailyashikhar",
+        "name_ne": "शैल्यशिखर",
+        "province": 7,
+        "district": 72
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 76001,
+    "fields": {
+        "name": "Binayee Tribeni",
+        "name_en": "Binayee Tribeni",
+        "name_ne": "विनयी-त्रिवेणी",
+        "province": 4,
+        "district": 481
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 76002,
+    "fields": {
+        "name": "Bulingtar",
+        "name_en": "Bulingtar",
+        "name_ne": "बुलिङटार",
+        "province": 4,
+        "district": 481
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 76003,
+    "fields": {
+        "name": "Bungdikali",
+        "name_en": "Bungdikali",
+        "name_ne": "बौदीकाली",
+        "province": 4,
+        "district": 481
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 76004,
+    "fields": {
+        "name": "Devchuli",
+        "name_en": "Devchuli",
+        "name_ne": "देवचुली",
+        "province": 4,
+        "district": 481
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 76005,
+    "fields": {
+        "name": "Gaidakot",
+        "name_en": "Gaidakot",
+        "name_ne": "गैंडाकोट",
+        "province": 4,
+        "district": 481
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 76006,
+    "fields": {
+        "name": "Hupsekot",
+        "name_en": "Hupsekot",
+        "name_ne": "हुप्सेकोट",
+        "province": 4,
+        "district": 481
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 76007,
+    "fields": {
+        "name": "Kawasoti",
+        "name_en": "Kawasoti",
+        "name_ne": "कावासोती",
+        "province": 4,
+        "district": 481
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 76008,
+    "fields": {
+        "name": "Madhyabindu",
+        "name_en": "Madhyabindu",
+        "name_ne": "मध्यविन्दु",
+        "province": 4,
+        "district": 481
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 76099,
+    "fields": {
+        "name": "Chitawan National Park",
+        "name_en": "Chitawan National Park",
+        "name_ne": null,
+        "province": 4,
+        "district": 481
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 77001,
+    "fields": {
+        "name": "Bhume",
+        "name_en": "Bhume",
+        "name_ne": "भूमे",
+        "province": 5,
+        "district": 541
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 77002,
+    "fields": {
+        "name": "Putha Uttarganga",
+        "name_en": "Putha Uttarganga",
+        "name_ne": "पुथा उत्तरगंगा",
+        "province": 5,
+        "district": 541
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 77003,
+    "fields": {
+        "name": "Sisne",
+        "name_en": "Sisne",
+        "name_ne": "सिस्ने",
+        "province": 5,
+        "district": 541
+    }
+},
+{
+    "model": "common.municipality",
+    "pk": 77099,
+    "fields": {
+        "name": "Dhorpatan Hunting Reserve",
+        "name_en": "Dhorpatan Hunting Reserve",
+        "name_ne": null,
+        "province": 5,
+        "district": 541
+    }
+}
+]

@@ -1,0 +1,65 @@
+[
+{
+    "model": "common.province",
+    "pk": 1,
+    "fields": {
+        "name": "Province 1",
+        "name_en": "Province 1",
+        "name_ne": "प्रदेश नं .१"
+    }
+},
+{
+    "model": "common.province",
+    "pk": 2,
+    "fields": {
+        "name": "Province 2",
+        "name_en": "Province 2",
+        "name_ne": "प्रदेश नं .२"
+    }
+},
+{
+    "model": "common.province",
+    "pk": 3,
+    "fields": {
+        "name": "Bagmati",
+        "name_en": "Bagmati",
+        "name_ne": "बाग्मती"
+    }
+},
+{
+    "model": "common.province",
+    "pk": 4,
+    "fields": {
+        "name": "Gandaki",
+        "name_en": "Gandaki",
+        "name_ne": "गण्डकी"
+    }
+},
+{
+    "model": "common.province",
+    "pk": 5,
+    "fields": {
+        "name": "Province 5",
+        "name_en": "Province 5",
+        "name_ne": "प्रदेश नं .५"
+    }
+},
+{
+    "model": "common.province",
+    "pk": 6,
+    "fields": {
+        "name": "Karnali",
+        "name_en": "Karnali",
+        "name_ne": "कर्णाली"
+    }
+},
+{
+    "model": "common.province",
+    "pk": 7,
+    "fields": {
+        "name": "Sudurpashchim",
+        "name_en": "Sudurpashchim",
+        "name_ne": "सुदुरपश्चिम"
+    }
+}
+]

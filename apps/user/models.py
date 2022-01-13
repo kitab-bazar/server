@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class UserManager(BaseUserManager):
@@ -44,6 +45,13 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     """ Custom User Model """
 
+    class UserType(models.TextChoices):
+        ADMIN = 'admin', 'Admin'
+        PUBLISHER = 'publisher', 'Publisher'
+        INSTITUTIONAL_USER = 'institutional_user', 'Institutional User'
+        SCHOOL_ADMIN = 'school_admin', 'School Admin'
+        INDIVIDUAL_USER = 'individual_user', 'Individual User'
+
     # Delete unused fields
     username = None
 
@@ -71,6 +79,24 @@ class User(AbstractUser):
         null=True,
         blank=True,
         verbose_name=ugettext("Full Name")
+    )
+    phone_number = PhoneNumberField(null=True, blank=True, unique=True)
+    user_type = models.CharField(
+        choices=UserType.choices, max_length=40,
+        default=UserType.INDIVIDUAL_USER,
+        verbose_name=ugettext("User Type")
+    )
+    institution = models.ForeignKey(
+        'institution.Institution', verbose_name=ugettext('Institution'), related_name='%(app_label)s_%(class)s_institution',
+        on_delete=models.CASCADE, null=True, blank=True
+    )
+    publisher = models.ForeignKey(
+        'publisher.Publisher', verbose_name=ugettext('Publisher'), related_name='%(app_label)s_%(class)s_publisher',
+        on_delete=models.CASCADE, null=True, blank=True
+    )
+    school = models.ForeignKey(
+        'school.School', verbose_name=ugettext('School'), related_name='%(app_label)s_%(class)s_school',
+        on_delete=models.CASCADE, null=True, blank=True
     )
 
     class Meta:

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 import environ
 from pathlib import Path
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ env = environ.Env(
     DB_HOST=(str, 'db'),
     DB_PORT=(int, 5432),
     REDIS_URL=(str, 'redis://redis:6379/0'),
-    CORS_ORIGIN_REGEX_WHITELIST=(str, r"^https://\w+\.togglecorp\.com$"),
+    CORS_ORIGIN_REGEX_WHITELIST=(str, 'r\"^https://\w+\.togglecorp\.com$\"'), # noqa W605
     TIME_ZONE=(str, 'Asia/Kathmandu'),
     CLIENT_URL=(str, 'http://localhost:3080')
 )
@@ -47,9 +48,14 @@ APPS_DIR = os.path.join(BASE_DIR, 'apps')
 
 LOCAL_APPS = [
     'apps.user',
+    'apps.common',
+    'apps.institution',
+    'apps.publisher',
+    'apps.school',
 ]
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,12 +65,14 @@ INSTALLED_APPS = [
     'graphene_django',
     'graphene_graphiql_explorer',
     'corsheaders',
+    'phonenumber_field',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -165,6 +173,7 @@ if DEBUG:
 else:
     CORS_ORIGIN_REGEX_WHITELIST = [env('CORS_ORIGIN_REGEX_WHITELIST')]
 
+CORS_ALLOW_CREDENTIALS = True
 CORS_URLS_REGEX = r'(^/api/.*$)|(^/media/.*$)|(^/graphql/$)'
 
 AUTH_USER_MODEL = "user.User"
@@ -196,6 +205,12 @@ GRAPHENE_NODES_WHITELIST = (
     'resetPassword',
     'generateResetPasswordToken',
     'activate',
+    'province',
+    'district',
+    'municipality',
+    'provinces',
+    'districts',
+    'municipalities',
     # __ double underscore nodes
     '__schema',
     '__type',
@@ -207,3 +222,13 @@ CLIENT_URL = env('CLIENT_URL')
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     DEFAULT_FROM_EMAIL = "Kitab Bazar <kitabbazar@togglecorp.com>"
+
+USE_I18N = True
+USE_L10N = True
+LOCALEURL_USE_ACCEPT_LANGUAGE = True
+LANGUAGES = [
+    ('en', _('English')),
+    ('ne', _('Nepali')),
+]
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ne'
+MODELTRANSLATION_LANGUAGES = ('en', 'ne')

@@ -8,6 +8,12 @@ from .tasks import generic_email_sender
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.translation import ugettext
+from apps.publisher.serializers import PublisherSerializer
+from apps.school.serializers import SchoolSerializer
+from apps.institution.serializers import InstitutionSerializer
+from apps.institution.models import Institution
+from apps.school.models import School
+from apps.publisher.models import Publisher
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,10 +41,6 @@ class UserPasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
     new_password = serializers.CharField(required=True, write_only=True)
 
-    class Meta:
-        model = User
-        fields = ['old_password', 'new_password']
-
     def validate_old_password(self, password):
         if not self.instance.check_password(password):
             raise serializers.ValidationError('The password is invalid.')
@@ -55,10 +57,16 @@ class UserPasswordSerializer(serializers.Serializer):
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(required=True, write_only=True)
+    institution = InstitutionSerializer(required=False)
+    school = SchoolSerializer(required=False)
+    publisher = PublisherSerializer(required=False)
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'password']
+        fields = [
+            'email', 'first_name', 'last_name', 'password', 'phone_number', 'user_type',
+            'institution', 'publisher', 'school'
+        ]
 
     def validate_password(self, password):
         validate_password(password)
@@ -75,8 +83,36 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=self.validated_data.get('last_name', ''),
             email=self.validated_data['email'],
             password=self.validated_data['password'],
+            user_type=self.validated_data.get('user_type', None),
+            phone_number=self.validated_data.get('phone_number', None),
             is_active=False
         )
+        if instance.user_type == User.UserType.INSTITUTIONAL_USER.value:
+            institution_data = self.validated_data['institution']
+            municipality = institution_data['municipality']
+            institution_data['district'] = municipality.district
+            institution_data['province'] = municipality.province
+            institution = Institution.objects.create(**institution_data)
+            instance.institution = institution
+            instance.save()
+
+        elif instance.user_type == User.UserType.PUBLISHER.value:
+            publisher_data = self.validated_data['publisher']
+            municipality = publisher_data['municipality']
+            publisher_data['district'] = municipality.district
+            publisher_data['province'] = municipality.province
+            publisher = Publisher.objects.create(**publisher_data)
+            instance.publisher = publisher
+            instance.save()
+
+        elif instance.user_type == User.UserType.SCHOOL_ADMIN.value:
+            school_data = self.validated_data['school']
+            municipality = school_data['municipality']
+            school_data['district'] = municipality.district
+            school_data['province'] = municipality.province
+            school = School.objects.create(**school_data)
+            instance.school = school
+            instance.save()
 
         subject = ugettext("Activate your account.")
         message = ugettext("Please click on the link to confirm your registration")

@@ -26,12 +26,14 @@ class UserListType(CustomDjangoListObjectType):
 
 
 class UserMeType(DjangoObjectType):
+
     class Meta:
         model = User
         skip_registry = True
         fields = (
             'id', 'first_name', 'last_name', 'full_name', 'email',
-            'is_active', 'last_login'
+            'is_active', 'last_login', 'user_type', 'institution',
+            'publisher', 'school'
         )
 
 
