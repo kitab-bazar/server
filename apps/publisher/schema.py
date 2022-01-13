@@ -13,8 +13,8 @@ class PublisherType(DjangoObjectType):
     class Meta:
         model = Publisher
         fields = (
-            'id', 'name', 'email', 'province', 'district',
-            'municipality', 'ward_number', 'local_address', 'vat_number', 'pan_number'
+            'id', 'name', 'email', 'municipality', 'ward_number', 'local_address',
+            'vat_number', 'pan_number'
         )
 
     @staticmethod

@@ -1,8 +1,9 @@
 import graphene
-from django.utils.translation import ugettext as _
-
-from utils.graphene.mutation import generate_input_type_for_serializer
-from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
+from utils.graphene.mutation import (
+    generate_input_type_for_serializer,
+    GrapheneMutation,
+    DeleteMutation
+)
 
 from apps.publisher.models import Publisher
 from apps.publisher.schema import PublisherType
@@ -15,69 +16,40 @@ PublisherInputType = generate_input_type_for_serializer(
 )
 
 
-class CreatePublisher(graphene.Mutation):
+class CreatePublisher(GrapheneMutation):
     class Arguments:
         data = PublisherInputType(required=True)
-
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
+    model = Publisher
+    serializer_class = PublisherSerializer
     result = graphene.Field(PublisherType)
 
-    @staticmethod
-    def mutate(root, info, data):
-        serializer = PublisherSerializer(data=data, context={'request': info.context.request})
-        if errors := mutation_is_not_valid(serializer):
-            return CreatePublisher(errors=errors, ok=False)
-        instance = serializer.save()
-        return CreatePublisher(result=instance, errors=None, ok=True)
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
 
 
-class UpdatePublisher(graphene.Mutation):
+class UpdatePublisher(GrapheneMutation):
     class Arguments:
-        id = graphene.ID(required=True)
         data = PublisherInputType(required=True)
-
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
+        id = graphene.ID(required=True)
+    model = Publisher
+    serializer_class = PublisherSerializer
     result = graphene.Field(PublisherType)
 
-    @staticmethod
-    def mutate(root, info, data):
-        try:
-            instance = Publisher.objects.get(id=data['id'])
-        except Publisher.DoesNotExist:
-            return UpdatePublisher(errors=[
-                dict(field='nonFieldErrors', messages=_('Publisher does not exist.'))
-            ])
-        serializer = PublisherSerializer(
-            instance=instance, data=data,
-            context={'request': info.context.request}, partial=True
-        )
-        if errors := mutation_is_not_valid(serializer):
-            return UpdatePublisher(errors=errors, ok=False)
-        instance = serializer.save()
-        return UpdatePublisher(result=instance, errors=None, ok=True)
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
 
 
-class DeletePublisher(graphene.Mutation):
+class DeletePublisher(DeleteMutation):
     class Arguments:
         id = graphene.ID(required=True)
-
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
+    model = Publisher
     result = graphene.Field(PublisherType)
 
-    @staticmethod
-    def mutate(root, info, id):
-        try:
-            instance = Publisher.objects.get(id=id)
-        except Publisher.DoesNotExist:
-            return DeletePublisher(errors=[
-                dict(field='nonFieldErrors', messages=_('Publisher does not exist.'))
-            ])
-        instance.delete()
-        instance.id = id
-        return DeletePublisher(result=instance, errors=None, ok=True)
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
 
 
 class Mutation(graphene.ObjectType):
