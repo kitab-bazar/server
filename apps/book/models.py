@@ -40,7 +40,7 @@ class Category(models.Model):
     parent_category = models.ForeignKey(
         'self',
         on_delete=models.PROTECT,
-        related_name='%(app_label)s_%(class)s_category',
+        related_name='book_category',
         null=True,
         blank=True,
         verbose_name=_('Parent category')
