@@ -1,8 +1,9 @@
 import graphene
-from django.utils.translation import ugettext as _
-
-from utils.graphene.mutation import generate_input_type_for_serializer
-from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
+from utils.graphene.mutation import (
+    generate_input_type_for_serializer,
+    GrapheneMutation,
+    DeleteMutation
+)
 
 from apps.school.models import School
 from apps.school.schema import SchoolType
@@ -15,69 +16,40 @@ SchoolInputType = generate_input_type_for_serializer(
 )
 
 
-class CreateSchool(graphene.Mutation):
+class CreateSchool(GrapheneMutation):
     class Arguments:
         data = SchoolInputType(required=True)
-
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
+    model = School
+    serializer_class = SchoolSerializer
     result = graphene.Field(SchoolType)
 
-    @staticmethod
-    def mutate(root, info, data):
-        serializer = SchoolSerializer(data=data, context={'request': info.context.request})
-        if errors := mutation_is_not_valid(serializer):
-            return CreateSchool(errors=errors, ok=False)
-        instance = serializer.save()
-        return CreateSchool(result=instance, errors=None, ok=True)
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
 
 
-class UpdateSchool(graphene.Mutation):
+class UpdateSchool(GrapheneMutation):
     class Arguments:
-        id = graphene.ID(required=True)
         data = SchoolInputType(required=True)
-
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
+        id = graphene.ID(required=True)
+    model = School
+    serializer_class = SchoolSerializer
     result = graphene.Field(SchoolType)
 
-    @staticmethod
-    def mutate(root, info, data):
-        try:
-            instance = School.objects.get(id=data['id'])
-        except School.DoesNotExist:
-            return UpdateSchool(errors=[
-                dict(field='nonFieldErrors', messages=_('School does not exist.'))
-            ])
-        serializer = SchoolSerializer(
-            instance=instance, data=data,
-            context={'request': info.context.request}, partial=True
-        )
-        if errors := mutation_is_not_valid(serializer):
-            return UpdateSchool(errors=errors, ok=False)
-        instance = serializer.save()
-        return UpdateSchool(result=instance, errors=None, ok=True)
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
 
 
-class DeleteSchool(graphene.Mutation):
+class DeleteSchool(DeleteMutation):
     class Arguments:
         id = graphene.ID(required=True)
-
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
+    model = School
     result = graphene.Field(SchoolType)
 
-    @staticmethod
-    def mutate(root, info, id):
-        try:
-            instance = School.objects.get(id=id)
-        except School.DoesNotExist:
-            return DeleteSchool(errors=[
-                dict(field='nonFieldErrors', messages=_('School does not exist.'))
-            ])
-        instance.delete()
-        instance.id = id
-        return DeleteSchool(result=instance, errors=None, ok=True)
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
 
 
 class Mutation(graphene.ObjectType):
