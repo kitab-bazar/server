@@ -185,6 +185,9 @@ GRAPHENE_DJANGO_EXTRAS = {
     'MAX_PAGE_SIZE': 50
 }
 
+if not DEBUG:
+    GRAPHENE['MIDDLEWARE'].append('utils.graphene.middleware.DisableIntrospectionSchemaMiddleware')
+
 GRAPHENE_NODES_WHITELIST = (
     'login',
     'logout',
