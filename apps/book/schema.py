@@ -45,7 +45,7 @@ class AuthorType(DjangoObjectType):
         )
 
 
-class AuthorListType(DjangoObjectType):
+class AuthorListType(CustomDjangoListObjectType):
     class Meta:
         model = Author
         filterset_class = AuthorFilter

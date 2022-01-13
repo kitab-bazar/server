@@ -480,6 +480,8 @@ description = "Python version of Google's common library for parsing, formatting
 category = "main"
 optional = false
 python-versions = "*"
+
+[[package]]
 name = "pillow"
 version = "9.0.0"
 description = "Python Imaging Library (Fork)"
@@ -640,7 +642,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "23c09b530c1c3ac3048ffce8aee1e26e0c549a98f9dc5d3e6bc32d8a6874935a"
+content-hash = "301264f3e473433693912588f35e2e3523eafcdd6e98d079c611ee402ba8c1a1"
 
 [metadata.files]
 amqp = [
@@ -770,6 +772,7 @@ packaging = [
 phonenumbers = [
     {file = "phonenumbers-8.12.41-py2.py3-none-any.whl", hash = "sha256:2b8c7a7ffac4fe2be3d8bf20dad316ea1292f27422c9e18b1f3cd16734d4a5ed"},
     {file = "phonenumbers-8.12.41.tar.gz", hash = "sha256:f477da623a51cba084567d6a67b1882a8aaaf3e7beadad655f8613a8f887ac62"},
+]
 pillow = [
     {file = "Pillow-9.0.0-cp310-cp310-macosx_10_10_universal2.whl", hash = "sha256:113723312215b25c22df1fdf0e2da7a3b9c357a7d24a93ebbe80bfda4f37a8d4"},
     {file = "Pillow-9.0.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:bb47a548cea95b86494a26c89d153fd31122ed65255db5dcbc421a2d28eb3379"},
