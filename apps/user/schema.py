@@ -11,8 +11,7 @@ class UserType(DjangoObjectType):
     class Meta:
         model = User
         fields = (
-            'id', 'first_name', 'last_name', 'full_name', 'email',
-            'is_active', 'last_login'
+            'id', 'first_name', 'last_name', 'full_name', 'is_active', 'last_login'
         )
 
     @staticmethod
