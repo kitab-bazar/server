@@ -5,7 +5,7 @@ from apps.publisher.models import Publisher
 
 class PublisherAdmin(admin.ModelAdmin):
     list_display = [
-        'id', 'name', 'email', 'district', 'province',
+        'id', 'name', 'district', 'province',
         'municipality', 'local_address'
     ]
     list_display_links = ['id', 'name']

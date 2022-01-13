@@ -8,7 +8,7 @@ class InstitutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Institution
         fields = (
-            'name', 'email', 'municipality', 'ward_number',
+            'name', 'municipality', 'ward_number',
             'local_address', 'pan_number', 'vat_number'
         )
 

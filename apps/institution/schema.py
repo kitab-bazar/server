@@ -13,7 +13,7 @@ class InstitutionType(DjangoObjectType):
     class Meta:
         model = Institution
         fields = (
-            'id', 'name', 'email', 'municipality', 'ward_number', 'local_address',
+            'id', 'name', 'municipality', 'ward_number', 'local_address',
             'vat_number', 'pan_number'
         )
 

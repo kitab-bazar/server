@@ -8,11 +8,6 @@ class Institution(models.Model):
         max_length=255,
         verbose_name=_("Name")
     )
-    email = models.EmailField(
-        max_length=255,
-        unique=True,
-        verbose_name=_("Email")
-    )
     province = models.ForeignKey(
         'common.Province', verbose_name=_('Province'), related_name='%(app_label)s_%(class)s_province',
         on_delete=models.PROTECT
