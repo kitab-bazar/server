@@ -22,7 +22,7 @@ class AuthorAdmin(TranslationAdmin):
 
 
 class BookAdmin(TranslationAdmin):
-    list_display = ['id', 'title', 'book_authors', 'book_tags', 'book_categories', 'publisher']
+    list_display = ['id', 'title', 'publisher', 'price', 'isbn']
     autocomplete_fields = ('categories', 'tags', 'authors', 'publisher')
     search_fields = [
         'id', 'title', 'authors__name', 'categories__name', 'publisher__name', 'tags__name',
@@ -45,15 +45,6 @@ class BookAdmin(TranslationAdmin):
             )
         }),
     )
-
-    def book_authors(self, obj):
-        return ", ".join([aurhor.name for aurhor in obj.authors.all()])
-
-    def book_tags(self, obj):
-        return ", ".join([tag.name for tag in obj.tags.all()])
-
-    def book_categories(self, obj):
-        return ", ".join([category.name for category in obj.categories.all()])
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related(
