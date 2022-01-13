@@ -1,4 +1,8 @@
+from PIL import Image
+
+from django.conf import settings
 from django.db import models
+
 from django.utils.translation import ugettext_lazy as _
 from apps.common.models import NameUniqueAbstractModel
 
@@ -47,6 +51,8 @@ class Category(models.Model):
 
 class Book(models.Model):
 
+    BOOK_UPLOAD_DIR = 'books/'
+
     class LanguageType(models.TextChoices):
         NEPALI = 'nepali', 'Nepali'
         ENGLISH = 'english', 'English'
@@ -54,7 +60,7 @@ class Book(models.Model):
     # Basic Fields
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     image = models.FileField(
-        upload_to='books/', max_length=255, null=True, blank=True, default=None,
+        upload_to=BOOK_UPLOAD_DIR, max_length=255, null=True, blank=True, default=None,
     )
     description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
     categories = models.ManyToManyField(
@@ -93,7 +99,7 @@ class Book(models.Model):
     og_title = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Open graph title'))
     og_description = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Open graph description'))
     og_image = models.FileField(
-        upload_to='books/', max_length=255, null=True, blank=True, default=None,
+        upload_to=BOOK_UPLOAD_DIR, max_length=255, null=True, blank=True, default=None,
     )
     og_locale = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Open graph locale'))
     og_type = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Open graph type'))
@@ -104,3 +110,26 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        super(Book, self).save(*args, **kwargs)
+        if self.image:
+            # Read book image
+            image = Image.open(self.image.path, 'r')
+
+            # Create a social sharable image
+            image_width, image_height = image.size
+            og_image = Image.new('RGB', (1200, 630), 'black')
+            og_image_image_height, og_image_image_width = og_image.size
+            offset = ((og_image_image_height - image_width) // 2, (og_image_image_width - image_height) // 2)
+            og_image.paste(image, offset)
+
+            # Upload image
+            filename = f'og_{self.image.name.split("/")[-1]}'
+            og_image_name = f'{Book.BOOK_UPLOAD_DIR}{filename}'
+            image_path = f'{settings.MEDIA_ROOT}/{og_image_name}'
+            og_image.save(image_path)
+
+            # Save image name
+            self.og_image.name = og_image_name
+            super(Book, self).save(*args, **kwargs)
