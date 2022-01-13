@@ -31,7 +31,7 @@ class LoginSerializer(serializers.Serializer):
         return dict(user=user)
 
 
-class UserPasswordSerializer(serializers.ModelSerializer):
+class UserPasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
     new_password = serializers.CharField(required=True, write_only=True)
 
