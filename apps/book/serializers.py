@@ -1,7 +1,8 @@
 from rest_framework import serializers
-# from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
-from apps.book.models import Book
+from apps.book.models import Book, WishList
+from config.serializers import CreatedUpdatedBaseSerializer
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -9,3 +10,16 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = '__all__'
+
+
+class WishListSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
+
+    class Meta:
+        model = WishList
+        fields = ('book', )
+
+    def validate_book(self, book):
+        created_by = self.context['request'].user
+        if WishList.objects.filter(created_by=created_by, book=book).exists():
+            raise serializers.ValidationError(_('Book is already added in wish list.'))
+        return book

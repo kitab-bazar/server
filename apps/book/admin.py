@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from apps.book.models import Tag, Category, Author, Book
+from apps.book.models import Tag, Category, Author, Book, WishList
 from apps.book.forms import BookAdminForm
 
 
@@ -55,7 +55,18 @@ class BookAdmin(TranslationAdmin):
         ).prefetch_related('tags', 'authors', 'categories')
 
 
+class WishListAdmin(admin.ModelAdmin):
+    list_display = ['id', 'book', 'created_by']
+    autocomplete_fields = ('created_by', 'book')
+    search_fields = ['book__title', 'created_by__full_name']
+    list_display_links = ['id']
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('created_by', 'book')
+
+
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Book, BookAdmin)
+admin.site.register(WishList, WishListAdmin)

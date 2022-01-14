@@ -1,11 +1,12 @@
 import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
+from django.db.models import QuerySet
 
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
 
-from apps.book.models import Book, Tag, Category, Author
+from apps.book.models import Book, Tag, Category, Author, WishList
 from apps.book.filters import BookFilter, TagFilter, CategoryFilter, AuthorFilter
 
 
@@ -72,6 +73,25 @@ class BookListType(CustomDjangoListObjectType):
         filterset_class = BookFilter
 
 
+def get_wish_list_qs(info):
+    return WishList.objects.filter(created_by=info.context.user)
+
+
+class WishListType(DjangoObjectType):
+    class Meta:
+        model = WishList
+        fields = ('id', 'book')
+
+    @staticmethod
+    def get_custom_queryset(queryset, info, **kwargs):
+        return get_wish_list_qs(info)
+
+
+class WishListListType(CustomDjangoListObjectType):
+    class Meta:
+        model = WishList
+
+
 class Query(graphene.ObjectType):
     book = DjangoObjectField(BookType)
     books = DjangoPaginatedListObjectField(
@@ -92,3 +112,13 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    wish_list = DjangoPaginatedListObjectField(
+        WishListListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+
+    @staticmethod
+    def resolve_wish_list(root, info, **kwargs) -> QuerySet:
+        return get_wish_list_qs(info)
