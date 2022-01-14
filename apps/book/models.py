@@ -57,8 +57,6 @@ class Category(models.Model):
 
 class Book(models.Model):
 
-    BOOK_UPLOAD_DIR = 'books/'
-
     class LanguageType(models.TextChoices):
         NEPALI = 'nepali', 'Nepali'
         ENGLISH = 'english', 'English'
