@@ -61,7 +61,7 @@ WishListInputType = generate_input_type_for_serializer(
 class WishListMixin():
     @classmethod
     def filter_queryset(cls, qs, info):
-        return qs.filter(user=info.context.user)
+        return qs.filter(created_by=info.context.user)
 
 
 class CreateWishList(WishListMixin, CreateUpdateGrapheneMutation):

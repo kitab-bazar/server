@@ -74,7 +74,7 @@ class BookListType(CustomDjangoListObjectType):
 
 
 def get_wish_list_qs(info):
-    return WishList.objects.filter(user=info.context.user)
+    return WishList.objects.filter(created_by=info.context.user)
 
 
 class WishListType(DjangoObjectType):
