@@ -144,3 +144,21 @@ class Book(models.Model):
             thumb_data = open(os.path.join('/tmp', filename), 'rb')
             self.og_image.save(filename, ImageFile(thumb_data), save=False)
             super(Book, self).save(*args, **kwargs)
+
+
+class WishList(models.Model):
+    user = models.ForeignKey(
+        'user.User', verbose_name=_('User'), related_name='user',
+        on_delete=models.CASCADE
+    )
+    book = models.ForeignKey(
+        'book.Book', verbose_name=_('Book'), related_name='book',
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name = _('Wish list')
+        verbose_name_plural = _('Wish lists')
+
+    def __str__(self):
+        return f'{self.user} - {self.book}'
