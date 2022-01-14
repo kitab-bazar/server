@@ -56,13 +56,13 @@ class BookAdmin(TranslationAdmin):
 
 
 class WishListAdmin(admin.ModelAdmin):
-    list_display = ['id', 'book', 'user']
-    autocomplete_fields = ('user', 'book')
-    search_fields = ['book__title', 'user__full_name']
+    list_display = ['id', 'book', 'created_by']
+    autocomplete_fields = ('created_by', 'book')
+    search_fields = ['book__title', 'created_by__full_name']
     list_display_links = ['id']
 
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related('user', 'book')
+        return super().get_queryset(request).select_related('created_by', 'book')
 
 
 admin.site.register(Tag, TagAdmin)

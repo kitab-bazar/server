@@ -147,12 +147,12 @@ class Book(models.Model):
 
 
 class WishList(models.Model):
-    user = models.ForeignKey(
-        'user.User', verbose_name=_('User'), related_name='user',
+    created_by = models.ForeignKey(
+        'user.User', verbose_name=_('User'), related_name='wish_lists',
         on_delete=models.CASCADE
     )
     book = models.ForeignKey(
-        'book.Book', verbose_name=_('Book'), related_name='book',
+        'book.Book', verbose_name=_('Book'), related_name='+',
         on_delete=models.CASCADE
     )
 
@@ -161,4 +161,4 @@ class WishList(models.Model):
         verbose_name_plural = _('Wish lists')
 
     def __str__(self):
-        return f'{self.user} - {self.book}'
+        return f'{self.created_by} - {self.book}'
