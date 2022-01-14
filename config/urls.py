@@ -15,7 +15,7 @@ Including another URLconf
 """
 import json
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import gettext_lazy as _
@@ -55,6 +55,8 @@ urlpatterns = i18n_patterns(
 urlpatterns += [
     path('graphiql/', csrf_exempt(CustomGraphQLView.as_view(graphiql=True))),
     path('graphql/', csrf_exempt(CustomGraphQLView.as_view())),
+    # tinymce urls
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 # Static and media file urls

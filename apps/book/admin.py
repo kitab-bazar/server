@@ -1,6 +1,8 @@
 from django.contrib import admin
-from apps.book.models import Tag, Category, Author, Book
 from modeltranslation.admin import TranslationAdmin
+
+from apps.book.models import Tag, Category, Author, Book
+from apps.book.forms import BookAdminForm
 
 
 class TagAdmin(TranslationAdmin):
@@ -45,6 +47,7 @@ class BookAdmin(TranslationAdmin):
             )
         }),
     )
+    form = BookAdminForm
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related(
