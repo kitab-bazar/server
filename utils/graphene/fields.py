@@ -14,8 +14,13 @@ from graphene_django_extras.paginations.pagination import BaseDjangoGraphqlPagin
 from graphene_django_extras.settings import graphql_api_settings
 from graphene_django_extras.utils import get_extra_filters
 from graphene_django.rest_framework.serializer_converter import get_graphene_type_from_serializer_field
+from django.core.files.storage import FileSystemStorage, get_storage_class
+from rest_framework import serializers
+
 
 from utils.graphene.pagination import OrderingOnlyArgumentPagination, NoOrderingPageGraphqlPagination
+
+StorageClass = get_storage_class()
 
 
 class CustomDjangoListObjectBase(DjangoListObjectBase):
@@ -258,3 +263,22 @@ def generate_serializer_field_class(inner_type, serializer_field, non_null=False
         lambda _: graphene.NonNull(inner_type) if non_null else inner_type
     )
     return new_serializer_field
+
+
+class FileField(serializers.FileField):
+
+    @classmethod
+    def name_to_representation(cls, name):
+        """
+        Caching signed url server-side
+        NOTE: Using storage_class.url directly
+        Assumptions:
+            - Single storage is used (accessable by get_storage_class)
+            - Either FileSystemStorage(local/default) or S3Boto3Storage(prod/deep.s3_storages.MediaStorage) is used.
+        """
+        name = str(name)
+
+        if StorageClass == FileSystemStorage:
+            return StorageClass().url(name)
+
+        return None
