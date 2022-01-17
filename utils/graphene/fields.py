@@ -269,16 +269,5 @@ class FileField(serializers.FileField):
 
     @classmethod
     def name_to_representation(cls, name):
-        """
-        Caching signed url server-side
-        NOTE: Using storage_class.url directly
-        Assumptions:
-            - Single storage is used (accessable by get_storage_class)
-            - Either FileSystemStorage(local/default) or S3Boto3Storage(prod/deep.s3_storages.MediaStorage) is used.
-        """
         name = str(name)
-
-        if StorageClass == FileSystemStorage:
-            return StorageClass().url(name)
-
-        return None
+        return StorageClass().url(name)
