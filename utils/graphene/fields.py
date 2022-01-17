@@ -14,7 +14,7 @@ from graphene_django_extras.paginations.pagination import BaseDjangoGraphqlPagin
 from graphene_django_extras.settings import graphql_api_settings
 from graphene_django_extras.utils import get_extra_filters
 from graphene_django.rest_framework.serializer_converter import get_graphene_type_from_serializer_field
-from django.core.files.storage import FileSystemStorage, get_storage_class
+from django.core.files.storage import get_storage_class
 from rest_framework import serializers
 
 
