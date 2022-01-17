@@ -14,8 +14,13 @@ from graphene_django_extras.paginations.pagination import BaseDjangoGraphqlPagin
 from graphene_django_extras.settings import graphql_api_settings
 from graphene_django_extras.utils import get_extra_filters
 from graphene_django.rest_framework.serializer_converter import get_graphene_type_from_serializer_field
+from django.core.files.storage import get_storage_class
+from rest_framework import serializers
+
 
 from utils.graphene.pagination import OrderingOnlyArgumentPagination, NoOrderingPageGraphqlPagination
+
+StorageClass = get_storage_class()
 
 
 class CustomDjangoListObjectBase(DjangoListObjectBase):
@@ -258,3 +263,11 @@ def generate_serializer_field_class(inner_type, serializer_field, non_null=False
         lambda _: graphene.NonNull(inner_type) if non_null else inner_type
     )
     return new_serializer_field
+
+
+class FileField(serializers.FileField):
+
+    @classmethod
+    def name_to_representation(cls, name):
+        name = str(name)
+        return StorageClass().url(name)

@@ -1,7 +1,11 @@
+import graphene
+from typing import Union
+
 from collections import OrderedDict
 
 from django.db.models import QuerySet
 from graphene import ObjectType, Field, Int
+
 # we will use graphene_django registry over the one from graphene_django_extras
 # since it adds information regarding nullability in the schema definition
 from graphene_django.registry import get_global_registry
@@ -10,7 +14,7 @@ from graphene_django_extras import DjangoListObjectType, DjangoObjectType
 from graphene_django_extras.base_types import factory_type
 from graphene_django_extras.types import DjangoObjectOptions
 
-from utils.graphene.fields import CustomDjangoListField
+from utils.graphene.fields import CustomDjangoListField, FileField
 from utils.graphene.options import CustomObjectTypeOptions
 
 
@@ -194,4 +198,18 @@ class CustomDjangoListObjectType(DjangoListObjectType):
 
         super(DjangoListObjectType, cls).__init_subclass_with_meta__(
             _meta=_meta, **options
+        )
+
+
+class FileFieldType(graphene.ObjectType):
+
+    name = graphene.String()
+    url = graphene.String()
+
+    def resolve_name(root, info, **kwargs) -> Union[str, None]:
+        return root.name
+
+    def resolve_url(root, info, **kwargs) -> Union[str, None]:
+        return info.context.request.build_absolute_uri(
+            FileField.name_to_representation(root)
         )

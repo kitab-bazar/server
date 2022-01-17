@@ -3,7 +3,7 @@ from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 from django.db.models import QuerySet
 
-from utils.graphene.types import CustomDjangoListObjectType
+from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
 
 from apps.book.models import Book, Tag, Category, Author, WishList
@@ -62,9 +62,8 @@ class BookType(DjangoObjectType):
             'og_description', 'og_image', 'og_locale', 'og_type', 'title', 'description'
         )
 
-    @staticmethod
-    def get_queryset(queryset, info):
-        return queryset
+    image = graphene.Field(FileFieldType)
+    og_image = graphene.Field(FileFieldType)
 
 
 class BookListType(CustomDjangoListObjectType):
