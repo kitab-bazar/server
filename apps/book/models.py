@@ -74,7 +74,7 @@ class Book(models.Model):
         'book.Author', verbose_name=_('Author'), related_name='%(app_label)s_%(class)s_authors',
     )
     tags = models.ManyToManyField(
-        'book.Tag', verbose_name=_('Tags'), related_name='%(app_label)s_%(class)s_tags',
+        'book.Tag', verbose_name=_('Tags'), related_name='%(app_label)s_%(class)s_tags', blank=True
     )
     isbn = models.CharField(
         max_length=255,
@@ -84,8 +84,8 @@ class Book(models.Model):
     language = models.CharField(
         choices=LanguageType.choices, max_length=40, verbose_name=_('Language')
     )
-    weight = models.IntegerField(verbose_name=_('Weight in grams'))
-    published_date = models.DateTimeField(verbose_name=_('Published Date'))
+    weight = models.IntegerField(verbose_name=_('Weight in grams'), null=True, blank=True)
+    published_date = models.DateField(verbose_name=_('Published Date'))
     edition = models.CharField(
         max_length=255,
         verbose_name=_('Edition')
