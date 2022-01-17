@@ -62,9 +62,15 @@ class BookType(DjangoObjectType):
             'og_description', 'og_image', 'og_locale', 'og_type', 'title', 'description'
         )
 
-    @staticmethod
-    def get_queryset(queryset, info):
-        return queryset
+    def resolve_image(root, info, **kwargs):
+        if not getattr(root, 'image', None):
+            return None
+        return info.context.request.build_absolute_uri(root.image.url)
+
+    def resolve_og_image(root, info, **kwargs):
+        if not getattr(root, 'og_image', None):
+            return None
+        return info.context.request.build_absolute_uri(root.og_image.url)
 
 
 class BookListType(CustomDjangoListObjectType):
