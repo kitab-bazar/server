@@ -237,7 +237,7 @@ LANGUAGES = [
     ('en', _('English')),
     ('ne', _('Nepali')),
 ]
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'ne'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 MODELTRANSLATION_LANGUAGES = ('en', 'ne')
 
 # Set default reason to nepal
