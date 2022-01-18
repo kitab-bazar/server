@@ -58,6 +58,7 @@ LOCAL_APPS = [
     'apps.publisher',
     'apps.school',
     'apps.book',
+    'apps.order',
 ]
 
 INSTALLED_APPS = [
