@@ -6,6 +6,7 @@ from apps.institution import schema as institution_schema, mutations as institut
 from apps.publisher import schema as publisher_schema, mutations as publisher_mutations
 from apps.school import schema as school_schema, mutations as school_mutations
 from apps.book import schema as book_schema, mutations as book_mutations
+from apps.order import schema as order_schema, mutations as order_mutations
 
 
 # schemas
@@ -16,6 +17,7 @@ class Query(
     publisher_schema.Query,
     school_schema.Query,
     book_schema.Query,
+    order_schema.Query,
     graphene.ObjectType,
 ):
     pass
@@ -28,6 +30,7 @@ class Mutation(
     publisher_mutations.Mutation,
     school_mutations.Mutation,
     book_mutations.Mutation,
+    order_mutations.Mutation,
     graphene.ObjectType,
 ):
     pass
