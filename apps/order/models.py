@@ -1,6 +1,7 @@
 import uuid
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.utils.translation import ugettext
 
 
 class CartItem(models.Model):
@@ -8,16 +9,12 @@ class CartItem(models.Model):
         'book.Book',
         on_delete=models.CASCADE,
         related_name='book_cart_item',
-        null=True,
-        blank=True,
         verbose_name=_('Book')
     )
     created_by = models.ForeignKey(
         'user.User',
         on_delete=models.CASCADE,
         related_name='cart_item',
-        null=True,
-        blank=True,
         verbose_name=_('Created by')
     )
     quantity = models.PositiveIntegerField(verbose_name=_('Quantity'))
@@ -36,7 +33,24 @@ class BookOrder(models.Model):
     quantity = models.PositiveIntegerField(verbose_name=_('Quantity'))
     isbn = models.CharField(max_length=255, verbose_name=_('ISBN'))
     edition = models.CharField(max_length=255, verbose_name=_('Edition'))
-    price = models.BigIntegerField(verbose_name=_('Price'))
+    total_price = models.BigIntegerField(verbose_name=_('Total Price'))
+    image = models.FileField(
+        upload_to='orders/books/images/', max_length=255, null=True, blank=True, default=None,
+    )
+    book = models.ForeignKey(
+        'book.Book',
+        on_delete=models.SET_NULL,
+        related_name='book_order_cart_item',
+        verbose_name=_('Book'),
+        null=True,
+        blank=True
+    )
+    order = models.ForeignKey(
+        'order.Order',
+        related_name='book_order',
+        on_delete=models.CASCADE,
+        verbose_name=_('Order')
+    )
 
     class Meta:
         verbose_name = _('Book Order')
@@ -47,6 +61,12 @@ class BookOrder(models.Model):
 
 
 class Order(models.Model):
+    class OrderStatus(models.TextChoices):
+        RECEIVED = 'received', 'Received'
+        PACKED = 'packed', 'Packed'
+        COMPLETED = 'completed', 'Completed'
+        CANCELLED = 'cancelled', 'Cancelled'
+
     total_price = models.BigIntegerField(verbose_name=_('Total Price'))
     order_code = models.UUIDField(
         primary_key=False,
@@ -59,11 +79,10 @@ class Order(models.Model):
         related_name='order',
         verbose_name=_('Created by')
     )
-    book_orders = models.ManyToManyField(
-        'order.BookOrder',
-        related_name='book_orders',
-        blank=True,
-        verbose_name=_('Book orders')
+    status = models.CharField(
+        choices=OrderStatus.choices, max_length=40,
+        default=OrderStatus.RECEIVED,
+        verbose_name=ugettext("Order status")
     )
 
     class Meta:
@@ -71,4 +90,4 @@ class Order(models.Model):
         verbose_name_plural = _('Orders')
 
     def __str__(self):
-        return self.total_price
+        return self.status

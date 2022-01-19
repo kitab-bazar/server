@@ -7,8 +7,13 @@ from utils.graphene.mutation import (
 from django.db.models import F
 
 from apps.order.models import CartItem
-from apps.order.schema import CartItemType
-from apps.order.serializers import CartItemSerializer
+from apps.order.schema import CartItemType, OrderType
+from apps.order.serializers import (
+    CartItemSerializer,
+    CreateOrderFromCartSerializer,
+    PlaceSingleOrderSerializer
+)
+from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 
 
 CartItemInputType = generate_input_type_for_serializer(
@@ -61,7 +66,45 @@ class DeleteCartItem(CartItemMixin, DeleteMutation):
         return True
 
 
+class PlaceOrderFromCart(graphene.Mutation):
+    errors = graphene.List(graphene.NonNull(CustomErrorType))
+    ok = graphene.Boolean()
+    result = graphene.Field(OrderType)
+
+    @staticmethod
+    def mutate(root, info):
+        serializer = CreateOrderFromCartSerializer(data=dict(), context={'request': info.context.request})
+        if errors := mutation_is_not_valid(serializer):
+            return PlaceOrderFromCart(errors=errors, ok=False)
+        instance = serializer.save()
+        return PlaceOrderFromCart(result=instance, errors=None, ok=True)
+
+
+PlaceSingleOrderInputType = generate_input_type_for_serializer(
+    'PlaceSingleOrderInputType',
+    serializer_class=PlaceSingleOrderSerializer
+)
+
+
+class PlaceSingleOrder(graphene.Mutation):
+    class Arguments:
+        data = PlaceSingleOrderInputType(required=True)
+    errors = graphene.List(graphene.NonNull(CustomErrorType))
+    ok = graphene.Boolean()
+    result = graphene.Field(OrderType)
+
+    @staticmethod
+    def mutate(root, info, data):
+        serializer = PlaceSingleOrderSerializer(data=data, context={'request': info.context.request})
+        if errors := mutation_is_not_valid(serializer):
+            return PlaceSingleOrder(errors=errors, ok=False)
+        instance = serializer.save()
+        return PlaceSingleOrder(result=instance, errors=None, ok=True)
+
+
 class Mutation(graphene.ObjectType):
     create_cart_item = CreateCartItem.Field()
     update_cart_item = UpdateCartItem.Field()
     delete_cart_item = DeleteCartItem.Field()
+    place_order_from_cart = PlaceOrderFromCart.Field()
+    place_single_order = PlaceSingleOrder.Field()
