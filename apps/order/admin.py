@@ -13,9 +13,10 @@ class CartItemAdmin(admin.ModelAdmin):
 
 
 class BookOrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'price', 'quantity', 'isbn', 'edition']
+    list_display = ['id', 'title', 'price', 'quantity', 'isbn', 'edition', 'image']
     list_display_links = ['id', 'title']
     search_fields = ['id', 'book__title', ]
+    autocomplete_fields = ['book']
 
 
 class OrderAdmin(admin.ModelAdmin):
