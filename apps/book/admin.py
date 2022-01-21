@@ -2,7 +2,7 @@ from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
 from apps.book.models import Tag, Category, Author, Book, WishList
-from apps.book.forms import BookAdminForm
+from apps.book.forms import BookAdminForm, AuthorAdminForm
 
 
 class TagAdmin(TranslationAdmin):
@@ -21,6 +21,7 @@ class AuthorAdmin(TranslationAdmin):
     list_display = ['id', 'name']
     list_display_links = ['id', 'name']
     search_fields = ['id', 'name', ]
+    form = AuthorAdminForm
 
 
 class BookAdmin(TranslationAdmin):
