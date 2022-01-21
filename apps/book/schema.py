@@ -42,7 +42,7 @@ class AuthorType(DjangoObjectType):
     class Meta:
         model = Author
         fields = (
-            'id', 'name',
+            'id', 'name', 'about_author',
         )
 
 
