@@ -271,3 +271,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 10,
     "language": "en",
 }
+
+# NOTE: Fix this in production
+TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
+TINYMCE_COMPRESSOR = False
