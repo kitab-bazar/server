@@ -29,7 +29,12 @@ env = environ.Env(
     REDIS_URL=(str, 'redis://redis:6379/0'),
     CORS_ORIGIN_REGEX_WHITELIST=(str, 'r\"^https://\w+\.togglecorp\.com$\"'), # noqa W605
     TIME_ZONE=(str, 'Asia/Kathmandu'),
-    CLIENT_URL=(str, 'http://localhost:3080')
+    CLIENT_URL=(str, 'http://localhost:3080'),
+    # Static, Media configs
+    DJANGO_STATIC_URL=(str, '/static/'),
+    DJANGO_MEDIA_URL=(str, '/media/'),
+    DJANGO_STATIC_ROOT=(str, os.path.join(BASE_DIR, "staticfiles")),
+    DJANGO_MEDIA_ROOT=(str, os.path.join(BASE_DIR, "media")),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -150,11 +155,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-STATIC_URL = "/static/"
-MEDIA_URL = "/media/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATIC_URL = env('DJANGO_STATIC_URL')
+MEDIA_URL = env('DJANGO_MEDIA_URL')
+STATIC_ROOT = env('DJANGO_STATIC_ROOT')
+MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
