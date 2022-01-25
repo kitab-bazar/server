@@ -31,7 +31,7 @@ class BookOrder(models.Model):
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     price = models.BigIntegerField(verbose_name=_('Price'))
     quantity = models.PositiveIntegerField(verbose_name=_('Quantity'))
-    isbn = models.CharField(max_length=255, verbose_name=_('ISBN'))
+    isbn = models.CharField(max_length=10, verbose_name=_('ISBN'))
     edition = models.CharField(max_length=255, verbose_name=_('Edition'))
     total_price = models.BigIntegerField(verbose_name=_('Total Price'))
     image = models.FileField(

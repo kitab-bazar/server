@@ -40,7 +40,7 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         cart_items = CartItem.objects.filter(created_by=self.context['request'].user).annotate(
             total_price=F('book__price') * F('quantity')
         )
-        if not cart_items:
+        if not cart_items.exists():
             raise serializers.ValidationError(_('Your cart is empty.'))
 
         # Create order

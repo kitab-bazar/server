@@ -78,7 +78,7 @@ class Book(models.Model):
         'book.Tag', verbose_name=_('Tags'), related_name='%(app_label)s_%(class)s_tags', blank=True
     )
     isbn = models.CharField(
-        max_length=255,
+        max_length=10,
         verbose_name=_('ISBN')
     )
     number_of_pages = models.IntegerField(verbose_name=_('Number of pages'))
