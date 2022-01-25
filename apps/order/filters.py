@@ -6,11 +6,11 @@ class BookOrderFilterSet(django_filters.FilterSet):
 
     class Meta:
         model = BookOrder
-        fields = ['id', ]
+        fields = ('id',)
 
 
 class OrderFilterSet(django_filters.FilterSet):
 
     class Meta:
         model = BookOrder
-        fields = ['id', ]
+        fields = ('id',)
