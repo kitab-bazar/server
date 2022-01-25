@@ -29,6 +29,10 @@ class CartItemMixin():
             total_price=F('book__price') * F('quantity')
         )
 
+    @classmethod
+    def check_permissions(cls, *args, **_):
+        return True
+
 
 class CreateCartItem(CartItemMixin, CreateUpdateGrapheneMutation):
     class Arguments:
@@ -36,10 +40,6 @@ class CreateCartItem(CartItemMixin, CreateUpdateGrapheneMutation):
     model = CartItem
     serializer_class = CartItemSerializer
     result = graphene.Field(CartItemType)
-
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
 
 
 class UpdateCartItem(CartItemMixin, CreateUpdateGrapheneMutation):
@@ -50,20 +50,12 @@ class UpdateCartItem(CartItemMixin, CreateUpdateGrapheneMutation):
     serializer_class = CartItemSerializer
     result = graphene.Field(CartItemType)
 
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
-
 
 class DeleteCartItem(CartItemMixin, DeleteMutation):
     class Arguments:
         id = graphene.ID(required=True)
     model = CartItem
     result = graphene.Field(CartItemType)
-
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
 
 
 class PlaceOrderFromCart(graphene.Mutation):
