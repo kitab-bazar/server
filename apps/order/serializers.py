@@ -16,8 +16,8 @@ class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializ
     def create(self, validated_data):
         created_by = self.context['request'].user
         validated_data['created_by'] = created_by
-        book = validated_data.get('book')
-        quantity = validated_data.get('quantity')
+        book = validated_data['book']
+        quantity = validated_data['quantity']
         existing_cart_item = CartItem.objects.filter(created_by=created_by, book=book).first()
         # Update quantity in cart if book is already in cart
         if existing_cart_item:
