@@ -11,7 +11,6 @@ class TestUser(GraphQLTestCase):
                 register(data: $input) {
                     ok
                     result {
-                        email
                         id
                         firstName
                         lastName
@@ -25,7 +24,6 @@ class TestUser(GraphQLTestCase):
             login(data: $input) {
                 ok
                 result {
-                    email
                     id
                 }
             }
@@ -35,9 +33,6 @@ class TestUser(GraphQLTestCase):
             mutation Mutation($input: ChangePasswordInputType!) {
                 changePassword(data: $input) {
                     ok
-                    result {
-                        email
-                    }
                 }
             }
         '''
@@ -61,7 +56,6 @@ class TestUser(GraphQLTestCase):
         self.assertEqual(first_name, minput['firstName'], content)
         self.assertEqual(last_name, minput['lastName'], content)
         self.assertEqual(content['data']['register']['result']['fullName'], f'{first_name} {last_name}', content)
-        self.assertEqual(content['data']['register']['result']['email'], minput['email'], content)
 
     def test_login(self):
         # Test invaid user should not login
@@ -73,7 +67,6 @@ class TestUser(GraphQLTestCase):
         minput = {"email": user.email, "password": user.password_text}
         content = self.query_check(self.login_mutation, minput=minput, okay=True)
         self.assertEqual(content['data']['login']['result']['id'], str(user.id), content)
-        self.assertEqual(content['data']['login']['result']['email'], user.email, content)
 
     def test_change_password(self):
         user = UserFactory.create()
