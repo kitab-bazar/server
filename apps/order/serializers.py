@@ -13,20 +13,13 @@ class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializ
         model = CartItem
         fields = ('book', 'quantity',)
 
-    def create(self, validated_data):
+    def validate_book(self, book):
         created_by = self.context['request'].user
-        validated_data['created_by'] = created_by
-        book = validated_data['book']
-        quantity = validated_data['quantity']
-        existing_cart_item = CartItem.objects.filter(created_by=created_by, book=book).first()
-        # Update quantity in cart if book is already in cart
-        if existing_cart_item:
-            existing_cart_item.quantity += quantity
-        else:
-            # Otherwise create new cart item
-            return CartItem.objects.create(**validated_data)
-        existing_cart_item.save()
-        return existing_cart_item
+        if not self.instance and CartItem.objects.filter(
+            created_by=created_by, book=book
+        ).exists():
+            raise serializers.ValidationError(_('Book is already added in cart.'))
+        return book
 
 
 class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
