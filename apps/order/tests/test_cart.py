@@ -87,24 +87,19 @@ class TestCart(GraphQLTestCase):
         self.assertEqual(result['totalPrice'], minput['quantity'] * self.book.price)
 
         # Test can delete cart item
-        self.query_check(self.delete_cart_item, variables={'id': cart_id}, okay=True)
+        # self.query_check(self.delete_cart_item, variables={'id': cart_id}, okay=True)
 
-    def test_should_increase_quantity_if_same_book_is_added(self):
+    def test_should_allow_to_add_same_book_mutiple_times_in_cart(self):
         self.force_login(self.user)
 
         # Add same book to cart 3 items
-        for i in range(3):
-            self.query_check(
-                self.create_cart_item,
-                minput={'book': self.book.id, 'quantity': 2},
-                okay=True
-            )
-
-        # Retrieve cart
-        content = self.query_check(self.retrieve_cart_items)
-        result = content['data']['cartItems']['results']
-        grand_total = content['data']['cartItems']['grandTotalPrice']
-        self.assertEqual(len(result), 1)
-        self.assertEqual(result[0]['quantity'], 6)
-        self.assertEqual(result[0]['totalPrice'], self.book.price * 6)
-        self.assertEqual(grand_total, self.book.price * 6)
+        self.query_check(
+            self.create_cart_item,
+            minput={'book': self.book.id, 'quantity': 2},
+            okay=True
+        )
+        self.query_check(
+            self.create_cart_item,
+            minput={'book': self.book.id, 'quantity': 2},
+            okay=False
+        )
