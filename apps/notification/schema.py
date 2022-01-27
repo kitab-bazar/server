@@ -22,7 +22,7 @@ class NotificationType(DjangoObjectType):
     class Meta:
         model = Notification
         fields = (
-            'id', 'read', 'message', 'created_at',
+            'id', 'read', 'title', 'created_at',
             'notification_type'
         )
 
