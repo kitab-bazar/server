@@ -51,6 +51,12 @@ class BookOrder(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('Order')
     )
+    publisher = models.ForeignKey(
+        'publisher.Publisher',
+        on_delete=models.CASCADE,
+        related_name='publisher',
+        verbose_name=_('Publisher')
+    )
 
     class Meta:
         verbose_name = _('Book Order')

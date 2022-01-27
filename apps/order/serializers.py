@@ -55,7 +55,8 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
                 image=cart_item.book.image,
                 total_price=cart_item.total_price,
                 order=order,
-                book=cart_item.book
+                book=cart_item.book,
+                publisher=cart_item.book.publisher
             ) for cart_item in cart_items
         ])
 
@@ -97,6 +98,7 @@ class PlaceSingleOrderSerializer(serializers.Serializer):
             image=book.image,
             total_price=total_price,
             order=order,
-            book=book
+            book=book,
+            publisher=book.publisher
         )
         return order
