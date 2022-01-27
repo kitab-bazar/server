@@ -43,3 +43,7 @@ class Publisher(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def user(self):
+        return self.user_user_publisher.first()
