@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('order', '0002_alter_bookorder_isbn'),
+        ('order', '0002_bookorder_publisher'),
     ]
 
     operations = [
