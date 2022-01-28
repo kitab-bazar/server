@@ -7,6 +7,10 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /code
 
+RUN apt-get update -y && \
+    apt-get install -y wait-for-it && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY pyproject.toml poetry.lock /code/
 
 # Upgrade pip and install python packages for code

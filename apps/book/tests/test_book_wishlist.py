@@ -4,7 +4,7 @@ from apps.user.factories import UserFactory
 from apps.publisher.factories import PublisherFactory
 
 
-class TestUser(GraphQLTestCase):
+class TestWishList(GraphQLTestCase):
     def setUp(self):
         self.wish_list_mutation = '''
             mutation Mutation($input: WishListInputType!) {
@@ -34,7 +34,7 @@ class TestUser(GraphQLTestCase):
         '''
         super().setUp()
 
-    def test_register_individual_user(self):
+    def test_wish_list(self):
         user = UserFactory.create()
         self.force_login(user)
         publisher = PublisherFactory.create()

@@ -1,0 +1,47 @@
+version: '3.2'
+
+services:
+  db:
+    image: postgres:12.0-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:latest
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    image: $DOCKER_IMAGE_SERVER
+    environment:
+      CI: "true"
+      # https://github.com/pytest-dev/pytest/issues/7443
+      PYTEST_ADDOPTS: "--color=yes"
+      DEBUG: "true"
+      SECRET_KEY: "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+      EMAIL_FROM: dev.kitab.org
+      # From db.environment
+      DATABASE_NAME: kitab
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_PORT: 5432
+      DATABASE_HOST: db
+      # From redis
+      CELERY_REDIS_URL: redis://redis:6379/0
+      DJANGO_CACHE_REDIS_URL: redis://redis:6379/2
+    volumes:
+      - ./coverage/:/code/coverage/
+      - ./ci-share/:/ci-share/
+    depends_on:
+      - db
+      - redis
