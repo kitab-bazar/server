@@ -235,7 +235,7 @@ type DeleteSchool {
 type DeleteWishList {
   errors: [GenericScalar!]
   ok: Boolean
-  result: BookType
+  result: WishListType
 }
 
 type DistrictListType {
