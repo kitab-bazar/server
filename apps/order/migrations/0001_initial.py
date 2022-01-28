@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('book', '0008_auto_20220118_1931'),
+        ('book', '0008_alter_book_title_ne'),
     ]
 
     operations = [
