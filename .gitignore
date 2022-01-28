@@ -6,3 +6,5 @@ staticfiles/
 *.tmp
 *.bak
 *.swp
+
+coverage/

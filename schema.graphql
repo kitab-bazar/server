@@ -1,0 +1,698 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Activate {
+  errors: [GenericScalar!]
+  ok: Boolean
+}
+
+input ActivateInputType {
+  uid: String!
+  token: String!
+}
+
+type AuthorListType {
+  results: [AuthorType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type AuthorType {
+  id: ID!
+  name: String!
+}
+
+input BookCreateInputType {
+  title: String!
+  titleEn: String
+  titleNe: String
+  image: String
+  description: String
+  descriptionEn: String
+  descriptionNe: String
+  isbn: String!
+  numberOfPages: Int
+  language: language!
+  weight: Int
+  publishedDate: Date!
+  edition: String!
+  price: Int!
+  metaTitle: String
+  metaTitleEn: String
+  metaTitleNe: String
+  metaKeywords: String
+  metaKeywordsEn: String
+  metaKeywordsNe: String
+  metaDescription: String
+  metaDescriptionEn: String
+  metaDescriptionNe: String
+  ogTitle: String
+  ogTitleEn: String
+  ogTitleNe: String
+  ogDescription: String
+  ogDescriptionEn: String
+  ogDescriptionNe: String
+  ogImage: String
+  ogLocale: String
+  ogLocaleEn: String
+  ogLocaleNe: String
+  ogType: String
+  ogTypeEn: String
+  ogTypeNe: String
+  publisher: String!
+  categories: [ID!]!
+  authors: [ID!]!
+  tags: [ID!]
+}
+
+enum BookLanguage {
+  NEPALI
+  ENGLISH
+}
+
+type BookListType {
+  results: [BookType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type BookOrderListType {
+  results: [BookOrderType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type BookOrderType {
+  id: ID!
+  title: String!
+  price: Int!
+  quantity: Int!
+  isbn: String!
+  edition: String!
+  image: FileFieldType
+}
+
+type BookType {
+  id: ID!
+  title: String!
+  image: FileFieldType
+  description: String
+  categories: [CategoryType!]!
+  authors: [AuthorType!]!
+  tags: [TagType!]!
+  isbn: String!
+  numberOfPages: Int
+  language: BookLanguage!
+  weight: Int
+  publishedDate: Date!
+  edition: String!
+  publisher: PublisherType!
+  price: Int!
+  metaTitle: String
+  metaKeywords: String
+  metaDescription: String
+  ogTitle: String
+  ogDescription: String
+  ogImage: FileFieldType
+  ogLocale: String
+  ogType: String
+}
+
+input CartItemInputType {
+  book: String!
+  quantity: Int!
+}
+
+type CartItemType {
+  id: ID!
+  book: BookType!
+  quantity: Int!
+  totalPrice: Int
+}
+
+type CartType {
+  results: [CartItemType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+  grandTotalPrice: Int
+}
+
+type CategoryType {
+  id: ID!
+  name: String!
+  parentCategory: CategoryType
+}
+
+input ChangePasswordInputType {
+  oldPassword: String!
+  newPassword: String!
+}
+
+type ChangeUserPassword {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: UserType
+}
+
+type CreateBook {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BookType
+}
+
+type CreateCartItem {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CartItemType
+}
+
+type CreateInstitution {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: InstitutionType
+}
+
+type CreatePublisher {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: PublisherType
+}
+
+type CreateSchool {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: SchoolType
+}
+
+type CreateWishList {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: WishListType
+}
+
+scalar Date
+
+scalar DateTime
+
+type DeleteBook {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BookType
+}
+
+type DeleteCartItem {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CartItemType
+}
+
+type DeleteInstitution {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: InstitutionType
+}
+
+type DeleteNotification {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: NotificationType
+}
+
+type DeletePublisher {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: PublisherType
+}
+
+type DeleteSchool {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: SchoolType
+}
+
+type DeleteWishList {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: WishListType
+}
+
+type DistrictListType {
+  results: [DistrictType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type DistrictType {
+  id: ID!
+  name: String!
+  province: ProvinceType!
+}
+
+type FileFieldType {
+  name: String
+  url: String
+}
+
+type GenerateResetPasswordToken {
+  errors: [GenericScalar!]
+  ok: Boolean
+}
+
+input GenerateResetPasswordTokenType {
+  email: String!
+}
+
+scalar GenericScalar
+
+input InstitutionCreateInputType {
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+  panNumber: String
+  vatNumber: String
+}
+
+input InstitutionInputType {
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+  panNumber: String
+  vatNumber: String
+}
+
+type InstitutionListType {
+  results: [InstitutionType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type InstitutionType {
+  id: ID!
+  name: String!
+  municipality: MunicipalityType!
+  wardNumber: Int!
+  localAddress: String
+  panNumber: String
+  vatNumber: String
+}
+
+type Login {
+  result: UserType
+  errors: [GenericScalar!]
+  ok: Boolean!
+}
+
+input LoginInputType {
+  email: String!
+  password: String!
+}
+
+type Logout {
+  ok: Boolean
+}
+
+type MunicipalityListType {
+  results: [MunicipalityType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type MunicipalityType {
+  id: ID!
+  name: String!
+  province: ProvinceType!
+  district: DistrictType!
+}
+
+type Mutation {
+  toggleNotification(data: ToggleNotificationInputType!, id: ID!): ToggleNotificationReadStatus
+  deleteNotification(id: ID!): DeleteNotification
+  createCartItem(data: CartItemInputType!): CreateCartItem
+  updateCartItem(data: CartItemInputType!, id: ID!): UpdateCartItem
+  deleteCartItem(id: ID!): DeleteCartItem
+  placeOrderFromCart: PlaceOrderFromCart
+  placeSingleOrder(data: PlaceSingleOrderInputType!): PlaceSingleOrder
+  createBook(data: BookCreateInputType!): CreateBook
+  updateBook(data: BookCreateInputType!, id: ID!): UpdateBook
+  deleteBook(id: ID!): DeleteBook
+  createWishlist(data: WishListInputType!): CreateWishList
+  deleteWishlist(id: ID!): DeleteWishList
+  createSchool(data: SchoolCreateInputType!): CreateSchool
+  updateSchool(data: SchoolCreateInputType!, id: ID!): UpdateSchool
+  deleteSchool(id: ID!): DeleteSchool
+  createPublisher(data: PublisherCreateInputType!): CreatePublisher
+  updatePublisher(data: PublisherCreateInputType!, id: ID!): UpdatePublisher
+  deletePublisher(id: ID!): DeletePublisher
+  createInstitution(data: InstitutionCreateInputType!): CreateInstitution
+  updateInstitution(data: InstitutionCreateInputType!, id: ID!): UpdateInstitution
+  deleteInstitution(id: ID!): DeleteInstitution
+  register(data: RegisterInputType!): Register
+  login(data: LoginInputType!): Login
+  activate(data: ActivateInputType!): Activate
+  logout: Logout
+  changePassword(data: ChangePasswordInputType!): ChangeUserPassword
+  generateResetPasswordToken(data: GenerateResetPasswordTokenType!): GenerateResetPasswordToken
+  resetPassword(data: ResetPasswordType!): ResetPassword
+}
+
+type NotificationListType {
+  results: [NotificationType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+  readCount: Int
+  unreadCount: Int
+}
+
+enum NotificationNotificationType {
+  ORDER_RECEIVED
+  ORDER_PACKED
+  ORDER_COMPLETED
+  ORDER_CANCELLED
+  GENERAL
+}
+
+type NotificationType {
+  id: ID!
+  notificationType: NotificationNotificationType!
+  title: String!
+  read: Boolean!
+  createdAt: DateTime!
+  order: OrderType
+}
+
+type OrderListType {
+  results: [OrderType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+enum OrderStatus {
+  RECEIVED
+  PACKED
+  COMPLETED
+  CANCELLED
+}
+
+type OrderType {
+  id: ID!
+  totalPrice: Int!
+  orderCode: UUID!
+  createdBy: UserType!
+  status: OrderStatus!
+  bookOrders(id: Float, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
+}
+
+type PlaceOrderFromCart {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: OrderType
+}
+
+type PlaceSingleOrder {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: OrderType
+}
+
+input PlaceSingleOrderInputType {
+  bookId: Int!
+  quantity: Int!
+}
+
+type ProvinceListType {
+  results: [ProvinceType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type ProvinceType {
+  id: ID!
+  name: String!
+}
+
+input PublisherCreateInputType {
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+  panNumber: String
+  vatNumber: String
+}
+
+input PublisherInputType {
+  id: Int
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+  panNumber: String
+  vatNumber: String
+}
+
+type PublisherListType {
+  results: [PublisherType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PublisherType {
+  id: ID!
+  name: String!
+  municipality: MunicipalityType!
+  wardNumber: Int!
+  localAddress: String
+  panNumber: String
+  vatNumber: String
+}
+
+type Query {
+  cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
+  orders(id: Float, page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  notification(id: ID!): NotificationType
+  notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
+  book(id: ID!): BookType
+  books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, page: Int = 1, ordering: String, pageSize: Int): BookListType
+  tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
+  authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
+  wishList(createdBy: ID, book: ID, page: Int = 1, ordering: String, pageSize: Int): WishListListType
+  school(id: ID!): SchoolType
+  schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
+  publisher(id: ID!): PublisherType
+  publishers(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): PublisherListType
+  institution(id: ID!): InstitutionType
+  institutions(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): InstitutionListType
+  province(id: ID!): ProvinceType
+  provinces(name: String, page: Int = 1, ordering: String, pageSize: Int): ProvinceListType
+  municipality(id: ID!): MunicipalityType
+  municipalities(name: String, provinces: [ID!], districts: [ID!], page: Int = 1, ordering: String, pageSize: Int): MunicipalityListType
+  district(id: ID!): DistrictType
+  districts(name: String, provinces: [ID!], page: Int = 1, ordering: String, pageSize: Int): DistrictListType
+  me: UserMeType
+  user(id: ID!): UserType
+  users(email: String, isActive: Boolean, fullName: String, page: Int = 1, ordering: String, pageSize: Int): UserListType
+}
+
+type Register {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: UserType
+}
+
+input RegisterInputType {
+  email: String!
+  firstName: String
+  lastName: String
+  password: String!
+  phoneNumber: String
+  userType: user_type
+  institution: InstitutionInputType
+  publisher: PublisherInputType
+  school: SchoolInputType
+}
+
+type ResetPassword {
+  errors: [GenericScalar!]
+  ok: Boolean
+}
+
+input ResetPasswordType {
+  passwordResetToken: String!
+  uid: String!
+  newPassword: String!
+}
+
+input SchoolCreateInputType {
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+  panNumber: String
+  vatNumber: String
+}
+
+input SchoolInputType {
+  id: Int
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+  panNumber: String
+  vatNumber: String
+}
+
+type SchoolListType {
+  results: [SchoolType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type SchoolType {
+  id: ID!
+  name: String!
+  municipality: MunicipalityType!
+  wardNumber: Int!
+  localAddress: String
+  panNumber: String
+  vatNumber: String
+}
+
+type TagListType {
+  results: [TagType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type TagType {
+  id: ID!
+  name: String!
+}
+
+input ToggleNotificationInputType {
+  read: Boolean
+}
+
+type ToggleNotificationReadStatus {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: NotificationType
+}
+
+scalar UUID
+
+type UpdateBook {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BookType
+}
+
+type UpdateCartItem {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CartItemType
+}
+
+type UpdateInstitution {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: InstitutionType
+}
+
+type UpdatePublisher {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: PublisherType
+}
+
+type UpdateSchool {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: SchoolType
+}
+
+type UserListType {
+  results: [UserType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type UserMeType {
+  id: ID!
+  lastLogin: DateTime
+  isActive: Boolean!
+  firstName: String
+  lastName: String
+  fullName: String
+  userType: UserUserType!
+  institution: InstitutionType
+  publisher: PublisherType
+  school: SchoolType
+  email: String!
+}
+
+type UserType {
+  id: ID!
+  lastLogin: DateTime
+  isActive: Boolean!
+  firstName: String
+  lastName: String
+  fullName: String
+  userType: UserUserType!
+  institution: InstitutionType
+  publisher: PublisherType
+  school: SchoolType
+}
+
+enum UserUserType {
+  ADMIN
+  PUBLISHER
+  INSTITUTIONAL_USER
+  SCHOOL_ADMIN
+  INDIVIDUAL_USER
+}
+
+input WishListInputType {
+  book: String!
+}
+
+type WishListListType {
+  results: [WishListType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type WishListType {
+  id: ID!
+  book: BookType!
+}
+
+enum language {
+  NEPALI
+  ENGLISH
+}
+
+enum user_type {
+  ADMIN
+  PUBLISHER
+  INSTITUTIONAL_USER
+  SCHOOL_ADMIN
+  INDIVIDUAL_USER
+}
