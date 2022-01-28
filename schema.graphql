@@ -220,6 +220,12 @@ type DeleteInstitution {
   result: InstitutionType
 }
 
+type DeleteNotification {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: NotificationType
+}
+
 type DeletePublisher {
   errors: [GenericScalar!]
   ok: Boolean
@@ -339,6 +345,8 @@ type MunicipalityType {
 }
 
 type Mutation {
+  toggleNotification(data: ToggleNotificationInputType!, id: ID!): ToggleNotificationReadStatus
+  deleteNotification(id: ID!): DeleteNotification
   createCartItem(data: CartItemInputType!): CreateCartItem
   updateCartItem(data: CartItemInputType!, id: ID!): UpdateCartItem
   deleteCartItem(id: ID!): DeleteCartItem
@@ -366,6 +374,32 @@ type Mutation {
   generateResetPasswordToken(data: GenerateResetPasswordTokenType!): GenerateResetPasswordToken
   resetPassword(data: ResetPasswordType!): ResetPassword
   updateProfile(data: UpdateProfileType!): UpdateProfile
+}
+
+type NotificationListType {
+  results: [NotificationType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+  readCount: Int
+  unreadCount: Int
+}
+
+enum NotificationNotificationType {
+  ORDER_RECEIVED
+  ORDER_PACKED
+  ORDER_COMPLETED
+  ORDER_CANCELLED
+  GENERAL
+}
+
+type NotificationType {
+  id: ID!
+  notificationType: NotificationNotificationType!
+  title: String!
+  read: Boolean!
+  createdAt: DateTime!
+  order: OrderType
 }
 
 type OrderListType {
@@ -467,7 +501,9 @@ input PublisherUpdateInputType {
 
 type Query {
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
-  orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  orders(id: Float, page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  notification(id: ID!): NotificationType
+  notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
   books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
@@ -573,6 +609,16 @@ type TagListType {
 type TagType {
   id: ID!
   name: String!
+}
+
+input ToggleNotificationInputType {
+  read: Boolean
+}
+
+type ToggleNotificationReadStatus {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: NotificationType
 }
 
 scalar UUID
