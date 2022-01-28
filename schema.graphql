@@ -34,7 +34,7 @@ input BookCreateInputType {
   descriptionEn: String
   descriptionNe: String
   isbn: String!
-  numberOfPages: Int
+  numberOfPages: Int!
   language: language!
   weight: Int
   publishedDate: Date!
@@ -80,23 +80,6 @@ type BookListType {
   pageSize: Int
 }
 
-type BookOrderListType {
-  results: [BookOrderType!]
-  totalCount: Int
-  page: Int
-  pageSize: Int
-}
-
-type BookOrderType {
-  id: ID!
-  title: String!
-  price: Int!
-  quantity: Int!
-  isbn: String!
-  edition: String!
-  image: FileFieldType
-}
-
 type BookType {
   id: ID!
   title: String!
@@ -106,7 +89,7 @@ type BookType {
   authors: [AuthorType!]!
   tags: [TagType!]!
   isbn: String!
-  numberOfPages: Int
+  numberOfPages: Int!
   language: BookLanguage!
   weight: Int
   publishedDate: Date!
@@ -121,26 +104,6 @@ type BookType {
   ogImage: FileFieldType
   ogLocale: String
   ogType: String
-}
-
-input CartItemInputType {
-  book: String!
-  quantity: Int!
-}
-
-type CartItemType {
-  id: ID!
-  book: BookType!
-  quantity: Int!
-  totalPrice: Int
-}
-
-type CartType {
-  results: [CartItemType!]
-  totalCount: Int
-  page: Int
-  pageSize: Int
-  grandTotalPrice: Int
 }
 
 type CategoryType {
@@ -164,12 +127,6 @@ type CreateBook {
   errors: [GenericScalar!]
   ok: Boolean
   result: BookType
-}
-
-type CreateCartItem {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: CartItemType
 }
 
 type CreateInstitution {
@@ -206,22 +163,10 @@ type DeleteBook {
   result: BookType
 }
 
-type DeleteCartItem {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: CartItemType
-}
-
 type DeleteInstitution {
   errors: [GenericScalar!]
   ok: Boolean
   result: InstitutionType
-}
-
-type DeleteNotification {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: NotificationType
 }
 
 type DeletePublisher {
@@ -239,7 +184,7 @@ type DeleteSchool {
 type DeleteWishList {
   errors: [GenericScalar!]
   ok: Boolean
-  result: WishListType
+  result: BookType
 }
 
 type DistrictListType {
@@ -336,13 +281,6 @@ type MunicipalityType {
 }
 
 type Mutation {
-  toggleNotification(data: ToggleNotificationInputType!, id: ID!): ToggleNotificationReadStatus
-  deleteNotification(id: ID!): DeleteNotification
-  createCartItem(data: CartItemInputType!): CreateCartItem
-  updateCartItem(data: CartItemInputType!, id: ID!): UpdateCartItem
-  deleteCartItem(id: ID!): DeleteCartItem
-  placeOrderFromCart: PlaceOrderFromCart
-  placeSingleOrder(data: PlaceSingleOrderInputType!): PlaceSingleOrder
   createBook(data: BookCreateInputType!): CreateBook
   updateBook(data: BookCreateInputType!, id: ID!): UpdateBook
   deleteBook(id: ID!): DeleteBook
@@ -364,72 +302,6 @@ type Mutation {
   changePassword(data: ChangePasswordInputType!): ChangeUserPassword
   generateResetPasswordToken(data: GenerateResetPasswordTokenType!): GenerateResetPasswordToken
   resetPassword(data: ResetPasswordType!): ResetPassword
-}
-
-type NotificationListType {
-  results: [NotificationType!]
-  totalCount: Int
-  page: Int
-  pageSize: Int
-  readCount: Int
-  unreadCount: Int
-}
-
-enum NotificationNotificationType {
-  ORDER_RECEIVED
-  ORDER_PACKED
-  ORDER_COMPLETED
-  ORDER_CANCELLED
-  GENERAL
-}
-
-type NotificationType {
-  id: ID!
-  notificationType: NotificationNotificationType!
-  title: String!
-  read: Boolean!
-  createdAt: DateTime!
-  order: OrderType
-}
-
-type OrderListType {
-  results: [OrderType!]
-  totalCount: Int
-  page: Int
-  pageSize: Int
-}
-
-enum OrderStatus {
-  RECEIVED
-  PACKED
-  COMPLETED
-  CANCELLED
-}
-
-type OrderType {
-  id: ID!
-  totalPrice: Int!
-  orderCode: UUID!
-  createdBy: UserType!
-  status: OrderStatus!
-  bookOrders(id: Float, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
-}
-
-type PlaceOrderFromCart {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: OrderType
-}
-
-type PlaceSingleOrder {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: OrderType
-}
-
-input PlaceSingleOrderInputType {
-  bookId: Int!
-  quantity: Int!
 }
 
 type ProvinceListType {
@@ -481,10 +353,6 @@ type PublisherType {
 }
 
 type Query {
-  cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
-  orders(id: Float, page: Int = 1, ordering: String, pageSize: Int): OrderListType
-  notification(id: ID!): NotificationType
-  notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
   books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
@@ -584,28 +452,10 @@ type TagType {
   name: String!
 }
 
-input ToggleNotificationInputType {
-  read: Boolean
-}
-
-type ToggleNotificationReadStatus {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: NotificationType
-}
-
-scalar UUID
-
 type UpdateBook {
   errors: [GenericScalar!]
   ok: Boolean
   result: BookType
-}
-
-type UpdateCartItem {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: CartItemType
 }
 
 type UpdateInstitution {
