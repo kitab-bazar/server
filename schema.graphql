@@ -98,6 +98,13 @@ type BookOrderType {
   image: FileFieldType
 }
 
+enum BookPermission {
+  CREATE_BOOK
+  UPDATE_BOOK
+  DELETE_BOOK
+  RETRIEVE_BOOK
+}
+
 type BookType {
   id: ID!
   title: String!
@@ -292,6 +299,13 @@ type InstitutionListType {
   pageSize: Int
 }
 
+enum InstitutionPermission {
+  CREATE_INSTITUTION
+  UPDATE_INSTITUTION
+  DELETE_INSTITUTION
+  RETRIEVE_INSTITUTION
+}
+
 type InstitutionType {
   id: ID!
   name: String!
@@ -438,6 +452,13 @@ type PublisherListType {
   pageSize: Int
 }
 
+enum PublisherPermission {
+  CREATE_PUBLISHER
+  UPDATE_PUBLISHER
+  DELETE_PUBLISHER
+  RETRIEVE_PUBLISHER
+}
+
 type PublisherType {
   id: ID!
   name: String!
@@ -528,6 +549,13 @@ type SchoolListType {
   pageSize: Int
 }
 
+enum SchoolPermission {
+  CREATE_SCHOOL
+  UPDATE_SCHOOL
+  DELETE_SCHOOL
+  RETRIEVE_SCHOOL
+}
+
 type SchoolType {
   id: ID!
   name: String!
@@ -601,6 +629,14 @@ type UserMeType {
   publisher: PublisherType
   school: SchoolType
   email: String!
+  allowedPermissions: UserPermissionType
+}
+
+type UserPermissionType {
+  schoolPermissions: [SchoolPermission!]!
+  publisherPermissions: [PublisherPermission!]!
+  institutionPermissions: [InstitutionPermission!]!
+  bookPermissions: [BookPermission!]!
 }
 
 type UserType {
