@@ -26,6 +26,7 @@ def send_notification_to_customer(instance, notification_type, title):
     transaction.on_commit(lambda: generic_email_sender.delay(
         subject, message, [instance.created_by.email], html_context=html_context
     ))
+    return True
 
 
 def send_notfication_to_publisher(instance, notification_type, title):
@@ -57,6 +58,7 @@ def send_notfication_to_publisher(instance, notification_type, title):
     transaction.on_commit(lambda: generic_email_sender.delay(
         subject, message, recipient_list, html_context=html_context
     ))
+    return True
 
 
 @receiver(post_save, sender=Order)
@@ -66,23 +68,19 @@ def send_notification(
     if instance.status == Order.OrderStatus.RECEIVED.value:
         title = _('Book order received.')
         notification_type = Notification.NotificationType.ORDER_RECEIVED.value
-        send_notification_to_customer(instance, notification_type, title)
         send_notfication_to_publisher(instance, notification_type, title)
 
     elif instance.status == Order.OrderStatus.PACKED.value:
         title = _('Book order packed.')
         notification_type = Notification.NotificationType.ORDER_PACKED.value
         send_notification_to_customer(instance, notification_type, title)
-        send_notfication_to_publisher(instance, notification_type, title)
 
     elif instance.status == Order.OrderStatus.COMPLETED.value:
         title = _('Book order completed.')
         notification_type = Notification.NotificationType.ORDER_COMPLETED.value
         send_notification_to_customer(instance, notification_type, title)
-        send_notfication_to_publisher(instance, notification_type, title)
 
     elif instance.status == Order.OrderStatus.CANCELLED.value:
         title = _('Book order cancelled.')
         notification_type = Notification.NotificationType.ORDER_CANCELLED.value
         send_notification_to_customer(instance, notification_type, title)
-        send_notfication_to_publisher(instance, notification_type, title)
