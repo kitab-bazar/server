@@ -226,6 +226,12 @@ type DeleteNotification {
   result: NotificationType
 }
 
+type DeleteOrder {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: OrderType
+}
+
 type DeletePublisher {
   errors: [GenericScalar!]
   ok: Boolean
@@ -352,6 +358,8 @@ type Mutation {
   deleteCartItem(id: ID!): DeleteCartItem
   placeOrderFromCart: PlaceOrderFromCart
   placeSingleOrder(data: PlaceSingleOrderInputType!): PlaceSingleOrder
+  updateOrder(data: OrderUpdateInputType!, id: ID!): UpdateOrder
+  deleteOrder(id: ID!): DeleteOrder
   createBook(data: BookCreateInputType!): CreateBook
   updateBook(data: BookCreateInputType!, id: ID!): UpdateBook
   deleteBook(id: ID!): DeleteBook
@@ -424,6 +432,10 @@ type OrderType {
   status: OrderStatus!
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
   totalQuantity: Int
+}
+
+input OrderUpdateInputType {
+  status: status
 }
 
 type PlaceOrderFromCart {
@@ -501,7 +513,7 @@ input PublisherUpdateInputType {
 
 type Query {
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
-  orders(id: Float, page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   notification(id: ID!): NotificationType
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
@@ -641,6 +653,12 @@ type UpdateInstitution {
   result: InstitutionType
 }
 
+type UpdateOrder {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: OrderType
+}
+
 type UpdateProfile {
   errors: [GenericScalar!]
   ok: Boolean
@@ -710,6 +728,10 @@ enum UserPermissions {
   CAN_UPDATE_INSTITUTION
   CAN_DELETE_INSTITUTION
   CAN_RETRIEVE_INSTITUTION
+  CREATE_ORDER
+  UPDATE_ORDER
+  DELETE_ORDER
+  RETRIEVE_ORDER
 }
 
 type UserType {
@@ -753,6 +775,13 @@ type WishListType {
 enum language {
   NEPALI
   ENGLISH
+}
+
+enum status {
+  RECEIVED
+  PACKED
+  COMPLETED
+  CANCELLED
 }
 
 enum user_type {
