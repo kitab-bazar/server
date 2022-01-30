@@ -1,9 +1,11 @@
 from django.utils.functional import cached_property
 from config.dataloaders import GlobalDataLoaders
-from config.permissions import BookPermissions
-from config.permissions import PublisherPermissions
-from config.permissions import SchoolPermissions
-from config.permissions import InstitutionPermissions
+from config.permissions import (
+    BookPermissions,
+    PublisherPermissions,
+    SchoolPermissions,
+    InstitutionPermissions,
+)
 
 
 class GQLContext:
