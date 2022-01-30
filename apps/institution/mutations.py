@@ -46,7 +46,7 @@ class CreateInstitution(InstitutionMutationMixin, CreateUpdateGrapheneMutation):
     permissions = [InstitutionPermissions.Permission.CREATE_INSTITUTION]
 
 
-class UpdateInstitution(CreateUpdateGrapheneMutation):
+class UpdateInstitution(InstitutionMutationMixin, CreateUpdateGrapheneMutation):
     class Arguments:
         data = InstitutionInputType(required=True)
         id = graphene.ID(required=True)
@@ -62,10 +62,6 @@ class DeleteInstitution(InstitutionMutationMixin, DeleteMutation):
     model = Institution
     result = graphene.Field(InstitutionType)
     permissions = [InstitutionPermissions.Permission.DELETE_INSTITUTION]
-
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
 
 
 class Mutation(graphene.ObjectType):

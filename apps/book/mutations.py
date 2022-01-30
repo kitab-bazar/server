@@ -63,10 +63,6 @@ class DeleteBook(BookMutationMixin, DeleteMutation):
     result = graphene.Field(BookType)
     permissions = [BookPermissions.Permission.DELETE_BOOK]
 
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
-
 
 WishListInputType = generate_input_type_for_serializer(
     'WishListInputType',
