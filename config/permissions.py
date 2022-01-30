@@ -137,7 +137,7 @@ class SchoolPermissions(BasePermissions):
     SCHOOL_ADMIN = [*INDIVIDUAL_USER, Permission.UPDATE_SCHOOL]
     PUBLISHER = [*INDIVIDUAL_USER]
     INSTITUTIONAL_USER = [*INDIVIDUAL_USER]
-    ADMIN = [*PUBLISHER, Permission.CREATE_SCHOOL, Permission.DELETE_SCHOOL]
+    ADMIN = [*SCHOOL_ADMIN, Permission.CREATE_SCHOOL, Permission.DELETE_SCHOOL]
 
     PERMISSION_MAP = {
         User.UserType.ADMIN: ADMIN,
