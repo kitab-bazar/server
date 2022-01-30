@@ -29,6 +29,11 @@ class UserPermissions():
         CAN_DELETE_INSTITUTION = auto()
         CAN_RETRIEVE_INSTITUTION = auto()
 
+        CREATE_ORDER = auto()
+        UPDATE_ORDER = auto()
+        DELETE_ORDER = auto()
+        RETRIEVE_ORDER = auto()
+
     Permission.__name__ = 'UserPermissions'
 
     __error_message__ = {
@@ -51,18 +56,23 @@ class UserPermissions():
         Permission.CAN_UPDATE_INSTITUTION: "You don't have permission to update institution",
         Permission.CAN_DELETE_INSTITUTION: "You don't have permission to delete institution",
         Permission.CAN_RETRIEVE_INSTITUTION: "You don't have permission to retrieve institution",
+
+        Permission.CREATE_ORDER: "You don't have permission to create order",
+        Permission.UPDATE_ORDER: "You don't have permission to update order",
+        Permission.DELETE_ORDER: "You don't have permission to delete order",
+        Permission.RETRIEVE_ORDER: "You don't have permission to retrieve order",
     }
 
     INDIVIDUAL_USER = [
         Permission.CAN_RETRIEVE_BOOK, Permission.CAN_RETRIEVE_PUBLISHER, Permission.CAN_RETRIEVE_SCHOOL,
-        Permission.CAN_RETRIEVE_INSTITUTION
+        Permission.CAN_RETRIEVE_INSTITUTION, Permission.CREATE_ORDER, Permission.RETRIEVE_ORDER,
     ]
     SCHOOL_ADMIN = [
         *INDIVIDUAL_USER, Permission.CAN_UPDATE_SCHOOL
     ]
     PUBLISHER = [
         *INDIVIDUAL_USER, Permission.CAN_CREATE_BOOK, Permission.CAN_UPDATE_BOOK, Permission.CAN_DELETE_BOOK,
-        Permission.CAN_UPDATE_PUBLISHER
+        Permission.CAN_UPDATE_PUBLISHER, Permission.UPDATE_ORDER, Permission.DELETE_ORDER
     ]
     INSTITUTIONAL_USER = [*INDIVIDUAL_USER, Permission.CAN_UPDATE_INSTITUTION]
     ADMIN = [

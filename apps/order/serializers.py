@@ -102,3 +102,13 @@ class PlaceSingleOrderSerializer(serializers.Serializer):
             publisher=book.publisher
         )
         return order
+
+
+class OrderStatusUpdateSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
+    '''
+    This serializer is used to update status of order only
+    '''
+
+    class Meta:
+        model = Order
+        fields = ('id', 'status',)
