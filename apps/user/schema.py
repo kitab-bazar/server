@@ -93,7 +93,7 @@ class UserMeType(DjangoObjectType):
         fields = (
             'id', 'first_name', 'last_name', 'full_name', 'email',
             'is_active', 'last_login', 'user_type', 'institution',
-            'publisher', 'school'
+            'publisher', 'school', 'phone_number'
         )
 
     @staticmethod
