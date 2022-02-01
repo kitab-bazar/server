@@ -316,6 +316,13 @@ type InstitutionType {
   vatNumber: String
 }
 
+input InstitutionUpdateInputType {
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+}
+
 type Login {
   result: UserType
   errors: [GenericScalar!]
@@ -372,6 +379,7 @@ type Mutation {
   changePassword(data: ChangePasswordInputType!): ChangeUserPassword
   generateResetPasswordToken(data: GenerateResetPasswordTokenType!): GenerateResetPasswordToken
   resetPassword(data: ResetPasswordType!): ResetPassword
+  updateProfile(data: UpdateProfileType!): UpdateProfile
 }
 
 type OrderListType {
@@ -467,6 +475,14 @@ type PublisherType {
   localAddress: String
   panNumber: String
   vatNumber: String
+}
+
+input PublisherUpdateInputType {
+  id: Int
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
 }
 
 type Query {
@@ -566,6 +582,14 @@ type SchoolType {
   vatNumber: String
 }
 
+input SchoolUpdateInputType {
+  id: Int
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+}
+
 type TagListType {
   results: [TagType!]
   totalCount: Int
@@ -598,6 +622,22 @@ type UpdateInstitution {
   result: InstitutionType
 }
 
+type UpdateProfile {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: UserType
+}
+
+input UpdateProfileType {
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  image: String
+  publisher: PublisherUpdateInputType
+  school: SchoolUpdateInputType
+  institution: InstitutionUpdateInputType
+}
+
 type UpdatePublisher {
   errors: [GenericScalar!]
   ok: Boolean
@@ -625,10 +665,12 @@ type UserMeType {
   lastName: String!
   fullName: String!
   userType: UserUserType!
+  image: FileFieldType
   institution: InstitutionType
   publisher: PublisherType
   school: SchoolType
   email: String!
+  phoneNumber: String
   allowedPermissions: UserPermissionType
 }
 
@@ -647,6 +689,7 @@ type UserType {
   lastName: String!
   fullName: String!
   userType: UserUserType!
+  image: FileFieldType
   institution: InstitutionType
   publisher: PublisherType
   school: SchoolType
