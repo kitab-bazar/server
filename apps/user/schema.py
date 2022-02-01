@@ -2,7 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
-from utils.graphene.types import CustomDjangoListObjectType
+from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
 from config.permissions import (
     SchoolPermissions,
@@ -22,13 +22,15 @@ from apps.user.filters import UserFilter
 
 
 class UserType(DjangoObjectType):
+
     class Meta:
         model = User
         fields = (
             'id', 'first_name', 'last_name', 'full_name',
             'is_active', 'last_login', 'user_type', 'institution',
-            'publisher', 'school'
+            'publisher', 'school', 'image'
         )
+    image = graphene.Field(FileFieldType)
 
     @staticmethod
     def get_queryset(queryset, info):
@@ -93,8 +95,9 @@ class UserMeType(DjangoObjectType):
         fields = (
             'id', 'first_name', 'last_name', 'full_name', 'email',
             'is_active', 'last_login', 'user_type', 'institution',
-            'publisher', 'school', 'phone_number'
+            'publisher', 'school', 'phone_number', 'image'
         )
+    image = graphene.Field(FileFieldType)
 
     @staticmethod
     def resolve_allowed_permissions(root, info):

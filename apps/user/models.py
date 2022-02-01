@@ -83,6 +83,9 @@ class User(AbstractUser):
         default=UserType.INDIVIDUAL_USER,
         verbose_name=ugettext("User Type")
     )
+    image = models.FileField(
+        upload_to='user/images/', max_length=255, blank=True
+    )
     institution = models.ForeignKey(
         'institution.Institution', verbose_name=ugettext('Institution'), related_name='%(app_label)s_%(class)s_institution',
         on_delete=models.CASCADE, null=True, blank=True
