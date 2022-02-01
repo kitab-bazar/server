@@ -1,5 +1,4 @@
 import graphene
-from django.core.exceptions import PermissionDenied
 
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
@@ -11,7 +10,7 @@ from apps.institution.models import Institution
 from apps.institution.schema import InstitutionType
 from apps.institution.serializers import InstitutionSerializer
 from apps.user.models import User
-from config.permissions import InstitutionPermissions
+from config.permissions import UserPermissions
 
 
 InstitutionInputType = generate_input_type_for_serializer(
@@ -29,13 +28,6 @@ class InstitutionMutationMixin():
             return qs
         return Institution.objects.none()
 
-    @classmethod
-    def check_permissions(cls, info, **_):
-        for permission in cls.permissions:
-            if not InstitutionPermissions.check_permission(info, permission):
-                raise PermissionDenied(InstitutionPermissions.get_permission_message(permission))
-        return False
-
 
 class CreateInstitution(InstitutionMutationMixin, CreateUpdateGrapheneMutation):
     class Arguments:
@@ -43,7 +35,7 @@ class CreateInstitution(InstitutionMutationMixin, CreateUpdateGrapheneMutation):
     model = Institution
     serializer_class = InstitutionSerializer
     result = graphene.Field(InstitutionType)
-    permissions = [InstitutionPermissions.Permission.CREATE_INSTITUTION]
+    permissions = [UserPermissions.Permission.CAN_CREATE_INSTITUTION]
 
 
 class UpdateInstitution(InstitutionMutationMixin, CreateUpdateGrapheneMutation):
@@ -53,7 +45,7 @@ class UpdateInstitution(InstitutionMutationMixin, CreateUpdateGrapheneMutation):
     model = Institution
     serializer_class = InstitutionSerializer
     result = graphene.Field(InstitutionType)
-    permissions = [InstitutionPermissions.Permission.UPDATE_INSTITUTION]
+    permissions = [UserPermissions.Permission.CAN_UPDATE_INSTITUTION]
 
 
 class DeleteInstitution(InstitutionMutationMixin, DeleteMutation):
@@ -61,7 +53,7 @@ class DeleteInstitution(InstitutionMutationMixin, DeleteMutation):
         id = graphene.ID(required=True)
     model = Institution
     result = graphene.Field(InstitutionType)
-    permissions = [InstitutionPermissions.Permission.DELETE_INSTITUTION]
+    permissions = [UserPermissions.Permission.CAN_DELETE_INSTITUTION]
 
 
 class Mutation(graphene.ObjectType):

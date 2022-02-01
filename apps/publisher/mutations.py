@@ -1,5 +1,4 @@
 import graphene
-from django.core.exceptions import PermissionDenied
 
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
@@ -11,7 +10,7 @@ from apps.publisher.models import Publisher
 from apps.publisher.schema import PublisherType
 from apps.publisher.serializers import PublisherSerializer
 from apps.user.models import User
-from config.permissions import PublisherPermissions
+from config.permissions import UserPermissions
 
 
 PublisherInputType = generate_input_type_for_serializer(
@@ -29,13 +28,6 @@ class PublisherMutationMixin():
             return qs
         return Publisher.objects.none()
 
-    @classmethod
-    def check_permissions(cls, info, **_):
-        for permission in cls.permissions:
-            if not PublisherPermissions.check_permission(info, permission):
-                raise PermissionDenied(PublisherPermissions.get_permission_message(permission))
-        return False
-
 
 class CreatePublisher(PublisherMutationMixin, CreateUpdateGrapheneMutation):
     class Arguments:
@@ -43,7 +35,7 @@ class CreatePublisher(PublisherMutationMixin, CreateUpdateGrapheneMutation):
     model = Publisher
     serializer_class = PublisherSerializer
     result = graphene.Field(PublisherType)
-    permissions = [PublisherPermissions.Permission.CREATE_PUBLISHER]
+    permissions = [UserPermissions.Permission.CAN_CREATE_PUBLISHER]
 
 
 class UpdatePublisher(PublisherMutationMixin, CreateUpdateGrapheneMutation):
@@ -53,7 +45,7 @@ class UpdatePublisher(PublisherMutationMixin, CreateUpdateGrapheneMutation):
     model = Publisher
     serializer_class = PublisherSerializer
     result = graphene.Field(PublisherType)
-    permissions = [PublisherPermissions.Permission.UPDATE_PUBLISHER]
+    permissions = [UserPermissions.Permission.CAN_UPDATE_PUBLISHER]
 
 
 class DeletePublisher(PublisherMutationMixin, DeleteMutation):
@@ -61,7 +53,7 @@ class DeletePublisher(PublisherMutationMixin, DeleteMutation):
         id = graphene.ID(required=True)
     model = Publisher
     result = graphene.Field(PublisherType)
-    permissions = [PublisherPermissions.Permission.DELETE_PUBLISHER]
+    permissions = [UserPermissions.Permission.CAN_DELETE_PUBLISHER]
 
 
 class Mutation(graphene.ObjectType):

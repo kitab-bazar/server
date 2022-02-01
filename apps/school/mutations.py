@@ -1,5 +1,4 @@
 import graphene
-from django.core.exceptions import PermissionDenied
 
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
@@ -12,7 +11,7 @@ from apps.school.schema import SchoolType
 from apps.school.serializers import SchoolSerializer
 
 from apps.user.models import User
-from config.permissions import SchoolPermissions
+from config.permissions import UserPermissions
 
 
 SchoolInputType = generate_input_type_for_serializer(
@@ -30,13 +29,6 @@ class SchoolMutationMixin():
             return qs
         return School.objects.none()
 
-    @classmethod
-    def check_permissions(cls, info, **_):
-        for permission in cls.permissions:
-            if not SchoolPermissions.check_permission(info, permission):
-                raise PermissionDenied(SchoolPermissions.get_permission_message(permission))
-        return False
-
 
 class CreateSchool(SchoolMutationMixin, CreateUpdateGrapheneMutation):
     class Arguments:
@@ -44,7 +36,7 @@ class CreateSchool(SchoolMutationMixin, CreateUpdateGrapheneMutation):
     model = School
     serializer_class = SchoolSerializer
     result = graphene.Field(SchoolType)
-    permissions = [SchoolPermissions.Permission.CREATE_SCHOOL]
+    permissions = [UserPermissions.Permission.CAN_CREATE_SCHOOL]
 
 
 class UpdateSchool(SchoolMutationMixin, CreateUpdateGrapheneMutation):
@@ -54,7 +46,7 @@ class UpdateSchool(SchoolMutationMixin, CreateUpdateGrapheneMutation):
     model = School
     serializer_class = SchoolSerializer
     result = graphene.Field(SchoolType)
-    permissions = [SchoolPermissions.Permission.UPDATE_SCHOOL]
+    permissions = [UserPermissions.Permission.CAN_UPDATE_SCHOOL]
 
 
 class DeleteSchool(SchoolMutationMixin, DeleteMutation):
@@ -62,7 +54,7 @@ class DeleteSchool(SchoolMutationMixin, DeleteMutation):
         id = graphene.ID(required=True)
     model = School
     result = graphene.Field(SchoolType)
-    permissions = [SchoolPermissions.Permission.DELETE_SCHOOL]
+    permissions = [UserPermissions.Permission.CAN_DELETE_SCHOOL]
 
 
 class Mutation(graphene.ObjectType):
