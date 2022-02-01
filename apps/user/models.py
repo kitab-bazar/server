@@ -64,19 +64,16 @@ class User(AbstractUser):
     email = models.EmailField(ugettext("Email address"), unique=True)
     first_name = models.CharField(
         max_length=255,
-        null=True,
         blank=True,
         verbose_name=ugettext("First name")
     )
     last_name = models.CharField(
         max_length=255,
-        null=True,
         blank=True,
         verbose_name=ugettext("Last name")
     )
     full_name = models.CharField(
         max_length=520,
-        null=True,
         blank=True,
         verbose_name=ugettext("Full Name")
     )
@@ -116,7 +113,5 @@ class User(AbstractUser):
         )
 
     def save(self, *args, **kwargs):
-        first_name = self.first_name if self.first_name else ""
-        last_name = self.first_name if self.first_name else ""
-        self.full_name = f'{first_name} {last_name}'
+        self.full_name = self.get_full_name()
         super().save(*args, **kwargs)

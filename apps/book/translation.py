@@ -16,7 +16,7 @@ class CategoryTranslationOptions(TranslationOptions):
 
 @register(Author)
 class AuthorTranslationOptions(TranslationOptions):
-    fields = ('name',)
+    fields = ('name', 'about_author')
 
 
 @register(Book)

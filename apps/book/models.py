@@ -24,6 +24,7 @@ class Author(models.Model):
         max_length=255,
         verbose_name=_('Author name')
     )
+    about_author = models.TextField(null=True, blank=True, verbose_name=_('About author'))
 
     class Meta:
         verbose_name = _('Author')
@@ -88,6 +89,7 @@ class Book(models.Model):
     published_date = models.DateField(verbose_name=_('Published Date'))
     edition = models.CharField(
         max_length=255,
+        null=True, blank=True,
         verbose_name=_('Edition')
     )
     publisher = models.ForeignKey(

@@ -23,6 +23,7 @@ type AuthorListType {
 type AuthorType {
   id: ID!
   name: String!
+  aboutAuthor: String
 }
 
 input BookCreateInputType {
@@ -38,7 +39,7 @@ input BookCreateInputType {
   language: language!
   weight: Int
   publishedDate: Date!
-  edition: String!
+  edition: String
   price: Int!
   metaTitle: String
   metaTitleEn: String
@@ -93,7 +94,7 @@ type BookType {
   language: BookLanguage!
   weight: Int
   publishedDate: Date!
-  edition: String!
+  edition: String
   publisher: PublisherType!
   price: Int!
   metaTitle: String
@@ -487,9 +488,9 @@ type UserMeType {
   id: ID!
   lastLogin: DateTime
   isActive: Boolean!
-  firstName: String
-  lastName: String
-  fullName: String
+  firstName: String!
+  lastName: String!
+  fullName: String!
   userType: UserUserType!
   institution: InstitutionType
   publisher: PublisherType
@@ -501,9 +502,9 @@ type UserType {
   id: ID!
   lastLogin: DateTime
   isActive: Boolean!
-  firstName: String
-  lastName: String
-  fullName: String
+  firstName: String!
+  lastName: String!
+  fullName: String!
   userType: UserUserType!
   institution: InstitutionType
   publisher: PublisherType
