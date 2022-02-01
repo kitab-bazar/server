@@ -8,9 +8,9 @@ from .tasks import generic_email_sender
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.translation import ugettext
-from apps.publisher.serializers import PublisherSerializer
-from apps.school.serializers import SchoolSerializer
-from apps.institution.serializers import InstitutionSerializer
+from apps.publisher.serializers import PublisherSerializer, PublisherUpdateSerializer
+from apps.school.serializers import SchoolSerializer, SchoolUpdateSerializer
+from apps.institution.serializers import InstitutionSerializer, InstitutionUpdateSerializer
 from apps.institution.models import Institution
 from apps.school.models import School
 from apps.publisher.models import Publisher
@@ -225,3 +225,40 @@ class ResetPasswordSerializer(serializers.Serializer):
             user.save()
             return attrs
         raise serializers.ValidationError(ugettext('The token is invalid.'))
+
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    institution = InstitutionUpdateSerializer(required=False)
+    school = SchoolUpdateSerializer(required=False)
+    publisher = PublisherUpdateSerializer(required=False)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'phone_number', 'image', 'publisher', 'school', 'institution')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def save(self, **kwargs):
+        instance = self.context['request'].user
+        institution_data = self.validated_data.pop('institution', None)
+        school_data = self.validated_data.pop('school', None)
+        publisher_data = self.validated_data.pop('publisher', None)
+        print(instance.user_type, User.UserType.INSTITUTIONAL_USER.value)
+        if institution_data and instance.user_type == User.UserType.INSTITUTIONAL_USER.value:
+            institution_data['municipality'] = institution_data['municipality'].id
+            serializer = InstitutionSerializer(data=institution_data, instance=instance.institution, partial=True)
+            if not serializer.is_valid():
+                raise serializers.ValidationError(serializer.errors)
+            serializer.save()
+        if school_data and instance.user_type == User.UserType.SCHOOL_ADMIN.value:
+            school_data['municipality'] = school_data['municipality'].id
+            serializer = SchoolSerializer(data=school_data, instance=instance.school, partial=True)
+            if not serializer.is_valid():
+                raise serializers.ValidationError(serializer.errors)
+            serializer.save()
+        if publisher_data and instance.user_type == User.UserType.PUBLISHER.value:
+            publisher_data['municipality'] = publisher_data['municipality'].id
+            serializer = InstitutionSerializer(data=publisher_data, instance=instance.publisher, partial=True)
+            if not serializer.is_valid():
+                raise serializers.ValidationError(serializer.errors)
+            serializer.save()
+        return super().update(instance, self.validated_data)
