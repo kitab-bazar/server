@@ -122,7 +122,7 @@ type BookType {
   ogImage: FileFieldType
   ogLocale: String
   ogType: String
-  quantityInCart: Int
+  quantityInCart: Int!
 }
 
 input CartItemInputType {
@@ -380,7 +380,7 @@ type OrderType {
   orderCode: UUID!
   createdBy: UserType!
   status: OrderStatus!
-  bookOrders(id: Float, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
+  bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
 }
 
 type PlaceOrderFromCart {
@@ -450,7 +450,7 @@ type PublisherType {
 
 type Query {
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
-  orders(id: Float, page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   book(id: ID!): BookType
   books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
