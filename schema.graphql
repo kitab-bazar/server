@@ -98,13 +98,6 @@ type BookOrderType {
   image: FileFieldType
 }
 
-enum BookPermission {
-  CREATE_BOOK
-  UPDATE_BOOK
-  DELETE_BOOK
-  RETRIEVE_BOOK
-}
-
 type BookType {
   id: ID!
   title: String!
@@ -299,13 +292,6 @@ type InstitutionListType {
   pageSize: Int
 }
 
-enum InstitutionPermission {
-  CREATE_INSTITUTION
-  UPDATE_INSTITUTION
-  DELETE_INSTITUTION
-  RETRIEVE_INSTITUTION
-}
-
 type InstitutionType {
   id: ID!
   name: String!
@@ -403,6 +389,7 @@ type OrderType {
   createdBy: UserType!
   status: OrderStatus!
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
+  totalQuantity: Int
 }
 
 type PlaceOrderFromCart {
@@ -458,13 +445,6 @@ type PublisherListType {
   totalCount: Int
   page: Int
   pageSize: Int
-}
-
-enum PublisherPermission {
-  CREATE_PUBLISHER
-  UPDATE_PUBLISHER
-  DELETE_PUBLISHER
-  RETRIEVE_PUBLISHER
 }
 
 type PublisherType {
@@ -563,13 +543,6 @@ type SchoolListType {
   totalCount: Int
   page: Int
   pageSize: Int
-}
-
-enum SchoolPermission {
-  CREATE_SCHOOL
-  UPDATE_SCHOOL
-  DELETE_SCHOOL
-  RETRIEVE_SCHOOL
 }
 
 type SchoolType {
@@ -671,14 +644,26 @@ type UserMeType {
   school: SchoolType
   email: String!
   phoneNumber: String
-  allowedPermissions: UserPermissionType
+  allowedPermissions: [UserPermissions!]!
 }
 
-type UserPermissionType {
-  schoolPermissions: [SchoolPermission!]!
-  publisherPermissions: [PublisherPermission!]!
-  institutionPermissions: [InstitutionPermission!]!
-  bookPermissions: [BookPermission!]!
+enum UserPermissions {
+  CAN_CREATE_BOOK
+  CAN_UPDATE_BOOK
+  CAN_DELETE_BOOK
+  CAN_RETRIEVE_BOOK
+  CAN_CREATE_PUBLISHER
+  CAN_UPDATE_PUBLISHER
+  CAN_DELETE_PUBLISHER
+  CAN_RETRIEVE_PUBLISHER
+  CAN_CREATE_SCHOOL
+  CAN_UPDATE_SCHOOL
+  CAN_DELETE_SCHOOL
+  CAN_RETRIEVE_SCHOOL
+  CAN_CREATE_INSTITUTION
+  CAN_UPDATE_INSTITUTION
+  CAN_DELETE_INSTITUTION
+  CAN_RETRIEVE_INSTITUTION
 }
 
 type UserType {
