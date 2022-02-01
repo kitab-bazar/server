@@ -53,7 +53,7 @@ class AuthorListType(CustomDjangoListObjectType):
 
 
 class BookType(DjangoObjectType):
-    quantity_in_cart = graphene.Int()
+    quantity_in_cart = graphene.Int(required=True)
 
     class Meta:
         model = Book
