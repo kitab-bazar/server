@@ -87,4 +87,4 @@ jobs:
         if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
         with:
           branch: gh-pages
-          folder: ./htmlcov
+          folder: ./coverage/htmlcov
