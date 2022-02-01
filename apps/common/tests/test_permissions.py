@@ -1,11 +1,6 @@
 from utils.graphene.tests import GraphQLTestCase
 
-from config.permissions import (
-    BookPermissions,
-    PublisherPermissions,
-    SchoolPermissions,
-    InstitutionPermissions,
-)
+from config.permissions import UserPermissions
 
 from apps.user.models import User
 from apps.book.models import Book
@@ -93,7 +88,7 @@ class TestBookPermissions(TestPermissions):
         response = self.query_check(self.create_book, minput=self.minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            BookPermissions.get_permission_message(BookPermissions.Permission.CREATE_BOOK)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_BOOK)
         )
 
         # Institution case
@@ -101,7 +96,7 @@ class TestBookPermissions(TestPermissions):
         response = self.query_check(self.create_book, minput=self.minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            BookPermissions.get_permission_message(BookPermissions.Permission.CREATE_BOOK)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_BOOK)
         )
 
         # Individual user case
@@ -109,7 +104,7 @@ class TestBookPermissions(TestPermissions):
         response = self.query_check(self.create_book, minput=self.minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            BookPermissions.get_permission_message(BookPermissions.Permission.CREATE_BOOK)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_BOOK)
         )
 
     def test_admin_and_publisher_only_can_update_book(self):
@@ -144,7 +139,7 @@ class TestBookPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            BookPermissions.get_permission_message(BookPermissions.Permission.UPDATE_BOOK)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_BOOK)
         )
 
         # Institution case
@@ -155,7 +150,7 @@ class TestBookPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            BookPermissions.get_permission_message(BookPermissions.Permission.UPDATE_BOOK)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_BOOK)
         )
 
         # Individual user case
@@ -166,7 +161,7 @@ class TestBookPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            BookPermissions.get_permission_message(BookPermissions.Permission.UPDATE_BOOK)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_BOOK)
         )
 
     def test_admin_and_publisher_only_can_delete_book(self):
@@ -187,7 +182,7 @@ class TestBookPermissions(TestPermissions):
         response = self.query_check(self.delete_book, variables={'id': book.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            BookPermissions.get_permission_message(BookPermissions.Permission.DELETE_BOOK)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_BOOK)
         )
 
         # Institution case
@@ -195,7 +190,7 @@ class TestBookPermissions(TestPermissions):
         response = self.query_check(self.delete_book, variables={'id': book.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            BookPermissions.get_permission_message(BookPermissions.Permission.DELETE_BOOK)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_BOOK)
         )
 
         # Individual user case
@@ -203,7 +198,7 @@ class TestBookPermissions(TestPermissions):
         response = self.query_check(self.delete_book, variables={'id': book.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            BookPermissions.get_permission_message(BookPermissions.Permission.DELETE_BOOK)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_BOOK)
         )
 
 
@@ -265,14 +260,14 @@ class TestPublisherPermissions(TestPermissions):
         response = self.query_check(self.create_publisher, minput=self.publisher_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.CREATE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_PUBLISHER)
         )
         # School admin case
         self.force_login(self.school_admin_user)
         response = self.query_check(self.create_publisher, minput=self.publisher_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.CREATE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_PUBLISHER)
         )
 
         # Institution case
@@ -280,7 +275,7 @@ class TestPublisherPermissions(TestPermissions):
         response = self.query_check(self.create_publisher, minput=self.publisher_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.CREATE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_PUBLISHER)
         )
 
         # Individual user case
@@ -288,7 +283,7 @@ class TestPublisherPermissions(TestPermissions):
         response = self.query_check(self.create_publisher, minput=self.publisher_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.CREATE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_PUBLISHER)
         )
 
     def test_admin_only_can_update_publishers(self):
@@ -325,7 +320,7 @@ class TestPublisherPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.UPDATE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_PUBLISHER)
         )
 
         # Institution case
@@ -336,7 +331,7 @@ class TestPublisherPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.UPDATE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_PUBLISHER)
         )
 
         # Individual user case
@@ -347,7 +342,7 @@ class TestPublisherPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.UPDATE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_PUBLISHER)
         )
 
     def test_publisher_can_update_his_profile(self):
@@ -379,14 +374,14 @@ class TestPublisherPermissions(TestPermissions):
         response = self.query_check(self.delete_publisher, variables={'id': publisher.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.DELETE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_PUBLISHER)
         )
         # School admin case
         self.force_login(self.school_admin_user)
         response = self.query_check(self.delete_publisher, variables={'id': publisher.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.DELETE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_PUBLISHER)
         )
 
         # Institution case
@@ -394,7 +389,7 @@ class TestPublisherPermissions(TestPermissions):
         response = self.query_check(self.delete_publisher, variables={'id': publisher.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.DELETE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_PUBLISHER)
         )
 
         # Individual user case
@@ -402,7 +397,7 @@ class TestPublisherPermissions(TestPermissions):
         response = self.query_check(self.delete_publisher, variables={'id': publisher.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            PublisherPermissions.get_permission_message(PublisherPermissions.Permission.DELETE_PUBLISHER)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_PUBLISHER)
         )
 
 
@@ -466,14 +461,14 @@ class TestSchoolPermissions(TestPermissions):
         response = self.query_check(self.create_school, minput=self.school_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.CREATE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_SCHOOL)
         )
         # School admin case
         self.force_login(self.school_admin_user)
         response = self.query_check(self.create_school, minput=self.school_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.CREATE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_SCHOOL)
         )
 
         # Institution case
@@ -481,7 +476,7 @@ class TestSchoolPermissions(TestPermissions):
         response = self.query_check(self.create_school, minput=self.school_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.CREATE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_SCHOOL)
         )
 
         # Individual user case
@@ -489,7 +484,7 @@ class TestSchoolPermissions(TestPermissions):
         response = self.query_check(self.create_school, minput=self.school_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.CREATE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_SCHOOL)
         )
 
     def test_admin_only_can_update_schools(self):
@@ -514,7 +509,7 @@ class TestSchoolPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.UPDATE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_SCHOOL)
         )
 
         # School admin case
@@ -537,7 +532,7 @@ class TestSchoolPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.UPDATE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_SCHOOL)
         )
 
         # Individual user case
@@ -548,7 +543,7 @@ class TestSchoolPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.UPDATE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_SCHOOL)
         )
 
     def test_school_can_update_his_profile(self):
@@ -581,14 +576,14 @@ class TestSchoolPermissions(TestPermissions):
         response = self.query_check(self.delete_school, variables={'id': school.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.DELETE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_SCHOOL)
         )
         # School admin case
         self.force_login(self.school_admin_user)
         response = self.query_check(self.delete_school, variables={'id': school.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.DELETE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_SCHOOL)
         )
 
         # Institution case
@@ -596,7 +591,7 @@ class TestSchoolPermissions(TestPermissions):
         response = self.query_check(self.delete_school, variables={'id': school.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.DELETE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_SCHOOL)
         )
 
         # Individual user case
@@ -604,7 +599,7 @@ class TestSchoolPermissions(TestPermissions):
         response = self.query_check(self.delete_school, variables={'id': school.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            SchoolPermissions.get_permission_message(SchoolPermissions.Permission.DELETE_SCHOOL)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_SCHOOL)
         )
 
 
@@ -668,14 +663,14 @@ class TestInstitutionPermissions(TestPermissions):
         response = self.query_check(self.create_institution, minput=self.institution_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.CREATE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_INSTITUTION)
         )
         # School admin case
         self.force_login(self.school_admin_user)
         response = self.query_check(self.create_institution, minput=self.institution_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.CREATE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_INSTITUTION)
         )
 
         # Institution case
@@ -683,7 +678,7 @@ class TestInstitutionPermissions(TestPermissions):
         response = self.query_check(self.create_institution, minput=self.institution_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.CREATE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_INSTITUTION)
         )
 
         # Individual user case
@@ -691,7 +686,7 @@ class TestInstitutionPermissions(TestPermissions):
         response = self.query_check(self.create_institution, minput=self.institution_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.CREATE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_INSTITUTION)
         )
 
     def test_admin_only_can_update_institutions(self):
@@ -715,7 +710,7 @@ class TestInstitutionPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.UPDATE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_INSTITUTION)
         )
 
         # School admin case
@@ -726,7 +721,7 @@ class TestInstitutionPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.UPDATE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_INSTITUTION)
         )
 
         # Institutional user case
@@ -751,7 +746,7 @@ class TestInstitutionPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.UPDATE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_INSTITUTION)
         )
 
     def test_institution_can_update_his_profile(self):
@@ -769,14 +764,14 @@ class TestInstitutionPermissions(TestPermissions):
         response = self.query_check(self.delete_institution, variables={'id': institution.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.DELETE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_INSTITUTION)
         )
         # School admin case
         self.force_login(self.school_admin_user)
         response = self.query_check(self.delete_institution, variables={'id': institution.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.DELETE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_INSTITUTION)
         )
 
         # Institution case
@@ -786,7 +781,7 @@ class TestInstitutionPermissions(TestPermissions):
         response = self.query_check(self.delete_institution, variables={'id': institution.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.DELETE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_INSTITUTION)
         )
 
         # Individual user case
@@ -794,5 +789,5 @@ class TestInstitutionPermissions(TestPermissions):
         response = self.query_check(self.delete_institution, variables={'id': institution.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            InstitutionPermissions.get_permission_message(InstitutionPermissions.Permission.DELETE_INSTITUTION)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_INSTITUTION)
         )
