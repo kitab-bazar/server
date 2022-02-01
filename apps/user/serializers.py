@@ -237,28 +237,29 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'phone_number', 'image', 'publisher', 'school', 'institution')
         extra_kwargs = {'password': {'write_only': True}}
 
+    def _save_profile_data(self, user, data):
+        data_key = {
+            User.UserType.INSTITUTIONAL_USER.value: 'institution',
+            User.UserType.SCHOOL_ADMIN.value: 'school',
+            User.UserType.PUBLISHER.value: 'publisher',
+        }.get(user.user_type)
+
+        serializer_class = {  # Used to create/update profile data.
+            User.UserType.INSTITUTIONAL_USER.value: InstitutionSerializer,
+            User.UserType.SCHOOL_ADMIN.value: SchoolSerializer,
+            User.UserType.PUBLISHER.value: InstitutionSerializer,
+        }.get(user.user_type)
+
+        data = self.validated_data.pop(data_key, None)
+        # NOTE: Serialier validated_data provides municipality object, but we have to pass id
+        data['municipality'] = data['municipality'].id
+        instance = getattr(user, data_key)
+        serializer = serializer_class(data=data, instance=instance, partial=True)
+        if not serializer.is_valid():
+            raise serializers.ValidationError(serializer.errors)
+        return serializer.save()
+
     def save(self, **kwargs):
         instance = self.context['request'].user
-        institution_data = self.validated_data.pop('institution', None)
-        school_data = self.validated_data.pop('school', None)
-        publisher_data = self.validated_data.pop('publisher', None)
-        print(instance.user_type, User.UserType.INSTITUTIONAL_USER.value)
-        if institution_data and instance.user_type == User.UserType.INSTITUTIONAL_USER.value:
-            institution_data['municipality'] = institution_data['municipality'].id
-            serializer = InstitutionSerializer(data=institution_data, instance=instance.institution, partial=True)
-            if not serializer.is_valid():
-                raise serializers.ValidationError(serializer.errors)
-            serializer.save()
-        if school_data and instance.user_type == User.UserType.SCHOOL_ADMIN.value:
-            school_data['municipality'] = school_data['municipality'].id
-            serializer = SchoolSerializer(data=school_data, instance=instance.school, partial=True)
-            if not serializer.is_valid():
-                raise serializers.ValidationError(serializer.errors)
-            serializer.save()
-        if publisher_data and instance.user_type == User.UserType.PUBLISHER.value:
-            publisher_data['municipality'] = publisher_data['municipality'].id
-            serializer = InstitutionSerializer(data=publisher_data, instance=instance.publisher, partial=True)
-            if not serializer.is_valid():
-                raise serializers.ValidationError(serializer.errors)
-            serializer.save()
+        self._save_profile_data(instance, self.validated_data)
         return super().update(instance, self.validated_data)
