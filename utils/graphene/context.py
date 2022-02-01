@@ -1,11 +1,6 @@
 from django.utils.functional import cached_property
 from config.dataloaders import GlobalDataLoaders
-from config.permissions import (
-    BookPermissions,
-    PublisherPermissions,
-    SchoolPermissions,
-    InstitutionPermissions,
-)
+from config.permissions import UserPermissions
 
 
 class GQLContext:
@@ -18,17 +13,8 @@ class GQLContext:
         # Set permissions by user type
         # ----------------------------------------------------------------------
         if not request.user.is_anonymous:
-            self.book_permissions = BookPermissions.get_permissions(request.user.user_type)
-            self.request.book_permissions = self.book_permissions
-
-            self.publisher_permissions = PublisherPermissions.get_permissions(request.user.user_type)
-            self.request.publisher_permissions = self.publisher_permissions
-
-            self.school_admin_permissions = SchoolPermissions.get_permissions(request.user.user_type)
-            self.request.school_admin_permissions = self.school_admin_permissions
-
-            self.institution_permissions = InstitutionPermissions.get_permissions(request.user.user_type)
-            self.request.institution_permissions = self.institution_permissions
+            self.user_permissions = UserPermissions.get_permissions(request.user.user_type)
+            self.request.user_permissions = self.user_permissions
 
     @cached_property
     def user(self):

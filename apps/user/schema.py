@@ -4,18 +4,8 @@ from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
-from config.permissions import (
-    SchoolPermissions,
-    InstitutionPermissions,
-    PublisherPermissions,
-    BookPermissions,
-)
-from .enums import (
-    SchoolPermissionEnum,
-    InstitutionPermissionEnum,
-    PublisherPermissionEnum,
-    BookPermissionEnum,
-)
+from config.permissions import UserPermissions
+from .enums import UserByTypePermissionEnum
 
 from apps.user.models import User
 from apps.user.filters import UserFilter
@@ -43,51 +33,8 @@ class UserListType(CustomDjangoListObjectType):
         filterset_class = UserFilter
 
 
-class UserPermissionType(graphene.ObjectType):
-    school_permissions = graphene.List(
-        graphene.NonNull(
-            SchoolPermissionEnum,
-        ), required=True
-    )
-    publisher_permissions = graphene.List(
-        graphene.NonNull(
-            PublisherPermissionEnum,
-        ), required=True
-    )
-    institution_permissions = graphene.List(
-        graphene.NonNull(
-            InstitutionPermissionEnum,
-        ), required=True
-    )
-    book_permissions = graphene.List(
-        graphene.NonNull(
-            BookPermissionEnum,
-        ), required=True
-    )
-
-    class Meta:
-        model = User
-        skip_registry = True
-
-    @staticmethod
-    def resolve_school_permissions(root, info):
-        return SchoolPermissions.get_permissions(info.context.request.user.user_type)
-
-    @staticmethod
-    def resolve_publisher_permissions(root, info):
-        return PublisherPermissions.get_permissions(info.context.request.user.user_type)
-
-    @staticmethod
-    def resolve_institution_permissions(root, info):
-        return InstitutionPermissions.get_permissions(info.context.request.user.user_type)
-
-    @staticmethod
-    def resolve_book_permissions(root, info):
-        return BookPermissions.get_permissions(info.context.request.user.user_type)
-
-
 class UserMeType(DjangoObjectType):
-    allowed_permissions = graphene.Field(UserPermissionType)
+    allowed_permissions = graphene.List(graphene.NonNull(UserByTypePermissionEnum), required=True)
 
     class Meta:
         model = User
@@ -101,7 +48,7 @@ class UserMeType(DjangoObjectType):
 
     @staticmethod
     def resolve_allowed_permissions(root, info):
-        return UserPermissionType
+        return UserPermissions.get_permissions(info.context.request.user.user_type)
 
 
 class Query(graphene.ObjectType):
