@@ -417,13 +417,6 @@ type OrderListType {
   pageSize: Int
 }
 
-enum OrderPermission {
-  CREATE_ORDER
-  UPDATE_ORDER
-  DELETE_ORDER
-  RETRIEVE_ORDER
-}
-
 enum OrderStatus {
   RECEIVED
   PACKED
