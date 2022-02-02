@@ -106,7 +106,6 @@ class OrderMutationMixin():
             return qs.none()
         elif info.context.user.user_type == User.UserType.ADMIN.value:
             return qs
-        return qs.none()
 
 
 OrderUpdateInputType = generate_input_type_for_serializer(
