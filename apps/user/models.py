@@ -87,15 +87,15 @@ class User(AbstractUser):
         upload_to='user/images/', max_length=255, blank=True
     )
     institution = models.ForeignKey(
-        'institution.Institution', verbose_name=ugettext('Institution'), related_name='%(app_label)s_%(class)s_institution',
+        'institution.Institution', verbose_name=ugettext('Institution'), related_name='institution_user',
         on_delete=models.CASCADE, null=True, blank=True
     )
     publisher = models.ForeignKey(
-        'publisher.Publisher', verbose_name=ugettext('Publisher'), related_name='%(app_label)s_%(class)s_publisher',
+        'publisher.Publisher', verbose_name=ugettext('Publisher'), related_name='publisher_user',
         on_delete=models.CASCADE, null=True, blank=True
     )
     school = models.ForeignKey(
-        'school.School', verbose_name=ugettext('School'), related_name='%(app_label)s_%(class)s_school',
+        'school.School', verbose_name=ugettext('School'), related_name='school_user',
         on_delete=models.CASCADE, null=True, blank=True
     )
 

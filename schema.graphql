@@ -220,6 +220,18 @@ type DeleteInstitution {
   result: InstitutionType
 }
 
+type DeleteNotification {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: NotificationType
+}
+
+type DeleteOrder {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: OrderType
+}
+
 type DeletePublisher {
   errors: [GenericScalar!]
   ok: Boolean
@@ -339,11 +351,15 @@ type MunicipalityType {
 }
 
 type Mutation {
+  toggleNotification(data: ToggleNotificationInputType!, id: ID!): ToggleNotificationReadStatus
+  deleteNotification(id: ID!): DeleteNotification
   createCartItem(data: CartItemInputType!): CreateCartItem
   updateCartItem(data: CartItemInputType!, id: ID!): UpdateCartItem
   deleteCartItem(id: ID!): DeleteCartItem
   placeOrderFromCart: PlaceOrderFromCart
   placeSingleOrder(data: PlaceSingleOrderInputType!): PlaceSingleOrder
+  updateOrder(data: OrderUpdateInputType!, id: ID!): UpdateOrder
+  deleteOrder(id: ID!): DeleteOrder
   createBook(data: BookCreateInputType!): CreateBook
   updateBook(data: BookCreateInputType!, id: ID!): UpdateBook
   deleteBook(id: ID!): DeleteBook
@@ -368,6 +384,32 @@ type Mutation {
   updateProfile(data: UpdateProfileType!): UpdateProfile
 }
 
+type NotificationListType {
+  results: [NotificationType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+  readCount: Int
+  unreadCount: Int
+}
+
+enum NotificationNotificationType {
+  ORDER_RECEIVED
+  ORDER_PACKED
+  ORDER_COMPLETED
+  ORDER_CANCELLED
+  GENERAL
+}
+
+type NotificationType {
+  id: ID!
+  notificationType: NotificationNotificationType!
+  title: String!
+  read: Boolean!
+  createdAt: DateTime!
+  order: OrderType
+}
+
 type OrderListType {
   results: [OrderType!]
   totalCount: Int
@@ -390,6 +432,10 @@ type OrderType {
   status: OrderStatus!
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
   totalQuantity: Int
+}
+
+input OrderUpdateInputType {
+  status: status
 }
 
 type PlaceOrderFromCart {
@@ -468,6 +514,8 @@ input PublisherUpdateInputType {
 type Query {
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
   orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  notification(id: ID!): NotificationType
+  notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
   books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
@@ -575,6 +623,16 @@ type TagType {
   name: String!
 }
 
+input ToggleNotificationInputType {
+  read: Boolean
+}
+
+type ToggleNotificationReadStatus {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: NotificationType
+}
+
 scalar UUID
 
 type UpdateBook {
@@ -593,6 +651,12 @@ type UpdateInstitution {
   errors: [GenericScalar!]
   ok: Boolean
   result: InstitutionType
+}
+
+type UpdateOrder {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: OrderType
 }
 
 type UpdateProfile {
@@ -664,6 +728,10 @@ enum UserPermissions {
   CAN_UPDATE_INSTITUTION
   CAN_DELETE_INSTITUTION
   CAN_RETRIEVE_INSTITUTION
+  CREATE_ORDER
+  UPDATE_ORDER
+  DELETE_ORDER
+  RETRIEVE_ORDER
 }
 
 type UserType {
@@ -707,6 +775,13 @@ type WishListType {
 enum language {
   NEPALI
   ENGLISH
+}
+
+enum status {
+  RECEIVED
+  PACKED
+  COMPLETED
+  CANCELLED
 }
 
 enum user_type {

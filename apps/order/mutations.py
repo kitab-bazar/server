@@ -1,19 +1,23 @@
 import graphene
+from django.db.models import F
+
+from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
     CreateUpdateGrapheneMutation,
     DeleteMutation
 )
-from django.db.models import F
+from config.permissions import UserPermissions
 
-from apps.order.models import CartItem
+from apps.user.models import User
+from apps.order.models import CartItem, Order
 from apps.order.schema import CartItemType, OrderType
 from apps.order.serializers import (
     CartItemSerializer,
     CreateOrderFromCartSerializer,
-    PlaceSingleOrderSerializer
+    PlaceSingleOrderSerializer,
+    OrderStatusUpdateSerializer,
 )
-from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 
 
 CartItemInputType = generate_input_type_for_serializer(
@@ -94,9 +98,45 @@ class PlaceSingleOrder(graphene.Mutation):
         return PlaceSingleOrder(result=instance, errors=None, ok=True)
 
 
+class OrderMutationMixin():
+    @classmethod
+    def filter_queryset(cls, qs, info):
+        if info.context.user.user_type == User.UserType.PUBLISHER.value:
+            return qs.filter(book_order__publisher_id=info.context.user.publisher)
+        elif info.context.user.user_type == User.UserType.ADMIN.value:
+            return qs
+        return qs.none()
+
+
+OrderUpdateInputType = generate_input_type_for_serializer(
+    'OrderUpdateInputType',
+    serializer_class=OrderStatusUpdateSerializer
+)
+
+
+class UpdateOrder(OrderMutationMixin, CreateUpdateGrapheneMutation):
+    class Arguments:
+        data = OrderUpdateInputType(required=True)
+        id = graphene.ID(required=True)
+    model = Order
+    serializer_class = OrderStatusUpdateSerializer
+    result = graphene.Field(OrderType)
+    permissions = [UserPermissions.Permission.UPDATE_ORDER]
+
+
+class DeleteOrder(OrderMutationMixin, DeleteMutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+    model = Order
+    result = graphene.Field(OrderType)
+    permissions = [UserPermissions.Permission.DELETE_ORDER]
+
+
 class Mutation(graphene.ObjectType):
     create_cart_item = CreateCartItem.Field()
     update_cart_item = UpdateCartItem.Field()
     delete_cart_item = DeleteCartItem.Field()
     place_order_from_cart = PlaceOrderFromCart.Field()
     place_single_order = PlaceSingleOrder.Field()
+    update_order = UpdateOrder.Field()
+    delete_order = DeleteOrder.Field()
