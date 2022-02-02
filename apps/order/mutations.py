@@ -103,9 +103,9 @@ class OrderMutationMixin():
     def filter_queryset(cls, qs, info):
         if info.context.user.user_type == User.UserType.PUBLISHER.value:
             return qs.filter(book_order__publisher_id=info.context.user.publisher)
-            return qs.none()
         elif info.context.user.user_type == User.UserType.ADMIN.value:
             return qs
+        return qs.none()
 
 
 OrderUpdateInputType = generate_input_type_for_serializer(
