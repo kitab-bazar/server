@@ -53,6 +53,8 @@ class AuthorListType(CustomDjangoListObjectType):
 
 
 class BookType(DjangoObjectType):
+    quantity_in_cart = graphene.Int(required=True)
+
     class Meta:
         model = Book
         fields = (
@@ -64,6 +66,10 @@ class BookType(DjangoObjectType):
 
     image = graphene.Field(FileFieldType)
     og_image = graphene.Field(FileFieldType)
+
+    @staticmethod
+    def resolve_quantity_in_cart(root, info, **kwargs) -> int:
+        return info.context.dl.book.quantity_in_cart.load(root.pk)
 
 
 class BookListType(CustomDjangoListObjectType):

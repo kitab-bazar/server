@@ -29,7 +29,7 @@ class CategoryFactory(DjangoModelFactory):
 
 class BookFactory(DjangoModelFactory):
 
-    isbn = fuzzy.FuzzyText(length=15)
+    isbn = fuzzy.FuzzyText(length=13)
     number_of_pages = fuzzy.FuzzyInteger(1, 20)
     price = fuzzy.FuzzyInteger(1, 20)
     language = Book.LanguageType.ENGLISH.value

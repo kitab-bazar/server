@@ -81,6 +81,23 @@ type BookListType {
   pageSize: Int
 }
 
+type BookOrderListType {
+  results: [BookOrderType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type BookOrderType {
+  id: ID!
+  title: String!
+  price: Int!
+  quantity: Int!
+  isbn: String!
+  edition: String!
+  image: FileFieldType
+}
+
 type BookType {
   id: ID!
   title: String!
@@ -105,6 +122,27 @@ type BookType {
   ogImage: FileFieldType
   ogLocale: String
   ogType: String
+  quantityInCart: Int!
+}
+
+input CartItemInputType {
+  book: String!
+  quantity: Int!
+}
+
+type CartItemType {
+  id: ID!
+  book: BookType!
+  quantity: Int!
+  totalPrice: Int
+}
+
+type CartType {
+  results: [CartItemType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+  grandTotalPrice: Int
 }
 
 type CategoryType {
@@ -128,6 +166,12 @@ type CreateBook {
   errors: [GenericScalar!]
   ok: Boolean
   result: BookType
+}
+
+type CreateCartItem {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CartItemType
 }
 
 type CreateInstitution {
@@ -162,6 +206,12 @@ type DeleteBook {
   errors: [GenericScalar!]
   ok: Boolean
   result: BookType
+}
+
+type DeleteCartItem {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CartItemType
 }
 
 type DeleteInstitution {
@@ -282,6 +332,11 @@ type MunicipalityType {
 }
 
 type Mutation {
+  createCartItem(data: CartItemInputType!): CreateCartItem
+  updateCartItem(data: CartItemInputType!, id: ID!): UpdateCartItem
+  deleteCartItem(id: ID!): DeleteCartItem
+  placeOrderFromCart: PlaceOrderFromCart
+  placeSingleOrder(data: PlaceSingleOrderInputType!): PlaceSingleOrder
   createBook(data: BookCreateInputType!): CreateBook
   updateBook(data: BookCreateInputType!, id: ID!): UpdateBook
   deleteBook(id: ID!): DeleteBook
@@ -303,6 +358,46 @@ type Mutation {
   changePassword(data: ChangePasswordInputType!): ChangeUserPassword
   generateResetPasswordToken(data: GenerateResetPasswordTokenType!): GenerateResetPasswordToken
   resetPassword(data: ResetPasswordType!): ResetPassword
+}
+
+type OrderListType {
+  results: [OrderType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+enum OrderStatus {
+  RECEIVED
+  PACKED
+  COMPLETED
+  CANCELLED
+}
+
+type OrderType {
+  id: ID!
+  totalPrice: Int!
+  orderCode: UUID!
+  createdBy: UserType!
+  status: OrderStatus!
+  bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
+}
+
+type PlaceOrderFromCart {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: OrderType
+}
+
+type PlaceSingleOrder {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: OrderType
+}
+
+input PlaceSingleOrderInputType {
+  bookId: Int!
+  quantity: Int!
 }
 
 type ProvinceListType {
@@ -354,6 +449,8 @@ type PublisherType {
 }
 
 type Query {
+  cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
+  orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   book(id: ID!): BookType
   books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
@@ -453,10 +550,18 @@ type TagType {
   name: String!
 }
 
+scalar UUID
+
 type UpdateBook {
   errors: [GenericScalar!]
   ok: Boolean
   result: BookType
+}
+
+type UpdateCartItem {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CartItemType
 }
 
 type UpdateInstitution {
