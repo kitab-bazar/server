@@ -36,7 +36,8 @@ def send_notfication_to_publisher(instance, notification_type, title):
     Notification.objects.bulk_create([
         Notification(
             content_object=book_order.order,
-            recipient=book_order.publisher.user,
+            # Assuming a publisher profile is associated with single user
+            recipient=book_order.publisher.publisher_user.first(),
             notification_type=notification_type,
             title=title,
         ) for book_order in book_orders
@@ -45,7 +46,8 @@ def send_notfication_to_publisher(instance, notification_type, title):
     # Prepare recipient list
     recipient_list = []
     for book_order in book_orders:
-        email = book_order.publisher.user.email
+        # Assuming a publisher profile is associated with single user
+        email = book_order.publisher.publisher_user.first().email
         recipient_list.append(email)
 
     # Send mail notifications
