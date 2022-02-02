@@ -26,6 +26,7 @@ class FaqMutationMixin():
     def filter_queryset(cls, qs, info):
         if info.context.user.user_type == User.UserType.ADMIN.value:
             return qs
+        return qs.none()
 
 
 class CreateFaq(FaqMutationMixin, CreateUpdateGrapheneMutation):
@@ -66,6 +67,7 @@ class ContactMessageMutationMixin():
     def filter_queryset(cls, qs, info):
         if info.context.user.user_type == User.UserType.ADMIN.value:
             return qs
+        return qs.none()
 
     @classmethod
     def check_permissions(cls, info, **_):
