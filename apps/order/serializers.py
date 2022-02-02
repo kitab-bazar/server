@@ -104,7 +104,7 @@ class PlaceSingleOrderSerializer(serializers.Serializer):
         return order
 
 
-class OrderStatusUpdateSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
+class OrderStatusUpdateSerializer(serializers.ModelSerializer):
     '''
     This serializer is used to update status of order only
     '''
