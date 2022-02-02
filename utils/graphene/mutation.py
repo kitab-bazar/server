@@ -9,6 +9,9 @@ from graphene_django.rest_framework.serializer_converter import (
 from graphene.types.generic import GenericScalar
 from utils.graphene.error_types import mutation_is_not_valid
 from rest_framework import serializers
+from django.core.exceptions import PermissionDenied
+
+from config.permissions import UserPermissions
 
 
 @get_graphene_type_from_serializer_field.register(serializers.ListSerializer)
@@ -214,6 +217,13 @@ class CreateUpdateGrapheneMutation(BaseGrapheneMutation):
         data = kwargs['data']
         instance, errors = cls._save_item(data, info, **kwargs)
         return cls(result=instance, errors=errors, ok=not errors)
+
+    @classmethod
+    def check_permissions(cls, info, **_):
+        for permission in cls.permissions:
+            if not UserPermissions.check_permission(info, permission):
+                raise PermissionDenied(UserPermissions.get_permission_message(permission))
+        return False
 
 
 class DeleteMutation(CreateUpdateGrapheneMutation):

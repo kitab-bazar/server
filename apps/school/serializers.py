@@ -17,3 +17,20 @@ class SchoolSerializer(serializers.ModelSerializer):
         attrs['district'] = municipality.district
         attrs['province'] = municipality.province
         return attrs
+
+
+class SchoolUpdateSerializer(serializers.ModelSerializer):
+    '''
+    This is used to update user profile only
+    '''
+    class Meta:
+        model = School
+        fields = (
+            'id', 'name', 'municipality', 'ward_number', 'local_address'
+        )
+
+    def validate(self, attrs):
+        municipality = attrs['municipality']
+        attrs['district'] = municipality.district
+        attrs['province'] = municipality.province
+        return attrs

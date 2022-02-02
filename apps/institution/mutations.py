@@ -1,4 +1,5 @@
 import graphene
+
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
     CreateUpdateGrapheneMutation,
@@ -7,9 +8,9 @@ from utils.graphene.mutation import (
 
 from apps.institution.models import Institution
 from apps.institution.schema import InstitutionType
-from apps.institution.serializers import (
-    InstitutionSerializer,
-)
+from apps.institution.serializers import InstitutionSerializer
+from apps.user.models import User
+from config.permissions import UserPermissions
 
 
 InstitutionInputType = generate_input_type_for_serializer(
@@ -18,40 +19,41 @@ InstitutionInputType = generate_input_type_for_serializer(
 )
 
 
-class CreateInstitution(CreateUpdateGrapheneMutation):
+class InstitutionMutationMixin():
+    @classmethod
+    def filter_queryset(cls, qs, info):
+        if info.context.user.user_type == User.UserType.INSTITUTIONAL_USER.value:
+            return qs.filter(id=info.context.user.institution_id)
+        elif info.context.user.user_type == User.UserType.ADMIN.value:
+            return qs
+        return Institution.objects.none()
+
+
+class CreateInstitution(InstitutionMutationMixin, CreateUpdateGrapheneMutation):
     class Arguments:
         data = InstitutionInputType(required=True)
     model = Institution
     serializer_class = InstitutionSerializer
     result = graphene.Field(InstitutionType)
-
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
+    permissions = [UserPermissions.Permission.CAN_CREATE_INSTITUTION]
 
 
-class UpdateInstitution(CreateUpdateGrapheneMutation):
+class UpdateInstitution(InstitutionMutationMixin, CreateUpdateGrapheneMutation):
     class Arguments:
         data = InstitutionInputType(required=True)
         id = graphene.ID(required=True)
     model = Institution
     serializer_class = InstitutionSerializer
     result = graphene.Field(InstitutionType)
-
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
+    permissions = [UserPermissions.Permission.CAN_UPDATE_INSTITUTION]
 
 
-class DeleteInstitution(DeleteMutation):
+class DeleteInstitution(InstitutionMutationMixin, DeleteMutation):
     class Arguments:
         id = graphene.ID(required=True)
     model = Institution
     result = graphene.Field(InstitutionType)
-
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
+    permissions = [UserPermissions.Permission.CAN_DELETE_INSTITUTION]
 
 
 class Mutation(graphene.ObjectType):

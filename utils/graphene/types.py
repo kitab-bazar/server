@@ -210,6 +210,8 @@ class FileFieldType(graphene.ObjectType):
         return root.name
 
     def resolve_url(root, info, **kwargs) -> Union[str, None]:
-        return info.context.request.build_absolute_uri(
-            FileField.name_to_representation(root)
-        )
+        if root.name:
+            return info.context.request.build_absolute_uri(
+                FileField.name_to_representation(root)
+            )
+        return ""

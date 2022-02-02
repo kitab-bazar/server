@@ -72,6 +72,7 @@ class OrderType(DjangoObjectType):
             page_size_query_param='pageSize'
         )
     )
+    total_quantity = graphene.Int()
 
     class Meta:
         model = Order
@@ -79,6 +80,9 @@ class OrderType(DjangoObjectType):
 
     def resolve_book_orders(root, info, **kwargs):
         return root.book_order
+
+    def resolve_total_quantity(root, info, **kwargs):
+        return root.book_order.aggregate(Sum('quantity'))['quantity__sum']
 
 
 class OrderListType(CustomDjangoListObjectType):

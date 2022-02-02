@@ -235,7 +235,7 @@ type DeleteSchool {
 type DeleteWishList {
   errors: [GenericScalar!]
   ok: Boolean
-  result: BookType
+  result: WishListType
 }
 
 type DistrictListType {
@@ -302,6 +302,13 @@ type InstitutionType {
   vatNumber: String
 }
 
+input InstitutionUpdateInputType {
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+}
+
 type Login {
   result: UserType
   errors: [GenericScalar!]
@@ -358,6 +365,7 @@ type Mutation {
   changePassword(data: ChangePasswordInputType!): ChangeUserPassword
   generateResetPasswordToken(data: GenerateResetPasswordTokenType!): GenerateResetPasswordToken
   resetPassword(data: ResetPasswordType!): ResetPassword
+  updateProfile(data: UpdateProfileType!): UpdateProfile
 }
 
 type OrderListType {
@@ -381,6 +389,7 @@ type OrderType {
   createdBy: UserType!
   status: OrderStatus!
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
+  totalQuantity: Int
 }
 
 type PlaceOrderFromCart {
@@ -446,6 +455,14 @@ type PublisherType {
   localAddress: String
   panNumber: String
   vatNumber: String
+}
+
+input PublisherUpdateInputType {
+  id: Int
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
 }
 
 type Query {
@@ -538,6 +555,14 @@ type SchoolType {
   vatNumber: String
 }
 
+input SchoolUpdateInputType {
+  id: Int
+  name: String!
+  municipality: String!
+  wardNumber: Int!
+  localAddress: String
+}
+
 type TagListType {
   results: [TagType!]
   totalCount: Int
@@ -570,6 +595,22 @@ type UpdateInstitution {
   result: InstitutionType
 }
 
+type UpdateProfile {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: UserType
+}
+
+input UpdateProfileType {
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  image: String
+  publisher: PublisherUpdateInputType
+  school: SchoolUpdateInputType
+  institution: InstitutionUpdateInputType
+}
+
 type UpdatePublisher {
   errors: [GenericScalar!]
   ok: Boolean
@@ -597,10 +638,32 @@ type UserMeType {
   lastName: String!
   fullName: String!
   userType: UserUserType!
+  image: FileFieldType
   institution: InstitutionType
   publisher: PublisherType
   school: SchoolType
   email: String!
+  phoneNumber: String
+  allowedPermissions: [UserPermissions!]!
+}
+
+enum UserPermissions {
+  CAN_CREATE_BOOK
+  CAN_UPDATE_BOOK
+  CAN_DELETE_BOOK
+  CAN_RETRIEVE_BOOK
+  CAN_CREATE_PUBLISHER
+  CAN_UPDATE_PUBLISHER
+  CAN_DELETE_PUBLISHER
+  CAN_RETRIEVE_PUBLISHER
+  CAN_CREATE_SCHOOL
+  CAN_UPDATE_SCHOOL
+  CAN_DELETE_SCHOOL
+  CAN_RETRIEVE_SCHOOL
+  CAN_CREATE_INSTITUTION
+  CAN_UPDATE_INSTITUTION
+  CAN_DELETE_INSTITUTION
+  CAN_RETRIEVE_INSTITUTION
 }
 
 type UserType {
@@ -611,6 +674,7 @@ type UserType {
   lastName: String!
   fullName: String!
   userType: UserUserType!
+  image: FileFieldType
   institution: InstitutionType
   publisher: PublisherType
   school: SchoolType

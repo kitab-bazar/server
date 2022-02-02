@@ -8,9 +8,9 @@ from .tasks import generic_email_sender
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.translation import ugettext
-from apps.publisher.serializers import PublisherSerializer
-from apps.school.serializers import SchoolSerializer
-from apps.institution.serializers import InstitutionSerializer
+from apps.publisher.serializers import PublisherSerializer, PublisherUpdateSerializer
+from apps.school.serializers import SchoolSerializer, SchoolUpdateSerializer
+from apps.institution.serializers import InstitutionSerializer, InstitutionUpdateSerializer
 from apps.institution.models import Institution
 from apps.school.models import School
 from apps.publisher.models import Publisher
@@ -225,3 +225,41 @@ class ResetPasswordSerializer(serializers.Serializer):
             user.save()
             return attrs
         raise serializers.ValidationError(ugettext('The token is invalid.'))
+
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    institution = InstitutionUpdateSerializer(required=False)
+    school = SchoolUpdateSerializer(required=False)
+    publisher = PublisherUpdateSerializer(required=False)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'phone_number', 'image', 'publisher', 'school', 'institution')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def _save_profile_data(self, user, data):
+        data_key = {
+            User.UserType.INSTITUTIONAL_USER.value: 'institution',
+            User.UserType.SCHOOL_ADMIN.value: 'school',
+            User.UserType.PUBLISHER.value: 'publisher',
+        }.get(user.user_type)
+
+        serializer_class = {  # Used to create/update profile data.
+            User.UserType.INSTITUTIONAL_USER.value: InstitutionSerializer,
+            User.UserType.SCHOOL_ADMIN.value: SchoolSerializer,
+            User.UserType.PUBLISHER.value: InstitutionSerializer,
+        }.get(user.user_type)
+
+        data = self.validated_data.pop(data_key, None)
+        # NOTE: Serialier validated_data provides municipality object, but we have to pass id
+        data['municipality'] = data['municipality'].id
+        instance = getattr(user, data_key)
+        serializer = serializer_class(data=data, instance=instance, partial=True)
+        if not serializer.is_valid():
+            raise serializers.ValidationError(serializer.errors)
+        return serializer.save()
+
+    def save(self, **kwargs):
+        instance = self.context['request'].user
+        self._save_profile_data(instance, self.validated_data)
+        return super().update(instance, self.validated_data)

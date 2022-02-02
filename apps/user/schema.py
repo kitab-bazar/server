@@ -1,20 +1,26 @@
 import graphene
 from graphene_django import DjangoObjectType
+from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
+
+from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
+from utils.graphene.fields import DjangoPaginatedListObjectField
+from config.permissions import UserPermissions
+from .enums import UserByTypePermissionEnum
+
 from apps.user.models import User
 from apps.user.filters import UserFilter
-from utils.graphene.types import CustomDjangoListObjectType
-from utils.graphene.fields import DjangoPaginatedListObjectField
-from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
 
 class UserType(DjangoObjectType):
+
     class Meta:
         model = User
         fields = (
             'id', 'first_name', 'last_name', 'full_name',
             'is_active', 'last_login', 'user_type', 'institution',
-            'publisher', 'school'
+            'publisher', 'school', 'image'
         )
+    image = graphene.Field(FileFieldType)
 
     @staticmethod
     def get_queryset(queryset, info):
@@ -28,6 +34,7 @@ class UserListType(CustomDjangoListObjectType):
 
 
 class UserMeType(DjangoObjectType):
+    allowed_permissions = graphene.List(graphene.NonNull(UserByTypePermissionEnum), required=True)
 
     class Meta:
         model = User
@@ -35,8 +42,13 @@ class UserMeType(DjangoObjectType):
         fields = (
             'id', 'first_name', 'last_name', 'full_name', 'email',
             'is_active', 'last_login', 'user_type', 'institution',
-            'publisher', 'school'
+            'publisher', 'school', 'phone_number', 'image'
         )
+    image = graphene.Field(FileFieldType)
+
+    @staticmethod
+    def resolve_allowed_permissions(root, info):
+        return UserPermissions.get_permissions(info.context.request.user.user_type)
 
 
 class Query(graphene.ObjectType):

@@ -13,6 +13,7 @@ from apps.user.serializers import (
     UserPasswordSerializer,
     GenerateResetPasswordTokenSerializer,
     ResetPasswordSerializer,
+    UpdateProfileSerializer,
 )
 
 
@@ -185,6 +186,36 @@ class Logout(graphene.Mutation):
         return Logout(ok=True)
 
 
+UpdateProfileType = generate_input_type_for_serializer(
+    'UpdateProfileType',
+    UpdateProfileSerializer
+)
+
+
+class UpdateProfile(graphene.Mutation):
+    class Arguments:
+        data = UpdateProfileType(required=True)
+
+    errors = graphene.List(graphene.NonNull(CustomErrorType))
+    ok = graphene.Boolean()
+    result = graphene.Field(UserType)
+
+    @staticmethod
+    def mutate(root, info, data):
+        serializer = UpdateProfileSerializer(
+            data=data,
+            context={'request': info.context.request},
+        )
+        if errors := mutation_is_not_valid(serializer):
+            return UpdateProfile(errors=errors, ok=False)
+        instance = serializer.save()
+        return UpdateProfile(
+            result=instance,
+            errors=None,
+            ok=True
+        )
+
+
 class Mutation(graphene.ObjectType):
     register = Register.Field()
     login = Login.Field()
@@ -193,3 +224,4 @@ class Mutation(graphene.ObjectType):
     change_password = ChangeUserPassword.Field()
     generate_reset_password_token = GenerateResetPasswordToken.Field()
     reset_password = ResetPassword.Field()
+    update_profile = UpdateProfile.Field()
