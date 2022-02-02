@@ -13,4 +13,4 @@ class FaqFilter(django_filters.FilterSet):
     def search(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(Q(question__icontains=value) | Q(question__icontains=value))
+        return queryset.filter(Q(question__icontains=value) | Q(answer__icontains=value))
