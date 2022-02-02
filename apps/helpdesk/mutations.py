@@ -12,7 +12,7 @@ from apps.helpdesk.schema import FaqType, ContactMessageType
 from apps.helpdesk.serializers import FaqSerializer, ContactMessageSerializer
 
 from apps.user.models import User
-from config.permissions import FaqPermissions, ContactMessagePermissions
+from config.permissions import UserPermissions
 
 
 FaqInputType = generate_input_type_for_serializer(
@@ -26,14 +26,6 @@ class FaqMutationMixin():
     def filter_queryset(cls, qs, info):
         if info.context.user.user_type == User.UserType.ADMIN.value:
             return qs
-        return qs.none()
-
-    @classmethod
-    def check_permissions(cls, info, **_):
-        for permission in cls.permissions:
-            if not FaqPermissions.check_permission(info, permission):
-                raise PermissionDenied(FaqPermissions.get_permission_message(permission))
-        return False
 
 
 class CreateFaq(FaqMutationMixin, CreateUpdateGrapheneMutation):
@@ -42,7 +34,7 @@ class CreateFaq(FaqMutationMixin, CreateUpdateGrapheneMutation):
     model = Faq
     serializer_class = FaqSerializer
     result = graphene.Field(FaqType)
-    permissions = [FaqPermissions.Permission.CREATE_FAQ]
+    permissions = [UserPermissions.Permission.CREATE_FAQ]
 
 
 class UpdateFaq(FaqMutationMixin, CreateUpdateGrapheneMutation):
@@ -52,7 +44,7 @@ class UpdateFaq(FaqMutationMixin, CreateUpdateGrapheneMutation):
     model = Faq
     serializer_class = FaqSerializer
     result = graphene.Field(FaqType)
-    permissions = [FaqPermissions.Permission.UPDATE_FAQ]
+    permissions = [UserPermissions.Permission.UPDATE_FAQ]
 
 
 class DeleteFaq(FaqMutationMixin, DeleteMutation):
@@ -60,7 +52,7 @@ class DeleteFaq(FaqMutationMixin, DeleteMutation):
         id = graphene.ID(required=True)
     model = Faq
     result = graphene.Field(FaqType)
-    permissions = [FaqPermissions.Permission.DELETE_FAQ]
+    permissions = [UserPermissions.Permission.DELETE_FAQ]
 
 
 ContactMessageInputType = generate_input_type_for_serializer(
@@ -72,16 +64,18 @@ ContactMessageInputType = generate_input_type_for_serializer(
 class ContactMessageMutationMixin():
     @classmethod
     def filter_queryset(cls, qs, info):
-        return qs
+        if info.context.user.user_type == User.UserType.ADMIN.value:
+            return qs
 
     @classmethod
     def check_permissions(cls, info, **_):
         # TODO: Find better way to handle this
+        # FIXME: Improve this
         if info.context.user.is_anonymous and cls.__name__ == 'CreateContactMessage':
             return True
         for permission in cls.permissions:
-            if not ContactMessagePermissions.check_permission(info, permission):
-                raise PermissionDenied(ContactMessagePermissions.get_permission_message(permission))
+            if not UserPermissions.check_permission(info, permission):
+                raise PermissionDenied(UserPermissions.get_permission_message(permission))
         return False
 
 
@@ -91,7 +85,7 @@ class CreateContactMessage(ContactMessageMutationMixin, CreateUpdateGrapheneMuta
     model = ContactMessage
     serializer_class = ContactMessageSerializer
     result = graphene.Field(ContactMessageType)
-    permissions = [ContactMessagePermissions.Permission.CREATE_CONTACT_MESSAGE]
+    permissions = [UserPermissions.Permission.CREATE_CONTACT_MESSAGE]
 
 
 class UpdateContactMessage(ContactMessageMutationMixin, CreateUpdateGrapheneMutation):
@@ -101,7 +95,7 @@ class UpdateContactMessage(ContactMessageMutationMixin, CreateUpdateGrapheneMuta
     model = ContactMessage
     serializer_class = ContactMessageSerializer
     result = graphene.Field(ContactMessageType)
-    permissions = [ContactMessagePermissions.Permission.UPDATE_CONTACT_MESSAGE]
+    permissions = [UserPermissions.Permission.UPDATE_CONTACT_MESSAGE]
 
 
 class DeleteContactMessage(ContactMessageMutationMixin, DeleteMutation):
@@ -109,7 +103,7 @@ class DeleteContactMessage(ContactMessageMutationMixin, DeleteMutation):
         id = graphene.ID(required=True)
     model = ContactMessage
     result = graphene.Field(ContactMessageType)
-    permissions = [ContactMessagePermissions.Permission.DELETE_CONTACT_MESSAGE]
+    permissions = [UserPermissions.Permission.DELETE_CONTACT_MESSAGE]
 
 
 class Mutation(graphene.ObjectType):

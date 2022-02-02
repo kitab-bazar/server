@@ -1,9 +1,5 @@
 from apps.common.tests.test_permissions import TestPermissions
-from config.permissions import (
-    FaqPermissions,
-    ContactMessagePermissions,
-)
-
+from config.permissions import UserPermissions
 from apps.helpdesk.factories import FaqFactory, ContactMessageFactory
 from apps.common.factories import MunicipalityFactory
 
@@ -61,7 +57,7 @@ class TestFaqPermissions(TestPermissions):
         response = self.query_check(self.create_faq, minput=self.faq_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.CREATE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CREATE_FAQ)
         )
 
         # School admin case
@@ -69,7 +65,7 @@ class TestFaqPermissions(TestPermissions):
         response = self.query_check(self.create_faq, minput=self.faq_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.CREATE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CREATE_FAQ)
         )
 
         # Institution case
@@ -77,7 +73,7 @@ class TestFaqPermissions(TestPermissions):
         response = self.query_check(self.create_faq, minput=self.faq_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.CREATE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CREATE_FAQ)
         )
 
         # Individual user case
@@ -85,7 +81,7 @@ class TestFaqPermissions(TestPermissions):
         response = self.query_check(self.create_faq, minput=self.faq_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.CREATE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.CREATE_FAQ)
         )
 
     def test_admin_only_can_update_faqs(self):
@@ -110,7 +106,7 @@ class TestFaqPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.UPDATE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_FAQ)
         )
 
         # School admin case
@@ -121,7 +117,7 @@ class TestFaqPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.UPDATE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_FAQ)
         )
 
         # Institution case
@@ -132,7 +128,7 @@ class TestFaqPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.UPDATE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_FAQ)
         )
 
         # Individual user case
@@ -143,7 +139,7 @@ class TestFaqPermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.UPDATE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_FAQ)
         )
 
     def test_admin_only_can_delete_faq(self):
@@ -159,7 +155,7 @@ class TestFaqPermissions(TestPermissions):
         response = self.query_check(self.delete_faq, variables={'id': faq.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.DELETE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_FAQ)
         )
 
         # School admin case
@@ -167,7 +163,7 @@ class TestFaqPermissions(TestPermissions):
         response = self.query_check(self.delete_faq, variables={'id': faq.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.DELETE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_FAQ)
         )
 
         # Institution case
@@ -175,7 +171,7 @@ class TestFaqPermissions(TestPermissions):
         response = self.query_check(self.delete_faq, variables={'id': faq.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.DELETE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_FAQ)
         )
 
         # Individual user case
@@ -183,7 +179,7 @@ class TestFaqPermissions(TestPermissions):
         response = self.query_check(self.delete_faq, variables={'id': faq.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            FaqPermissions.get_permission_message(FaqPermissions.Permission.DELETE_FAQ)
+            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_FAQ)
         )
 
 
@@ -301,7 +297,7 @@ class TestContactMessagePermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            ContactMessagePermissions.get_permission_message(ContactMessagePermissions.Permission.UPDATE_CONTACT_MESSAGE)
+            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_CONTACT_MESSAGE)
         )
 
         # School admin case
@@ -312,7 +308,7 @@ class TestContactMessagePermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            ContactMessagePermissions.get_permission_message(ContactMessagePermissions.Permission.UPDATE_CONTACT_MESSAGE)
+            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_CONTACT_MESSAGE)
         )
 
         # Institution case
@@ -323,7 +319,7 @@ class TestContactMessagePermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            ContactMessagePermissions.get_permission_message(ContactMessagePermissions.Permission.UPDATE_CONTACT_MESSAGE)
+            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_CONTACT_MESSAGE)
         )
 
         # Individual user case
@@ -334,7 +330,7 @@ class TestContactMessagePermissions(TestPermissions):
         )
         self.assertEqual(
             response['errors'][0]['message'],
-            ContactMessagePermissions.get_permission_message(ContactMessagePermissions.Permission.UPDATE_CONTACT_MESSAGE)
+            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_CONTACT_MESSAGE)
         )
 
     def test_admin_only_delete_contact_message(self):
@@ -350,7 +346,7 @@ class TestContactMessagePermissions(TestPermissions):
         response = self.query_check(self.delete_contact_message, variables={'id': contact_message.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            ContactMessagePermissions.get_permission_message(ContactMessagePermissions.Permission.DELETE_CONTACT_MESSAGE)
+            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_CONTACT_MESSAGE)
         )
 
         # School admin case
@@ -358,7 +354,7 @@ class TestContactMessagePermissions(TestPermissions):
         response = self.query_check(self.delete_contact_message, variables={'id': contact_message.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            ContactMessagePermissions.get_permission_message(ContactMessagePermissions.Permission.DELETE_CONTACT_MESSAGE)
+            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_CONTACT_MESSAGE)
         )
 
         # Institution case
@@ -366,7 +362,7 @@ class TestContactMessagePermissions(TestPermissions):
         response = self.query_check(self.delete_contact_message, variables={'id': contact_message.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            ContactMessagePermissions.get_permission_message(ContactMessagePermissions.Permission.DELETE_CONTACT_MESSAGE)
+            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_CONTACT_MESSAGE)
         )
 
         # Individual user case
@@ -374,5 +370,5 @@ class TestContactMessagePermissions(TestPermissions):
         response = self.query_check(self.delete_contact_message, variables={'id': contact_message.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
-            ContactMessagePermissions.get_permission_message(ContactMessagePermissions.Permission.DELETE_CONTACT_MESSAGE)
+            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_CONTACT_MESSAGE)
         )

@@ -189,13 +189,6 @@ enum ContactMessageMessageType {
   OTHER
 }
 
-enum ContactMessagePermission {
-  CREATE_CONTACT_MESSAGE
-  UPDATE_CONTACT_MESSAGE
-  DELETE_CONTACT_MESSAGE
-  RETRIEVE_CONTACT_MESSAGE
-}
-
 type ContactMessageType {
   id: ID!
   fullName: String!
@@ -347,13 +340,6 @@ type FaqListType {
   totalCount: Int
   page: Int
   pageSize: Int
-}
-
-enum FaqPermission {
-  CREATE_FAQ
-  UPDATE_FAQ
-  DELETE_FAQ
-  RETRIEVE_FAQ
 }
 
 type FaqType {
@@ -853,6 +839,14 @@ enum UserPermissions {
   UPDATE_ORDER
   DELETE_ORDER
   RETRIEVE_ORDER
+  CREATE_FAQ
+  UPDATE_FAQ
+  DELETE_FAQ
+  RETRIEVE_FAQ
+  CREATE_CONTACT_MESSAGE
+  UPDATE_CONTACT_MESSAGE
+  DELETE_CONTACT_MESSAGE
+  RETRIEVE_CONTACT_MESSAGE
 }
 
 type UserType {
