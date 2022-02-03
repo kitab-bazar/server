@@ -61,6 +61,7 @@ LOCAL_APPS = [
     'apps.order',
     'apps.notification',
     'apps.helpdesk',
+    'apps.blog',
 ]
 
 INSTALLED_APPS = [
