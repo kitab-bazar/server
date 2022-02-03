@@ -2,11 +2,17 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
+from django.db.models import QuerySet
+
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
 
 from apps.blog.models import Blog, Tag, Category
 from apps.blog.filters import BlogFilter, TagFilter, CategoryFilter
+
+
+def get_blog_qs(info):
+    return Blog.objects.filter(publish_type=Blog.PublishType.PUBLISH)
 
 
 class BlogTagType(DjangoObjectType):
@@ -51,6 +57,10 @@ class BlogType(DjangoObjectType):
     image = graphene.Field(FileFieldType)
     og_image = graphene.Field(FileFieldType)
 
+    @staticmethod
+    def get_custom_queryset(queryset, info):
+        return get_blog_qs(info)
+
 
 class BlogListType(CustomDjangoListObjectType):
     class Meta:
@@ -78,3 +88,7 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+
+    @staticmethod
+    def resolve_blogs(root, info, **kwargs) -> QuerySet:
+        return get_blog_qs(info)
