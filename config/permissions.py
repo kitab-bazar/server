@@ -43,6 +43,20 @@ class UserPermissions():
         UPDATE_CONTACT_MESSAGE = auto()
         DELETE_CONTACT_MESSAGE = auto()
         RETRIEVE_CONTACT_MESSAGE = auto()
+        CAN_CREATE_BLOG = auto()
+        CAN_UPDATE_BLOG = auto()
+        CAN_DELETE_BLOG = auto()
+        CAN_RETRIEVE_BLOG = auto()
+
+        CAN_CREATE_BLOG_CATEGORY = auto()
+        CAN_UPDATE_BLOG_CATEGORY = auto()
+        CAN_DELETE_BLOG_CATEGORY = auto()
+        CAN_RETRIEVE_BLOG_CATEGORY = auto()
+
+        CAN_CREATE_BLOG_TAG = auto()
+        CAN_UPDATE_BLOG_TAG = auto()
+        CAN_DELETE_BLOG_TAG = auto()
+        CAN_RETRIEVE_BLOG_TAG = auto()
 
     Permission.__name__ = 'UserPermissions'
 
@@ -81,12 +95,28 @@ class UserPermissions():
         Permission.UPDATE_CONTACT_MESSAGE: "You don't have permission to update contact message.",
         Permission.DELETE_CONTACT_MESSAGE: "You don't have permission to delete contact message.",
         Permission.RETRIEVE_CONTACT_MESSAGE: "You don't have permission to retrieve contact message.",
+        Permission.CAN_CREATE_BLOG: "You don't have permission to create blog",
+        Permission.CAN_UPDATE_BLOG: "You don't have permission to update blog",
+        Permission.CAN_DELETE_BLOG: "You don't have permission to delete blog",
+        Permission.CAN_RETRIEVE_BLOG: "You don't have permission to retrieve blog",
+
+        Permission.CAN_CREATE_BLOG_CATEGORY: "You don't have permission to create blog category",
+        Permission.CAN_UPDATE_BLOG_CATEGORY: "You don't have permission to update blog category",
+        Permission.CAN_DELETE_BLOG_CATEGORY: "You don't have permission to delete blog category",
+        Permission.CAN_RETRIEVE_BLOG_CATEGORY: "You don't have permission to retrieve blog category",
+
+        Permission.CAN_CREATE_BLOG_TAG: "You don't have permission to create blog tag",
+        Permission.CAN_UPDATE_BLOG_TAG: "You don't have permission to update blog tag",
+        Permission.CAN_DELETE_BLOG_TAG: "You don't have permission to delete blog tag",
+        Permission.CAN_RETRIEVE_BLOG_TAG: "You don't have permission to retrieve blog tag",
     }
 
     INDIVIDUAL_USER = [
         Permission.CAN_RETRIEVE_BOOK, Permission.CAN_RETRIEVE_PUBLISHER, Permission.CAN_RETRIEVE_SCHOOL,
         Permission.CAN_RETRIEVE_INSTITUTION, Permission.CREATE_ORDER, Permission.RETRIEVE_ORDER,
-        Permission.RETRIEVE_FAQ, Permission.CREATE_CONTACT_MESSAGE
+        Permission.RETRIEVE_FAQ, Permission.CREATE_CONTACT_MESSAGE,
+        Permission.CAN_RETRIEVE_INSTITUTION, Permission.CAN_RETRIEVE_BLOG, Permission.CAN_RETRIEVE_BLOG_CATEGORY,
+        Permission.CAN_RETRIEVE_BLOG_TAG
     ]
     SCHOOL_ADMIN = [
         *INDIVIDUAL_USER, Permission.CAN_UPDATE_SCHOOL
@@ -102,6 +132,10 @@ class UserPermissions():
         Permission.CAN_DELETE_SCHOOL, Permission.CAN_CREATE_INSTITUTION, Permission.CAN_DELETE_INSTITUTION,
         Permission.CREATE_FAQ, Permission.UPDATE_FAQ, Permission.DELETE_FAQ, Permission.RETRIEVE_CONTACT_MESSAGE,
         Permission.UPDATE_CONTACT_MESSAGE, Permission.DELETE_CONTACT_MESSAGE,
+        Permission.CAN_DELETE_BLOG, Permission.CAN_CREATE_BLOG, Permission.CAN_DELETE_BLOG,
+        Permission.CAN_UPDATE_BLOG, Permission.CAN_CREATE_BLOG_CATEGORY, Permission.CAN_UPDATE_BLOG_CATEGORY,
+        Permission.CAN_DELETE_BLOG_CATEGORY, Permission.CAN_CREATE_BLOG_TAG, Permission.CAN_UPDATE_BLOG_TAG,
+        Permission.CAN_DELETE_BLOG_TAG,
     ]
 
     PERMISSION_MAP = {
