@@ -26,6 +26,106 @@ type AuthorType {
   aboutAuthor: String
 }
 
+input BlogCategoryInputType {
+  name: String!
+  nameEn: String
+  nameNe: String
+  parentCategory: String
+}
+
+type BlogCategoryListType {
+  results: [BlogCategoryType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type BlogCategoryType {
+  id: ID!
+  name: String!
+  parentCategory: BlogCategoryType
+}
+
+input BlogInputType {
+  title: String
+  titleEn: String
+  titleNe: String
+  description: String
+  descriptionEn: String
+  descriptionNe: String
+  image: String
+  publishedDate: Date!
+  publishType: publish_type
+  metaTitle: String
+  metaTitleEn: String
+  metaTitleNe: String
+  metaKeywords: String
+  metaKeywordsEn: String
+  metaKeywordsNe: String
+  metaDescription: String
+  metaDescriptionEn: String
+  metaDescriptionNe: String
+  ogTitle: String
+  ogTitleEn: String
+  ogTitleNe: String
+  ogDescription: String
+  ogDescriptionEn: String
+  ogDescriptionNe: String
+  ogImage: String
+  ogLocale: String
+  ogLocaleEn: String
+  ogLocaleNe: String
+  ogType: String
+  ogTypeEn: String
+  ogTypeNe: String
+  category: String!
+  tags: [ID!]
+}
+
+type BlogListType {
+  results: [BlogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+input BlogTagInputType {
+  name: String!
+  nameEn: String
+  nameNe: String
+}
+
+type BlogTagListType {
+  results: [BlogTagType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type BlogTagType {
+  id: ID!
+  name: String!
+}
+
+type BlogType {
+  id: ID!
+  title: String!
+  description: String!
+  image: FileFieldType
+  category: BlogCategoryType!
+  tags: [BlogTagType!]!
+  publishedDate: Date!
+  metaTitle: String
+  metaKeywords: String
+  metaDescription: String
+  ogTitle: String
+  ogDescription: String
+  ogImage: FileFieldType
+  ogLocale: String
+  ogType: String
+  quantityInCart: Int!
+}
+
 input BookCreateInputType {
   title: String!
   titleEn: String
@@ -268,6 +368,22 @@ type ContactMessageType {
   message: String!
   phoneNumber: String!
   messageType: ContactMessageMessageType!
+type CreateBlog {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogType
+}
+
+type CreateBlogCategory {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogCategoryType
+}
+
+type CreateBlogTag {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogTagType
 }
 
 type CreateBook {
@@ -321,6 +437,24 @@ type CreateWishList {
 scalar Date
 
 scalar DateTime
+
+type DeleteBlog {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogType
+}
+
+type DeleteBlogCategory {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogCategoryType
+}
+
+type DeleteBlogTag {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogTagType
+}
 
 type DeleteBook {
   errors: [GenericScalar!]
@@ -512,6 +646,15 @@ type Mutation {
   createContactMessage(data: ContactMessageInputType!): CreateContactMessage
   updateContactMessage(data: ContactMessageInputType!, id: ID!): UpdateContactMessage
   deleteContactMessage(id: ID!): DeleteContactMessage
+  createBlog(data: BlogInputType!): CreateBlog
+  updateBlog(data: BlogInputType!, id: ID!): UpdateBlog
+  deleteBlog(id: ID!): DeleteBlog
+  createBlogTag(data: BlogTagInputType!): CreateBlogTag
+  updateBlogTag(data: BlogTagInputType!, id: ID!): UpdateBlogTag
+  deleteBlogTag(id: ID!): DeleteBlogTag
+  createBlogCategory(data: BlogCategoryInputType!): CreateBlogCategory
+  updateBlogCategory(data: BlogCategoryInputType!, id: ID!): UpdateBlogCategory
+  deleteBlogCategory(id: ID!): DeleteBlogCategory
   toggleNotification(data: ToggleNotificationInputType!, id: ID!): ToggleNotificationReadStatus
   deleteNotification(id: ID!): DeleteNotification
   createCartItem(data: CartItemInputType!): CreateCartItem
@@ -677,6 +820,10 @@ type Query {
   faqs(page: Int = 1, ordering: String, pageSize: Int): FaqListType
   contactMessage(id: ID!): ContactMessageType
   contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
+  blog(id: ID!): BlogType
+  blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
+  blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
+  blogTags(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogTagListType
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
   orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   notification(id: ID!): NotificationType
@@ -802,6 +949,24 @@ type ToggleNotificationReadStatus {
 
 scalar UUID
 
+type UpdateBlog {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogType
+}
+
+type UpdateBlogCategory {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogCategoryType
+}
+
+type UpdateBlogTag {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogTagType
+}
+
 type UpdateBook {
   errors: [GenericScalar!]
   ok: Boolean
@@ -919,6 +1084,18 @@ enum UserPermissions {
   UPDATE_CONTACT_MESSAGE
   DELETE_CONTACT_MESSAGE
   RETRIEVE_CONTACT_MESSAGE
+  CAN_CREATE_BLOG
+  CAN_UPDATE_BLOG
+  CAN_DELETE_BLOG
+  CAN_RETRIEVE_BLOG
+  CAN_CREATE_BLOG_CATEGORY
+  CAN_UPDATE_BLOG_CATEGORY
+  CAN_DELETE_BLOG_CATEGORY
+  CAN_RETRIEVE_BLOG_CATEGORY
+  CAN_CREATE_BLOG_TAG
+  CAN_UPDATE_BLOG_TAG
+  CAN_DELETE_BLOG_TAG
+  CAN_RETRIEVE_BLOG_TAG
 }
 
 type UserType {
