@@ -1,9 +1,12 @@
-from apps.user.models import User
 from rest_framework import serializers
+from phonenumber_field.formfields import PhoneNumberField
+
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
+
+from apps.user.models import User
 from apps.common.tasks import generic_email_sender
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -231,11 +234,17 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
     institution = InstitutionUpdateSerializer(required=False)
     school = SchoolUpdateSerializer(required=False)
     publisher = PublisherUpdateSerializer(required=False)
+    phone_number = PhoneNumberField(required=False)
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'phone_number', 'image', 'publisher', 'school', 'institution')
         extra_kwargs = {'password': {'write_only': True}}
+
+    def validate_phone_number(self, phone_number):
+        if User.objects.filter(phone_number=phone_number).exclude(id=self.context['request'].user.id).exists():
+            raise serializers.ValidationError('User with this Phone number already exists.')
+        return phone_number
 
     def _save_profile_data(self, user, data):
         data_key = {
@@ -261,5 +270,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
 
     def save(self, **kwargs):
         instance = self.context['request'].user
-        self._save_profile_data(instance, self.validated_data)
+        # NOTE: Individual user don't have profile
+        if instance.user_type != User.UserType.INDIVIDUAL_USER.value:
+            self._save_profile_data(instance, self.validated_data)
         return super().update(instance, self.validated_data)
