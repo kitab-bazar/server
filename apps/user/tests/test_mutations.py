@@ -1,7 +1,13 @@
-from utils.graphene.tests import GraphQLTestCase
-from apps.user.factories import UserFactory
 from django.contrib.auth.hashers import check_password
+
+from utils.graphene.tests import GraphQLTestCase
+
 from apps.user.models import User
+from apps.user.factories import UserFactory
+from apps.common.factories import MunicipalityFactory
+from apps.school.factories import SchoolFactory
+from apps.publisher.factories import PublisherFactory
+from apps.institution.factories import InstitutionFactory
 
 
 class TestUser(GraphQLTestCase):
@@ -43,6 +49,37 @@ class TestUser(GraphQLTestCase):
               }
             }
         '''
+        self.update_profile = '''
+            mutation Mutation($input: UpdateProfileType!) {
+                updateProfile(data: $input) {
+                    ok
+                    errors
+                    result {
+                      firstName
+                      fullName
+                      lastName
+                      userType
+                      phoneNumber
+                      school {
+                        localAddress
+                        name
+                        wardNumber
+                      }
+                      institution {
+                        localAddress
+                        name
+                        wardNumber
+                      }
+                      publisher {
+                        localAddress
+                        name
+                        wardNumber
+                      }
+                    }
+                }
+            }
+        '''
+        self.municipality = MunicipalityFactory.create()
         super().setUp()
 
     def test_register_individual_user(self):
@@ -87,3 +124,100 @@ class TestUser(GraphQLTestCase):
 
     def test_logout(self):
         self.query_check(self.logout_mutation, okay=True)
+
+    def test_individual_user_can_update_profile(self):
+        user = UserFactory.create(user_type=User.UserType.INDIVIDUAL_USER.value)
+        self.force_login(user)
+        minput = {"firstName": 'Bimal', "lastName": 'Pandey', 'phoneNumber': '9848864675'}
+        response = self.query_check(self.update_profile, minput=minput, okay=True)
+        content = response['data']['updateProfile']['result']
+        self.assertEqual(content['firstName'], minput['firstName'])
+        self.assertEqual(content['lastName'], minput['lastName'])
+        # NOTE: +977 prefix is added by phonenumberfield
+        self.assertEqual(content['phoneNumber'], '+977' + minput['phoneNumber'])
+        self.assertEqual(content['fullName'], minput['firstName'] + ' ' + minput['lastName'])
+        self.assertEqual(content['userType'], User.UserType.INDIVIDUAL_USER.name)
+        self.assertEqual(content['school'], None)
+        self.assertEqual(content['publisher'], None)
+        self.assertEqual(content['institution'], None)
+
+    def test_school_admin_can_update_profile(self):
+        school = SchoolFactory.create()
+        user = UserFactory.create(user_type=User.UserType.SCHOOL_ADMIN.value, school=school)
+        self.force_login(user)
+        minput = {
+            "firstName": 'Bimal', "lastName": 'Pandey', 'phoneNumber': '9848864611',
+            'school': {
+                'localAddress': 'Kanchanpur', 'name': 'XYZ', 'wardNumber': '8',
+                'municipality': self.municipality.id
+            }
+        }
+        response = self.query_check(self.update_profile, minput=minput, okay=True)
+        content = response['data']['updateProfile']['result']
+        self.assertEqual(content['firstName'], minput['firstName'])
+        self.assertEqual(content['lastName'], minput['lastName'])
+        # NOTE: +977 prefix is added by phonenumberfield
+        self.assertEqual(content['phoneNumber'], '+977' + minput['phoneNumber'])
+        self.assertEqual(content['fullName'], minput['firstName'] + ' ' + minput['lastName'])
+        self.assertEqual(content['userType'], User.UserType.SCHOOL_ADMIN.name)
+        self.assertEqual(content['school']['localAddress'], minput['school']['localAddress'])
+        self.assertEqual(content['school']['name'], minput['school']['name'])
+        self.assertEqual(str(content['school']['wardNumber']), minput['school']['wardNumber'])
+        self.assertEqual(content['publisher'], None)
+        self.assertEqual(content['institution'], None)
+        # Test can update multiple times
+        self.query_check(self.update_profile, minput=minput, okay=True)
+
+    def test_institution_user_can_update_profile(self):
+        institution = InstitutionFactory.create()
+        user = UserFactory.create(user_type=User.UserType.INSTITUTIONAL_USER.value, institution=institution)
+        self.force_login(user)
+        minput = {
+            "firstName": 'Bimal', "lastName": 'Pandey', 'phoneNumber': '9848864622',
+            'institution': {
+                'localAddress': 'Kanchanpur', 'name': 'XYZ', 'wardNumber': '8',
+                'municipality': self.municipality.id
+            }
+        }
+        response = self.query_check(self.update_profile, minput=minput, okay=True)
+        content = response['data']['updateProfile']['result']
+        self.assertEqual(content['firstName'], minput['firstName'])
+        self.assertEqual(content['lastName'], minput['lastName'])
+        # NOTE: +977 prefix is added by phonenumberfield
+        self.assertEqual(content['phoneNumber'], '+977' + minput['phoneNumber'])
+        self.assertEqual(content['fullName'], minput['firstName'] + ' ' + minput['lastName'])
+        self.assertEqual(content['userType'], User.UserType.INSTITUTIONAL_USER.name)
+        self.assertEqual(content['institution']['localAddress'], minput['institution']['localAddress'])
+        self.assertEqual(content['institution']['name'], minput['institution']['name'])
+        self.assertEqual(str(content['institution']['wardNumber']), minput['institution']['wardNumber'])
+        self.assertEqual(content['publisher'], None)
+        self.assertEqual(content['school'], None)
+        # Test can update multiple times
+        self.query_check(self.update_profile, minput=minput, okay=True)
+
+    def test_publisher_user_can_update_profile(self):
+        publisher = PublisherFactory.create()
+        user = UserFactory.create(user_type=User.UserType.PUBLISHER.value, publisher=publisher)
+        self.force_login(user)
+        minput = {
+            "firstName": 'Bimal', "lastName": 'Pandey', 'phoneNumber': '9848864633',
+            'publisher': {
+                'localAddress': 'Kanchanpur', 'name': 'XYZ', 'wardNumber': '8',
+                'municipality': self.municipality.id
+            }
+        }
+        response = self.query_check(self.update_profile, minput=minput, okay=True)
+        content = response['data']['updateProfile']['result']
+        self.assertEqual(content['firstName'], minput['firstName'])
+        self.assertEqual(content['lastName'], minput['lastName'])
+        # NOTE: +977 prefix is added by phonenumberfield
+        self.assertEqual(content['phoneNumber'], '+977' + minput['phoneNumber'])
+        self.assertEqual(content['fullName'], minput['firstName'] + ' ' + minput['lastName'])
+        self.assertEqual(content['userType'], User.UserType.PUBLISHER.name)
+        self.assertEqual(content['publisher']['localAddress'], minput['publisher']['localAddress'])
+        self.assertEqual(content['publisher']['name'], minput['publisher']['name'])
+        self.assertEqual(str(content['publisher']['wardNumber']), minput['publisher']['wardNumber'])
+        self.assertEqual(content['institution'], None)
+        self.assertEqual(content['school'], None)
+        # Test can update multiple times
+        self.query_check(self.update_profile, minput=minput, okay=True)

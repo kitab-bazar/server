@@ -662,7 +662,7 @@ type UpdateOrder {
 type UpdateProfile {
   errors: [GenericScalar!]
   ok: Boolean
-  result: UserType
+  result: UserMeType
 }
 
 input UpdateProfileType {

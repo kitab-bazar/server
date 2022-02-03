@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout
 from utils.graphene.mutation import generate_input_type_for_serializer
 from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 
-from apps.user.schema import UserType
+from apps.user.schema import UserType, UserMeType
 from apps.user.serializers import (
     LoginSerializer,
     RegisterSerializer,
@@ -198,13 +198,15 @@ class UpdateProfile(graphene.Mutation):
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
-    result = graphene.Field(UserType)
+    result = graphene.Field(UserMeType)
 
     @staticmethod
     def mutate(root, info, data):
         serializer = UpdateProfileSerializer(
+            instance=info.context.user,
             data=data,
             context={'request': info.context.request},
+            partial=True,
         )
         if errors := mutation_is_not_valid(serializer):
             return UpdateProfile(errors=errors, ok=False)
