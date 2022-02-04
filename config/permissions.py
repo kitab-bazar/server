@@ -34,6 +34,16 @@ class UserPermissions():
         DELETE_ORDER = auto()
         RETRIEVE_ORDER = auto()
 
+        CREATE_FAQ = auto()
+        UPDATE_FAQ = auto()
+        DELETE_FAQ = auto()
+        RETRIEVE_FAQ = auto()
+
+        CREATE_CONTACT_MESSAGE = auto()
+        UPDATE_CONTACT_MESSAGE = auto()
+        DELETE_CONTACT_MESSAGE = auto()
+        RETRIEVE_CONTACT_MESSAGE = auto()
+
     Permission.__name__ = 'UserPermissions'
 
     __error_message__ = {
@@ -61,11 +71,22 @@ class UserPermissions():
         Permission.UPDATE_ORDER: "You don't have permission to update order",
         Permission.DELETE_ORDER: "You don't have permission to delete order",
         Permission.RETRIEVE_ORDER: "You don't have permission to retrieve order",
+
+        Permission.CREATE_FAQ: "You don't have permission to create faq.",
+        Permission.UPDATE_FAQ: "You don't have permission to update faq.",
+        Permission.DELETE_FAQ: "You don't have permission to delete faq.",
+        Permission.RETRIEVE_FAQ: "You don't have permission to retrieve faq.",
+
+        Permission.CREATE_CONTACT_MESSAGE: "You don't have permission to create contact message.",
+        Permission.UPDATE_CONTACT_MESSAGE: "You don't have permission to update contact message.",
+        Permission.DELETE_CONTACT_MESSAGE: "You don't have permission to delete contact message.",
+        Permission.RETRIEVE_CONTACT_MESSAGE: "You don't have permission to retrieve contact message.",
     }
 
     INDIVIDUAL_USER = [
         Permission.CAN_RETRIEVE_BOOK, Permission.CAN_RETRIEVE_PUBLISHER, Permission.CAN_RETRIEVE_SCHOOL,
         Permission.CAN_RETRIEVE_INSTITUTION, Permission.CREATE_ORDER, Permission.RETRIEVE_ORDER,
+        Permission.RETRIEVE_FAQ, Permission.CREATE_CONTACT_MESSAGE
     ]
     SCHOOL_ADMIN = [
         *INDIVIDUAL_USER, Permission.CAN_UPDATE_SCHOOL
@@ -78,7 +99,9 @@ class UserPermissions():
     ADMIN = [
         *INDIVIDUAL_USER, *PUBLISHER, *INSTITUTIONAL_USER, *SCHOOL_ADMIN,
         Permission.CAN_CREATE_PUBLISHER, Permission.CAN_DELETE_PUBLISHER, Permission.CAN_CREATE_SCHOOL,
-        Permission.CAN_DELETE_SCHOOL, Permission.CAN_CREATE_INSTITUTION, Permission.CAN_DELETE_INSTITUTION
+        Permission.CAN_DELETE_SCHOOL, Permission.CAN_CREATE_INSTITUTION, Permission.CAN_DELETE_INSTITUTION,
+        Permission.CREATE_FAQ, Permission.UPDATE_FAQ, Permission.DELETE_FAQ, Permission.RETRIEVE_CONTACT_MESSAGE,
+        Permission.UPDATE_CONTACT_MESSAGE, Permission.DELETE_CONTACT_MESSAGE,
     ]
 
     PERMISSION_MAP = {

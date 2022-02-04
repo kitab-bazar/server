@@ -60,6 +60,7 @@ LOCAL_APPS = [
     'apps.book',
     'apps.order',
     'apps.notification',
+    'apps.helpdesk',
 ]
 
 INSTALLED_APPS = [
@@ -229,6 +230,7 @@ GRAPHENE_NODES_WHITELIST = (
     'tags',
     'categories',
     'authors',
+    'createContactMessage',
 )
 
 CLIENT_URL = env('CLIENT_URL')
