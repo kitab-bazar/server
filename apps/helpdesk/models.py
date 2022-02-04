@@ -38,15 +38,15 @@ class ContactMessage(models.Model):
 
 
 class Faq(models.Model):
-    class PublishType(models.TextChoices):
+    class FaqPublishType(models.TextChoices):
         PUBLISH = 'publish', 'Publish'
         DRAFT = 'draft', 'Draft'
 
     question = models.TextField(null=True, blank=True, verbose_name=ugettext('Question'))
     answer = models.TextField(null=True, blank=True, verbose_name=ugettext('Answer'))
-    publish_type = models.CharField(
-        choices=PublishType.choices, max_length=40,
-        default=PublishType.DRAFT,
+    faq_publish_type = models.CharField(
+        choices=FaqPublishType.choices, max_length=40,
+        default=FaqPublishType.DRAFT,
         verbose_name=ugettext('Publish Type')
     )
 

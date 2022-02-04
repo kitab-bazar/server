@@ -23,6 +23,7 @@ class BaseBlogMutationMixin():
     def filter_queryset(cls, qs, info):
         if info.context.user.user_type == User.UserType.ADMIN.value:
             return qs
+        return qs.none()
 
 
 class CreateBlog(BaseBlogMutationMixin, CreateUpdateGrapheneMutation):

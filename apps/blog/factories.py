@@ -29,7 +29,7 @@ class BlogFactory(DjangoModelFactory):
         datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=730),
     )
     category = factory.SubFactory(BlogCategoryFactory)
-    publish_type = factory.fuzzy.FuzzyChoice(Blog.PublishType.choices)
+    blog_publish_type = factory.fuzzy.FuzzyChoice(Blog.BlogPublishType.choices)
     meta_title = fuzzy.FuzzyText(length=15)
     meta_keywords = fuzzy.FuzzyText(length=15)
     meta_description = fuzzy.FuzzyText(length=15)

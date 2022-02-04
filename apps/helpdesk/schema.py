@@ -18,7 +18,7 @@ def get_contact_messages_qs(info):
 
 
 def get_faq_qs(info):
-    return Faq.objects.filter(publish_type=Faq.PublishType.PUBLISH)
+    return Faq.objects.filter(faq_publish_type=Faq.FaqPublishType.PUBLISH)
 
 
 class ContactMessageType(DjangoObjectType):

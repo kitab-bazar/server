@@ -43,9 +43,9 @@ class Category(models.Model):
 
 class Blog(models.Model):
 
-    class PublishType(models.TextChoices):
+    class BlogPublishType(models.TextChoices):
         PUBLISH = 'publish', 'Publish'
-        DRAFT = 'draft', "Draft"
+        DRAFT = 'draft', 'Draft'
 
     title = models.TextField(blank=True, verbose_name=ugettext('Blog title'))
     description = models.TextField(blank=True, verbose_name=ugettext('Blog Description'))
@@ -61,8 +61,8 @@ class Blog(models.Model):
         'blog.Tag', related_name='blog_tags', blank=True, verbose_name=ugettext('Blog Tags')
     )
     published_date = models.DateField(verbose_name=ugettext('Published Date'))
-    publish_type = models.CharField(
-        choices=PublishType.choices, max_length=40, verbose_name=ugettext('Publish Type'), default=PublishType.DRAFT
+    blog_publish_type = models.CharField(
+        choices=BlogPublishType.choices, max_length=40, verbose_name=ugettext('Publish Type'), default=BlogPublishType.DRAFT
     )
     # SEO fields
     meta_title = models.CharField(max_length=255, null=True, blank=True, verbose_name=ugettext('Meta title'))

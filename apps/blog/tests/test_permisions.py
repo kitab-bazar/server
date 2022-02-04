@@ -53,7 +53,7 @@ class TestBlogPermissions(TestPermissions):
         self.blog_minput = {
             'title': 'Test title', 'description': 'Test description',
             'publishedDate': '2021-09-12', 'category': self.blog_category.id,
-            'publishType': Blog.PublishType.DRAFT.name
+            'blogPublishType': Blog.BlogPublishType.DRAFT.name
         }
 
         super().setUp()

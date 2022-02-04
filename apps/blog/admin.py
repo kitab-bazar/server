@@ -41,7 +41,7 @@ class BlogAdmin(TranslationAdmin):
         }),
         ('Publish', {
             'fields': (
-                'publish_type',
+                'blog_publish_type',
             )
         }),
     )

@@ -12,7 +12,7 @@ from apps.blog.filters import BlogFilter, TagFilter, CategoryFilter
 
 
 def get_blog_qs(info):
-    return Blog.objects.filter(publish_type=Blog.PublishType.PUBLISH)
+    return Blog.objects.filter(blog_publish_type=Blog.BlogPublishType.PUBLISH)
 
 
 class BlogTagType(DjangoObjectType):
