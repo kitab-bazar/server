@@ -55,7 +55,7 @@ input BlogInputType {
   descriptionNe: String
   image: String
   publishedDate: Date!
-  publishType: publish_type
+  blogPublishType: blog_publish_type
   metaTitle: String
   metaTitleEn: String
   metaTitleNe: String
@@ -368,6 +368,8 @@ type ContactMessageType {
   message: String!
   phoneNumber: String!
   messageType: ContactMessageMessageType!
+}
+
 type CreateBlog {
   errors: [GenericScalar!]
   ok: Boolean
@@ -536,7 +538,7 @@ input FaqCreateInputType {
   answer: String
   answerEn: String
   answerNe: String
-  publishType: publish_type
+  faqPublishType: faq_publish_type
 }
 
 type FaqListType {
@@ -640,12 +642,6 @@ type MunicipalityType {
 }
 
 type Mutation {
-  createFaq(data: FaqCreateInputType!): CreateFaq
-  updateFaq(data: FaqCreateInputType!, id: ID!): UpdateFaq
-  deleteFaq(id: ID!): DeleteFaq
-  createContactMessage(data: ContactMessageInputType!): CreateContactMessage
-  updateContactMessage(data: ContactMessageInputType!, id: ID!): UpdateContactMessage
-  deleteContactMessage(id: ID!): DeleteContactMessage
   createBlog(data: BlogInputType!): CreateBlog
   updateBlog(data: BlogInputType!, id: ID!): UpdateBlog
   deleteBlog(id: ID!): DeleteBlog
@@ -655,6 +651,12 @@ type Mutation {
   createBlogCategory(data: BlogCategoryInputType!): CreateBlogCategory
   updateBlogCategory(data: BlogCategoryInputType!, id: ID!): UpdateBlogCategory
   deleteBlogCategory(id: ID!): DeleteBlogCategory
+  createFaq(data: FaqCreateInputType!): CreateFaq
+  updateFaq(data: FaqCreateInputType!, id: ID!): UpdateFaq
+  deleteFaq(id: ID!): DeleteFaq
+  createContactMessage(data: ContactMessageInputType!): CreateContactMessage
+  updateContactMessage(data: ContactMessageInputType!, id: ID!): UpdateContactMessage
+  deleteContactMessage(id: ID!): DeleteContactMessage
   toggleNotification(data: ToggleNotificationInputType!, id: ID!): ToggleNotificationReadStatus
   deleteNotification(id: ID!): DeleteNotification
   createCartItem(data: CartItemInputType!): CreateCartItem
@@ -816,14 +818,14 @@ input PublisherUpdateInputType {
 }
 
 type Query {
-  faq(id: ID!): FaqType
-  faqs(page: Int = 1, ordering: String, pageSize: Int): FaqListType
-  contactMessage(id: ID!): ContactMessageType
-  contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
   blog(id: ID!): BlogType
   blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
   blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
   blogTags(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogTagListType
+  faq(id: ID!): FaqType
+  faqs(page: Int = 1, ordering: String, pageSize: Int): FaqListType
+  contactMessage(id: ID!): ContactMessageType
+  contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
   orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   notification(id: ID!): NotificationType
@@ -1140,6 +1142,14 @@ enum grade {
   GRADE_ONE
   GRADE_TWO
   GRADE_THREE
+enum blog_publish_type {
+  PUBLISH
+  DRAFT
+}
+
+enum faq_publish_type {
+  PUBLISH
+  DRAFT
 }
 
 enum language {
@@ -1155,11 +1165,6 @@ enum message_type {
   BUSINESS_RELATED
   FEATURE_SUGGESTIONS_FEEDBACK
   OTHER
-}
-
-enum publish_type {
-  PUBLISH
-  DRAFT
 }
 
 enum status {
