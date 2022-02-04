@@ -54,7 +54,8 @@ class AuthorListType(CustomDjangoListObjectType):
 
 class BookType(DjangoObjectType):
     quantity_in_cart = graphene.Int(required=True)
-    is_in_withlist = graphene.Boolean(required=True)
+    # Wishlist id may be None
+    wishlist_id = graphene.Int()
 
     class Meta:
         model = Book
@@ -73,8 +74,8 @@ class BookType(DjangoObjectType):
         return info.context.dl.book.quantity_in_cart.load(root.pk)
 
     @staticmethod
-    def resolve_is_in_withlist(root, info, **kwargs) -> int:
-        return info.context.dl.book.is_in_withlist.load(root.pk)
+    def resolve_wishlist_id(root, info, **kwargs) -> int:
+        return info.context.dl.book.wishlist_id.load(root.pk)
 
 
 class BookListType(CustomDjangoListObjectType):

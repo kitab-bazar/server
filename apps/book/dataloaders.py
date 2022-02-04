@@ -22,14 +22,14 @@ class QuantityInCartLoader(DataLoaderWithContext):
 
 class WishListLoader(DataLoaderWithContext):
     def batch_load_fn(self, keys):
-        book_qs = Book.objects.filter(id__in=keys).annotate(
-            quantity=models.Count('book_wish_list')
-        ).values_list('id', 'quantity')
-        is_in_withlist = {
-            id: quantity and True
-            for id, quantity in book_qs
+        book_qs = Book.objects.filter(id__in=keys).select_related(
+            'book_wish_list'
+        ).values_list('id', 'book_wish_list__id')
+        wishlist_ids = {
+            id: wish_list_id
+            for id, wish_list_id in book_qs
         }
-        return Promise.resolve([is_in_withlist.get(key, 0) for key in keys])
+        return Promise.resolve([wishlist_ids.get(key, 0) for key in keys])
 
 
 class DataLoaders(WithContextMixin):
@@ -38,5 +38,5 @@ class DataLoaders(WithContextMixin):
         return QuantityInCartLoader(context=self.context)
 
     @cached_property
-    def is_in_withlist(self):
+    def wishlist_id(self):
         return WishListLoader(context=self.context)
