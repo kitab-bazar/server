@@ -123,6 +123,7 @@ type BookType {
   ogLocale: String
   ogType: String
   quantityInCart: Int!
+  isInWithlist: Boolean!
 }
 
 input CartItemInputType {
