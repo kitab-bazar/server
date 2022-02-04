@@ -3,7 +3,7 @@ from django.db.models import F, Sum
 from django.utils.translation import ugettext_lazy as _
 
 from apps.order.models import CartItem, Order, BookOrder
-from apps.book.models import Book
+from apps.book.models import Book, WishList
 from config.serializers import CreatedUpdatedBaseSerializer
 
 
@@ -60,6 +60,10 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
             ) for cart_item in cart_items
         ])
 
+        # Remove books form withlist
+        book_ids = CartItem.objects.filter(created_by=self.context['request'].user).values_list('book', flat=True)
+        WishList.objects.filter(book_id__in=list(book_ids)).delete()
+
         # Clear cart
         cart_items.delete()
         return order
@@ -101,6 +105,10 @@ class PlaceSingleOrderSerializer(serializers.Serializer):
             book=book,
             publisher=book.publisher
         )
+
+        # Remove book form withlist
+        WishList.objects.filter(book_id=book_id).delete()
+
         return order
 
 
