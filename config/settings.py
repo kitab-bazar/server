@@ -35,6 +35,14 @@ env = environ.Env(
     DJANGO_MEDIA_URL=(str, '/media/'),
     DJANGO_STATIC_ROOT=(str, os.path.join(BASE_DIR, "staticfiles")),
     DJANGO_MEDIA_ROOT=(str, os.path.join(BASE_DIR, "media")),
+    # AWS static, media configs
+    AWS_STORAGE_BUCKET_NAME=(str, None),
+    AWS_STATIC_LOCATION=(str, '/static/'),
+    AWS_MEDIA_LOCATION=(str, '/media/'),
+    # NOTE: aws access key id, and aws secret access keys are required if aws policy
+    # is not set otherwise these variables are not required
+    AWS_ACCESS_KEY_ID=(str, None),
+    AWS_SECRET_ACCESS_KEY=(str, None),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -76,7 +84,8 @@ INSTALLED_APPS = [
     'graphene_graphiql_explorer',
     'corsheaders',
     'phonenumber_field',
-    'tinymce'
+    'tinymce',
+    'storages',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
@@ -159,11 +168,33 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_URL = env('DJANGO_STATIC_URL')
-MEDIA_URL = env('DJANGO_MEDIA_URL')
-STATIC_ROOT = env('DJANGO_STATIC_ROOT')
-MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+    STATIC_URL = env('DJANGO_STATIC_URL')
+    MEDIA_URL = env('DJANGO_MEDIA_URL')
+    STATIC_ROOT = env('DJANGO_STATIC_ROOT')
+    MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
+    TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
+    TINYMCE_COMPRESSOR = False
+else:
+    # Amazon s3 settings
+    # NOTE: uncomment these lines if you are not using IAM roles and policy in AWS
+    # AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    # AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    AWS_STATIC_LOCATION = env('AWS_STATIC_LOCATION')
+    AWS_MEDIA_LOCATION = env('AWS_MEDIA_LOCATION')
+
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_MEDIA_LOCATION}/'
+    TINYMCE_JS_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/tinymce/tinymce.min.js'
+
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -298,7 +329,3 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 10,
     "language": "en",
 }
-
-# NOTE: Fix this in production
-TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
-TINYMCE_COMPRESSOR = False
