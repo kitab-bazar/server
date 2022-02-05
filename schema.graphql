@@ -126,6 +126,22 @@ type BlogType {
   quantityInCart: Int!
 }
 
+input BookAuthorInputType {
+  name: String!
+  nameEn: String
+  nameNe: String
+  aboutAuthor: String
+  aboutAuthorEn: String
+  aboutAuthorNe: String
+}
+
+input BookCategoryInputType {
+  name: String!
+  nameEn: String
+  nameNe: String
+  parentCategory: String
+}
+
 input BookCreateInputType {
   title: String!
   titleEn: String
@@ -255,6 +271,12 @@ type BookOrderType {
   isbn: String!
   edition: String!
   image: FileFieldType
+}
+
+input BookTagInputType {
+  name: String!
+  nameEn: String
+  nameNe: String
 }
 
 type BookType {
@@ -394,6 +416,24 @@ type CreateBook {
   result: BookType
 }
 
+type CreateBookAuthor {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: AuthorType
+}
+
+type CreateBookCategory {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CategoryType
+}
+
+type CreateBookTag {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: TagType
+}
+
 type CreateCartItem {
   errors: [GenericScalar!]
   ok: Boolean
@@ -462,6 +502,24 @@ type DeleteBook {
   errors: [GenericScalar!]
   ok: Boolean
   result: BookType
+}
+
+type DeleteBookAuthor {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: AuthorType
+}
+
+type DeleteBookCategory {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CategoryType
+}
+
+type DeleteBookTag {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: TagType
 }
 
 type DeleteCartItem {
@@ -671,6 +729,15 @@ type Mutation {
   deleteBook(id: ID!): DeleteBook
   createWishlist(data: WishListInputType!): CreateWishList
   deleteWishlist(id: ID!): DeleteWishList
+  createBookTag(data: BookTagInputType!): CreateBookTag
+  updateBookTag(data: BookTagInputType!, id: ID!): UpdateBookTag
+  deleteBookTag(id: ID!): DeleteBookTag
+  createBookCategory(data: BookCategoryInputType!): CreateBookCategory
+  updateBookCategory(data: BookCategoryInputType!, id: ID!): UpdateBookCategory
+  deleteBookCategory(id: ID!): DeleteBookCategory
+  createBookAuthor(data: BookAuthorInputType!): CreateBookAuthor
+  updateBookAuthor(data: BookAuthorInputType!, id: ID!): UpdateBookAuthor
+  deleteBookAuthor(id: ID!): DeleteBookAuthor
   createSchool(data: SchoolCreateInputType!): CreateSchool
   updateSchool(data: SchoolCreateInputType!, id: ID!): UpdateSchool
   deleteSchool(id: ID!): DeleteSchool
@@ -975,6 +1042,24 @@ type UpdateBook {
   result: BookType
 }
 
+type UpdateBookAuthor {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: AuthorType
+}
+
+type UpdateBookCategory {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CategoryType
+}
+
+type UpdateBookTag {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: TagType
+}
+
 type UpdateCartItem {
   errors: [GenericScalar!]
   ok: Boolean
@@ -1064,6 +1149,18 @@ enum UserPermissions {
   CAN_UPDATE_BOOK
   CAN_DELETE_BOOK
   CAN_RETRIEVE_BOOK
+  CAN_CREATE_BOOK_CATEGORY
+  CAN_UPDATE_BOOK_CATEGORY
+  CAN_DELETE_BOOK_CATEGORY
+  CAN_RETRIEVE_BOOK_CATEGORY
+  CAN_CREATE_BOOK_AUTHOR
+  CAN_UPDATE_BOOK_AUTHOR
+  CAN_DELETE_BOOK_AUTHOR
+  CAN_RETRIEVE_BOOK_AUTHOR
+  CAN_CREATE_BOOK_TAG
+  CAN_UPDATE_BOOK_TAG
+  CAN_DELETE_BOOK_TAG
+  CAN_RETRIEVE_BOOK_TAG
   CAN_CREATE_PUBLISHER
   CAN_UPDATE_PUBLISHER
   CAN_DELETE_PUBLISHER
