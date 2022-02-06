@@ -57,7 +57,7 @@ class Login(graphene.Mutation):
     class Arguments:
         data = LoginInputType(required=True)
 
-    result = graphene.Field(UserType)
+    result = graphene.Field(UserMeType)
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean(required=True)
 
