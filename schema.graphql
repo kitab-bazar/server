@@ -408,7 +408,7 @@ input InstitutionUpdateInputType {
 }
 
 type Login {
-  result: UserType
+  result: UserMeType
   errors: [GenericScalar!]
   ok: Boolean!
 }
