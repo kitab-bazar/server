@@ -24,7 +24,6 @@ class OrderFilterSet(django_filters.FilterSet):
         fields = ('status',)
 
     def filter_order_status(self, queryset, name, value):
-        print(value)
         if not value:
             return queryset
         order_status_list = list(map(str.lower, value))
