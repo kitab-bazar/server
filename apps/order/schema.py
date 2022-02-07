@@ -1,4 +1,5 @@
 import graphene
+import datetime
 from graphene_django import DjangoObjectType
 from graphene_django_extras import PageGraphqlPagination
 
@@ -6,11 +7,12 @@ from django.db.models import QuerySet
 from django.db.models import F, Sum
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
-from utils.graphene.fields import DjangoPaginatedListObjectField
+from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoListField
 
 from apps.order.models import CartItem, Order, BookOrder
 from apps.order.filters import BookOrderFilterSet, OrderFilterSet
 from apps.user.models import User
+from apps.book.models import Book
 
 
 def get_cart_items_qs(info):
@@ -101,6 +103,79 @@ class OrderListType(CustomDjangoListObjectType):
         filterset_class = OrderFilterSet
 
 
+class OrderTypeForStatistic(DjangoObjectType):
+    total_quantity = graphene.Int()
+
+    class Meta:
+        model = Order
+        fields = ('id', 'order_code', 'total_price')
+
+    def resolve_total_quantity(root, info, **kwargs):
+        return root.book_order.aggregate(Sum('quantity'))['quantity__sum']
+
+
+stat_to = datetime.date.today()
+stat_from = stat_from = stat_to - datetime.timedelta(30)
+
+
+class OrderStatType(graphene.ObjectType):
+    total_quantity = graphene.Int()
+    books_uploaded_count = graphene.Int()
+    orders_completed_count = graphene.Int()
+    books_ordered_count = graphene.Int()
+    stat = CustomDjangoListField(OrderTypeForStatistic)
+
+    class Meta:
+        fields = ()
+
+    def resolve_total_quantity(root, info, **kwargs):
+        return root.aggregate(Sum('book_order__quantity'))['book_order__quantity__sum']
+
+    @staticmethod
+    def resolve_books_uploaded_count(root, info, **kwargs):
+        '''
+        Returns total books uploaded count
+        '''
+        if info.context.user.user_type == User.UserType.ADMIN.value:
+            return Book.objects.count()
+        elif info.context.user.user_type == User.UserType.PUBLISHER.value:
+            return Book.objects.filter(publisher=info.context.user.publisher).count()
+        return Book.objects.filter(created_by=info.context.user).count()
+
+    @staticmethod
+    def resolve_orders_completed_count(root, info, **kwargs):
+        '''
+        Returns total orders completed in last 30 days
+        '''
+        return get_orders_qs(info).filter(
+            status=Order.OrderStatus.COMPLETED.value,
+            order_placed_at__gte=stat_from,
+            order_placed_at__lte=stat_to
+        ).count()
+
+    @staticmethod
+    def resolve_books_ordered_count(root, info, **kwargs):
+        '''
+        Returns total books ordered in last 30 days
+        '''
+        return get_orders_qs(info).filter(
+            status=Order.OrderStatus.COMPLETED.value,
+            order_placed_at__gte=stat_from,
+            order_placed_at__lte=stat_to
+        ).count()
+
+    @staticmethod
+    def resolve_stat(root, info, **kwargs) -> QuerySet:
+        '''
+        Returns order stat of in last 30 days
+        '''
+        return get_orders_qs(info).filter(
+            status=Order.OrderStatus.COMPLETED.value,
+            order_placed_at__gte=stat_from,
+            order_placed_at__lte=stat_to
+        )
+
+
 class Query(graphene.ObjectType):
     cart_items = DjangoPaginatedListObjectField(
         CartType,
@@ -114,6 +189,7 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    order_stat = graphene.Field(OrderStatType)
 
     @staticmethod
     def resolve_cart_grand_total_price(root, info, **kwargs) -> QuerySet:
@@ -126,3 +202,8 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_cart_items(root, info, **kwargs) -> QuerySet:
         return get_cart_items_qs(info)
+
+    def resolve_order_stat(root, info, **kwargs):
+        if info.context.user.is_authenticated:
+            return get_orders_qs(info)
+        return None
