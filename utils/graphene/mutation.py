@@ -12,6 +12,7 @@ from rest_framework import serializers
 from django.core.exceptions import PermissionDenied
 
 from config.permissions import UserPermissions
+from config.serializers import IntegerIDField
 
 
 @get_graphene_type_from_serializer_field.register(serializers.ListSerializer)
@@ -29,6 +30,11 @@ def convert_list_field_to_field(field):
 @get_graphene_type_from_serializer_field.register(serializers.ManyRelatedField)
 def convert_serializer_field_to_many_related_id(field):
     return (graphene.List, graphene.NonNull(graphene.ID))
+
+
+@get_graphene_type_from_serializer_field.register(IntegerIDField)
+def convert_serializer_field_to_id(field):
+    return graphene.ID
 
 
 def convert_serializer_field(field, is_input=True, convert_choices_to_enum=True):

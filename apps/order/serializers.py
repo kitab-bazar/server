@@ -37,9 +37,10 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         cart_items = CartItem.objects.filter(
             created_by=created_by, id__in=cart_item_ids
         )
-        if not cart_items.exists():
+        filtered_cart_items_ids = cart_items.values_list('id', flat=True)
+        if not cart_items.exists() or len(filtered_cart_items_ids) != len(cart_item_ids):
             raise serializers.ValidationError(_('Invalid cart item id supplied.'))
-        return cart_items.values_list('id', flat=True)
+        return filtered_cart_items_ids
 
     def save(self, **kwargs):
         # Get current users cart
@@ -81,7 +82,7 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
             created_by=self.context['request'].user,
             id__in=cart_item_ids
         ).values_list('book', flat=True)
-        WishList.objects.filter(book_id__in=list(book_ids)).delete()
+        WishList.objects.filter(book_id__in=book_ids).delete()
 
         # Clear cart
         cart_items.delete()

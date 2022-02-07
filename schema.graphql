@@ -123,7 +123,7 @@ type BookType {
   ogLocale: String
   ogType: String
   cartDetails: CartItemType
-  wishlistId: Int
+  wishlistId: ID
 }
 
 input CartItemInputType {

@@ -27,3 +27,15 @@ class CreatedUpdatedBaseSerializer(serializers.Serializer):
         if model_has_field(self.Meta.model, 'modified_by'):
             validated_data['modified_by'] = self.context['request'].user
         return super().update(instance, validated_data)
+
+
+class IntegerIDField(serializers.IntegerField):
+    """
+    This field is created to override the graphene conversion of the integerfield -> graphene.ID
+    check out utils/graphene/mutation.py
+    """
+    pass
+
+
+def IdListField(**args):
+    return serializers.ListField(child=IntegerIDField(**args), default=list, allow_empty=True,)

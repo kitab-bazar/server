@@ -55,8 +55,7 @@ class AuthorListType(CustomDjangoListObjectType):
 
 class BookType(DjangoObjectType):
     cart_details = graphene.Field(CartItemType)
-    # Wishlist id may be None
-    wishlist_id = graphene.Int()
+    wishlist_id = graphene.ID()
 
     class Meta:
         model = Book
@@ -72,7 +71,7 @@ class BookType(DjangoObjectType):
 
     @staticmethod
     def resolve_cart_details(root, info, **kwargs) -> QuerySet:
-        return root.book_cart_item.first()
+        return info.context.dl.book.cart_details.load(root.pk)
 
     @staticmethod
     def resolve_wishlist_id(root, info, **kwargs) -> int:
