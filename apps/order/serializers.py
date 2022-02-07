@@ -128,6 +128,9 @@ class PlaceSingleOrderSerializer(serializers.Serializer):
         # Remove book form withlist
         WishList.objects.filter(book_id=book_id).delete()
 
+        # Remove book form cart
+        CartItem.objects.filter(book_id=book_id).delete()
+
         return order
 
 
