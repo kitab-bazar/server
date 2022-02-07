@@ -5,7 +5,7 @@ from apps.book.models import Book, WishList, Tag, Author, Category
 from config.serializers import CreatedUpdatedBaseSerializer
 
 
-class BookSerializer(serializers.ModelSerializer):
+class BookSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
 
     class Meta:
         model = Book

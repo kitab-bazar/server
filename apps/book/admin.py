@@ -36,7 +36,7 @@ class BookAdmin(TranslationAdmin):
             'fields': (
                 'categories', 'authors', 'tags', 'isbn', 'number_of_pages',
                 'language', 'weight', 'published_date', 'edition', 'publisher', 'price',
-                'grade',
+                'created_by', 'grade',
             )
         }),
         ('Content', {
