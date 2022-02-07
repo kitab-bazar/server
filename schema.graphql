@@ -448,7 +448,7 @@ type Mutation {
   createCartItem(data: CartItemInputType!): CreateCartItem
   updateCartItem(data: CartItemInputType!, id: ID!): UpdateCartItem
   deleteCartItem(id: ID!): DeleteCartItem
-  placeOrderFromCart: PlaceOrderFromCart
+  placeOrderFromCart(data: PlaceOrderFromCartInputType!): PlaceOrderFromCart
   placeSingleOrder(data: PlaceSingleOrderInputType!): PlaceSingleOrder
   updateOrder(data: OrderUpdateInputType!, id: ID!): UpdateOrder
   deleteOrder(id: ID!): DeleteOrder
@@ -534,6 +534,10 @@ type PlaceOrderFromCart {
   errors: [GenericScalar!]
   ok: Boolean
   result: OrderType
+}
+
+input PlaceOrderFromCartInputType {
+  cartItemIds: [Int!]!
 }
 
 type PlaceSingleOrder {
