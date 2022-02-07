@@ -8,8 +8,8 @@ from apps.publisher.factories import PublisherFactory
 class TestOrder(GraphQLTestCase):
     def setUp(self):
         self.place_order_from_cart = '''
-            mutation Mutation {
-                placeOrderFromCart {
+            mutation Mutation($input: PlaceOrderFromCartInputType!) {
+                placeOrderFromCart(data: $input) {
                     ok
                     errors
                 }
@@ -95,7 +95,8 @@ class TestOrder(GraphQLTestCase):
         self.assertEqual(len(result), 2)
 
         # Place order
-        self.query_check(self.place_order_from_cart, okay=True)
+        minput = {'cartItemIds': [self.cart_item_1.id, self.cart_item_2.id]}
+        self.query_check(self.place_order_from_cart, minput=minput, okay=True)
 
         # Test should clear cart after order placed
         content = self.query_check(self.cart)
