@@ -122,7 +122,7 @@ type BookType {
   ogImage: FileFieldType
   ogLocale: String
   ogType: String
-  quantityInCart: Int!
+  cartDetails: [CartItemType!]
   wishlistId: Int
 }
 

@@ -8,6 +8,8 @@ from utils.graphene.fields import DjangoPaginatedListObjectField
 
 from apps.book.models import Book, Tag, Category, Author, WishList
 from apps.book.filters import BookFilter, TagFilter, CategoryFilter, AuthorFilter
+from apps.order.schema import CartItemType
+from graphene_django_extras.fields import DjangoListField
 
 
 class TagType(DjangoObjectType):
@@ -53,7 +55,7 @@ class AuthorListType(CustomDjangoListObjectType):
 
 
 class BookType(DjangoObjectType):
-    quantity_in_cart = graphene.Int(required=True)
+    cart_details = DjangoListField(CartItemType)
     # Wishlist id may be None
     wishlist_id = graphene.Int()
 
@@ -70,8 +72,8 @@ class BookType(DjangoObjectType):
     og_image = graphene.Field(FileFieldType)
 
     @staticmethod
-    def resolve_quantity_in_cart(root, info, **kwargs) -> int:
-        return info.context.dl.book.quantity_in_cart.load(root.pk)
+    def resolve_cart_details(root, info, **kwargs) -> QuerySet:
+        return root.book_cart_item
 
     @staticmethod
     def resolve_wishlist_id(root, info, **kwargs) -> int:
