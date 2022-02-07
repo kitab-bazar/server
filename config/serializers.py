@@ -26,4 +26,4 @@ class CreatedUpdatedBaseSerializer(serializers.Serializer):
             validated_data['created_by'] = self.context['request'].user
         if model_has_field(self.Meta.model, 'modified_by'):
             validated_data['modified_by'] = self.context['request'].user
-        return super().create(validated_data)
+        return super().update(instance, validated_data)
