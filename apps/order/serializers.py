@@ -24,13 +24,29 @@ class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializ
 
 class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
 
+    cart_item_ids = serializers.ListField(
+        child=serializers.IntegerField(required=True)
+    )
+
     class Meta:
         model = Order
-        fields = ()
+        fields = ('cart_item_ids',)
+
+    def validate_cart_item_ids(self, cart_item_ids):
+        created_by = self.context['request'].user
+        cart_items = CartItem.objects.filter(
+            created_by=created_by, id__in=cart_item_ids
+        )
+        if not cart_items.exists():
+            raise serializers.ValidationError(_('Invalid cart item id supplied.'))
+        return cart_items.values_list('id', flat=True)
 
     def save(self, **kwargs):
         # Get current users cart
-        cart_items = CartItem.objects.filter(created_by=self.context['request'].user).annotate(
+        cart_item_ids = self.validated_data.pop('cart_item_ids')
+        cart_items = CartItem.objects.filter(
+            created_by=self.context['request'].user, id__in=cart_item_ids
+        ).annotate(
             total_price=F('book__price') * F('quantity')
         )
         if not cart_items.exists():
@@ -61,7 +77,10 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         ])
 
         # Remove books form withlist
-        book_ids = CartItem.objects.filter(created_by=self.context['request'].user).values_list('book', flat=True)
+        book_ids = CartItem.objects.filter(
+            created_by=self.context['request'].user,
+            id__in=cart_item_ids
+        ).values_list('book', flat=True)
         WishList.objects.filter(book_id__in=list(book_ids)).delete()
 
         # Clear cart
