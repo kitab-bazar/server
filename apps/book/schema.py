@@ -9,7 +9,6 @@ from utils.graphene.fields import DjangoPaginatedListObjectField
 from apps.book.models import Book, Tag, Category, Author, WishList
 from apps.book.filters import BookFilter, TagFilter, CategoryFilter, AuthorFilter
 from apps.order.schema import CartItemType
-from graphene_django_extras.fields import DjangoListField
 
 
 class TagType(DjangoObjectType):
@@ -55,7 +54,7 @@ class AuthorListType(CustomDjangoListObjectType):
 
 
 class BookType(DjangoObjectType):
-    cart_details = DjangoListField(CartItemType)
+    cart_details = graphene.Field(CartItemType)
     # Wishlist id may be None
     wishlist_id = graphene.Int()
 
@@ -73,7 +72,7 @@ class BookType(DjangoObjectType):
 
     @staticmethod
     def resolve_cart_details(root, info, **kwargs) -> QuerySet:
-        return root.book_cart_item
+        return root.book_cart_item.first()
 
     @staticmethod
     def resolve_wishlist_id(root, info, **kwargs) -> int:
