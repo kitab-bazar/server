@@ -135,7 +135,7 @@ class OrderStatType(graphene.ObjectType):
         Returns total orders completed in last 3 months
         '''
         stat_to = datetime.date.today()
-        stat_from = stat_to - datetime.timedelta(30)
+        stat_from = stat_to - datetime.timedelta(90)
         return root.filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
@@ -148,7 +148,7 @@ class OrderStatType(graphene.ObjectType):
         Returns total books ordered in last 3 months
         '''
         stat_to = datetime.date.today()
-        stat_from = stat_to - datetime.timedelta(30)
+        stat_from = stat_to - datetime.timedelta(90)
         return root.filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
@@ -161,7 +161,7 @@ class OrderStatType(graphene.ObjectType):
         Returns order stat of in last 3 months
         '''
         stat_to = datetime.date.today()
-        stat_from = stat_to - datetime.timedelta(30)
+        stat_from = stat_to - datetime.timedelta(90)
         return root.filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,

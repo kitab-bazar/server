@@ -26,9 +26,9 @@ class TestOrderState(TestPermissions):
             }
         '''
         stat_to = datetime.date.today()
-        stat_from = stat_to - datetime.timedelta(30)
+        stat_from = stat_to - datetime.timedelta(90)
         intermediate_date = stat_to - datetime.timedelta(15)
-        not_in_range_date = stat_to - datetime.timedelta(40)
+        not_in_range_date = stat_to - datetime.timedelta(120)
 
         # Create publishers
         self.publisher_1 = PublisherFactory.create()
