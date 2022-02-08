@@ -3,7 +3,8 @@ import pytz
 import factory
 from factory import fuzzy
 from factory.django import DjangoModelFactory
-from apps.book.models import Book, Tag, Author, Category
+from apps.book.models import Book, Tag, Author, Category, WishList
+from apps.user.factories import UserFactory
 
 
 class TagFactory(DjangoModelFactory):
@@ -75,3 +76,11 @@ class BookFactory(DjangoModelFactory):
         if extracted:
             for category in extracted:
                 self.categories.add(category)
+
+
+class WishListFactory(DjangoModelFactory):
+    book = factory.SubFactory(BookFactory)
+    created_by = factory.SubFactory(UserFactory)
+
+    class Meta:
+        model = WishList

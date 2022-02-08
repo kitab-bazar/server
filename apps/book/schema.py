@@ -8,6 +8,7 @@ from utils.graphene.fields import DjangoPaginatedListObjectField
 
 from apps.book.models import Book, Tag, Category, Author, WishList
 from apps.book.filters import BookFilter, TagFilter, CategoryFilter, AuthorFilter
+from apps.order.schema import CartItemType
 
 
 class TagType(DjangoObjectType):
@@ -53,7 +54,7 @@ class AuthorListType(CustomDjangoListObjectType):
 
 
 class BookType(DjangoObjectType):
-    quantity_in_cart = graphene.Int(required=True)
+    wishlist_id = graphene.ID()
 
     class Meta:
         model = Book
@@ -68,8 +69,20 @@ class BookType(DjangoObjectType):
     og_image = graphene.Field(FileFieldType)
 
     @staticmethod
-    def resolve_quantity_in_cart(root, info, **kwargs) -> int:
-        return info.context.dl.book.quantity_in_cart.load(root.pk)
+    def resolve_wishlist_id(root, info, **kwargs) -> int:
+        return info.context.dl.book.wishlist_id.load(root.pk)
+
+
+class BookDetailType(BookType):
+    cart_details = graphene.Field(CartItemType)
+
+    class Meta:
+        model = Book
+        skip_registry = True
+
+    @staticmethod
+    def resolve_cart_details(root, info, **kwargs) -> QuerySet:
+        return root.book_cart_item.first()
 
 
 class BookListType(CustomDjangoListObjectType):
@@ -99,6 +112,7 @@ class WishListListType(CustomDjangoListObjectType):
 
 class Query(graphene.ObjectType):
     book = DjangoObjectField(BookType)
+    book_detail = DjangoObjectField(BookDetailType)
     books = DjangoPaginatedListObjectField(
         BookListType,
         pagination=PageGraphqlPagination(

@@ -69,6 +69,55 @@ input BookCreateInputType {
   tags: [ID!]
 }
 
+type BookDetailType {
+  id: ID!
+  title: String!
+  image: FileFieldType
+  description: String
+  categories: [CategoryType!]!
+  authors: [AuthorType!]!
+  tags: [TagType!]!
+  isbn: String!
+  numberOfPages: Int!
+  language: BookLanguage!
+  weight: Int
+  publishedDate: Date!
+  edition: String
+  publisher: PublisherType!
+  price: Int!
+  metaTitle: String
+  metaKeywords: String
+  metaDescription: String
+  ogTitle: String
+  ogDescription: String
+  ogImage: FileFieldType
+  ogLocale: String
+  ogType: String
+  titleEn: String
+  titleNe: String
+  descriptionEn: String
+  descriptionNe: String
+  metaTitleEn: String
+  metaTitleNe: String
+  metaKeywordsEn: String
+  metaKeywordsNe: String
+  metaDescriptionEn: String
+  metaDescriptionNe: String
+  ogTitleEn: String
+  ogTitleNe: String
+  ogDescriptionEn: String
+  ogDescriptionNe: String
+  ogLocaleEn: String
+  ogLocaleNe: String
+  ogTypeEn: String
+  ogTypeNe: String
+  bookWishList: [WishListType!]!
+  bookCartItem: [CartItemType!]!
+  bookOrderCartItem: [BookOrderType!]!
+  wishlistId: ID
+  cartDetails: CartItemType
+}
+
 enum BookLanguage {
   NEPALI
   ENGLISH
@@ -122,7 +171,7 @@ type BookType {
   ogImage: FileFieldType
   ogLocale: String
   ogType: String
-  quantityInCart: Int!
+  wishlistId: ID
 }
 
 input CartItemInputType {
@@ -407,7 +456,7 @@ input InstitutionUpdateInputType {
 }
 
 type Login {
-  result: UserType
+  result: UserMeType
   errors: [GenericScalar!]
   ok: Boolean!
 }
@@ -447,7 +496,7 @@ type Mutation {
   createCartItem(data: CartItemInputType!): CreateCartItem
   updateCartItem(data: CartItemInputType!, id: ID!): UpdateCartItem
   deleteCartItem(id: ID!): DeleteCartItem
-  placeOrderFromCart: PlaceOrderFromCart
+  placeOrderFromCart(data: PlaceOrderFromCartInputType!): PlaceOrderFromCart
   placeSingleOrder(data: PlaceSingleOrderInputType!): PlaceSingleOrder
   updateOrder(data: OrderUpdateInputType!, id: ID!): UpdateOrder
   deleteOrder(id: ID!): DeleteOrder
@@ -535,6 +584,10 @@ type PlaceOrderFromCart {
   result: OrderType
 }
 
+input PlaceOrderFromCartInputType {
+  cartItemIds: [ID!]
+}
+
 type PlaceSingleOrder {
   errors: [GenericScalar!]
   ok: Boolean
@@ -612,6 +665,7 @@ type Query {
   notification(id: ID!): NotificationType
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
+  bookDetail(id: ID!): BookDetailType
   books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
   authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType

@@ -117,3 +117,7 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_orders(root, info, **kwargs) -> QuerySet:
         return get_orders_qs(info)
+
+    @staticmethod
+    def resolve_cart_items(root, info, **kwargs) -> QuerySet:
+        return get_cart_items_qs(info)

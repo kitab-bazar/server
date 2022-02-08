@@ -154,7 +154,7 @@ class WishList(models.Model):
         on_delete=models.CASCADE
     )
     book = models.ForeignKey(
-        'book.Book', verbose_name=_('Book'), related_name='+',
+        'book.Book', verbose_name=_('Book'), related_name='book_wish_list',
         on_delete=models.CASCADE
     )
 
