@@ -55,6 +55,7 @@ class AuthorListType(CustomDjangoListObjectType):
 
 class BookType(DjangoObjectType):
     wishlist_id = graphene.ID()
+    cart_details = graphene.Field(CartItemType)
 
     class Meta:
         model = Book
@@ -71,6 +72,10 @@ class BookType(DjangoObjectType):
     @staticmethod
     def resolve_wishlist_id(root, info, **kwargs) -> int:
         return info.context.dl.book.wishlist_id.load(root.pk)
+
+    @staticmethod
+    def resolve_cart_details(root, info, **kwargs) -> QuerySet:
+        return root.book_cart_item.first()
 
 
 class BookDetailType(BookType):
@@ -127,6 +132,12 @@ class Query(graphene.ObjectType):
     )
     authors = DjangoPaginatedListObjectField(
         AuthorListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+    categories = DjangoPaginatedListObjectField(
+        CategoryListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
