@@ -537,7 +537,7 @@ type PlaceOrderFromCart {
 }
 
 input PlaceOrderFromCartInputType {
-  cartItemIds: [Int!]!
+  cartItemIds: [ID!]
 }
 
 type PlaceSingleOrder {

@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from apps.order.models import CartItem, Order, BookOrder
 from apps.book.models import Book, WishList
-from config.serializers import CreatedUpdatedBaseSerializer
+from config.serializers import CreatedUpdatedBaseSerializer, IdListField
 
 
 class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
@@ -24,9 +24,7 @@ class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializ
 
 class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
 
-    cart_item_ids = serializers.ListField(
-        child=serializers.IntegerField(required=True)
-    )
+    cart_item_ids = IdListField(required=True)
 
     class Meta:
         model = Order
