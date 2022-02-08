@@ -195,6 +195,13 @@ type CartType {
   grandTotalPrice: Int
 }
 
+type CategoryListType {
+  results: [CategoryType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
 type CategoryType {
   id: ID!
   name: String!
@@ -670,6 +677,7 @@ type Query {
   books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
   authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
+  categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
   wishList(createdBy: ID, book: ID, page: Int = 1, ordering: String, pageSize: Int): WishListListType
   school(id: ID!): SchoolType
   schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType

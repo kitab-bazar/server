@@ -136,6 +136,12 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    categories = DjangoPaginatedListObjectField(
+        CategoryListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
     wish_list = DjangoPaginatedListObjectField(
         WishListListType,
         pagination=PageGraphqlPagination(
