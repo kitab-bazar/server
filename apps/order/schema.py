@@ -141,7 +141,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         stat_to = datetime.date.today()
         stat_from = stat_to - datetime.timedelta(30)
-        return get_orders_qs(info).filter(
+        return root.filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
@@ -154,7 +154,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         stat_to = datetime.date.today()
         stat_from = stat_to - datetime.timedelta(30)
-        return get_orders_qs(info).filter(
+        return root.filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
@@ -167,7 +167,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         stat_to = datetime.date.today()
         stat_from = stat_to - datetime.timedelta(30)
-        return get_orders_qs(info).filter(
+        return root.filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
