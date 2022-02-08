@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from apps.order.models import CartItem, Order, BookOrder
 from apps.book.models import Book, WishList
-from config.serializers import CreatedUpdatedBaseSerializer, IdListField
+from config.serializers import CreatedUpdatedBaseSerializer, IdListField, IntegerIDField
 
 
 class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
@@ -88,8 +88,8 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
 
 
 class PlaceSingleOrderSerializer(serializers.Serializer):
-    book_id = serializers.IntegerField(required=True, write_only=True)
-    quantity = serializers.IntegerField(required=True, write_only=True)
+    book_id = IntegerIDField(required=True, write_only=True)
+    quantity = IntegerIDField(required=True, write_only=True)
 
     def validate_book_id(self, book_id):
         try:
