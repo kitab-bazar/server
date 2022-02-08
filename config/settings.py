@@ -178,8 +178,6 @@ if DEBUG:
     TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
     TINYMCE_COMPRESSOR = False
 else:
-    # Amazon s3 settings
-    # NOTE: comment these lines if you are not using IAM roles and policy in AWS
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
