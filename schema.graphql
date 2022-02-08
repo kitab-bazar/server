@@ -172,6 +172,7 @@ type BookType {
   ogLocale: String
   ogType: String
   wishlistId: ID
+  cartDetails: CartItemType
 }
 
 input CartItemInputType {
