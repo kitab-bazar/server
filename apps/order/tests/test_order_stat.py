@@ -18,7 +18,6 @@ class TestOrderState(TestPermissions):
                 booksOrderedCount
                 booksUploadedCount
                 ordersCompletedCount
-                totalQuantity
                 stat {
                   totalPrice
                   totalQuantity

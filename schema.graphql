@@ -217,6 +217,7 @@ type BookDetailType {
   titleNe: String
   descriptionEn: String
   descriptionNe: String
+  createdBy: UserType
   metaTitleEn: String
   metaTitleNe: String
   metaKeywordsEn: String
@@ -791,11 +792,16 @@ type OrderListType {
 }
 
 type OrderStatType {
-  totalQuantity: Int
   booksUploadedCount: Int
   ordersCompletedCount: Int
   booksOrderedCount: Int
-  stat: [OrderTypeForStatistic!]
+  stat: [OrderStatisticType!]
+}
+
+type OrderStatisticType {
+  id: Int
+  totalPrice: Int
+  totalQuantity: Int
 }
 
 enum OrderStatus {
@@ -812,13 +818,6 @@ type OrderType {
   createdBy: UserType!
   status: OrderStatus!
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
-  totalQuantity: Int
-}
-
-type OrderTypeForStatistic {
-  id: ID!
-  totalPrice: Int!
-  orderCode: UUID!
   totalQuantity: Int
 }
 
