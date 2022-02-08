@@ -47,7 +47,8 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         # Create book orders
         BookOrder.objects.bulk_create([
             BookOrder(
-                title=cart_item.book.title,
+                title_en=cart_item.book.title_en,
+                title_ne=cart_item.book.title_ne,
                 price=cart_item.book.price,
                 quantity=cart_item.quantity,
                 isbn=cart_item.book.isbn,
@@ -94,7 +95,8 @@ class PlaceSingleOrderSerializer(serializers.Serializer):
 
         # Create book orders
         BookOrder.objects.create(
-            title=book.title,
+            title_en=book.title_en,
+            title_ne=book.title_ne,
             price=book.price,
             quantity=quantity,
             isbn=book.isbn,
