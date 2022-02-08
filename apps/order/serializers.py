@@ -36,7 +36,7 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
             created_by=created_by, id__in=cart_item_ids
         )
         filtered_cart_items_ids = cart_items.values_list('id', flat=True)
-        if not cart_items.exists() or len(filtered_cart_items_ids) != len(cart_item_ids):
+        if len(filtered_cart_items_ids) != len(cart_item_ids):
             raise serializers.ValidationError(_('Invalid cart item id supplied.'))
         return filtered_cart_items_ids
 
