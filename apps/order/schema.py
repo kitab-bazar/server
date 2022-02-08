@@ -103,22 +103,17 @@ class OrderListType(CustomDjangoListObjectType):
         filterset_class = OrderFilterSet
 
 
-class OrderTypeForStatistic(DjangoObjectType):
+class OrderStatisticType(graphene.ObjectType):
+    id = graphene.Int()
+    total_price = graphene.Int()
     total_quantity = graphene.Int()
-
-    class Meta:
-        model = Order
-        fields = ('id', 'order_code', 'total_price')
-
-    def resolve_total_quantity(root, info, **kwargs):
-        return root.book_order.aggregate(Sum('quantity'))['quantity__sum']
 
 
 class OrderStatType(graphene.ObjectType):
     books_uploaded_count = graphene.Int(description='Total books upload count')
     orders_completed_count = graphene.Int(description='Total orders completed count in last 3 months')
     books_ordered_count = graphene.Int(description='Total books ordered count in last 3 months')
-    stat = CustomDjangoListField(OrderTypeForStatistic)
+    stat = CustomDjangoListField(OrderStatisticType)
 
     class Meta:
         fields = ()
@@ -161,7 +156,7 @@ class OrderStatType(graphene.ObjectType):
         ).count()
 
     @staticmethod
-    def resolve_stat(root, info, **kwargs) -> QuerySet:
+    def resolve_stat(root, info, **kwargs):
         '''
         Returns order stat of in last 3 months
         '''
@@ -171,7 +166,9 @@ class OrderStatType(graphene.ObjectType):
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
-        )
+        ).annotate(
+            total_quantity=Sum('book_order__quantity')
+        ).values('id', 'total_price', 'total_quantity')
 
 
 class Query(graphene.ObjectType):
