@@ -1,4 +1,3 @@
-import os
 from django.conf import settings
 import tempfile
 from PIL import Image
@@ -23,9 +22,8 @@ def get_social_sharable_image(image_obj, filename):
 
     # Upload image
 
-    temp_image = tempfile.TemporaryFile(dir=settings.TEMP_DIR)
-    og_image.save(temp_image, 'PNG')
+    image_obj = tempfile.TemporaryFile(dir=settings.TEMP_DIR)
+    og_image.save(image_obj, 'PNG')
 
     # Return image file obj
-    thumb_data = open(os.path.join('/tmp', filename), 'rb')
-    return ImageFile(thumb_data)
+    return ImageFile(image_obj)
