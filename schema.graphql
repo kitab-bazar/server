@@ -597,7 +597,7 @@ type PlaceSingleOrder {
 
 input PlaceSingleOrderInputType {
   bookId: ID!
-  quantity: ID!
+  quantity: Int!
 }
 
 type ProvinceListType {

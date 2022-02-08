@@ -89,7 +89,7 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
 
 class PlaceSingleOrderSerializer(serializers.Serializer):
     book_id = IntegerIDField(required=True, write_only=True)
-    quantity = IntegerIDField(required=True, write_only=True)
+    quantity = serializers.IntegerField(required=True, write_only=True)
 
     def validate_book_id(self, book_id):
         try:
