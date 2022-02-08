@@ -43,6 +43,7 @@ env = environ.Env(
     # is not set otherwise these variables are not required
     AWS_ACCESS_KEY_ID=(str, None),
     AWS_SECRET_ACCESS_KEY=(str, None),
+    TEMP_DIR=(str, '/tmp')
 )
 
 # Quick-start development settings - unsuitable for production
@@ -329,3 +330,5 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 10,
     "language": "en",
 }
+# Used to save og images temporarily
+TEMP_DIR = env('TEMP_DIR')
