@@ -114,22 +114,14 @@ class OrderTypeForStatistic(DjangoObjectType):
         return root.book_order.aggregate(Sum('quantity'))['quantity__sum']
 
 
-stat_to = datetime.date.today()
-stat_from = stat_from = stat_to - datetime.timedelta(30)
-
-
 class OrderStatType(graphene.ObjectType):
-    total_quantity = graphene.Int()
-    books_uploaded_count = graphene.Int()
-    orders_completed_count = graphene.Int()
-    books_ordered_count = graphene.Int()
+    books_uploaded_count = graphene.Int(description='Total books upload count')
+    orders_completed_count = graphene.Int(description='Total orders completed count in last 3 months')
+    books_ordered_count = graphene.Int(description='Total books ordered count in last 3 months')
     stat = CustomDjangoListField(OrderTypeForStatistic)
 
     class Meta:
         fields = ()
-
-    def resolve_total_quantity(root, info, **kwargs):
-        return root.aggregate(Sum('book_order__quantity'))['book_order__quantity__sum']
 
     @staticmethod
     def resolve_books_uploaded_count(root, info, **kwargs):
@@ -145,8 +137,10 @@ class OrderStatType(graphene.ObjectType):
     @staticmethod
     def resolve_orders_completed_count(root, info, **kwargs):
         '''
-        Returns total orders completed in last 30 days
+        Returns total orders completed in last 3 months
         '''
+        stat_to = datetime.date.today()
+        stat_from = stat_to - datetime.timedelta(30)
         return get_orders_qs(info).filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
@@ -156,8 +150,10 @@ class OrderStatType(graphene.ObjectType):
     @staticmethod
     def resolve_books_ordered_count(root, info, **kwargs):
         '''
-        Returns total books ordered in last 30 days
+        Returns total books ordered in last 3 months
         '''
+        stat_to = datetime.date.today()
+        stat_from = stat_to - datetime.timedelta(30)
         return get_orders_qs(info).filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
@@ -167,8 +163,10 @@ class OrderStatType(graphene.ObjectType):
     @staticmethod
     def resolve_stat(root, info, **kwargs) -> QuerySet:
         '''
-        Returns order stat of in last 30 days
+        Returns order stat of in last 3 months
         '''
+        stat_to = datetime.date.today()
+        stat_from = stat_to - datetime.timedelta(30)
         return get_orders_qs(info).filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
