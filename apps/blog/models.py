@@ -88,7 +88,7 @@ class Blog(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if self.image and self.image != self.__image_name:
+        if self.image and self.image.name != self.__image_name:
             filename = f'og_{self.image.name.split("/")[-1]}'
             social_sharable_image = get_social_sharable_image(self.image, filename)
             self.og_image.save(filename, social_sharable_image, save=False)
