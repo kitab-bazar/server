@@ -54,7 +54,6 @@ class AuthorListType(CustomDjangoListObjectType):
 
 
 class BookType(DjangoObjectType):
-    cart_details = graphene.Field(CartItemType)
     wishlist_id = graphene.ID()
 
     class Meta:
@@ -70,12 +69,20 @@ class BookType(DjangoObjectType):
     og_image = graphene.Field(FileFieldType)
 
     @staticmethod
-    def resolve_cart_details(root, info, **kwargs) -> QuerySet:
-        return info.context.dl.book.cart_details.load(root.pk)
-
-    @staticmethod
     def resolve_wishlist_id(root, info, **kwargs) -> int:
         return info.context.dl.book.wishlist_id.load(root.pk)
+
+
+class BookDetailType(BookType):
+    cart_details = graphene.Field(CartItemType)
+
+    class Meta:
+        model = Book
+        skip_registry = True
+
+    @staticmethod
+    def resolve_cart_details(root, info, **kwargs) -> QuerySet:
+        return root.book_cart_item.first()
 
 
 class BookListType(CustomDjangoListObjectType):
@@ -105,6 +112,7 @@ class WishListListType(CustomDjangoListObjectType):
 
 class Query(graphene.ObjectType):
     book = DjangoObjectField(BookType)
+    book_detail = DjangoObjectField(BookDetailType)
     books = DjangoPaginatedListObjectField(
         BookListType,
         pagination=PageGraphqlPagination(
