@@ -35,7 +35,8 @@ class BookAdmin(TranslationAdmin):
         ('Basic Information', {
             'fields': (
                 'categories', 'authors', 'tags', 'isbn', 'number_of_pages',
-                'language', 'weight', 'published_date', 'edition', 'publisher', 'price'
+                'language', 'weight', 'published_date', 'edition', 'publisher', 'price',
+                'grade',
             )
         }),
         ('Content', {
@@ -45,6 +46,11 @@ class BookAdmin(TranslationAdmin):
             'fields': (
                 'meta_title', 'meta_keywords', 'meta_description', 'og_title', 'og_description',
                 'og_image', 'og_locale', 'og_type'
+            )
+        }),
+        ('Publish', {
+            'fields': (
+                'is_published',
             )
         }),
     )

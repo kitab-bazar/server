@@ -40,6 +40,8 @@ input BookCreateInputType {
   weight: Int
   publishedDate: Date!
   edition: String
+  grade: grade
+  isPublished: Boolean
   price: Int!
   metaTitle: String
   metaTitleEn: String
@@ -84,6 +86,8 @@ type BookDetailType {
   publishedDate: Date!
   edition: String
   publisher: PublisherType!
+  grade: BookGrade
+  isPublished: Boolean!
   price: Int!
   metaTitle: String
   metaKeywords: String
@@ -116,6 +120,12 @@ type BookDetailType {
   bookOrderCartItem: [BookOrderType!]!
   wishlistId: ID
   cartDetails: CartItemType
+}
+
+enum BookGrade {
+  GRADE_ONE
+  GRADE_TWO
+  GRADE_THREE
 }
 
 enum BookLanguage {
@@ -162,6 +172,8 @@ type BookType {
   publishedDate: Date!
   edition: String
   publisher: PublisherType!
+  grade: BookGrade
+  isPublished: Boolean!
   price: Int!
   metaTitle: String
   metaKeywords: String
@@ -948,6 +960,12 @@ type WishListListType {
 type WishListType {
   id: ID!
   book: BookType!
+}
+
+enum grade {
+  GRADE_ONE
+  GRADE_TWO
+  GRADE_THREE
 }
 
 enum language {
