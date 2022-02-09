@@ -62,7 +62,7 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
 
         # Remove books form withlist
         book_ids = CartItem.objects.filter(created_by=self.context['request'].user).values_list('book', flat=True)
-        WishList.objects.filter(book_id__in=list(book_ids)).delete()
+        WishList.objects.filter(book_id__in=book_ids).delete()
 
         # Clear cart
         cart_items.delete()
