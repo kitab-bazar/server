@@ -15,20 +15,20 @@ class TestOrderState(TestPermissions):
         self.order_stat = '''
             query MyQuery {
               orderStat {
-                booksOrderedCount
-                booksUploadedCount
                 ordersCompletedCount
+                totalBooksOrdered
+                totalBooksUploaded
                 stat {
-                  totalPrice
+                  orderPlacedAt
                   totalQuantity
                 }
               }
             }
         '''
-        stat_to = datetime.date.today()
-        stat_from = stat_to - datetime.timedelta(90)
-        intermediate_date = stat_to - datetime.timedelta(15)
-        not_in_range_date = stat_to - datetime.timedelta(120)
+        self.stat_to = datetime.date.today()
+        stat_from = self.stat_to - datetime.timedelta(90)
+        intermediate_date = self.stat_to - datetime.timedelta(15)
+        not_in_range_date = self.stat_to - datetime.timedelta(120)
 
         # Create publishers
         self.publisher_1 = PublisherFactory.create()
@@ -43,15 +43,21 @@ class TestOrderState(TestPermissions):
         )
 
         # Create 4 book in different date range
-        self.book_1 = BookFactory.create(publisher=self.publisher_1, published_date=stat_to)
+        self.book_1 = BookFactory.create(publisher=self.publisher_1, published_date=self.stat_to)
         self.book_2 = BookFactory.create(publisher=self.publisher_1, published_date=stat_from)
         self.book_3 = BookFactory.create(publisher=self.publisher_2, published_date=intermediate_date)
         self.book_4 = BookFactory.create(publisher=self.publisher_2, published_date=not_in_range_date)
 
         # Create 3 book orders
-        order_1 = OrderFactory.create(created_by=self.individual_user, status=Order.OrderStatus.COMPLETED)
-        order_2 = OrderFactory.create(created_by=self.individual_user, status=Order.OrderStatus.COMPLETED)
-        order_3 = OrderFactory.create(created_by=self.individual_user, status=Order.OrderStatus.COMPLETED)
+        order_1 = OrderFactory.create(
+            created_by=self.individual_user, status=Order.OrderStatus.COMPLETED, order_placed_at=self.stat_to
+        )
+        order_2 = OrderFactory.create(
+            created_by=self.individual_user, status=Order.OrderStatus.COMPLETED, order_placed_at=self.stat_to
+        )
+        order_3 = OrderFactory.create(
+            created_by=self.individual_user, status=Order.OrderStatus.COMPLETED, order_placed_at=self.stat_to
+        )
 
         # Create 4 book orders each having 5 quantity and 500 price
         BookOrderFactory.create(
@@ -70,15 +76,13 @@ class TestOrderState(TestPermissions):
         content = self.query_check(self.order_stat)
         order_stat = content['data']['orderStat']
         # Test shoudl retrive correct count
-        self.assertEqual(order_stat['booksOrderedCount'], 3)
-        self.assertEqual(order_stat['booksUploadedCount'], 4)
+        self.assertEqual(order_stat['totalBooksOrdered'], 15)
+        self.assertEqual(order_stat['totalBooksUploaded'], 4)
         self.assertEqual(order_stat['ordersCompletedCount'], 3)
 
         # Test shoudl retrive quantity count
-        self.assertEqual(len(order_stat['stat']), 3)
-        self.assertEqual(order_stat['stat'][0]['totalQuantity'], 5)
-        self.assertEqual(order_stat['stat'][1]['totalQuantity'], 5)
-        self.assertEqual(order_stat['stat'][2]['totalQuantity'], 5)
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
+        self.assertEqual(order_stat['stat'][0]['totalQuantity'], 15)
 
     def test_publisher_can_see_their_stat_only(self):
         # ------------------------------------
@@ -88,14 +92,13 @@ class TestOrderState(TestPermissions):
         content = self.query_check(self.order_stat)
         order_stat = content['data']['orderStat']
         # Test shoudl retrive correct count
-        self.assertEqual(len(order_stat['stat']), 2)
-        self.assertEqual(order_stat['booksOrderedCount'], 2)
-        self.assertEqual(order_stat['booksUploadedCount'], 2)
+        self.assertEqual(order_stat['totalBooksOrdered'], 10)
+        self.assertEqual(order_stat['totalBooksUploaded'], 2)
         self.assertEqual(order_stat['ordersCompletedCount'], 2)
 
         # Test shoudl retrive quantity count
-        self.assertEqual(order_stat['stat'][0]['totalQuantity'], 5)
-        self.assertEqual(order_stat['stat'][1]['totalQuantity'], 5)
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
+        self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
         # ------------------------------------
         # Test second first publisher
@@ -103,12 +106,11 @@ class TestOrderState(TestPermissions):
         self.force_login(self.publisher_user_1)
         content = self.query_check(self.order_stat)
         order_stat = content['data']['orderStat']
-        self.assertEqual(len(order_stat['stat']), 2)
-        self.assertEqual(order_stat['booksOrderedCount'], 2)
-        self.assertEqual(order_stat['booksUploadedCount'], 2)
+        self.assertEqual(order_stat['totalBooksOrdered'], 10)
+        self.assertEqual(order_stat['totalBooksUploaded'], 2)
         self.assertEqual(order_stat['ordersCompletedCount'], 2)
-        self.assertEqual(order_stat['stat'][0]['totalQuantity'], 5)
-        self.assertEqual(order_stat['stat'][1]['totalQuantity'], 5)
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
+        self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
     def test_school_admin_can_see_their_stat_only(self):
         order = OrderFactory.create(created_by=self.school_admin_user, status=Order.OrderStatus.COMPLETED)
@@ -118,10 +120,7 @@ class TestOrderState(TestPermissions):
         self.force_login(self.school_admin_user)
         content = self.query_check(self.order_stat)
         order_stat = content['data']['orderStat']
-        self.assertEqual(len(order_stat['stat']), 1)
-        self.assertEqual(order_stat['booksOrderedCount'], 1)
-        self.assertEqual(order_stat['booksUploadedCount'], 0)
-        self.assertEqual(order_stat['ordersCompletedCount'], 1)
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
     def test_individual_user_can_see_their_stat_only(self):
@@ -132,8 +131,5 @@ class TestOrderState(TestPermissions):
         self.force_login(self.individual_user)
         content = self.query_check(self.order_stat)
         order_stat = content['data']['orderStat']
-        self.assertEqual(len(order_stat['stat']), 1)
-        self.assertEqual(order_stat['booksOrderedCount'], 1)
-        self.assertEqual(order_stat['booksUploadedCount'], 0)
-        self.assertEqual(order_stat['ordersCompletedCount'], 1)
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 30)

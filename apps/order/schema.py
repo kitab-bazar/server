@@ -104,22 +104,21 @@ class OrderListType(CustomDjangoListObjectType):
 
 
 class OrderStatisticType(graphene.ObjectType):
-    id = graphene.Int()
-    total_price = graphene.Int()
+    order_placed_at = graphene.Date()
     total_quantity = graphene.Int()
 
 
 class OrderStatType(graphene.ObjectType):
-    books_uploaded_count = graphene.Int(description='Total books upload count')
+    total_books_uploaded = graphene.Int(description='Total books upload count')
     orders_completed_count = graphene.Int(description='Total orders completed count in last 3 months')
-    books_ordered_count = graphene.Int(description='Total books ordered count in last 3 months')
+    total_books_ordered = graphene.Int(description='Total books ordered count in last 3 months')
     stat = CustomDjangoListField(OrderStatisticType)
 
     class Meta:
         fields = ()
 
     @staticmethod
-    def resolve_books_uploaded_count(root, info, **kwargs):
+    def resolve_total_books_uploaded(root, info, **kwargs):
         '''
         Returns total books uploaded count
         '''
@@ -143,7 +142,7 @@ class OrderStatType(graphene.ObjectType):
         ).count()
 
     @staticmethod
-    def resolve_books_ordered_count(root, info, **kwargs):
+    def resolve_total_books_ordered(root, info, **kwargs):
         '''
         Returns total books ordered in last 3 months
         '''
@@ -153,7 +152,7 @@ class OrderStatType(graphene.ObjectType):
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
-        ).count()
+        ).aggregate(Sum('book_order__quantity'))['book_order__quantity__sum']
 
     @staticmethod
     def resolve_stat(root, info, **kwargs):
@@ -166,9 +165,9 @@ class OrderStatType(graphene.ObjectType):
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
-        ).annotate(
+        ).values('order_placed_at').annotate(
             total_quantity=Sum('book_order__quantity')
-        ).values('id', 'total_price', 'total_quantity')
+        ).values('order_placed_at', 'total_quantity')
 
 
 class Query(graphene.ObjectType):
