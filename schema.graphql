@@ -792,15 +792,14 @@ type OrderListType {
 }
 
 type OrderStatType {
-  booksUploadedCount: Int
+  totalBooksUploaded: Int
   ordersCompletedCount: Int
-  booksOrderedCount: Int
+  totalBooksOrdered: Int
   stat: [OrderStatisticType!]
 }
 
 type OrderStatisticType {
-  id: Int
-  totalPrice: Int
+  orderPlacedAt: Date
   totalQuantity: Int
 }
 
