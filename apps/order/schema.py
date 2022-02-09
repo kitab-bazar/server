@@ -108,6 +108,11 @@ class OrderStatisticType(graphene.ObjectType):
     total_quantity = graphene.Int()
 
 
+def get_stat_daterange():
+    stat_to = datetime.date.today()
+    return stat_to - datetime.timedelta(90), stat_to
+
+
 class OrderStatType(graphene.ObjectType):
     total_books_uploaded = graphene.Int(description='Total books upload count')
     orders_completed_count = graphene.Int(description='Total orders completed count in last 3 months')
@@ -133,8 +138,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         Returns total orders completed in last 3 months
         '''
-        stat_to = datetime.date.today()
-        stat_from = stat_to - datetime.timedelta(90)
+        stat_from, stat_to = get_stat_daterange()
         return root.filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
@@ -146,8 +150,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         Returns total books ordered in last 3 months
         '''
-        stat_to = datetime.date.today()
-        stat_from = stat_to - datetime.timedelta(90)
+        stat_from, stat_to = get_stat_daterange()
         return root.filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
@@ -159,8 +162,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         Returns order stat of in last 3 months
         '''
-        stat_to = datetime.date.today()
-        stat_from = stat_to - datetime.timedelta(90)
+        stat_from, stat_to = get_stat_daterange()
         return root.filter(
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
