@@ -1,0 +1,18 @@
+name: Graphql Inspector
+
+on:
+  pull_request:
+
+
+jobs:
+  test:
+    name: Check Schema
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - uses: kamilkisiela/graphql-inspector@master
+        with:
+          schema: 'develop:schema.graphql'
