@@ -68,7 +68,8 @@ class TestBookPermissions(TestPermissions):
             'title': "book title", 'isbn': "123456789", 'numberOfPages': 10,
             'language': Book.LanguageType.NEPALI.name, 'publishedDate': "2018-01-01",
             'edition': "1", 'price': 10, 'publisher': self.book_publisher.id,
-            'authors': [author.id], 'categories': [category.id]
+            'authors': [author.id], 'categories': [category.id],
+            'isPublished': True
         }
         self.book = BookFactory.create(publisher=self.book_publisher)
         super().setUp()

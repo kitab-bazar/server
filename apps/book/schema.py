@@ -11,6 +11,10 @@ from apps.book.filters import BookFilter, TagFilter, CategoryFilter, AuthorFilte
 from apps.order.schema import CartItemType
 
 
+def book_qs(info):
+    return Book.objects.filter(is_published=True)
+
+
 class TagType(DjangoObjectType):
     class Meta:
         model = Tag
@@ -63,11 +67,16 @@ class BookType(DjangoObjectType):
             'id', 'categories', 'authors', 'tags', 'isbn', 'number_of_pages', 'price',
             'image', 'language', 'weight', 'published_date', 'edition', 'publisher',
             'meta_title', 'meta_keywords', 'meta_description', 'og_title',
-            'og_description', 'og_image', 'og_locale', 'og_type', 'title', 'description'
+            'og_description', 'og_image', 'og_locale', 'og_type', 'title', 'description',
+            'grade', 'is_published'
         )
 
     image = graphene.Field(FileFieldType)
     og_image = graphene.Field(FileFieldType)
+
+    @staticmethod
+    def get_custom_queryset(queryset, info):
+        return book_qs(info)
 
     @staticmethod
     def resolve_wishlist_id(root, info, **kwargs) -> int:
@@ -152,3 +161,7 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_wish_list(root, info, **kwargs) -> QuerySet:
         return get_wish_list_qs(info)
+
+    @staticmethod
+    def resolve_books(root, info, **kwargs) -> QuerySet:
+        return book_qs(info)

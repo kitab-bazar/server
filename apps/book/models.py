@@ -62,6 +62,11 @@ class Book(models.Model):
         NEPALI = 'nepali', 'Nepali'
         ENGLISH = 'english', 'English'
 
+    class Grade(models.TextChoices):
+        GRADE_1 = 'grade_one', _('Grade 1')
+        GRADE_2 = 'grade_two', _('Grade 2')
+        GRADE_3 = 'grade_three', _('Grade 3')
+
     # Basic Fields
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     image = models.FileField(
@@ -96,6 +101,10 @@ class Book(models.Model):
         'publisher.Publisher', verbose_name=_('Publisher'), related_name='%(app_label)s_%(class)s_publisher',
         on_delete=models.PROTECT
     )
+    grade = models.CharField(
+        choices=Grade.choices, max_length=40, verbose_name=_('Grade'), null=True, blank=True
+    )
+    is_published = models.BooleanField(default=False, verbose_name=_('Is published'))
     # TODO: need to add display price ?
     price = models.IntegerField(verbose_name=_('Price'))
     # SEO fields
