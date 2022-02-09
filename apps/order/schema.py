@@ -41,6 +41,7 @@ class CartItemType(DjangoObjectType):
 
 class CartGrandTotalType(graphene.ObjectType):
     grand_total_price = graphene.Int()
+    total_quantity = graphene.Int()
 
     class Meta:
         fields = (
@@ -50,6 +51,10 @@ class CartGrandTotalType(graphene.ObjectType):
     @staticmethod
     def resolve_grand_total_price(root, info, **kwargs) -> QuerySet:
         return get_cart_items_qs(info).aggregate(Sum('total_price'))['total_price__sum']
+
+    @staticmethod
+    def resolve_total_quantity(root, info, **kwargs):
+        return get_cart_items_qs(info).aggregate(Sum('quantity'))['quantity__sum']
 
 
 class CartType(CustomDjangoListObjectType, CartGrandTotalType):

@@ -62,23 +62,14 @@ class DeleteCartItem(CartItemMixin, DeleteMutation):
     result = graphene.Field(CartItemType)
 
 
-PlaceOrderFromCartInputType = generate_input_type_for_serializer(
-    'PlaceOrderFromCartInputType',
-    serializer_class=CreateOrderFromCartSerializer
-)
-
-
 class PlaceOrderFromCart(graphene.Mutation):
-    class Arguments:
-        data = PlaceOrderFromCartInputType(required=True)
-
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
     result = graphene.Field(OrderType)
 
     @staticmethod
-    def mutate(root, info, data):
-        serializer = CreateOrderFromCartSerializer(data=data, context={'request': info.context.request})
+    def mutate(root, info):
+        serializer = CreateOrderFromCartSerializer(data=dict(), context={'request': info.context.request})
         if errors := mutation_is_not_valid(serializer):
             return PlaceOrderFromCart(errors=errors, ok=False)
         instance = serializer.save()
