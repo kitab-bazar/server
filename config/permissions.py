@@ -14,6 +14,21 @@ class UserPermissions():
         CAN_DELETE_BOOK = auto()
         CAN_RETRIEVE_BOOK = auto()
 
+        CAN_CREATE_BOOK_CATEGORY = auto()
+        CAN_UPDATE_BOOK_CATEGORY = auto()
+        CAN_DELETE_BOOK_CATEGORY = auto()
+        CAN_RETRIEVE_BOOK_CATEGORY = auto()
+
+        CAN_CREATE_BOOK_AUTHOR = auto()
+        CAN_UPDATE_BOOK_AUTHOR = auto()
+        CAN_DELETE_BOOK_AUTHOR = auto()
+        CAN_RETRIEVE_BOOK_AUTHOR = auto()
+
+        CAN_CREATE_BOOK_TAG = auto()
+        CAN_UPDATE_BOOK_TAG = auto()
+        CAN_DELETE_BOOK_TAG = auto()
+        CAN_RETRIEVE_BOOK_TAG = auto()
+
         CAN_CREATE_PUBLISHER = auto()
         CAN_UPDATE_PUBLISHER = auto()
         CAN_DELETE_PUBLISHER = auto()
@@ -66,6 +81,21 @@ class UserPermissions():
         Permission.CAN_DELETE_BOOK: "You don't have permission to delete book",
         Permission.CAN_RETRIEVE_BOOK: "You don't have permission to retrieve book",
 
+        Permission.CAN_CREATE_BOOK_CATEGORY: "You don't have permission to create book category",
+        Permission.CAN_UPDATE_BOOK_CATEGORY: "You don't have permission to update book category",
+        Permission.CAN_DELETE_BOOK_CATEGORY: "You don't have permission to delete book category",
+        Permission.CAN_RETRIEVE_BOOK_CATEGORY: "You don't have permission to retrieve book category",
+
+        Permission.CAN_CREATE_BOOK_AUTHOR: "You don't have permission to create book author",
+        Permission.CAN_UPDATE_BOOK_AUTHOR: "You don't have permission to update book author",
+        Permission.CAN_DELETE_BOOK_AUTHOR: "You don't have permission to delete book author",
+        Permission.CAN_RETRIEVE_BOOK_AUTHOR: "You don't have permission to retrieve book author",
+
+        Permission.CAN_CREATE_BOOK_TAG: "You don't have permission to create book tag",
+        Permission.CAN_UPDATE_BOOK_TAG: "You don't have permission to update book tag",
+        Permission.CAN_DELETE_BOOK_TAG: "You don't have permission to delete book tag",
+        Permission.CAN_RETRIEVE_BOOK_TAG: "You don't have permission to retrieve book tag",
+
         Permission.CAN_CREATE_PUBLISHER: "You don't have permission to create publihser",
         Permission.CAN_UPDATE_PUBLISHER: "You don't have permission to update publihser",
         Permission.CAN_DELETE_PUBLISHER: "You don't have permission to delete publihser",
@@ -112,30 +142,67 @@ class UserPermissions():
     }
 
     INDIVIDUAL_USER = [
-        Permission.CAN_RETRIEVE_BOOK, Permission.CAN_RETRIEVE_PUBLISHER, Permission.CAN_RETRIEVE_SCHOOL,
-        Permission.CAN_RETRIEVE_INSTITUTION, Permission.CREATE_ORDER, Permission.RETRIEVE_ORDER,
-        Permission.RETRIEVE_FAQ, Permission.CREATE_CONTACT_MESSAGE,
-        Permission.CAN_RETRIEVE_INSTITUTION, Permission.CAN_RETRIEVE_BLOG, Permission.CAN_RETRIEVE_BLOG_CATEGORY,
-        Permission.CAN_RETRIEVE_BLOG_TAG
+        Permission.CAN_RETRIEVE_BOOK,
+        Permission.CAN_RETRIEVE_PUBLISHER,
+        Permission.CAN_RETRIEVE_SCHOOL,
+        Permission.CAN_RETRIEVE_INSTITUTION,
+        Permission.CREATE_ORDER,
+        Permission.RETRIEVE_ORDER,
+        Permission.RETRIEVE_FAQ,
+        Permission.CREATE_CONTACT_MESSAGE,
+        Permission.CAN_RETRIEVE_BOOK_CATEGORY,
+        Permission.CAN_RETRIEVE_BOOK_TAG,
+        Permission.CAN_RETRIEVE_BOOK_AUTHOR,
+        Permission.CAN_RETRIEVE_BLOG,
+        Permission.CAN_RETRIEVE_BLOG_CATEGORY,
+        Permission.CAN_RETRIEVE_BLOG_TAG,
     ]
     SCHOOL_ADMIN = [
-        *INDIVIDUAL_USER, Permission.CAN_UPDATE_SCHOOL
+        *INDIVIDUAL_USER,
+        Permission.CAN_UPDATE_SCHOOL
     ]
     PUBLISHER = [
-        *INDIVIDUAL_USER, Permission.CAN_CREATE_BOOK, Permission.CAN_UPDATE_BOOK, Permission.CAN_DELETE_BOOK,
-        Permission.CAN_UPDATE_PUBLISHER, Permission.UPDATE_ORDER, Permission.DELETE_ORDER
+        *INDIVIDUAL_USER, Permission.CAN_CREATE_BOOK,
+        Permission.CAN_UPDATE_BOOK,
+        Permission.CAN_DELETE_BOOK,
+        Permission.CAN_UPDATE_PUBLISHER,
+        Permission.UPDATE_ORDER,
+        Permission.DELETE_ORDER,
+        Permission.CAN_CREATE_BOOK_AUTHOR,
+        Permission.CAN_UPDATE_BOOK_AUTHOR,
     ]
     INSTITUTIONAL_USER = [*INDIVIDUAL_USER, Permission.CAN_UPDATE_INSTITUTION]
     ADMIN = [
         *INDIVIDUAL_USER, *PUBLISHER, *INSTITUTIONAL_USER, *SCHOOL_ADMIN,
-        Permission.CAN_CREATE_PUBLISHER, Permission.CAN_DELETE_PUBLISHER, Permission.CAN_CREATE_SCHOOL,
-        Permission.CAN_DELETE_SCHOOL, Permission.CAN_CREATE_INSTITUTION, Permission.CAN_DELETE_INSTITUTION,
-        Permission.CREATE_FAQ, Permission.UPDATE_FAQ, Permission.DELETE_FAQ, Permission.RETRIEVE_CONTACT_MESSAGE,
-        Permission.UPDATE_CONTACT_MESSAGE, Permission.DELETE_CONTACT_MESSAGE,
-        Permission.CAN_DELETE_BLOG, Permission.CAN_CREATE_BLOG, Permission.CAN_DELETE_BLOG,
-        Permission.CAN_UPDATE_BLOG, Permission.CAN_CREATE_BLOG_CATEGORY, Permission.CAN_UPDATE_BLOG_CATEGORY,
-        Permission.CAN_DELETE_BLOG_CATEGORY, Permission.CAN_CREATE_BLOG_TAG, Permission.CAN_UPDATE_BLOG_TAG,
         Permission.CAN_DELETE_BLOG_TAG,
+        Permission.CAN_CREATE_PUBLISHER,
+        Permission.CAN_DELETE_PUBLISHER,
+        Permission.CAN_CREATE_SCHOOL,
+        Permission.CAN_DELETE_SCHOOL,
+        Permission.CAN_CREATE_INSTITUTION,
+        Permission.CAN_DELETE_INSTITUTION,
+        Permission.CREATE_FAQ,
+        Permission.UPDATE_FAQ,
+        Permission.DELETE_FAQ,
+        Permission.RETRIEVE_CONTACT_MESSAGE,
+        Permission.UPDATE_CONTACT_MESSAGE,
+        Permission.DELETE_CONTACT_MESSAGE,
+        Permission.CAN_CREATE_BOOK_TAG,
+        Permission.CAN_UPDATE_BOOK_TAG,
+        Permission.CAN_DELETE_BOOK_TAG,
+        Permission.CAN_CREATE_BOOK_CATEGORY,
+        Permission.CAN_UPDATE_BOOK_CATEGORY,
+        Permission.CAN_DELETE_BOOK_CATEGORY,
+        Permission.CAN_DELETE_BOOK_AUTHOR,
+        Permission.CAN_DELETE_BLOG,
+        Permission.CAN_CREATE_BLOG,
+        Permission.CAN_DELETE_BLOG,
+        Permission.CAN_UPDATE_BLOG,
+        Permission.CAN_CREATE_BLOG_CATEGORY,
+        Permission.CAN_UPDATE_BLOG_CATEGORY,
+        Permission.CAN_DELETE_BLOG_CATEGORY,
+        Permission.CAN_CREATE_BLOG_TAG,
+        Permission.CAN_UPDATE_BLOG_TAG,
     ]
 
     PERMISSION_MAP = {
