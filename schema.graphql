@@ -1140,10 +1140,6 @@ type WishListType {
   book: BookType!
 }
 
-enum grade {
-  GRADE_ONE
-  GRADE_TWO
-  GRADE_THREE
 enum blog_publish_type {
   PUBLISH
   DRAFT
@@ -1152,6 +1148,12 @@ enum blog_publish_type {
 enum faq_publish_type {
   PUBLISH
   DRAFT
+}
+
+enum grade {
+  GRADE_ONE
+  GRADE_TWO
+  GRADE_THREE
 }
 
 enum language {
