@@ -1,10 +1,13 @@
 from rest_framework import serializers
 from django.db.models import F, Sum
 from django.utils.translation import ugettext_lazy as _
+from django.db import transaction
+
+from config.serializers import CreatedUpdatedBaseSerializer, IntegerIDField
 
 from apps.order.models import CartItem, Order, BookOrder
 from apps.book.models import Book, WishList
-from config.serializers import CreatedUpdatedBaseSerializer, IntegerIDField
+from apps.order.tasks import send_notification
 
 
 class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
@@ -67,6 +70,12 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
 
         # Clear cart
         cart_items.delete()
+
+        # Send notification
+        transaction.on_commit(
+            lambda: send_notification.delay(order.id)
+        )
+
         return order
 
 
@@ -111,6 +120,14 @@ class PlaceSingleOrderSerializer(serializers.Serializer):
         # Remove book form withlist
         WishList.objects.filter(book_id=book_id).delete()
 
+        # Remove book form cart
+        CartItem.objects.filter(book_id=book_id).delete()
+
+        # Send notification
+        transaction.on_commit(
+            lambda: send_notification.delay(order.id)
+        )
+
         return order
 
 
@@ -122,3 +139,12 @@ class OrderStatusUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'status',)
+
+    def save(self, **kwargs):
+        instance = self.instance
+        updated_order = super().update(instance, self.validated_data)
+        # Send notification
+        transaction.on_commit(
+            lambda: send_notification.delay(updated_order.id)
+        )
+        return updated_order

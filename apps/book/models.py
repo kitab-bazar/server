@@ -101,6 +101,10 @@ class Book(models.Model):
         choices=Grade.choices, max_length=40, verbose_name=_('Grade'), null=True, blank=True
     )
     is_published = models.BooleanField(default=False, verbose_name=_('Is published'))
+    created_by = models.ForeignKey(
+        'user.User', verbose_name=_('Created by'), related_name='book_creator', null=True, blank=True,
+        on_delete=models.CASCADE
+    )
     # TODO: need to add display price ?
     price = models.IntegerField(verbose_name=_('Price'))
     # SEO fields

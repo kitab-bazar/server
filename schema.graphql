@@ -217,6 +217,7 @@ type BookDetailType {
   titleNe: String
   descriptionEn: String
   descriptionNe: String
+  createdBy: UserType
   metaTitleEn: String
   metaTitleNe: String
   metaKeywordsEn: String
@@ -790,6 +791,18 @@ type OrderListType {
   pageSize: Int
 }
 
+type OrderStatType {
+  totalBooksUploaded: Int
+  ordersCompletedCount: Int
+  totalBooksOrdered: Int
+  stat: [OrderStatisticType!]
+}
+
+type OrderStatisticType {
+  orderPlacedAt: Date
+  totalQuantity: Int
+}
+
 enum OrderStatus {
   RECEIVED
   PACKED
@@ -895,6 +908,7 @@ type Query {
   contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
   orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  orderStat: OrderStatType
   notification(id: ID!): NotificationType
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
