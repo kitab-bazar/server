@@ -26,11 +26,111 @@ type AuthorType {
   aboutAuthor: String
 }
 
+input BlogCategoryInputType {
+  name: String!
+  nameEn: String
+  nameNe: String
+  parentCategory: String
+}
+
+type BlogCategoryListType {
+  results: [BlogCategoryType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type BlogCategoryType {
+  id: ID!
+  name: String!
+  parentCategory: BlogCategoryType
+}
+
+input BlogInputType {
+  title: String
+  titleEn: String
+  titleNe: String
+  description: String
+  descriptionEn: String
+  descriptionNe: String
+  image: Upload
+  publishedDate: Date!
+  blogPublishType: blog_publish_type
+  metaTitle: String
+  metaTitleEn: String
+  metaTitleNe: String
+  metaKeywords: String
+  metaKeywordsEn: String
+  metaKeywordsNe: String
+  metaDescription: String
+  metaDescriptionEn: String
+  metaDescriptionNe: String
+  ogTitle: String
+  ogTitleEn: String
+  ogTitleNe: String
+  ogDescription: String
+  ogDescriptionEn: String
+  ogDescriptionNe: String
+  ogImage: Upload
+  ogLocale: String
+  ogLocaleEn: String
+  ogLocaleNe: String
+  ogType: String
+  ogTypeEn: String
+  ogTypeNe: String
+  category: String!
+  tags: [ID!]
+}
+
+type BlogListType {
+  results: [BlogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+input BlogTagInputType {
+  name: String!
+  nameEn: String
+  nameNe: String
+}
+
+type BlogTagListType {
+  results: [BlogTagType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type BlogTagType {
+  id: ID!
+  name: String!
+}
+
+type BlogType {
+  id: ID!
+  title: String!
+  description: String!
+  image: FileFieldType
+  category: BlogCategoryType!
+  tags: [BlogTagType!]!
+  publishedDate: Date!
+  metaTitle: String
+  metaKeywords: String
+  metaDescription: String
+  ogTitle: String
+  ogDescription: String
+  ogImage: FileFieldType
+  ogLocale: String
+  ogType: String
+  quantityInCart: Int!
+}
+
 input BookCreateInputType {
   title: String!
   titleEn: String
   titleNe: String
-  image: String
+  image: Upload
   description: String
   descriptionEn: String
   descriptionNe: String
@@ -58,7 +158,7 @@ input BookCreateInputType {
   ogDescription: String
   ogDescriptionEn: String
   ogDescriptionNe: String
-  ogImage: String
+  ogImage: Upload
   ogLocale: String
   ogLocaleEn: String
   ogLocaleNe: String
@@ -270,6 +370,24 @@ type ContactMessageType {
   messageType: ContactMessageMessageType!
 }
 
+type CreateBlog {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogType
+}
+
+type CreateBlogCategory {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogCategoryType
+}
+
+type CreateBlogTag {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogTagType
+}
+
 type CreateBook {
   errors: [GenericScalar!]
   ok: Boolean
@@ -321,6 +439,24 @@ type CreateWishList {
 scalar Date
 
 scalar DateTime
+
+type DeleteBlog {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogType
+}
+
+type DeleteBlogCategory {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogCategoryType
+}
+
+type DeleteBlogTag {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogTagType
+}
 
 type DeleteBook {
   errors: [GenericScalar!]
@@ -402,7 +538,7 @@ input FaqCreateInputType {
   answer: String
   answerEn: String
   answerNe: String
-  publishType: publish_type
+  faqPublishType: faq_publish_type
 }
 
 type FaqListType {
@@ -506,6 +642,15 @@ type MunicipalityType {
 }
 
 type Mutation {
+  createBlog(data: BlogInputType!): CreateBlog
+  updateBlog(data: BlogInputType!, id: ID!): UpdateBlog
+  deleteBlog(id: ID!): DeleteBlog
+  createBlogTag(data: BlogTagInputType!): CreateBlogTag
+  updateBlogTag(data: BlogTagInputType!, id: ID!): UpdateBlogTag
+  deleteBlogTag(id: ID!): DeleteBlogTag
+  createBlogCategory(data: BlogCategoryInputType!): CreateBlogCategory
+  updateBlogCategory(data: BlogCategoryInputType!, id: ID!): UpdateBlogCategory
+  deleteBlogCategory(id: ID!): DeleteBlogCategory
   createFaq(data: FaqCreateInputType!): CreateFaq
   updateFaq(data: FaqCreateInputType!, id: ID!): UpdateFaq
   deleteFaq(id: ID!): DeleteFaq
@@ -673,6 +818,10 @@ input PublisherUpdateInputType {
 }
 
 type Query {
+  blog(id: ID!): BlogType
+  blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
+  blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
+  blogTags(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogTagListType
   faq(id: ID!): FaqType
   faqs(page: Int = 1, ordering: String, pageSize: Int): FaqListType
   contactMessage(id: ID!): ContactMessageType
@@ -802,6 +951,24 @@ type ToggleNotificationReadStatus {
 
 scalar UUID
 
+type UpdateBlog {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogType
+}
+
+type UpdateBlogCategory {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogCategoryType
+}
+
+type UpdateBlogTag {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: BlogTagType
+}
+
 type UpdateBook {
   errors: [GenericScalar!]
   ok: Boolean
@@ -848,7 +1015,7 @@ input UpdateProfileType {
   firstName: String
   lastName: String
   phoneNumber: String
-  image: String
+  image: Upload
   publisher: PublisherUpdateInputType
   school: SchoolUpdateInputType
   institution: InstitutionUpdateInputType
@@ -865,6 +1032,8 @@ type UpdateSchool {
   ok: Boolean
   result: SchoolType
 }
+
+scalar Upload
 
 type UserListType {
   results: [UserType!]
@@ -919,6 +1088,18 @@ enum UserPermissions {
   UPDATE_CONTACT_MESSAGE
   DELETE_CONTACT_MESSAGE
   RETRIEVE_CONTACT_MESSAGE
+  CAN_CREATE_BLOG
+  CAN_UPDATE_BLOG
+  CAN_DELETE_BLOG
+  CAN_RETRIEVE_BLOG
+  CAN_CREATE_BLOG_CATEGORY
+  CAN_UPDATE_BLOG_CATEGORY
+  CAN_DELETE_BLOG_CATEGORY
+  CAN_RETRIEVE_BLOG_CATEGORY
+  CAN_CREATE_BLOG_TAG
+  CAN_UPDATE_BLOG_TAG
+  CAN_DELETE_BLOG_TAG
+  CAN_RETRIEVE_BLOG_TAG
 }
 
 type UserType {
@@ -959,6 +1140,16 @@ type WishListType {
   book: BookType!
 }
 
+enum blog_publish_type {
+  PUBLISH
+  DRAFT
+}
+
+enum faq_publish_type {
+  PUBLISH
+  DRAFT
+}
+
 enum grade {
   GRADE_ONE
   GRADE_TWO
@@ -978,11 +1169,6 @@ enum message_type {
   BUSINESS_RELATED
   FEATURE_SUGGESTIONS_FEEDBACK
   OTHER
-}
-
-enum publish_type {
-  PUBLISH
-  DRAFT
 }
 
 enum status {

@@ -9,6 +9,7 @@ from apps.book import schema as book_schema, mutations as book_mutations
 from apps.order import schema as order_schema, mutations as order_mutations
 from apps.notification import schema as notification_schema, mutations as notification_mutations
 from apps.helpdesk import schema as helpdesk_schema, mutations as helpdesk_mutations
+from apps.blog import schema as blog_schema, mutations as blog_mutations
 
 
 # schemas
@@ -22,6 +23,7 @@ class Query(
     notification_schema.Query,
     order_schema.Query,
     helpdesk_schema.Query,
+    blog_schema.Query,
     graphene.ObjectType,
 ):
     pass
@@ -37,6 +39,7 @@ class Mutation(
     order_mutations.Mutation,
     notification_mutations.Mutation,
     helpdesk_mutations.Mutation,
+    blog_mutations.Mutation,
     graphene.ObjectType,
 ):
     pass

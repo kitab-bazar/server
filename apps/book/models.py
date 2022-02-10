@@ -1,10 +1,6 @@
-import os.path
-from PIL import Image
-from django.core.files.images import ImageFile
-
 from django.db import models
-
 from django.utils.translation import ugettext_lazy as _
+from utils.common import get_social_sharable_image
 
 
 class Tag(models.Model):
@@ -134,27 +130,11 @@ class Book(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        super(Book, self).save(*args, **kwargs)
         if self.image and self.image.name != self.__image_name:
-            # Read book image
-            image = Image.open(self.image.path, 'r')
-
-            # Create a social sharable image
-            image_width, image_height = image.size
-            og_image = Image.new('RGB', (1200, 630), 'black')
-            og_image_image_height, og_image_image_width = og_image.size
-            offset = ((og_image_image_height - image_width) // 2, (og_image_image_width - image_height) // 2)
-            og_image.paste(image, offset)
-
-            # Upload image
             filename = f'og_{self.image.name.split("/")[-1]}'
-            temp_image = open(os.path.join('/tmp', filename), 'wb')
-            og_image.save(temp_image, 'PNG')
-
-            # Save image nam
-            thumb_data = open(os.path.join('/tmp', filename), 'rb')
-            self.og_image.save(filename, ImageFile(thumb_data), save=False)
-            super(Book, self).save(*args, **kwargs)
+            social_sharable_image = get_social_sharable_image(self.image, filename)
+            self.og_image.save(filename, social_sharable_image, save=False)
+        super(Book, self).save(*args, **kwargs)
 
 
 class WishList(models.Model):
