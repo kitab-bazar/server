@@ -284,6 +284,8 @@ GRAPHENE_NODES_WHITELIST = (
     'categories',
     'authors',
     'createContactMessage',
+    'publisher',
+    'publishers',
 )
 
 CLIENT_URL = env('CLIENT_URL')
