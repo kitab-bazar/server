@@ -1,0 +1,34 @@
+{% load static %}
+{% load custom_tags %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ heading }} </title>
+  </head>
+  <body>
+    <p> Message: {{ message }} </p>
+
+    <p> Full name: {{ full_name }} </p>
+
+    <p>Grand Total Price : {{ order_data | dict_lookup:'total_price' }} </p>
+    <p>Order code: {{ order_data | dict_lookup:'order_code' }} </p>
+    <p>Total Status : {{ order_data | dict_lookup:'status' }} </p>
+    <p>Order order placed at: {{ order_data | dict_lookup:'order_placed_at' }} </p>
+
+    <ul>
+        {% with order_items=order_data|dict_lookup:'order_items' %}
+            {% for order_item in order_items %}
+                <li>Book Title: {{ order_item | dict_lookup:'title' }}</li>
+                <li>Book Price: {{ order_item | dict_lookup:'price' }}</li>
+                <li>Book Quantity: {{ order_item | dict_lookup:'quantity' }}</li>
+                <li>Book ISBN: {{ order_item | dict_lookup:'isbn' }}</li>
+                <li>Book Edition: {{ order_item | dict_lookup:'edition' }}</li>
+                <li>Book Total Price: {{ order_item | dict_lookup:'total_price' }}</li>
+                <li>Book Image: <img src="{{ order_item | dict_lookup:'image' }}" alt="Book Image"></li>
+            {% endfor %}
+        {% endwith %}
+    </ul>
+  </body>
+</html>
