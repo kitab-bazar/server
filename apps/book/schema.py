@@ -84,7 +84,9 @@ class BookType(DjangoObjectType):
 
     @staticmethod
     def resolve_cart_details(root, info, **kwargs) -> QuerySet:
-        return root.book_cart_item.first()
+        if info.context.user.is_anonymous:
+            return None
+        return root.book_cart_item.all().filter(created_by=info.context.user).first()
 
 
 class BookDetailType(BookType):
