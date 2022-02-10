@@ -9,6 +9,8 @@ from unittest.mock import patch
 from django.utils import timezone
 from django.conf import settings
 from django.test import override_settings
+
+from config.celery import app as celery_app
 from graphene_django.utils import GraphQLTestCase as BaseGraphQLTestCase
 from rest_framework import status
 
@@ -59,6 +61,9 @@ class GraphQLTestCase(CommonSetupClassMixin, BaseGraphQLTestCase):
 
     def setUp(self):
         super().setUp()
+        # Enable CELERY_TASK_ALWAYS_EAGER since it's not working properly
+        if getattr(settings, 'CELERY_TASK_ALWAYS_EAGER', False):
+            celery_app.conf.task_always_eager = True
         if self.ENABLE_NOW_PATCHER:
             self.now_patcher = patch('django.utils.timezone.now')
             self.now_datetime = datetime.datetime(2021, 1, 1, 0, 0, 0, 123456, tzinfo=pytz.UTC)
@@ -68,6 +73,7 @@ class GraphQLTestCase(CommonSetupClassMixin, BaseGraphQLTestCase):
     def tearDown(self):
         if hasattr(self, 'now_patcher'):
             self.now_patcher.stop()
+        celery_app.conf.task_always_eager = False
         super().tearDown()
 
     def force_login(self, user):

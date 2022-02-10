@@ -60,7 +60,8 @@ class TestNotificationForOrder(GraphQLTestCase):
     def test_pulisher_should_get_notification_if_order_placed(self):
         self.force_login(self.publisher_user)
         minput = {'status': Order.OrderStatus.RECEIVED.name}
-        content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
+        with self.captureOnCommitCallbacks(execute=True):
+            content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
         self.assertEqual(content['data']['updateOrder']['result']['status'], Order.OrderStatus.RECEIVED.name)
 
         # Test customer (individual_user) should not get notification
@@ -85,7 +86,8 @@ class TestNotificationForOrder(GraphQLTestCase):
         # Publisher updates order status
         self.force_login(self.publisher_user)
         minput = {'status': Order.OrderStatus.CANCELLED.name}
-        content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
+        with self.captureOnCommitCallbacks(execute=True):
+            content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
         self.assertEqual(content['data']['updateOrder']['result']['status'], Order.OrderStatus.CANCELLED.name)
 
         # Test publisher should not get notification
@@ -109,7 +111,8 @@ class TestNotificationForOrder(GraphQLTestCase):
         # Publisher updates order status
         self.force_login(self.publisher_user)
         minput = {'status': Order.OrderStatus.PACKED.name}
-        content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
+        with self.captureOnCommitCallbacks(execute=True):
+            content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
         self.assertEqual(content['data']['updateOrder']['result']['status'], Order.OrderStatus.PACKED.name)
 
         # Test publisher should not get notification
@@ -133,7 +136,8 @@ class TestNotificationForOrder(GraphQLTestCase):
         # Publisher updates order status
         self.force_login(self.publisher_user)
         minput = {'status': Order.OrderStatus.COMPLETED.name}
-        content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
+        with self.captureOnCommitCallbacks(execute=True):
+            content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
         self.assertEqual(content['data']['updateOrder']['result']['status'], Order.OrderStatus.COMPLETED.name)
 
         # Test publisher should not get notification

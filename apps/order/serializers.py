@@ -72,7 +72,9 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         cart_items.delete()
 
         # Send notification
-        transaction.on_commit(lambda: send_notification.delay(order.id))
+        transaction.on_commit(
+            lambda: send_notification.delay(order.id)
+        )
 
         return order
 
@@ -122,7 +124,9 @@ class PlaceSingleOrderSerializer(serializers.Serializer):
         CartItem.objects.filter(book_id=book_id).delete()
 
         # Send notification
-        transaction.on_commit(lambda: send_notification.delay(order.id))
+        transaction.on_commit(
+            lambda: send_notification.delay(order.id)
+        )
 
         return order
 
@@ -140,6 +144,7 @@ class OrderStatusUpdateSerializer(serializers.ModelSerializer):
         instance = self.instance
         updated_order = super().update(instance, self.validated_data)
         # Send notification
-        transaction.on_commit(lambda: send_notification.delay(updated_order.id))
-        # send_notification(updated_order.id)
+        transaction.on_commit(
+            lambda: send_notification.delay(updated_order.id)
+        )
         return updated_order

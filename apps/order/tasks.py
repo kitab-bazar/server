@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 
 
 def send_notification_to_customer(order_obj, notification_type, title):
-    logger.info('**************Reached here 2 *************', exc_info=True)
     # Send in app notification
     Notification.objects.create(
         content_object=order_obj,
@@ -26,14 +25,15 @@ def send_notification_to_customer(order_obj, notification_type, title):
         "full_name": order_obj.created_by.full_name,
     }
     subject, message = title, title
-    transaction.on_commit(lambda: generic_email_sender.delay(
-        subject, message, [order_obj.created_by.email], html_context=html_context
-    ))
+    transaction.on_commit(
+        lambda: generic_email_sender.delay(
+            subject, message, [order_obj.created_by.email], html_context=html_context
+        )
+    )
     return True
 
 
 def send_notfication_to_publisher(order_obj, notification_type, title):
-    logger.info('**************Reached here 3 *************', exc_info=True)
     book_orders = order_obj.book_order.distinct('publisher')
     # NOTE: a book oder may have multiple publishers
     # Send in app notification
@@ -61,16 +61,17 @@ def send_notfication_to_publisher(order_obj, notification_type, title):
         "message": title
     }
     subject, message = title, title
-    transaction.on_commit(lambda: generic_email_sender.delay(
-        subject, message, recipient_list, html_context=html_context
-    ))
+    transaction.on_commit(
+        lambda: generic_email_sender.delay(
+            subject, message, recipient_list, html_context=html_context
+        )
+    )
     return True
 
 
 @shared_task(name="notification_sender")
 def send_notification(order_id):
     order_obj = Order.objects.get(id=order_id)
-    logger.info('**************Reached here *************', exc_info=True)
     if order_obj.status == Order.OrderStatus.RECEIVED.value:
         title = _('Book order received.')
         notification_type = Notification.NotificationType.ORDER_RECEIVED.value
