@@ -125,6 +125,7 @@ class UserPermissions():
         Permission.UPDATE_CONTACT_MESSAGE: "You don't have permission to update contact message.",
         Permission.DELETE_CONTACT_MESSAGE: "You don't have permission to delete contact message.",
         Permission.RETRIEVE_CONTACT_MESSAGE: "You don't have permission to retrieve contact message.",
+
         Permission.CAN_CREATE_BLOG: "You don't have permission to create blog",
         Permission.CAN_UPDATE_BLOG: "You don't have permission to update blog",
         Permission.CAN_DELETE_BLOG: "You don't have permission to delete blog",
