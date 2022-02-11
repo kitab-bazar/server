@@ -33,6 +33,14 @@ class LoginSerializer(serializers.Serializer):
     def validate(self, attrs):
         email = attrs.get('email', '')
         password = attrs.get('password', '')
+        try:
+            user = User.objects.get(email=email)
+            if not user.is_active:
+                raise serializers.ValidationError(
+                    ugettext('Your accout is not active, please click the activation link we sent to your email')
+                )
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            raise serializers.ValidationError('User with this email does not exist.')
         user = authenticate(email=email, password=password)
         if not user:
             raise serializers.ValidationError('Invalid Credentials')
