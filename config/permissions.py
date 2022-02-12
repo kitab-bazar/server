@@ -158,10 +158,12 @@ class UserPermissions():
         Permission.CAN_RETRIEVE_BLOG_CATEGORY,
         Permission.CAN_RETRIEVE_BLOG_TAG,
     ]
+
     SCHOOL_ADMIN = [
         *INDIVIDUAL_USER,
         Permission.CAN_UPDATE_SCHOOL
     ]
+
     PUBLISHER = [
         *INDIVIDUAL_USER, Permission.CAN_CREATE_BOOK,
         Permission.CAN_UPDATE_BOOK,
@@ -172,7 +174,9 @@ class UserPermissions():
         Permission.CAN_CREATE_BOOK_AUTHOR,
         Permission.CAN_UPDATE_BOOK_AUTHOR,
     ]
+
     INSTITUTIONAL_USER = [*INDIVIDUAL_USER, Permission.CAN_UPDATE_INSTITUTION]
+
     ADMIN = [
         *INDIVIDUAL_USER, *PUBLISHER, *INSTITUTIONAL_USER, *SCHOOL_ADMIN,
         Permission.CAN_DELETE_BLOG_TAG,
@@ -205,6 +209,13 @@ class UserPermissions():
         Permission.CAN_CREATE_BLOG_TAG,
         Permission.CAN_UPDATE_BLOG_TAG,
     ]
+
+    # ----------------------------------------
+    # Remove special permission from publisher
+    # -----------------------------------------
+    PUBLISHER = list(set(PUBLISHER) - set([
+        Permission.CREATE_ORDER]
+    ))
 
     PERMISSION_MAP = {
         User.UserType.ADMIN: ADMIN,
