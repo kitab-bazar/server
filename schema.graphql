@@ -799,7 +799,7 @@ type OrderStatType {
 }
 
 type OrderStatisticType {
-  orderPlacedAt: Date
+  orderPlacedAtDate: Date
   totalQuantity: Int
 }
 
@@ -816,7 +816,7 @@ type OrderType {
   orderCode: UUID!
   createdBy: UserType!
   status: OrderStatus!
-  orderPlacedAt: Date!
+  orderPlacedAt: DateTime!
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
   totalQuantity: Int
 }
