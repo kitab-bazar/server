@@ -88,7 +88,7 @@ class OrderType(DjangoObjectType):
 
     class Meta:
         model = Order
-        fields = ('id', 'order_code', 'total_price', 'created_by', 'status')
+        fields = ('id', 'order_code', 'total_price', 'created_by', 'status', 'order_placed_at')
 
     @staticmethod
     def get_custom_queryset(queryset, info):

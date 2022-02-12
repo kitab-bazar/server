@@ -816,6 +816,7 @@ type OrderType {
   orderCode: UUID!
   createdBy: UserType!
   status: OrderStatus!
+  orderPlacedAt: Date!
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
   totalQuantity: Int
 }
