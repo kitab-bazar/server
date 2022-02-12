@@ -1,7 +1,7 @@
 import graphene
 import datetime
 from graphene_django import DjangoObjectType
-from graphene_django_extras import PageGraphqlPagination
+from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
 
 from django.db.models import QuerySet
 from django.db.models import F, Sum
@@ -89,6 +89,10 @@ class OrderType(DjangoObjectType):
     class Meta:
         model = Order
         fields = ('id', 'order_code', 'total_price', 'created_by', 'status')
+
+    @staticmethod
+    def get_custom_queryset(queryset, info):
+        return get_orders_qs(info)
 
     def resolve_book_orders(root, info, **kwargs):
         return root.book_order
@@ -179,6 +183,7 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    order = DjangoObjectField(OrderType)
     orders = DjangoPaginatedListObjectField(
         OrderListType,
         pagination=PageGraphqlPagination(
