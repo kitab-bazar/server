@@ -1,6 +1,6 @@
 import django_filters
 from apps.book.models import Book, Tag, Category, Author
-from utils.graphene.filters import IDListFilter, IDFilter
+from utils.graphene.filters import IDListFilter, IDFilter, StringListFilter
 
 
 class BookFilter(django_filters.FilterSet):
@@ -12,6 +12,7 @@ class BookFilter(django_filters.FilterSet):
     is_added_in_wishlist = django_filters.rest_framework.BooleanFilter(
         method='filter_is_added_in_wishlist', initial=False
     )
+    grade = StringListFilter(method='filter_grade')
 
     class Meta:
         model = Book
@@ -49,6 +50,12 @@ class BookFilter(django_filters.FilterSet):
             return queryset.filter(book_wish_list__isnull=False)
         if value is False:
             return queryset.filter(book_wish_list__isnull=True)
+
+    def filter_grade(self, queryset, name, value):
+        if not value:
+            return queryset
+        grade_list = list(map(str.lower, value))
+        return queryset.filter(grade__in=grade_list)
 
 
 class TagFilter(django_filters.FilterSet):
