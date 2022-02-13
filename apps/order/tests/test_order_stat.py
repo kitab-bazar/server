@@ -1,4 +1,5 @@
-import datetime
+from django.utils import timezone
+
 from apps.common.tests.test_permissions import TestPermissions
 from apps.user.models import User
 from apps.order.models import Order
@@ -19,16 +20,16 @@ class TestOrderState(TestPermissions):
                 totalBooksOrdered
                 totalBooksUploaded
                 stat {
-                  orderPlacedAt
+                  orderPlacedAtDate
                   totalQuantity
                 }
               }
             }
         '''
-        self.stat_to = datetime.date.today()
-        stat_from = self.stat_to - datetime.timedelta(90)
-        intermediate_date = self.stat_to - datetime.timedelta(15)
-        not_in_range_date = self.stat_to - datetime.timedelta(120)
+        self.stat_to = timezone.now()
+        stat_from = self.stat_to - timezone.timedelta(90)
+        intermediate_date = self.stat_to - timezone.timedelta(15)
+        not_in_range_date = self.stat_to - timezone.timedelta(120)
 
         # Create publishers
         self.publisher_1 = PublisherFactory.create()
@@ -81,7 +82,7 @@ class TestOrderState(TestPermissions):
         self.assertEqual(order_stat['ordersCompletedCount'], 3)
 
         # Test shoudl retrive quantity count
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 15)
 
     def test_publisher_can_see_their_stat_only(self):
@@ -97,7 +98,7 @@ class TestOrderState(TestPermissions):
         self.assertEqual(order_stat['ordersCompletedCount'], 2)
 
         # Test shoudl retrive quantity count
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
         # ------------------------------------
@@ -109,7 +110,7 @@ class TestOrderState(TestPermissions):
         self.assertEqual(order_stat['totalBooksOrdered'], 10)
         self.assertEqual(order_stat['totalBooksUploaded'], 2)
         self.assertEqual(order_stat['ordersCompletedCount'], 2)
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
     def test_school_admin_can_see_their_stat_only(self):
@@ -120,7 +121,7 @@ class TestOrderState(TestPermissions):
         self.force_login(self.school_admin_user)
         content = self.query_check(self.order_stat)
         order_stat = content['data']['orderStat']
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
     def test_individual_user_can_see_their_stat_only(self):
@@ -131,5 +132,5 @@ class TestOrderState(TestPermissions):
         self.force_login(self.individual_user)
         content = self.query_check(self.order_stat)
         order_stat = content['data']['orderStat']
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAt'], str(self.stat_to))
+        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 30)

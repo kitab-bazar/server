@@ -1,10 +1,11 @@
 import graphene
-import datetime
+from django.utils import timezone
 from graphene_django import DjangoObjectType
-from graphene_django_extras import PageGraphqlPagination
+from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
 
-from django.db.models import QuerySet
-from django.db.models import F, Sum
+from django.db.models import QuerySet, F, Sum
+from django.db.models.fields import DateField
+from django.db.models.functions import Cast
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoListField
@@ -88,7 +89,11 @@ class OrderType(DjangoObjectType):
 
     class Meta:
         model = Order
-        fields = ('id', 'order_code', 'total_price', 'created_by', 'status')
+        fields = ('id', 'order_code', 'total_price', 'created_by', 'status', 'order_placed_at')
+
+    @staticmethod
+    def get_custom_queryset(queryset, info):
+        return get_orders_qs(info)
 
     def resolve_book_orders(root, info, **kwargs):
         return root.book_order
@@ -104,13 +109,13 @@ class OrderListType(CustomDjangoListObjectType):
 
 
 class OrderStatisticType(graphene.ObjectType):
-    order_placed_at = graphene.Date()
+    order_placed_at_date = graphene.Date()
     total_quantity = graphene.Int()
 
 
 def get_stat_daterange():
-    stat_to = datetime.date.today()
-    return stat_to - datetime.timedelta(90), stat_to
+    stat_to = timezone.now()
+    return stat_to - timezone.timedelta(90), stat_to
 
 
 class OrderStatType(graphene.ObjectType):
@@ -167,9 +172,9 @@ class OrderStatType(graphene.ObjectType):
             status=Order.OrderStatus.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
-        ).values('order_placed_at').annotate(
+        ).annotate(order_placed_at_date=Cast('order_placed_at', DateField())).values('order_placed_at_date').annotate(
             total_quantity=Sum('book_order__quantity')
-        ).values('order_placed_at', 'total_quantity')
+        ).values('order_placed_at_date', 'total_quantity')
 
 
 class Query(graphene.ObjectType):
@@ -179,6 +184,7 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    order = DjangoObjectField(OrderType)
     orders = DjangoPaginatedListObjectField(
         OrderListType,
         pagination=PageGraphqlPagination(

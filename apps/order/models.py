@@ -90,7 +90,7 @@ class Order(models.Model):
         default=OrderStatus.RECEIVED,
         verbose_name=ugettext("Order status")
     )
-    order_placed_at = models.DateField(
+    order_placed_at = models.DateTimeField(
         auto_now_add=True, verbose_name=ugettext("Order placed at")
     )
 
