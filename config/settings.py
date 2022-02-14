@@ -307,6 +307,9 @@ LANGUAGES = [
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 MODELTRANSLATION_LANGUAGES = ('en', 'ne')
 
+# Locale dir for language transaction
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+
 # Set default reason to nepal
 PHONENUMBER_DEFAULT_REGION = 'NP'
 
