@@ -30,11 +30,14 @@ type AuthorType {
   aboutAuthorNe: String
 }
 
+enum BlogBlogPublishType {
+  PUBLISH
+  DRAFT
+}
+
 input BlogCategoryInputType {
-  name: String!
   nameEn: String
   nameNe: String
-  parentCategory: String
 }
 
 type BlogCategoryListType {
@@ -47,19 +50,75 @@ type BlogCategoryListType {
 type BlogCategoryType {
   id: ID!
   name: String!
-  parentCategory: BlogCategoryType
+  nameEn: String
+  nameNe: String
 }
 
 input BlogInputType {
-  title: String
-  titleEn: String
-  titleNe: String
-  description: String
-  descriptionEn: String
-  descriptionNe: String
   image: Upload
+  category: String!
+  tags: [ID!]
   publishedDate: Date!
   blogPublishType: blog_publish_type
+  titleEn: String
+  descriptionEn: String
+  metaTitleEn: String
+  metaKeywordsEn: String
+  metaDescriptionEn: String
+  ogTitleEn: String
+  ogDescriptionEn: String
+  ogLocaleEn: String
+  ogTypeEn: String
+  titleNe: String
+  descriptionNe: String
+  metaTitleNe: String
+  metaKeywordsNe: String
+  metaDescriptionNe: String
+  ogTitleNe: String
+  ogDescriptionNe: String
+  ogLocaleNe: String
+  ogTypeNe: String
+}
+
+type BlogListType {
+  results: [BlogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+input BlogTagInputType {
+  nameEn: String
+  nameNe: String
+}
+
+type BlogTagListType {
+  results: [BlogTagType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type BlogTagType {
+  id: ID!
+  name: String!
+  nameEn: String
+  nameNe: String
+}
+
+type BlogType {
+  id: ID!
+  title: String!
+  titleEn: String
+  titleNe: String
+  description: String!
+  descriptionEn: String
+  descriptionNe: String
+  image: FileFieldType
+  category: BlogCategoryType!
+  tags: [BlogTagType!]!
+  publishedDate: Date!
+  blogPublishType: BlogBlogPublishType!
   metaTitle: String
   metaTitleEn: String
   metaTitleNe: String
@@ -75,58 +134,13 @@ input BlogInputType {
   ogDescription: String
   ogDescriptionEn: String
   ogDescriptionNe: String
-  ogImage: Upload
+  ogImage: FileFieldType
   ogLocale: String
   ogLocaleEn: String
   ogLocaleNe: String
   ogType: String
   ogTypeEn: String
   ogTypeNe: String
-  category: String!
-  tags: [ID!]
-}
-
-type BlogListType {
-  results: [BlogType!]
-  totalCount: Int
-  page: Int
-  pageSize: Int
-}
-
-input BlogTagInputType {
-  name: String!
-  nameEn: String
-  nameNe: String
-}
-
-type BlogTagListType {
-  results: [BlogTagType!]
-  totalCount: Int
-  page: Int
-  pageSize: Int
-}
-
-type BlogTagType {
-  id: ID!
-  name: String!
-}
-
-type BlogType {
-  id: ID!
-  title: String!
-  description: String!
-  image: FileFieldType
-  category: BlogCategoryType!
-  tags: [BlogTagType!]!
-  publishedDate: Date!
-  metaTitle: String
-  metaKeywords: String
-  metaDescription: String
-  ogTitle: String
-  ogDescription: String
-  ogImage: FileFieldType
-  ogLocale: String
-  ogType: String
   quantityInCart: Int!
 }
 
