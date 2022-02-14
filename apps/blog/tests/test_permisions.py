@@ -51,7 +51,7 @@ class TestBlogPermissions(TestPermissions):
         self.blog_category = BlogCategoryFactory.create()
         self.blog = BlogFactory.create(category=self.blog_category)
         self.blog_minput = {
-            'title': 'Test title', 'description': 'Test description',
+            'titleEn': 'Test title', 'descriptionEn': 'Test description',
             'publishedDate': '2021-09-12', 'category': self.blog_category.id,
             'blogPublishType': Blog.BlogPublishType.DRAFT.name
         }
@@ -62,8 +62,8 @@ class TestBlogPermissions(TestPermissions):
         # Admin case
         self.force_login(self.super_admin)
         content = self.query_check(self.create_blog, minput=self.blog_minput, okay=True)
-        self.assertEqual(content['data']['createBlog']['result']['title'], self.blog_minput['title'])
-        self.assertEqual(content['data']['createBlog']['result']['description'], self.blog_minput['description'])
+        self.assertEqual(content['data']['createBlog']['result']['title'], self.blog_minput['titleEn'])
+        self.assertEqual(content['data']['createBlog']['result']['description'], self.blog_minput['descriptionEn'])
         self.assertEqual(content['data']['createBlog']['result']['category']['id'], str(self.blog_minput['category']))
 
         # Publisher case
@@ -103,15 +103,15 @@ class TestBlogPermissions(TestPermissions):
 
         # Admin case
         updated_title = 'updated title'
-        self.blog_minput['title'] = updated_title
+        self.blog_minput['titleEn'] = updated_title
 
         self.force_login(self.super_admin)
         content = self.query_check(
             self.update_blog, minput=self.blog_minput,
             variables={'id': blog.id}, okay=True
         )
-        self.assertEqual(content['data']['updateBlog']['result']['title'], self.blog_minput['title'])
-        self.assertEqual(content['data']['updateBlog']['result']['description'], self.blog_minput['description'])
+        self.assertEqual(content['data']['updateBlog']['result']['title'], self.blog_minput['titleEn'])
+        self.assertEqual(content['data']['updateBlog']['result']['description'], self.blog_minput['descriptionEn'])
         self.assertEqual(content['data']['updateBlog']['result']['category']['id'], str(self.blog_minput['category']))
 
         # Publisher case
@@ -235,7 +235,7 @@ class TestBlogCategoryPermissions(TestPermissions):
             }
         '''
         self.blog_category_minput = {
-            'name': 'Test category'
+            'nameEn': 'Test category'
         }
         super().setUp()
 
@@ -243,7 +243,7 @@ class TestBlogCategoryPermissions(TestPermissions):
         # Admin case
         self.force_login(self.super_admin)
         content = self.query_check(self.create_blog_category, minput=self.blog_category_minput, okay=True)
-        self.assertEqual(content['data']['createBlogCategory']['result']['name'], self.blog_category_minput['name'])
+        self.assertEqual(content['data']['createBlogCategory']['result']['name'], self.blog_category_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
@@ -282,14 +282,14 @@ class TestBlogCategoryPermissions(TestPermissions):
 
         # Admin case
         updated_name = 'updated name'
-        self.blog_category_minput['name'] = updated_name
+        self.blog_category_minput['nameEn'] = updated_name
 
         self.force_login(self.super_admin)
         content = self.query_check(
             self.update_blog_category, minput=self.blog_category_minput,
             variables={'id': blog_category.id}, okay=True
         )
-        self.assertEqual(content['data']['updateBlogCategory']['result']['name'], self.blog_category_minput['name'])
+        self.assertEqual(content['data']['updateBlogCategory']['result']['name'], self.blog_category_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
@@ -379,7 +379,7 @@ class TestBlogCategoryPermissions(TestPermissions):
 class TestBlogTagPermissions(TestPermissions):
     def setUp(self):
         super(TestBlogTagPermissions, self).setUp()
-        self.create_blog_category = '''
+        self.create_blog_tag = '''
             mutation Mutation($input: BlogTagInputType!) {
                 createBlogTag(data: $input) {
                     ok
@@ -391,7 +391,7 @@ class TestBlogTagPermissions(TestPermissions):
                 }
             }
         '''
-        self.update_blog_category = '''
+        self.update_blog_tag = '''
             mutation Mutation($id: ID!, $input:  BlogTagInputType!) {
                 updateBlogTag(id: $id data: $input) {
                     ok
@@ -403,7 +403,7 @@ class TestBlogTagPermissions(TestPermissions):
                 }
             }
         '''
-        self.delete_blog_category = '''
+        self.delete_blog_tag = '''
             mutation Mutation($id: ID!) {
                 deleteBlogTag(id: $id) {
                     ok
@@ -411,20 +411,20 @@ class TestBlogTagPermissions(TestPermissions):
                 }
             }
         '''
-        self.blog_category_minput = {
-            'name': 'Test category'
+        self.blog_tag_minput = {
+            'nameEn': 'Test tag'
         }
         super().setUp()
 
-    def test_admin_only_can_create_blog_category(self):
+    def test_admin_only_can_create_blog_tag(self):
         # Admin case
         self.force_login(self.super_admin)
-        content = self.query_check(self.create_blog_category, minput=self.blog_category_minput, okay=True)
-        self.assertEqual(content['data']['createBlogTag']['result']['name'], self.blog_category_minput['name'])
+        content = self.query_check(self.create_blog_tag, minput=self.blog_tag_minput, okay=True)
+        self.assertEqual(content['data']['createBlogTag']['result']['name'], self.blog_tag_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
-        response = self.query_check(self.create_blog_category, minput=self.blog_category_minput, assert_for_error=True)
+        response = self.query_check(self.create_blog_tag, minput=self.blog_tag_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_BLOG_TAG)
@@ -432,7 +432,7 @@ class TestBlogTagPermissions(TestPermissions):
 
         # School admin case
         self.force_login(self.school_admin_user)
-        response = self.query_check(self.create_blog_category, minput=self.blog_category_minput, assert_for_error=True)
+        response = self.query_check(self.create_blog_tag, minput=self.blog_tag_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_BLOG_TAG)
@@ -440,7 +440,7 @@ class TestBlogTagPermissions(TestPermissions):
 
         # Institution case
         self.force_login(self.institutional_user)
-        response = self.query_check(self.create_blog_category, minput=self.blog_category_minput, assert_for_error=True)
+        response = self.query_check(self.create_blog_tag, minput=self.blog_tag_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_BLOG_TAG)
@@ -448,30 +448,30 @@ class TestBlogTagPermissions(TestPermissions):
 
         # Individual user case
         self.force_login(self.individual_user)
-        response = self.query_check(self.create_blog_category, minput=self.blog_category_minput, assert_for_error=True)
+        response = self.query_check(self.create_blog_tag, minput=self.blog_tag_minput, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_CREATE_BLOG_TAG)
         )
 
-    def test_admin_only_can_update_blog_categorys(self):
-        blog_category = BlogTagFactory.create()
+    def test_admin_only_can_update_blog_tags(self):
+        blog_tag = BlogTagFactory.create()
 
         # Admin case
         updated_name = 'updated name'
-        self.blog_category_minput['name'] = updated_name
+        self.blog_tag_minput['nameEn'] = updated_name
 
         self.force_login(self.super_admin)
         content = self.query_check(
-            self.update_blog_category, minput=self.blog_category_minput,
-            variables={'id': blog_category.id}, okay=True
+            self.update_blog_tag, minput=self.blog_tag_minput,
+            variables={'id': blog_tag.id}, okay=True
         )
-        self.assertEqual(content['data']['updateBlogTag']['result']['name'], self.blog_category_minput['name'])
+        self.assertEqual(content['data']['updateBlogTag']['result']['name'], self.blog_tag_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
         response = self.query_check(
-            self.update_blog_category, minput=self.blog_category_minput, variables={'id': blog_category.id},
+            self.update_blog_tag, minput=self.blog_tag_minput, variables={'id': blog_tag.id},
             assert_for_error=True
         )
         self.assertEqual(
@@ -482,7 +482,7 @@ class TestBlogTagPermissions(TestPermissions):
         # School admin case
         self.force_login(self.school_admin_user)
         response = self.query_check(
-            self.update_blog_category, minput=self.blog_category_minput, variables={'id': blog_category.id},
+            self.update_blog_tag, minput=self.blog_tag_minput, variables={'id': blog_tag.id},
             assert_for_error=True
         )
         self.assertEqual(
@@ -493,7 +493,7 @@ class TestBlogTagPermissions(TestPermissions):
         # Institution case
         self.force_login(self.institutional_user)
         response = self.query_check(
-            self.update_blog_category, minput=self.blog_category_minput, variables={'id': blog_category.id},
+            self.update_blog_tag, minput=self.blog_tag_minput, variables={'id': blog_tag.id},
             assert_for_error=True
         )
         self.assertEqual(
@@ -504,7 +504,7 @@ class TestBlogTagPermissions(TestPermissions):
         # Individual user case
         self.force_login(self.individual_user)
         response = self.query_check(
-            self.update_blog_category, minput=self.blog_category_minput, variables={'id': blog_category.id},
+            self.update_blog_tag, minput=self.blog_tag_minput, variables={'id': blog_tag.id},
             assert_for_error=True
         )
         self.assertEqual(
@@ -512,17 +512,17 @@ class TestBlogTagPermissions(TestPermissions):
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_UPDATE_BLOG_TAG)
         )
 
-    def test_admin_only_can_delete_blog_category(self):
+    def test_admin_only_can_delete_blog_tag(self):
         # Admin case
         self.force_login(self.super_admin)
-        blog_category = BlogTagFactory.create()
-        self.query_check(self.delete_blog_category, variables={'id': blog_category.id}, okay=True)
+        blog_tag = BlogTagFactory.create()
+        self.query_check(self.delete_blog_tag, variables={'id': blog_tag.id}, okay=True)
 
-        blog_category = BlogTagFactory.create()
+        blog_tag = BlogTagFactory.create()
 
         # Publisher case
         self.force_login(self.publisher_user)
-        response = self.query_check(self.delete_blog_category, variables={'id': blog_category.id}, assert_for_error=True)
+        response = self.query_check(self.delete_blog_tag, variables={'id': blog_tag.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_BLOG_TAG)
@@ -530,7 +530,7 @@ class TestBlogTagPermissions(TestPermissions):
 
         # School admin case
         self.force_login(self.school_admin_user)
-        response = self.query_check(self.delete_blog_category, variables={'id': blog_category.id}, assert_for_error=True)
+        response = self.query_check(self.delete_blog_tag, variables={'id': blog_tag.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_BLOG_TAG)
@@ -538,7 +538,7 @@ class TestBlogTagPermissions(TestPermissions):
 
         # Institution case
         self.force_login(self.institutional_user)
-        response = self.query_check(self.delete_blog_category, variables={'id': blog_category.id}, assert_for_error=True)
+        response = self.query_check(self.delete_blog_tag, variables={'id': blog_tag.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_BLOG_TAG)
@@ -546,7 +546,7 @@ class TestBlogTagPermissions(TestPermissions):
 
         # Individual user case
         self.force_login(self.individual_user)
-        response = self.query_check(self.delete_blog_category, variables={'id': blog_category.id}, assert_for_error=True)
+        response = self.query_check(self.delete_blog_tag, variables={'id': blog_tag.id}, assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_BLOG_TAG)

@@ -19,7 +19,7 @@ class BlogTagType(DjangoObjectType):
     class Meta:
         model = Tag
         fields = (
-            'id', 'name'
+            'id', 'name', 'name_en', 'name_ne'
         )
 
 
@@ -33,7 +33,7 @@ class BlogCategoryType(DjangoObjectType):
     class Meta:
         model = Category
         fields = (
-            'id', 'name', 'parent_category'
+            'id', 'name', 'name_en', 'name_ne'
         )
 
 
@@ -49,9 +49,19 @@ class BlogType(DjangoObjectType):
     class Meta:
         model = Blog
         fields = (
-            'id', 'title', 'description', 'image', 'category', 'tags', 'published_date',
-            'meta_title', 'meta_keywords', 'meta_description', 'og_title',
-            'og_description', 'og_image', 'og_locale', 'og_type',
+            # model fields
+            'id', 'image', 'og_image', 'category', 'tags', 'published_date',
+            'blog_publish_type', 'title', 'description', 'meta_title', 'meta_keywords',
+            'meta_description', 'og_title', 'og_description', 'og_locale', 'og_type',
+
+            # English fields
+            'title_en', 'description_en', 'meta_title_en', 'meta_keywords_en',
+            'meta_description_en', 'og_title_en', 'og_description_en', 'og_locale_en',
+            'og_type_en',
+
+            # Nepali fields
+            'title_ne', 'description_ne', 'meta_title_ne', 'meta_keywords_ne',
+            'meta_description_ne', 'og_title_ne', 'og_description_ne', 'og_locale_ne', 'og_type_ne',
         )
 
     image = graphene.Field(FileFieldType)
