@@ -43,7 +43,14 @@ class FaqType(DjangoObjectType):
     class Meta:
         model = Faq
         fields = (
+            # Model fields
             'id', 'question', 'answer',
+
+            # English fields
+            'question_en', 'answer_en',
+
+            # Nepali fields
+            'question_ne', 'answer_ne'
         )
 
     @staticmethod

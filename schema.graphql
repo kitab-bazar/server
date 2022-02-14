@@ -562,13 +562,10 @@ type DistrictType {
 }
 
 input FaqCreateInputType {
-  question: String
   questionEn: String
-  questionNe: String
-  answer: String
   answerEn: String
+  questionNe: String
   answerNe: String
-  faqPublishType: faq_publish_type
 }
 
 type FaqListType {
@@ -581,7 +578,11 @@ type FaqListType {
 type FaqType {
   id: ID!
   question: String
+  questionEn: String
+  questionNe: String
   answer: String
+  answerEn: String
+  answerNe: String
 }
 
 type FileFieldType {
@@ -1226,11 +1227,6 @@ type WishListType {
 }
 
 enum blog_publish_type {
-  PUBLISH
-  DRAFT
-}
-
-enum faq_publish_type {
   PUBLISH
   DRAFT
 }
