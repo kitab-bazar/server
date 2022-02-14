@@ -65,7 +65,7 @@ class TestBookPermissions(TestPermissions):
         category = CategoryFactory.create()
         self.book_publisher = PublisherFactory.create()
         self.minput = {
-            'title': "book title", 'isbn': "123456789", 'numberOfPages': 10,
+            'titleEn': "book title", 'isbn': "123456789", 'numberOfPages': 10,
             'language': Book.LanguageType.NEPALI.name, 'publishedDate': "2018-01-01",
             'edition': "1", 'price': 10, 'publisher': self.book_publisher.id,
             'authors': [author.id], 'categories': [category.id],
@@ -78,14 +78,14 @@ class TestBookPermissions(TestPermissions):
         # Admin case
         self.force_login(self.super_admin)
         content = self.query_check(self.create_book, minput=self.minput, okay=True)
-        self.assertEqual(content['data']['createBook']['result']['title'], self.minput['title'])
+        self.assertEqual(content['data']['createBook']['result']['title'], self.minput['titleEn'])
 
         # Publisher case
         self.publisher_user.publisher = self.book_publisher
         self.publisher_user.save()
         self.force_login(self.publisher_user)
         self.query_check(self.create_book, minput=self.minput, okay=True)
-        self.assertEqual(content['data']['createBook']['result']['title'], self.minput['title'])
+        self.assertEqual(content['data']['createBook']['result']['title'], self.minput['titleEn'])
 
         # School admin case
         self.force_login(self.school_admin_user)
@@ -114,7 +114,7 @@ class TestBookPermissions(TestPermissions):
     def test_admin_and_publisher_only_can_update_book(self):
         # Admin case
         updated_title = 'updated book title'
-        self.minput['title'] = updated_title
+        self.minput['titleEn'] = updated_title
 
         self.force_login(self.super_admin)
         content = self.query_check(
@@ -125,7 +125,7 @@ class TestBookPermissions(TestPermissions):
 
         # Publisher case
         updated_title = 'updated book title latest'
-        self.minput['title'] = updated_title
+        self.minput['titleEn'] = updated_title
         self.publisher_user.publisher = self.book_publisher
         self.publisher_user.save()
         self.force_login(self.publisher_user)

@@ -9,7 +9,20 @@ class BookSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = (
+            'id', 'categories', 'authors', 'tags', 'isbn', 'number_of_pages', 'price',
+            'image', 'language', 'weight', 'published_date', 'edition', 'publisher',
+            'grade', 'is_published',
+
+            # English fields
+            'title_en', 'description_en', 'meta_title_en', 'meta_keywords_en', 'meta_description_en',
+            'og_title_en', 'og_description_en', 'og_locale_en', 'og_type_en',
+
+            # Nepali fields
+            'title_ne', 'description_ne', 'meta_title_ne', 'meta_keywords_ne', 'meta_description_ne',
+            'og_title_ne', 'og_description_ne', 'og_locale_ne', 'og_type_ne',
+
+        )
 
 
 class WishListSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
@@ -29,18 +42,25 @@ class BookTagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = '__all__'
+        fields = (
+            'id', 'name_en', 'name_ne'
+        )
 
 
 class BookAuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Author
-        fields = '__all__'
+        fields = (
+            'id', 'name_en', 'name_ne',
+            'about_author_en', 'about_author_ne'
+        )
 
 
 class BookCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = (
+            'id', 'name_en', 'name_ne'
+        )
