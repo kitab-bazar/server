@@ -1,6 +1,8 @@
 import django_filters
+from utils.graphene.filters import IDListFilter, IDFilter, MultipleInputFilter
+
 from apps.book.models import Book, Tag, Category, Author
-from utils.graphene.filters import IDListFilter, IDFilter
+from apps.book.enums import BookGradeEnum
 
 
 class BookFilter(django_filters.FilterSet):
@@ -12,6 +14,7 @@ class BookFilter(django_filters.FilterSet):
     is_added_in_wishlist = django_filters.rest_framework.BooleanFilter(
         method='filter_is_added_in_wishlist', initial=False
     )
+    grade = MultipleInputFilter(BookGradeEnum, field_name='grade')
 
     class Meta:
         model = Book
