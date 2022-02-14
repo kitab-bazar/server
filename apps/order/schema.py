@@ -23,11 +23,14 @@ def get_cart_items_qs(info):
 
 
 def get_orders_qs(info):
-    if info.context.user.user_type == User.UserType.PUBLISHER.value:
-        return Order.objects.filter(book_order__publisher=info.context.user.publisher).distinct()
-    elif info.context.user.user_type == User.UserType.ADMIN.value:
-        return Order.objects.all().distinct()
-    return Order.objects.filter(created_by=info.context.user).distinct()
+    def _qs():
+        if info.context.user.user_type == User.UserType.PUBLISHER.value:
+            return Order.objects.filter(book_order__publisher=info.context.user.publisher)
+        elif info.context.user.user_type == User.UserType.ADMIN.value:
+            return Order.objects.all()
+        return Order.objects.filter(created_by=info.context.user)
+    # Making sure only distinct orders are fetched
+    return _qs().distinct()
 
 
 class CartItemType(DjangoObjectType):
