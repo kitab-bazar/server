@@ -703,13 +703,10 @@ type DistrictType {
 scalar EnumDescription
 
 input FaqCreateInputType {
-  question: String
   questionEn: String
-  questionNe: String
-  answer: String
   answerEn: String
+  questionNe: String
   answerNe: String
-  faqPublishType: faq_publish_type
 }
 
 type FaqListType {
@@ -722,7 +719,11 @@ type FaqListType {
 type FaqType {
   id: ID!
   question: String
+  questionEn: String
+  questionNe: String
   answer: String
+  answerEn: String
+  answerNe: String
 }
 
 type FileFieldType {
@@ -1706,6 +1707,11 @@ enum blog_publish_type {
 enum faq_publish_type {
   PUBLISH
   DRAFT
+}
+
+enum language {
+  NEPALI
+  ENGLISH
 }
 
 enum message_type {
