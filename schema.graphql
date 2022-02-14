@@ -156,7 +156,7 @@ input BookCreateInputType {
   weight: Int
   publishedDate: Date!
   edition: String
-  grade: grade
+  grade: BookGradeEnum
   isPublished: Boolean
   price: Int!
   metaTitle: String
@@ -202,7 +202,7 @@ type BookDetailType {
   publishedDate: Date!
   edition: String
   publisher: PublisherType!
-  grade: BookGrade
+  grade: BookGradeEnum
   isPublished: Boolean!
   price: Int!
   metaTitle: String
@@ -237,12 +237,6 @@ type BookDetailType {
   bookOrderCartItem: [BookOrderType!]!
   wishlistId: ID
   cartDetails: CartItemType
-}
-
-enum BookGrade {
-  GRADE_ONE
-  GRADE_TWO
-  GRADE_THREE
 }
 
 enum BookGradeEnum {
@@ -301,7 +295,7 @@ type BookType {
   publishedDate: Date!
   edition: String
   publisher: PublisherType!
-  grade: BookGrade
+  grade: BookGradeEnum
   isPublished: Boolean!
   price: Int!
   metaTitle: String
@@ -1267,12 +1261,6 @@ enum blog_publish_type {
 enum faq_publish_type {
   PUBLISH
   DRAFT
-}
-
-enum grade {
-  GRADE_ONE
-  GRADE_TWO
-  GRADE_THREE
 }
 
 enum language {
