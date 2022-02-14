@@ -8,6 +8,7 @@ from utils.graphene.fields import DjangoPaginatedListObjectField
 
 from apps.book.models import Book, Tag, Category, Author, WishList
 from apps.book.filters import BookFilter, TagFilter, CategoryFilter, AuthorFilter
+from apps.book.enums import BookGradeEnum
 from apps.order.schema import CartItemType
 
 
@@ -60,6 +61,7 @@ class AuthorListType(CustomDjangoListObjectType):
 class BookType(DjangoObjectType):
     wishlist_id = graphene.ID()
     cart_details = graphene.Field(CartItemType)
+    grade = graphene.Field(BookGradeEnum)
 
     class Meta:
         model = Book
