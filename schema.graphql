@@ -33,7 +33,11 @@ type AuthorListType {
 type AuthorType {
   id: ID!
   name: String!
+  nameEn: String
+  nameNe: String
   aboutAuthor: String
+  aboutAuthorEn: String
+  aboutAuthorNe: String
 }
 
 input BlogCategoryInputType {
@@ -137,19 +141,15 @@ type BlogType {
 }
 
 input BookAuthorInputType {
-  name: String!
   nameEn: String
   nameNe: String
-  aboutAuthor: String
   aboutAuthorEn: String
   aboutAuthorNe: String
 }
 
 input BookCategoryInputType {
-  name: String!
   nameEn: String
   nameNe: String
-  parentCategory: String
 }
 
 input BookCreateInputType {
@@ -163,9 +163,18 @@ input BookCreateInputType {
   isbn: String
   numberOfPages: Int!
   language: BookLanguageEnum!
+  categories: [ID!]!
+  authors: [ID!]!
+  tags: [ID!]
+  isbn: String!
+  numberOfPages: Int!
+  price: Int!
+  image: Upload
+  language: language!
   weight: Int
   publishedDate: Date!
   edition: String
+  publisher: String!
   grade: BookGradeEnum
   isPublished: Boolean
   price: Int!
@@ -224,23 +233,22 @@ type BookDetailType {
   ogLocale: String
   ogType: String
   titleEn: String
-  titleNe: String
   descriptionEn: String
-  descriptionNe: String
-  createdBy: UserType
   metaTitleEn: String
-  metaTitleNe: String
   metaKeywordsEn: String
-  metaKeywordsNe: String
   metaDescriptionEn: String
-  metaDescriptionNe: String
   ogTitleEn: String
-  ogTitleNe: String
   ogDescriptionEn: String
-  ogDescriptionNe: String
   ogLocaleEn: String
-  ogLocaleNe: String
   ogTypeEn: String
+  titleNe: String
+  descriptionNe: String
+  metaTitleNe: String
+  metaKeywordsNe: String
+  metaDescriptionNe: String
+  ogTitleNe: String
+  ogDescriptionNe: String
+  ogLocaleNe: String
   ogTypeNe: String
   bookWishList: [WishListType!]!
   bookCartItem: [CartItemType!]!
@@ -291,7 +299,6 @@ type BookOrderType {
 }
 
 input BookTagInputType {
-  name: String!
   nameEn: String
   nameNe: String
 }
@@ -299,8 +306,12 @@ input BookTagInputType {
 type BookType {
   id: ID!
   title: String!
+  titleEn: String
+  titleNe: String
   image: FileFieldType
   description: String
+  descriptionEn: String
+  descriptionNe: String
   categories: [CategoryType!]!
   authors: [AuthorType!]!
   tags: [TagType!]!
@@ -315,13 +326,27 @@ type BookType {
   isPublished: Boolean!
   price: Int!
   metaTitle: String
+  metaTitleEn: String
+  metaTitleNe: String
   metaKeywords: String
+  metaKeywordsEn: String
+  metaKeywordsNe: String
   metaDescription: String
+  metaDescriptionEn: String
+  metaDescriptionNe: String
   ogTitle: String
+  ogTitleEn: String
+  ogTitleNe: String
   ogDescription: String
+  ogDescriptionEn: String
+  ogDescriptionNe: String
   ogImage: FileFieldType
   ogLocale: String
+  ogLocaleEn: String
+  ogLocaleNe: String
   ogType: String
+  ogTypeEn: String
+  ogTypeNe: String
   wishlistId: ID
   cartDetails: CartItemType
   gradeDisplay: EnumDescription
@@ -359,6 +384,8 @@ type CategoryListType {
 type CategoryType {
   id: ID!
   name: String!
+  nameEn: String
+  nameNe: String
   parentCategory: CategoryType
 }
 
@@ -1209,6 +1236,7 @@ type Query {
   book(id: ID!): BookType
   bookDetail(id: ID!): BookDetailType
   books(categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, search: String, publishers: [ID!], isAddedInWishlist: Boolean, grade: [BookGradeEnum!], language: [BookLanguageEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
+  books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, isAddedInWishlist: Boolean, grade: [BookGradeEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
   authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
   categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
@@ -1391,6 +1419,8 @@ type TagListType {
 type TagType {
   id: ID!
   name: String!
+  nameEn: String
+  nameNe: String
 }
 
 input ToggleNotificationInputType {
