@@ -128,7 +128,7 @@ def send_notification(order_id):
         'order_code': order_obj.order_code,
     }
     if order_obj.status == Order.OrderStatus.RECEIVED.value:
-        heading = 'Order received.'
+        heading = _('Thank you for your purchase!')
         with translation.override('en'):
             in_app_title_en = _(
                 'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been recieved.'
@@ -151,7 +151,7 @@ def send_notification(order_id):
         )
 
     elif order_obj.status == Order.OrderStatus.PACKED.value:
-        heading = 'Order packed.'
+        heading = _('Thank you for your purchase!')
         with translation.override('en'):
             in_app_title_en = _(
                 'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been packed.'
@@ -177,7 +177,7 @@ def send_notification(order_id):
         )
 
     elif order_obj.status == Order.OrderStatus.COMPLETED.value:
-        heading = 'Order completed.'
+        heading = _('Your order has been delivered!')
         with translation.override('en'):
             in_app_title_en = _(
                 'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been successfully delivered.'  # noqa: E501
@@ -203,7 +203,7 @@ def send_notification(order_id):
         )
 
     elif order_obj.status == Order.OrderStatus.CANCELLED.value:
-        heading = 'Order cancelled.'
+        heading = _('Your itesm(s) has been cancelled')
         with translation.override('ne'):
             in_app_title_en = _(
                 'Your order {order_code} has been successfully cancelled.'

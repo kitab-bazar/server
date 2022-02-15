@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-15 08:20+0545\n"
+"POT-Creation-Date: 2022-02-15 08:55+0545\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -401,6 +401,10 @@ msgstr ""
 msgid "Invalid book id."
 msgstr ""
 
+#: apps/order/tasks.py:131 apps/order/tasks.py:154
+msgid "Thank you for your purchase!"
+msgstr "तपाइँको खरिद को लागी धन्यवाद!"
+
 #: apps/order/tasks.py:134 apps/order/tasks.py:138
 #, python-brace-format
 msgid ""
@@ -437,6 +441,10 @@ msgstr ""
 "{day_name} {day} {month_name} {year} मा {time} मा राखिएको तपाईंको अर्डर "
 "{order_code} तलको विवरण सहित प्राप्त भएको छ ।"
 
+#: apps/order/tasks.py:180
+msgid "Your order has been delivered!"
+msgstr "तपाइँको अडर  डेलिभर भएको छ!"
+
 #: apps/order/tasks.py:183 apps/order/tasks.py:188
 #, python-brace-format
 msgid ""
@@ -455,6 +463,10 @@ msgstr ""
 "हामीसँग किनमेल गर्नुभएकोमा धन्यवाद! तपाईको अर्डर {order_code} तलको विवरण सहित "
 "सफलतापूर्वक डेलिभर गरिएको छ भनी जानकारी गराउन पाउँदा हामी खुसी छौं।हामी आशा गर्दछौं "
 "कि तपाईले भर्खर खरीद गर्नु भएको सामानसँग खुशी हुनुहुन्छ ।"
+
+#: apps/order/tasks.py:206
+msgid "Your itesm(s) has been cancelled"
+msgstr "तपाइँको खरिद रद्द गरिएको छ ।"
 
 #: apps/order/tasks.py:209 apps/order/tasks.py:213 apps/order/tasks.py:216
 #, python-brace-format

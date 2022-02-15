@@ -1,14 +1,16 @@
 {% load static %}
 {% load custom_tags %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>{{ heading }} </title>
+    <title>{% trans heading %} </title>
   </head>
   <body>
-    <p> Message: {{ message }} </p>
+    <p> Heading : {% trans heading %} </p>
+    <p> Message: {% trans message %} </p>
 
     <p> Full name: {{ full_name }} </p>
 
