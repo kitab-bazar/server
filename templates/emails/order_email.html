@@ -1,5 +1,4 @@
 {% load static %}
-{% load custom_tags %}
 {% load i18n %}
 
 <!DOCTYPE html>
@@ -14,23 +13,21 @@
 
     <p> Full name: {{ full_name }} </p>
 
-    <p>Grand Total Price : {{ order_data | dict_lookup:'total_price' }} </p>
-    <p>Order code: {{ order_data | dict_lookup:'order_code' }} </p>
-    <p>Total Status : {{ order_data | dict_lookup:'status' }} </p>
-    <p>Order order placed at: {{ order_data | dict_lookup:'order_placed_at' }} </p>
+    <p>Grand Total Price : {{ order_data.total_price }} </p>
+    <p>Order code: {{ order_dat.order_code }} </p>
+    <p>Total Status : {{ order_data.status}} </p>
+    <p>Order order placed at: {{ order_data.order_placed_at }} </p>
 
     <ul>
-        {% with order_items=order_data|dict_lookup:'order_items' %}
-            {% for order_item in order_items %}
-                <li>Book Title: {{ order_item | dict_lookup:'title' }}</li>
-                <li>Book Price: {{ order_item | dict_lookup:'price' }}</li>
-                <li>Book Quantity: {{ order_item | dict_lookup:'quantity' }}</li>
-                <li>Book ISBN: {{ order_item | dict_lookup:'isbn' }}</li>
-                <li>Book Edition: {{ order_item | dict_lookup:'edition' }}</li>
-                <li>Book Total Price: {{ order_item | dict_lookup:'total_price' }}</li>
-                <li>Book Image: <img src="{{ order_item | dict_lookup:'image' }}" alt="Book Image"></li>
-            {% endfor %}
-        {% endwith %}
+        {% for order_item in order_data.order_items %}
+            <li>Book Title: {{ order_item.title }}</li>
+            <li>Book Price: {{ order_item.price }}</li>
+            <li>Book Quantity: {{ order_item.quantity }}</li>
+            <li>Book ISBN: {{ order_item.isbn }}</li>
+            <li>Book Edition: {{ order_item.edition }}</li>
+            <li>Book Total Price: {{ order_item.total_price }}</li>
+            <li>Book Image: <img src="{{ order_item.image }}" alt="Book Image"></li>
+        {% endfor %}
     </ul>
   </body>
 </html>
