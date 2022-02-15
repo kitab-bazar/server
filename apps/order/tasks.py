@@ -2,6 +2,7 @@ import logging
 from celery import shared_task
 from django.utils.translation import ugettext_lazy as _
 from django.db import transaction
+from django.utils import translation
 
 from apps.order.models import Order
 from apps.notification.models import Notification
@@ -38,16 +39,18 @@ def get_order_data(order_obj):
 def send_notification_to_customer(
     order_obj,
     notification_type,
-    in_app_title,
     mail_title,
     heading,
+    in_app_title_en,
+    in_app_title_ne,
 ):
     # Send in app notification
     Notification.objects.create(
         content_object=order_obj,
         recipient=order_obj.created_by,
         notification_type=notification_type,
-        title=in_app_title,
+        title_en=in_app_title_en,
+        title_ne=in_app_title_ne,
     )
     # Send mail notification
     html_context = {
@@ -69,9 +72,10 @@ def send_notification_to_customer(
 def send_notfication_to_publisher(
     order_obj,
     notification_type,
-    in_app_title,
     mail_title,
     heading,
+    in_app_title_en,
+    in_app_title_ne,
 ):
     book_orders = order_obj.book_order.distinct('publisher')
     # NOTE: a book oder may have multiple publishers
@@ -82,7 +86,8 @@ def send_notfication_to_publisher(
             # Assuming a publisher profile is associated with single user
             recipient=book_order.publisher.publisher_user.first(),
             notification_type=notification_type,
-            title=in_app_title,
+            title_en=in_app_title_en,
+            title_ne=in_app_title_ne,
         ) for book_order in book_orders
     ])
 
@@ -124,48 +129,98 @@ def send_notification(order_id):
     }
     if order_obj.status == Order.OrderStatus.RECEIVED.value:
         heading = 'Order received.'
-        in_app_title = _(
-            'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been recieved.'
-        ).format(**notification_date_attrs)
+        with translation.override('en'):
+            in_app_title_en = _(
+                'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been recieved.'
+            ).format(**notification_date_attrs)
+        with translation.override('ne'):
+            in_app_title_ne = _(
+                'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been recieved.'
+            ).format(**notification_date_attrs)
         mail_title = _(
             'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been recieved with details as below.'  # noqa: E501
         ).format(**notification_date_attrs)
         notification_type = Notification.NotificationType.ORDER_RECEIVED.value
-        send_notfication_to_publisher(order_obj, notification_type, in_app_title, mail_title, heading)
+        send_notfication_to_publisher(
+            order_obj,
+            notification_type,
+            mail_title,
+            heading,
+            in_app_title_en=in_app_title_en,
+            in_app_title_ne=in_app_title_ne,
+        )
 
     elif order_obj.status == Order.OrderStatus.PACKED.value:
         heading = 'Order packed.'
-        in_app_title = _(
-            'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been packed.'
-        ).format(**notification_date_attrs)
+        with translation.override('en'):
+            in_app_title_en = _(
+                'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been packed.'
+            ).format(**notification_date_attrs)
+
+        with translation.override('ne'):
+            in_app_title_ne = _(
+                'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been packed.'
+            ).format(**notification_date_attrs)
 
         mail_title = _(
             'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been packed with details as below.'  # noqa: E501
         ).format(**notification_date_attrs)
 
         notification_type = Notification.NotificationType.ORDER_PACKED.value
-        send_notification_to_customer(order_obj, notification_type, in_app_title, mail_title, heading)
+        send_notification_to_customer(
+            order_obj,
+            notification_type,
+            mail_title,
+            heading,
+            in_app_title_en=in_app_title_en,
+            in_app_title_ne=in_app_title_ne,
+        )
 
     elif order_obj.status == Order.OrderStatus.COMPLETED.value:
         heading = 'Order completed.'
-        in_app_title = _(
-            'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been successfully delivered.'  # noqa: E501
-        ).format(**notification_date_attrs)
+        with translation.override('en'):
+            in_app_title_en = _(
+                'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been successfully delivered.'  # noqa: E501
+            ).format(**notification_date_attrs)
+
+        with translation.override('ne'):
+            in_app_title_ne = _(
+                'Your order {order_code} placed on {day_name} {day}th {month_name} {year} at {time} has been successfully delivered.'  # noqa: E501
+            ).format(**notification_date_attrs)
 
         mail_title = _(
             'Thanks for shopping with us! we are glad to inform you that your order {order_code} has been successfully delivered with details as below.'  # noqa: E501
         ).format(**notification_date_attrs)
 
         notification_type = Notification.NotificationType.ORDER_COMPLETED.value
-        send_notification_to_customer(order_obj, notification_type, in_app_title, mail_title, heading)
+        send_notification_to_customer(
+            order_obj,
+            notification_type,
+            mail_title,
+            heading,
+            in_app_title_en=in_app_title_en,
+            in_app_title_ne=in_app_title_ne,
+        )
 
     elif order_obj.status == Order.OrderStatus.CANCELLED.value:
         heading = 'Order cancelled.'
-        in_app_title = _(
-            'Your order {order_code} has been successfully cancelled.'
-        ).format(**notification_date_attrs)
+        with translation.override('ne'):
+            in_app_title_en = _(
+                'Your order {order_code} has been successfully cancelled.'
+            ).format(**notification_date_attrs)
+        with translation.override('ne'):
+            in_app_title_ne = _(
+                'Your order {order_code} has been successfully cancelled.'
+            ).format(**notification_date_attrs)
         mail_title = _(
             'Your order {order_code} has been successfully cancelled.'
         ).format(**notification_date_attrs)
         notification_type = Notification.NotificationType.ORDER_CANCELLED.value
-        send_notification_to_customer(order_obj, notification_type, in_app_title, mail_title, heading)
+        send_notification_to_customer(
+            order_obj,
+            notification_type,
+            mail_title,
+            heading,
+            in_app_title_en=in_app_title_en,
+            in_app_title_ne=in_app_title_ne,
+        )

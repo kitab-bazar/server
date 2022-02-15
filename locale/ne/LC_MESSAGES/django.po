@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-15 00:58+0545\n"
+"POT-Creation-Date: 2022-02-15 08:20+0545\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -401,7 +401,7 @@ msgstr ""
 msgid "Invalid book id."
 msgstr ""
 
-#: apps/order/tasks.py:128
+#: apps/order/tasks.py:134 apps/order/tasks.py:138
 #, python-brace-format
 msgid ""
 "Your order {order_code} placed on {day_name} {day}th {month_name} {year} at "
@@ -410,7 +410,7 @@ msgstr ""
 "तपाइले  {day_name} {day} {month_name} {year} {time} मा गर्नु भएको अडर "
 "{order_code} प्राप्त भएको छ ।"
 
-#: apps/order/tasks.py:131
+#: apps/order/tasks.py:141
 #, python-brace-format
 msgid ""
 "Your order {order_code} placed on {day_name} {day}th {month_name} {year} at "
@@ -419,7 +419,7 @@ msgstr ""
 "{day_name} {day} {month_name} {year} मा {time} मा राखिएको तपाईंको अर्डर "
 "{order_code} तलको विवरण सहित प्राप्त भएको छ ।"
 
-#: apps/order/tasks.py:139
+#: apps/order/tasks.py:157 apps/order/tasks.py:162
 #, python-brace-format
 msgid ""
 "Your order {order_code} placed on {day_name} {day}th {month_name} {year} at "
@@ -428,7 +428,7 @@ msgstr ""
 "तपाइले  {day_name} {day} {month_name} {year} {time} मा गर्नु भएको अडर "
 "{order_code} प्याक गरिएको छ ।"
 
-#: apps/order/tasks.py:143
+#: apps/order/tasks.py:166
 #, python-brace-format
 msgid ""
 "Your order {order_code} placed on {day_name} {day}th {month_name} {year} at "
@@ -437,7 +437,7 @@ msgstr ""
 "{day_name} {day} {month_name} {year} मा {time} मा राखिएको तपाईंको अर्डर "
 "{order_code} तलको विवरण सहित प्राप्त भएको छ ।"
 
-#: apps/order/tasks.py:152
+#: apps/order/tasks.py:183 apps/order/tasks.py:188
 #, python-brace-format
 msgid ""
 "Your order {order_code} placed on {day_name} {day}th {month_name} {year} at "
@@ -446,7 +446,7 @@ msgstr ""
 "तपाइले  {day_name} {day} {month_name} {year} {time} मा गर्नु भएको अडर "
 "{order_code} डेलिभर भएको छ ।"
 
-#: apps/order/tasks.py:156
+#: apps/order/tasks.py:192
 #, python-brace-format
 msgid ""
 "Thanks for shopping with us! we are glad to inform you that your order "
@@ -456,7 +456,7 @@ msgstr ""
 "सफलतापूर्वक डेलिभर गरिएको छ भनी जानकारी गराउन पाउँदा हामी खुसी छौं।हामी आशा गर्दछौं "
 "कि तपाईले भर्खर खरीद गर्नु भएको सामानसँग खुशी हुनुहुन्छ ।"
 
-#: apps/order/tasks.py:165 apps/order/tasks.py:168
+#: apps/order/tasks.py:209 apps/order/tasks.py:213 apps/order/tasks.py:216
 #, python-brace-format
 msgid "Your order {order_code} has been successfully cancelled."
 msgstr "तपाईको अर्डर {order_code} तपाईको अनुरोध अनुसार सफलतापूर्वक रद्द गरिएको छ ।"
