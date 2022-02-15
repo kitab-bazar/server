@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'tinymce',
     'storages',
+    'import_export',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
