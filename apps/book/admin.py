@@ -1,30 +1,37 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
+from import_export.admin import ImportExportModelAdmin
 
 from apps.book.models import Tag, Category, Author, Book, WishList
 from apps.book.forms import BookAdminForm, AuthorAdminForm
+from apps.book.resources import (
+    BookResource, BookCategoryResource, BookAuthorResource, BookTagResource
+)
 
 
-class TagAdmin(TranslationAdmin):
+class TagAdmin(TranslationAdmin, ImportExportModelAdmin):
     list_display = ['id', 'name']
     list_display_links = ['id', 'name']
     search_fields = ['id', 'name', ]
+    resource_class = BookTagResource
 
 
-class CategoryAdmin(TranslationAdmin):
+class CategoryAdmin(TranslationAdmin, ImportExportModelAdmin):
     list_display = ['id', 'name', 'parent_category']
     list_display_links = ['id', 'name']
     search_fields = ['id', 'name', ]
+    resource_class = BookCategoryResource
 
 
-class AuthorAdmin(TranslationAdmin):
+class AuthorAdmin(TranslationAdmin, ImportExportModelAdmin):
     list_display = ['id', 'name']
     list_display_links = ['id', 'name']
     search_fields = ['id', 'name', ]
     form = AuthorAdminForm
+    resource_class = BookAuthorResource
 
 
-class BookAdmin(TranslationAdmin):
+class BookAdmin(TranslationAdmin, ImportExportModelAdmin):
     list_display = ['id', 'title', 'publisher', 'price', 'isbn']
     autocomplete_fields = ('categories', 'tags', 'authors', 'publisher')
     search_fields = [
@@ -55,6 +62,7 @@ class BookAdmin(TranslationAdmin):
         }),
     )
     form = BookAdminForm
+    resource_class = BookResource
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related(
