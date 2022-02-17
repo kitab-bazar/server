@@ -19,7 +19,6 @@ class Notification(models.Model):
         default=NotificationType.GENERAL,
         verbose_name=_("Notification Type")
     )
-    title = models.TextField(verbose_name=_('Title'))
     # Display to user
     recipient = models.ForeignKey('user.User', on_delete=models.CASCADE, verbose_name=_('For user'),)
     # Unread/Read

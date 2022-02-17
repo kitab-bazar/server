@@ -778,7 +778,6 @@ enum NotificationNotificationType {
 type NotificationType {
   id: ID!
   notificationType: NotificationNotificationType!
-  title: String!
   read: Boolean!
   createdAt: DateTime!
   order: OrderType
@@ -912,7 +911,7 @@ type Query {
   orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   orderStat: OrderStatType
   notification(id: ID!): NotificationType
-  notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
+  notifications(isRead: Boolean, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
   bookDetail(id: ID!): BookDetailType
   books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, isAddedInWishlist: Boolean, grade: [BookGradeEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType

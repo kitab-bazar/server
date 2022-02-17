@@ -20,7 +20,6 @@ class TestNotificationForOrder(GraphQLTestCase):
                   id
                   notificationType
                   read
-                  title
                   order {
                     status
                   }

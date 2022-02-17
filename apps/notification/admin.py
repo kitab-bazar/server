@@ -3,8 +3,8 @@ from apps.notification.models import Notification
 
 
 class NotificationAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'read', 'recipient', 'notification_type']
-    list_display_links = ['id', 'title']
+    list_display = ['id', 'read', 'recipient', 'notification_type']
+    list_display_links = ['id']
     search_fields = ['id', 'recipient__full_name']
     autocomplete_fields = ['recipient', ]
 
