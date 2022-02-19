@@ -3,18 +3,36 @@ from django.db.models import F, Sum
 from django.utils.translation import ugettext_lazy as _
 from django.db import transaction
 
-from config.serializers import CreatedUpdatedBaseSerializer, IntegerIDField
+from config.serializers import CreatedUpdatedBaseSerializer
 
 from apps.order.models import CartItem, Order, BookOrder
-from apps.book.models import Book, WishList
+from apps.book.models import WishList
 from apps.order.tasks import send_notification
 
 
 class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
+    MAX_ITEMS_ALLOWED = 1000
 
     class Meta:
         model = CartItem
         fields = ('book', 'quantity',)
+
+    def validate_quantity(self, quantity):
+        created_by = self.context['request'].user
+        cart_item_qs = CartItem.objects.filter(created_by=created_by)
+        if self.instance:
+            # Exclude current item if already in database
+            cart_item_qs = cart_item_qs.exclude(pk=self.instance.pk)
+        current_total_cart_items_count = cart_item_qs.aggregate(Sum('quantity'))['quantity__sum'] or 0
+        new_count = current_total_cart_items_count + quantity
+        if new_count > self.MAX_ITEMS_ALLOWED:
+            raise serializers.ValidationError(
+                _('Only %(new_count)d books are allowed. Current request has %(allowed_count)d books.') % dict(
+                    new_count=new_count,
+                    allowed_count=self.MAX_ITEMS_ALLOWED,
+                )
+            )
+        return quantity
 
     def validate_book(self, book):
         created_by = self.context['request'].user
@@ -26,7 +44,6 @@ class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializ
 
 
 class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
-
     class Meta:
         model = Order
         fields = ()
