@@ -16,18 +16,6 @@ class TestOrder(GraphQLTestCase):
             }
         '''
 
-        self.place_single_order = '''
-            mutation Mutation($input: PlaceSingleOrderInputType!) {
-                placeSingleOrder(data: $input) {
-                    ok
-                    errors
-                    result {
-                      id
-                      totalPrice
-                    }
-                }
-            }
-        '''
         self.cart = '''
             query MyQuery {
               cartItems {
@@ -119,21 +107,3 @@ class TestOrder(GraphQLTestCase):
             total_price,
             self.book1.price * self.cart_item_1.quantity + self.book2.price * self.cart_item_2.quantity
         )
-
-    def test_can_place_single_order(self):
-        self.force_login(self.user)
-        # Place single order
-        minput = {'bookId': self.book1.id, 'quantity': 20}
-        content = self.query_check(
-            self.place_single_order, minput=minput, okay=True
-        )
-        result = content['data']['placeSingleOrder']['result']
-        self.assertEqual(result['totalPrice'], self.book1.price * minput['quantity'])
-
-        # Test should clear wish list after order placed
-        content = self.query_check(self.retrieve_wish_list)
-        result = content['data']['wishList']['results']
-        self.assertEqual(len(result), 1)
-
-        # Test should not remove not ordered item
-        self.assertEqual(content['data']['wishList']['results'][0]['id'], str(self.wish_list_2.id))

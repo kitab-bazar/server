@@ -15,7 +15,6 @@ from apps.order.schema import CartItemType, OrderType
 from apps.order.serializers import (
     CartItemSerializer,
     CreateOrderFromCartSerializer,
-    PlaceSingleOrderSerializer,
     OrderStatusUpdateSerializer,
 )
 
@@ -76,28 +75,6 @@ class PlaceOrderFromCart(graphene.Mutation):
         return PlaceOrderFromCart(result=instance, errors=None, ok=True)
 
 
-PlaceSingleOrderInputType = generate_input_type_for_serializer(
-    'PlaceSingleOrderInputType',
-    serializer_class=PlaceSingleOrderSerializer
-)
-
-
-class PlaceSingleOrder(graphene.Mutation):
-    class Arguments:
-        data = PlaceSingleOrderInputType(required=True)
-    errors = graphene.List(graphene.NonNull(CustomErrorType))
-    ok = graphene.Boolean()
-    result = graphene.Field(OrderType)
-
-    @staticmethod
-    def mutate(root, info, data):
-        serializer = PlaceSingleOrderSerializer(data=data, context={'request': info.context.request})
-        if errors := mutation_is_not_valid(serializer):
-            return PlaceSingleOrder(errors=errors, ok=False)
-        instance = serializer.save()
-        return PlaceSingleOrder(result=instance, errors=None, ok=True)
-
-
 class OrderMutationMixin():
     @classmethod
     def filter_queryset(cls, qs, info):
@@ -137,6 +114,5 @@ class Mutation(graphene.ObjectType):
     update_cart_item = UpdateCartItem.Field()
     delete_cart_item = DeleteCartItem.Field()
     place_order_from_cart = PlaceOrderFromCart.Field()
-    place_single_order = PlaceSingleOrder.Field()
     update_order = UpdateOrder.Field()
     delete_order = DeleteOrder.Field()

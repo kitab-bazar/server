@@ -79,58 +79,6 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         return order
 
 
-class PlaceSingleOrderSerializer(serializers.Serializer):
-    book_id = IntegerIDField(required=True, write_only=True)
-    quantity = serializers.IntegerField(required=True, write_only=True)
-
-    def validate_book_id(self, book_id):
-        try:
-            return Book.objects.get(pk=book_id).id
-        except Book.DoesNotExist:
-            raise serializers.ValidationError(_('Invalid book id.'))
-
-    def save(self, **kwargs):
-        created_by = self.context['request'].user
-        book_id = self.validated_data['book_id']
-        quantity = self.validated_data['quantity']
-
-        book = Book.objects.get(pk=book_id)
-        total_price = book.price * quantity
-
-        # Create order
-        self.validated_data['created_by'] = created_by
-        self.validated_data['total_price'] = total_price
-        order = Order.objects.create(created_by=created_by, total_price=total_price)
-
-        # Create book orders
-        BookOrder.objects.create(
-            title_en=book.title_en,
-            title_ne=book.title_ne,
-            price=book.price,
-            quantity=quantity,
-            isbn=book.isbn,
-            edition=book.edition,
-            image=book.image,
-            total_price=total_price,
-            order=order,
-            book=book,
-            publisher=book.publisher
-        )
-
-        # Remove book form withlist
-        WishList.objects.filter(book_id=book_id).delete()
-
-        # Remove book form cart
-        CartItem.objects.filter(book_id=book_id).delete()
-
-        # Send notification
-        transaction.on_commit(
-            lambda: send_notification.delay(order.id)
-        )
-
-        return order
-
-
 class OrderStatusUpdateSerializer(serializers.ModelSerializer):
     '''
     This serializer is used to update status of order only

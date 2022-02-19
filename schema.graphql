@@ -722,7 +722,6 @@ type Mutation {
   updateCartItem(data: CartItemInputType!, id: ID!): UpdateCartItem
   deleteCartItem(id: ID!): DeleteCartItem
   placeOrderFromCart: PlaceOrderFromCart
-  placeSingleOrder(data: PlaceSingleOrderInputType!): PlaceSingleOrder
   updateOrder(data: OrderUpdateInputType!, id: ID!): UpdateOrder
   deleteOrder(id: ID!): DeleteOrder
   createBook(data: BookCreateInputType!): CreateBook
@@ -829,17 +828,6 @@ type PlaceOrderFromCart {
   errors: [GenericScalar!]
   ok: Boolean
   result: OrderType
-}
-
-type PlaceSingleOrder {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: OrderType
-}
-
-input PlaceSingleOrderInputType {
-  bookId: ID!
-  quantity: Int!
 }
 
 type ProvinceListType {
