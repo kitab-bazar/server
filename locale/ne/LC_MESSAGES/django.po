@@ -1,0 +1,514 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-19 16:28+0545\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/blog/forms.py:12 apps/book/forms.py:12
+msgid "Description [en]"
+msgstr ""
+
+#: apps/blog/forms.py:14 apps/book/forms.py:14
+msgid "Description [ne]"
+msgstr ""
+
+#: apps/blog/models.py:10 apps/book/models.py:9 apps/common/models.py:7
+#: apps/common/models.py:43 apps/institution/models.py:9
+#: apps/publisher/models.py:9 apps/school/models.py:8
+msgid "Name"
+msgstr ""
+
+#: apps/blog/models.py:22 apps/book/models.py:36
+msgid "Category name"
+msgstr ""
+
+#: apps/blog/models.py:30 apps/book/models.py:44
+msgid "Parent category"
+msgstr ""
+
+#: apps/blog/models.py:34 apps/book/models.py:48 apps/book/models.py:73
+msgid "Category"
+msgstr ""
+
+#: apps/blog/models.py:35 apps/book/models.py:49
+msgid "Categories"
+msgstr ""
+
+#: apps/blog/models.py:47
+msgid "Blog title"
+msgstr ""
+
+#: apps/blog/models.py:48
+msgid "Blog Description"
+msgstr ""
+
+#: apps/blog/models.py:51
+msgid "Blog image"
+msgstr ""
+
+#: apps/blog/models.py:55
+msgid "Blog category"
+msgstr ""
+
+#: apps/blog/models.py:58
+msgid "Blog Tags"
+msgstr ""
+
+#: apps/blog/models.py:60 apps/book/models.py:90
+msgid "Published Date"
+msgstr ""
+
+#: apps/blog/models.py:62 apps/helpdesk/models.py:50
+msgid "Publish Type"
+msgstr ""
+
+#: apps/blog/models.py:65 apps/book/models.py:111
+msgid "Meta title"
+msgstr ""
+
+#: apps/blog/models.py:66 apps/book/models.py:112
+msgid "Meta Keywords"
+msgstr ""
+
+#: apps/blog/models.py:67 apps/book/models.py:113
+msgid "Meta Description"
+msgstr ""
+
+#: apps/blog/models.py:68 apps/book/models.py:114
+msgid "Open graph title"
+msgstr ""
+
+#: apps/blog/models.py:69 apps/book/models.py:115
+msgid "Open graph description"
+msgstr ""
+
+#: apps/blog/models.py:73 apps/book/models.py:119
+msgid "Open graph locale"
+msgstr ""
+
+#: apps/blog/models.py:74 apps/book/models.py:120
+msgid "Open graph type"
+msgstr ""
+
+#: apps/blog/models.py:80
+msgid "Blog"
+msgstr ""
+
+#: apps/blog/models.py:81
+msgid "Blogs"
+msgstr ""
+
+#: apps/book/forms.py:26
+msgid "About Author [en]"
+msgstr ""
+
+#: apps/book/forms.py:28
+msgid "About author [ne]"
+msgstr ""
+
+#: apps/book/models.py:21
+msgid "Author name"
+msgstr ""
+
+#: apps/book/models.py:23
+msgid "About author"
+msgstr ""
+
+#: apps/book/models.py:26 apps/book/models.py:76
+msgid "Author"
+msgstr ""
+
+#: apps/book/models.py:27
+msgid "Authors"
+msgstr ""
+
+#: apps/book/models.py:62
+msgid "Grade 1"
+msgstr ""
+
+#: apps/book/models.py:63
+msgid "Grade 2"
+msgstr ""
+
+#: apps/book/models.py:64
+msgid "Grade 3"
+msgstr ""
+
+#: apps/book/models.py:67 apps/notification/models.py:22
+#: apps/order/models.py:31
+msgid "Title"
+msgstr ""
+
+#: apps/book/models.py:71 apps/helpdesk/models.py:24
+msgid "Description"
+msgstr ""
+
+#: apps/book/models.py:79
+msgid "Tags"
+msgstr ""
+
+#: apps/book/models.py:83 apps/order/models.py:34
+msgid "ISBN"
+msgstr ""
+
+#: apps/book/models.py:85
+msgid "Number of pages"
+msgstr ""
+
+#: apps/book/models.py:87
+msgid "Language"
+msgstr ""
+
+#: apps/book/models.py:89
+msgid "Weight in grams"
+msgstr ""
+
+#: apps/book/models.py:94 apps/order/models.py:35
+msgid "Edition"
+msgstr ""
+
+#: apps/book/models.py:97 apps/order/models.py:58 apps/publisher/models.py:41
+#: apps/user/models.py:94
+msgid "Publisher"
+msgstr ""
+
+#: apps/book/models.py:101
+msgid "Grade"
+msgstr ""
+
+#: apps/book/models.py:103
+msgid "Is published"
+msgstr ""
+
+#: apps/book/models.py:105 apps/order/models.py:18 apps/order/models.py:86
+msgid "Created by"
+msgstr ""
+
+#: apps/book/models.py:109 apps/order/models.py:32
+msgid "Price"
+msgstr ""
+
+#: apps/book/models.py:126 apps/book/models.py:150 apps/order/models.py:12
+#: apps/order/models.py:44
+msgid "Book"
+msgstr ""
+
+#: apps/book/models.py:127
+msgid "Books"
+msgstr ""
+
+#: apps/book/models.py:146 apps/user/models.py:103
+msgid "User"
+msgstr ""
+
+#: apps/book/models.py:155
+msgid "Wish list"
+msgstr ""
+
+#: apps/book/models.py:156
+msgid "Wish lists"
+msgstr ""
+
+#: apps/book/serializers.py:24
+msgid "Book is already added in wish list."
+msgstr ""
+
+#: apps/common/models.py:20 apps/common/models.py:21 apps/common/models.py:29
+#: apps/common/models.py:47 apps/institution/models.py:12
+#: apps/publisher/models.py:12 apps/school/models.py:11
+msgid "Province"
+msgstr ""
+
+#: apps/common/models.py:34 apps/common/models.py:51
+#: apps/institution/models.py:16 apps/publisher/models.py:16
+#: apps/school/models.py:15
+msgid "District"
+msgstr ""
+
+#: apps/common/models.py:35
+msgid "Districts"
+msgstr ""
+
+#: apps/common/models.py:56 apps/helpdesk/models.py:20
+#: apps/institution/models.py:20 apps/publisher/models.py:20
+#: apps/school/models.py:19
+msgid "Municipality"
+msgstr ""
+
+#: apps/common/models.py:57
+msgid "Municipalities"
+msgstr ""
+
+#: apps/helpdesk/models.py:17 apps/user/models.py:78
+msgid "Full Name"
+msgstr ""
+
+#: apps/helpdesk/models.py:18 apps/user/models.py:64
+msgid "Email address"
+msgstr ""
+
+#: apps/helpdesk/models.py:23 apps/institution/models.py:24
+#: apps/publisher/models.py:24 apps/school/models.py:23
+msgid "Local address"
+msgstr ""
+
+#: apps/helpdesk/models.py:29
+msgid "Message Type"
+msgstr ""
+
+#: apps/helpdesk/models.py:33
+msgid "Contact message"
+msgstr ""
+
+#: apps/helpdesk/models.py:34
+msgid "Contact messages"
+msgstr ""
+
+#: apps/helpdesk/models.py:45
+msgid "Question"
+msgstr ""
+
+#: apps/helpdesk/models.py:46
+msgid "Answer"
+msgstr ""
+
+#: apps/helpdesk/models.py:54
+msgid "Faq"
+msgstr ""
+
+#: apps/helpdesk/models.py:55
+msgid "Faqs"
+msgstr ""
+
+#: apps/institution/models.py:23 apps/publisher/models.py:23
+#: apps/school/models.py:22
+msgid "Ward Number"
+msgstr ""
+
+#: apps/institution/models.py:30 apps/publisher/models.py:30
+#: apps/school/models.py:29
+msgid "Pan number"
+msgstr ""
+
+#: apps/institution/models.py:37 apps/publisher/models.py:37
+#: apps/school/models.py:36
+msgid "Vat number"
+msgstr ""
+
+#: apps/institution/models.py:41 apps/user/models.py:90
+msgid "Institution"
+msgstr ""
+
+#: apps/institution/models.py:42
+msgid "Institutions"
+msgstr ""
+
+#: apps/notification/models.py:20
+msgid "Notification Type"
+msgstr ""
+
+#: apps/notification/models.py:24
+msgid "For user"
+msgstr ""
+
+#: apps/notification/models.py:27
+msgid "Read"
+msgstr ""
+
+#: apps/notification/models.py:27
+msgid "Whether notification has been marked as read"
+msgstr ""
+
+#: apps/notification/models.py:30
+msgid "Created at"
+msgstr ""
+
+#: apps/notification/models.py:30
+msgid "When notification was created"
+msgstr ""
+
+#: apps/notification/models.py:38
+msgid "Notification"
+msgstr ""
+
+#: apps/notification/models.py:39
+msgid "Notifications"
+msgstr ""
+
+#: apps/order/models.py:20 apps/order/models.py:33
+msgid "Quantity"
+msgstr ""
+
+#: apps/order/models.py:23
+msgid "Cart Item"
+msgstr ""
+
+#: apps/order/models.py:24
+msgid "Cart Items"
+msgstr ""
+
+#: apps/order/models.py:36 apps/order/models.py:76
+msgid "Total Price"
+msgstr ""
+
+#: apps/order/models.py:52 apps/order/models.py:98
+msgid "Order"
+msgstr ""
+
+#: apps/order/models.py:62
+msgid "Book Order"
+msgstr ""
+
+#: apps/order/models.py:63
+msgid "Book Orders"
+msgstr ""
+
+#: apps/order/models.py:91
+msgid "Order status"
+msgstr ""
+
+#: apps/order/models.py:94
+msgid "Order placed at"
+msgstr ""
+
+#: apps/order/models.py:99
+msgid "Orders"
+msgstr ""
+
+#: apps/order/serializers.py:24
+msgid "Book is already added in cart."
+msgstr ""
+
+#: apps/order/serializers.py:40
+msgid "Your cart is empty."
+msgstr ""
+
+#: apps/order/serializers.py:90
+msgid "Invalid book id."
+msgstr ""
+
+#: apps/order/tasks.py:76
+msgid "Book order received."
+msgstr ""
+
+#: apps/order/tasks.py:81
+msgid "Book order packed."
+msgstr ""
+
+#: apps/order/tasks.py:86
+msgid "Book order completed."
+msgstr ""
+
+#: apps/order/tasks.py:91
+msgid "Book order cancelled."
+msgstr ""
+
+#: apps/publisher/models.py:42
+msgid "Publishers"
+msgstr ""
+
+#: apps/school/models.py:40 apps/user/models.py:98
+msgid "School"
+msgstr ""
+
+#: apps/school/models.py:41
+msgid "Schools"
+msgstr ""
+
+#: apps/user/models.py:68
+msgid "First name"
+msgstr ""
+
+#: apps/user/models.py:73
+msgid "Last name"
+msgstr ""
+
+#: apps/user/models.py:84
+msgid "User Type"
+msgstr ""
+
+#: apps/user/models.py:104
+msgid "Users"
+msgstr ""
+
+#: apps/user/serializers.py:40
+msgid ""
+"Your accout is not active, please click the activation link we sent to your "
+"email"
+msgstr ""
+
+#: apps/user/serializers.py:127
+msgid "Activate your account."
+msgstr ""
+
+#: apps/user/serializers.py:128
+msgid "Please click on the link to confirm your registration"
+msgstr ""
+
+#: apps/user/serializers.py:135
+msgid "Activate your account"
+msgstr ""
+
+#: apps/user/serializers.py:137
+msgid "Activate Account"
+msgstr ""
+
+#: apps/user/serializers.py:166
+msgid "Activation link is not valid."
+msgstr ""
+
+#: apps/user/serializers.py:187
+msgid ""
+"We received a request to reset your account password. If you wish to do so, "
+"please click below. Otherwise, you may safely disregard this email."
+msgstr ""
+
+#: apps/user/serializers.py:194
+msgid "User with this email does not exist."
+msgstr ""
+
+#: apps/user/serializers.py:195
+msgid "Reset password"
+msgstr ""
+
+#: apps/user/serializers.py:197 apps/user/serializers.py:199
+msgid "Reset Password"
+msgstr ""
+
+#: apps/user/serializers.py:237
+msgid "The token is invalid."
+msgstr ""
+
+#: config/auth.py:5 config/exceptions.py:6 utils/permissions.py:6
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: config/exceptions.py:13
+msgid "You are not authenticated"
+msgstr ""
+
+#: config/settings.py:301
+msgid "English"
+msgstr ""
+
+#: config/settings.py:302
+msgid "Nepali"
+msgstr ""
+
+#: config/urls.py:66
+msgid "Kitab Bazar administration"
+msgstr ""
