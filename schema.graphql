@@ -802,9 +802,9 @@ type OrderStatisticType {
   totalQuantity: Int
 }
 
-enum OrderStatus {
-  RECEIVED
-  PACKED
+enum OrderStatusEnum {
+  PENDING
+  IN_TRANSIT
   COMPLETED
   CANCELLED
 }
@@ -814,14 +814,22 @@ type OrderType {
   totalPrice: Int!
   orderCode: UUID!
   createdBy: UserType!
-  status: OrderStatus!
+  status: OrderStatusEnum
   orderPlacedAt: DateTime!
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
   totalQuantity: Int
 }
 
 input OrderUpdateInputType {
-  status: status
+  status: OrderStatusEnum
+}
+
+type OrderWindowType {
+  id: ID!
+  title: String!
+  description: String!
+  startDate: Date!
+  endDate: Date!
 }
 
 type PlaceOrderFromCart {
@@ -899,6 +907,7 @@ type Query {
   order(id: ID!): OrderType
   orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   orderStat: OrderStatType
+  orderWindow: OrderWindowType
   notification(id: ID!): NotificationType
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
@@ -1264,13 +1273,6 @@ enum message_type {
   BUSINESS_RELATED
   FEATURE_SUGGESTIONS_FEEDBACK
   OTHER
-}
-
-enum status {
-  RECEIVED
-  PACKED
-  COMPLETED
-  CANCELLED
 }
 
 enum user_type {

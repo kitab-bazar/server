@@ -825,7 +825,7 @@ class TestOrderPermissions(TestPermissions):
 
         self.order = OrderFactory(created_by=self.individual_user)
         BookOrderFactory.create(book=self.book, order=self.order, publisher=self.publisher)
-        self.order_minput = {'status': Order.OrderStatus.CANCELLED.name}
+        self.order_minput = {'status': Order.Status.CANCELLED.name}
 
         super().setUp()
 

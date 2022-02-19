@@ -5,9 +5,15 @@ from django.db import transaction
 
 from config.serializers import CreatedUpdatedBaseSerializer
 
-from apps.order.models import CartItem, Order, BookOrder
 from apps.book.models import WishList
-from apps.order.tasks import send_notification
+
+from .models import (
+    CartItem,
+    Order,
+    BookOrder,
+    OrderWindow,
+)
+from .tasks import send_notification
 
 
 class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
@@ -48,22 +54,33 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         model = Order
         fields = ()
 
-    def save(self, **kwargs):
+    def validate(self, data):
+        created_by = self.context['request'].user
         # Get current users cart
-        cart_items = CartItem.objects.filter(created_by=self.context['request'].user).annotate(
+        cart_items = CartItem.objects.filter(created_by=created_by).annotate(
             total_price=F('book__price') * F('quantity')
         )
         if not cart_items.exists():
             raise serializers.ValidationError(_('Your cart is empty.'))
 
+        active_order_window = OrderWindow.get_active_window()
+        if active_order_window is None:
+            raise serializers.ValidationError(
+                _('No active order window available right now.')
+            )
+
         # Create order
-        created_by = self.context['request'].user
-        self.validated_data['created_by'] = created_by
+        data['created_by'] = created_by
+        data['assigned_order_window'] = active_order_window
         total_price = cart_items.aggregate(Sum('total_price'))['total_price__sum']
         cart_items.aggregate(Sum('total_price'))['total_price__sum']
-        self.validated_data['total_price'] = total_price
-        order = Order.objects.create(**self.validated_data)
+        data['total_price'] = total_price
+        data['cart_items'] = cart_items
+        return data
 
+    def create(self, validated_data):
+        cart_items = validated_data.pop('cart_items')
+        order = super().create(validated_data)
         # Create book orders
         BookOrder.objects.bulk_create([
             BookOrder(
@@ -80,19 +97,17 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
                 publisher=cart_item.book.publisher
             ) for cart_item in cart_items
         ])
-
         # Remove books form withlist
-        book_ids = CartItem.objects.filter(created_by=self.context['request'].user).values_list('book', flat=True)
+        book_ids = CartItem.objects\
+            .filter(created_by=validated_data['created_by'])\
+            .values_list('book', flat=True)
         WishList.objects.filter(book_id__in=book_ids).delete()
-
         # Clear cart
         cart_items.delete()
-
         # Send notification
         transaction.on_commit(
             lambda: send_notification.delay(order.id)
         )
-
         return order
 
 

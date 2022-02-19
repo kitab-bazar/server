@@ -59,10 +59,10 @@ class TestNotificationForOrder(GraphQLTestCase):
 
     def test_pulisher_should_get_notification_if_order_placed(self):
         self.force_login(self.publisher_user)
-        minput = {'status': Order.OrderStatus.RECEIVED.name}
+        minput = {'status': Order.Status.RECEIVED.name}
         with self.captureOnCommitCallbacks(execute=True):
             content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
-        self.assertEqual(content['data']['updateOrder']['result']['status'], Order.OrderStatus.RECEIVED.name)
+        self.assertEqual(content['data']['updateOrder']['result']['status'], Order.Status.RECEIVED.name)
 
         # Test customer (individual_user) should not get notification
         self.force_login(self.individual_user)
@@ -85,10 +85,10 @@ class TestNotificationForOrder(GraphQLTestCase):
     def test_customer_shoud_get_notification_if_order_cancelled(self):
         # Publisher updates order status
         self.force_login(self.publisher_user)
-        minput = {'status': Order.OrderStatus.CANCELLED.name}
+        minput = {'status': Order.Status.CANCELLED.name}
         with self.captureOnCommitCallbacks(execute=True):
             content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
-        self.assertEqual(content['data']['updateOrder']['result']['status'], Order.OrderStatus.CANCELLED.name)
+        self.assertEqual(content['data']['updateOrder']['result']['status'], Order.Status.CANCELLED.name)
 
         # Test publisher should not get notification
         content = self.query_check(self.notifications)
@@ -110,10 +110,10 @@ class TestNotificationForOrder(GraphQLTestCase):
     def test_customer_shoud_get_notification_if_order_packed(self):
         # Publisher updates order status
         self.force_login(self.publisher_user)
-        minput = {'status': Order.OrderStatus.PACKED.name}
+        minput = {'status': Order.Status.PACKED.name}
         with self.captureOnCommitCallbacks(execute=True):
             content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
-        self.assertEqual(content['data']['updateOrder']['result']['status'], Order.OrderStatus.PACKED.name)
+        self.assertEqual(content['data']['updateOrder']['result']['status'], Order.Status.PACKED.name)
 
         # Test publisher should not get notification
         content = self.query_check(self.notifications)
@@ -135,10 +135,10 @@ class TestNotificationForOrder(GraphQLTestCase):
     def test_customer_shoud_get_notification_if_order_completed(self):
         # Publisher updates order status
         self.force_login(self.publisher_user)
-        minput = {'status': Order.OrderStatus.COMPLETED.name}
+        minput = {'status': Order.Status.COMPLETED.name}
         with self.captureOnCommitCallbacks(execute=True):
             content = self.query_check(self.update_order, variables={'id': self.order.id}, minput=minput, okay=True)
-        self.assertEqual(content['data']['updateOrder']['result']['status'], Order.OrderStatus.COMPLETED.name)
+        self.assertEqual(content['data']['updateOrder']['result']['status'], Order.Status.COMPLETED.name)
 
         # Test publisher should not get notification
         content = self.query_check(self.notifications)

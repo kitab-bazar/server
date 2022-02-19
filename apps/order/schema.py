@@ -1,4 +1,5 @@
 import graphene
+from typing import Union
 from django.utils import timezone
 from graphene_django import DjangoObjectType
 from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
@@ -10,10 +11,12 @@ from django.db.models.functions import Cast
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoListField
 
-from apps.order.models import CartItem, Order, BookOrder
-from apps.order.filters import BookOrderFilterSet, OrderFilterSet
 from apps.user.models import User
 from apps.book.models import Book
+
+from .models import CartItem, Order, BookOrder, OrderWindow
+from .filters import BookOrderFilterSet, OrderFilterSet
+from .enums import OrderStatusEnum
 
 
 def get_cart_items_qs(info):
@@ -31,6 +34,12 @@ def get_orders_qs(info):
         return Order.objects.filter(created_by=info.context.user)
     # Making sure only distinct orders are fetched
     return _qs().distinct()
+
+
+class OrderWindowType(DjangoObjectType):
+    class Meta:
+        model = OrderWindow
+        fields = ('id', 'title', 'description', 'start_date', 'end_date')
 
 
 class CartItemType(DjangoObjectType):
@@ -89,6 +98,7 @@ class OrderType(DjangoObjectType):
         )
     )
     total_quantity = graphene.Int()
+    status = graphene.Field(OrderStatusEnum)
 
     class Meta:
         model = Order
@@ -148,7 +158,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         stat_from, stat_to = get_stat_daterange()
         return root.filter(
-            status=Order.OrderStatus.COMPLETED.value,
+            status=Order.Status.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
         ).count()
@@ -160,7 +170,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         stat_from, stat_to = get_stat_daterange()
         return root.filter(
-            status=Order.OrderStatus.COMPLETED.value,
+            status=Order.Status.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
         ).aggregate(Sum('book_order__quantity'))['book_order__quantity__sum']
@@ -172,7 +182,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         stat_from, stat_to = get_stat_daterange()
         return root.filter(
-            status=Order.OrderStatus.COMPLETED.value,
+            status=Order.Status.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
         ).annotate(order_placed_at_date=Cast('order_placed_at', DateField())).values('order_placed_at_date').annotate(
@@ -195,6 +205,11 @@ class Query(graphene.ObjectType):
         )
     )
     order_stat = graphene.Field(OrderStatType)
+    order_window = graphene.Field(OrderWindowType)
+
+    @staticmethod
+    def resolve_order_window(root, info, **kwargs) -> Union[None, OrderWindow]:
+        return OrderWindow.get_active_window()
 
     @staticmethod
     def resolve_cart_grand_total_price(root, info, **kwargs) -> QuerySet:

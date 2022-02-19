@@ -32,7 +32,7 @@ class TestOrderTranslation(GraphQLTestCase):
         self.individual_user = UserFactory.create(user_type=User.UserType.INDIVIDUAL_USER.value)
         publisher = PublisherFactory.create()
         self.book = BookFactory.create(publisher=publisher)
-        order = OrderFactory.create(created_by=self.individual_user, status=Order.OrderStatus.COMPLETED)
+        order = OrderFactory.create(created_by=self.individual_user, status=Order.Status.COMPLETED)
         BookOrderFactory.create(
             order=order, publisher=publisher, book=self.book,
             title_en='book title in english',

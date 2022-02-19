@@ -51,13 +51,13 @@ class TestOrderState(TestPermissions):
 
         # Create 3 book orders
         order_1 = OrderFactory.create(
-            created_by=self.individual_user, status=Order.OrderStatus.COMPLETED, order_placed_at=self.stat_to
+            created_by=self.individual_user, status=Order.Status.COMPLETED, order_placed_at=self.stat_to
         )
         order_2 = OrderFactory.create(
-            created_by=self.individual_user, status=Order.OrderStatus.COMPLETED, order_placed_at=self.stat_to
+            created_by=self.individual_user, status=Order.Status.COMPLETED, order_placed_at=self.stat_to
         )
         order_3 = OrderFactory.create(
-            created_by=self.individual_user, status=Order.OrderStatus.COMPLETED, order_placed_at=self.stat_to
+            created_by=self.individual_user, status=Order.Status.COMPLETED, order_placed_at=self.stat_to
         )
 
         # Create 4 book orders each having 5 quantity and 500 price
@@ -114,7 +114,7 @@ class TestOrderState(TestPermissions):
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
     def test_school_admin_can_see_their_stat_only(self):
-        order = OrderFactory.create(created_by=self.school_admin_user, status=Order.OrderStatus.COMPLETED)
+        order = OrderFactory.create(created_by=self.school_admin_user, status=Order.Status.COMPLETED)
         BookOrderFactory.create(
             order=order, publisher=self.publisher_1, book=self.book_1, quantity=10, price=100
         )
@@ -125,7 +125,7 @@ class TestOrderState(TestPermissions):
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
     def test_individual_user_can_see_their_stat_only(self):
-        order = OrderFactory.create(created_by=self.individual_user, status=Order.OrderStatus.COMPLETED)
+        order = OrderFactory.create(created_by=self.individual_user, status=Order.Status.COMPLETED)
         BookOrderFactory.create(
             order=order, publisher=self.publisher_1, book=self.book_1, quantity=30, price=100
         )

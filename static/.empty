@@ -1,0 +1,5 @@
+WHAT? EMPTY FILE.
+WHY?
+    - ./manage.py collectstaic wants this directory as defined in STATICFILES_DIRS.
+    - To add this dirctory to the git.
+TODO: DELETE THIS FILE AFTER ADDING ANY OTHER FILES IN THIS DIRECTORY.
