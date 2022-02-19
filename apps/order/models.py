@@ -1,7 +1,6 @@
 import uuid
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db import models
-from django.utils.translation import ugettext
 
 
 class CartItem(models.Model):
@@ -88,10 +87,10 @@ class Order(models.Model):
     status = models.CharField(
         choices=OrderStatus.choices, max_length=40,
         default=OrderStatus.RECEIVED,
-        verbose_name=ugettext("Order status")
+        verbose_name=_("Order status")
     )
     order_placed_at = models.DateTimeField(
-        auto_now_add=True, verbose_name=ugettext("Order placed at")
+        auto_now_add=True, verbose_name=_("Order placed at")
     )
 
     class Meta:
