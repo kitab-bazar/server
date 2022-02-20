@@ -56,7 +56,7 @@ class TestNotificationForOrder(GraphQLTestCase):
         self.publisher_user.save()
 
         self.order = OrderFactory(created_by=self.individual_user)
-        BookOrderFactory.create(book=self.book, order=self.order, publisher=publisher)
+        BookOrderFactory.create(book=self.book, order=self.order, quantity=1)
 
         super().setUp()
 

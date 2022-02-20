@@ -9,7 +9,12 @@ from apps.order.models import Order
 from apps.user.factories import UserFactory
 from apps.book.factories import BookFactory, WishListFactory
 from apps.publisher.factories import PublisherFactory
-from apps.order.factories import CartItemFactory, OrderWindowFactory, OrderFactory
+from apps.order.factories import (
+    BookOrderFactory,
+    CartItemFactory,
+    OrderFactory,
+    OrderWindowFactory,
+)
 
 
 class TestOrder(GraphQLTestCase):
@@ -85,6 +90,16 @@ class TestOrder(GraphQLTestCase):
                 id
               }
             }
+          }
+        }
+    '''
+
+    ORDER_SUMMARY_QUERY = '''
+        query MyQuery {
+          orderSummary {
+            totalBooks
+            totalBooksQuantity
+            totalPrice
           }
         }
     '''
@@ -222,6 +237,47 @@ class TestOrder(GraphQLTestCase):
             if okay:
                 assert len(response['data']['updateOrder']['result']['activityLog']) > 0
             order.save(update_fields=('status',))  # Revert back status for next user
+
+    def test_order_summary(self):
+        user = UserFactory.create(user_type=User.UserType.SCHOOL_ADMIN)
+        publisher = PublisherFactory.create()
+        book1 = BookFactory.create(publisher=publisher, price=10)
+        book2 = BookFactory.create(publisher=publisher, price=20)
+        book3 = BookFactory.create(publisher=publisher, price=25)
+        BookFactory.create(publisher=publisher, price=2)
+
+        order1 = OrderFactory.create(created_by=user)
+        order2 = OrderFactory.create(created_by=user)
+        order3 = OrderFactory.create(created_by=user, status=Order.Status.CANCELLED)
+        order4 = OrderFactory.create(created_by=user, status=Order.Status.COMPLETED)
+        order5 = OrderFactory.create(created_by=user, status=Order.Status.IN_TRANSIT)
+
+        # Order 1 (Pending)
+        BookOrderFactory.create(order=order1, book=book1, quantity=1)
+        BookOrderFactory.create(order=order1, book=book2, quantity=10)
+        # Order 2 (Pending)
+        BookOrderFactory.create(order=order2, book=book1, quantity=10)
+        BookOrderFactory.create(order=order2, book=book2, quantity=10)
+        BookOrderFactory.create(order=order2, book=book3, quantity=30)
+        # Order 3 (CANCELLED)
+        BookOrderFactory.create(order=order3, book=book1, quantity=20)
+        BookOrderFactory.create(order=order3, book=book1, quantity=20)
+        # Order 4 (COMPLETED)
+        BookOrderFactory.create(order=order4, book=book1, quantity=20)
+        BookOrderFactory.create(order=order4, book=book2, quantity=5)
+        BookOrderFactory.create(order=order4, book=book3, quantity=2)
+        # Order 5 (IN_TRANSIT)
+        BookOrderFactory.create(order=order5, book=book1, quantity=20)
+        BookOrderFactory.create(order=order5, book=book2, quantity=5)
+        BookOrderFactory.create(order=order5, book=book3, quantity=2)
+
+        self.force_login(user)
+        content = self.query_check(self.ORDER_SUMMARY_QUERY)['data']['orderSummary']
+        self.assertEqual(content, {
+            'totalBooks': 3,  # book1, book2, book3
+            'totalBooksQuantity': 61,
+            'totalPrice': 1260,
+        })
 
 
 class OrderWindowTest(GraphQLTestCase):

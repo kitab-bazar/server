@@ -3,6 +3,7 @@ import uuid
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _, gettext
 from django.core.exceptions import ValidationError
+from django.conf import settings
 from django.db import models
 
 
@@ -111,6 +112,26 @@ class BookOrder(models.Model):
 
     def __str__(self):
         return self.title
+
+    def _set_book_attributes(self):
+        for attr in [
+            *(
+                f'title_{lang}'
+                for lang, _ in settings.LANGUAGES
+            ),
+            'publisher',
+            'price',
+            'isbn',
+            'edition',
+            'image',
+        ]:
+            setattr(self, attr, getattr(self.book, attr))
+        self.total_price = self.price * self.quantity
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:  # Create
+            self._set_book_attributes()
+        return super().save(*args, **kwargs)
 
 
 class Order(models.Model):

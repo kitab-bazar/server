@@ -84,21 +84,18 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         cart_items = validated_data.pop('cart_items')
         order = super().create(validated_data)
         # Create book orders
-        BookOrder.objects.bulk_create([
-            BookOrder(
-                title_en=cart_item.book.title_en,
-                title_ne=cart_item.book.title_ne,
-                price=cart_item.book.price,
+        book_orders = []
+        for cart_item in cart_items:
+            book_order = BookOrder(
                 quantity=cart_item.quantity,
-                isbn=cart_item.book.isbn,
-                edition=cart_item.book.edition,
-                image=cart_item.book.image,
                 total_price=cart_item.total_price,
                 order=order,
                 book=cart_item.book,
-                publisher=cart_item.book.publisher
-            ) for cart_item in cart_items
-        ])
+            )
+            # Fetch and set attributes from book
+            book_order._set_book_attributes()
+            book_orders.append(book_order)
+        BookOrder.objects.bulk_create(book_orders)
         # Remove books form withlist
         book_ids = CartItem.objects\
             .filter(created_by=validated_data['created_by'])\

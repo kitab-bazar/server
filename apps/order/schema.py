@@ -4,7 +4,7 @@ from django.utils import timezone
 from graphene_django import DjangoObjectType
 from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
 
-from django.db.models import QuerySet, F, Sum
+from django.db.models import QuerySet, F, Sum, Count
 from django.db.models.fields import DateField
 from django.db.models.functions import Cast
 
@@ -219,6 +219,18 @@ class OrderStatType(graphene.ObjectType):
         ).values('created_at_date', 'total_quantity')
 
 
+class OrderSummaryType(graphene.ObjectType):
+    """
+    Order summary for current user's pending orders
+    """
+    total_books = graphene.Int(description='Total books count (Unique book count)')
+    total_books_quantity = graphene.Int(description='Total books quantity count. (Order quantity sum)')
+    total_price = graphene.Int(description='Total price. (Order price sum)')
+
+    class Meta:
+        fields = ()
+
+
 class Query(graphene.ObjectType):
     cart_items = DjangoPaginatedListObjectField(
         CartType,
@@ -234,6 +246,7 @@ class Query(graphene.ObjectType):
         )
     )
     order_stat = graphene.Field(OrderStatType)
+    order_summary = graphene.Field(OrderSummaryType)
     # Order window
     order_window_active = graphene.Field(OrderWindowType)
     order_window = DjangoObjectField(OrderWindowType)
@@ -243,6 +256,17 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+
+    @staticmethod
+    def resolve_order_summary(root, info, **kwargs):
+        current_user = info.context.user
+        if current_user.user_type == User.UserType.SCHOOL_ADMIN:
+            order_qs = Order.objects.filter(created_by=current_user, status=Order.Status.PENDING)
+            return order_qs.aggregate(
+                total_books=Count('book_order__book', distinct=True),
+                total_books_quantity=Sum('book_order__quantity'),
+                total_price=Sum('book_order__total_price'),
+            )
 
     @staticmethod
     def resolve_order_window_active(root, info, **kwargs) -> Union[None, OrderWindow]:

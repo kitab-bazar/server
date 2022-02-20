@@ -30,12 +30,6 @@ class OrderFactory(DjangoModelFactory):
 
 
 class BookOrderFactory(DjangoModelFactory):
-    title = fuzzy.FuzzyText(length=15)
-    price = fuzzy.FuzzyInteger(500, 2000)
-    quantity = fuzzy.FuzzyInteger(3, 10)
-    isbn = fuzzy.FuzzyText(length=13)
-    edition = fuzzy.FuzzyInteger(1, 9)
-    total_price = fuzzy.FuzzyInteger(5000, 500000)
     book = factory.SubFactory(BookFactory)
     order = factory.SubFactory(OrderFactory)
 
