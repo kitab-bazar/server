@@ -70,14 +70,15 @@ class TestCart(GraphQLTestCase):
         super().setUp()
 
     def test_can_add_update_delete_cart_items(self):
-        self.force_login(self.user)
-        book1 = BookFactory.create(publisher=self.publisher)
-        book2 = BookFactory.create(publisher=self.publisher)
+        user = UserFactory.create()
+        book1 = BookFactory.create(publisher=self.publisher, price=10)
+        book2 = BookFactory.create(publisher=self.publisher, price=20)
 
+        self.force_login(user)
         # Test can create cart
         minput = {'book': book1.id, 'quantity': CartItemSerializer.MAX_ITEMS_ALLOWED + 1}
         # - Don't allow new item with > MAX_ITEMS_ALLOWED
-        content = self.query_check(self.create_cart_item, minput=minput, okay=False)
+        self.query_check(self.create_cart_item, minput=minput, okay=False)
 
         minput = {'book': book1.id, 'quantity': CartItemSerializer.MAX_ITEMS_ALLOWED}
         content = self.query_check(self.create_cart_item, minput=minput, okay=True)
@@ -100,7 +101,7 @@ class TestCart(GraphQLTestCase):
         content = self.query_check(self.update_cart_item, minput=minput, variables={'id': cart_item_1.pk}, okay=True)
         result = content['data']['updateCartItem']['result']
         self.assertEqual(result['quantity'], minput['quantity'])
-        self.assertEqual(result['totalPrice'], minput['quantity'] * book1.price)
+        self.assertEqual(result['totalPrice'], minput['quantity'] * book2.price)
 
         # Failure again for > MAX_ITEMS_ALLOWED
         minput = {'book': book2.id, 'quantity': CartItemSerializer.MAX_ITEMS_ALLOWED}

@@ -806,7 +806,7 @@ type OrderStatType {
 }
 
 type OrderStatisticType {
-  orderPlacedAtDate: Date
+  createdAtDate: Date
   totalQuantity: Int
 }
 

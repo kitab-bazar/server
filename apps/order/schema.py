@@ -151,7 +151,7 @@ class OrderListType(CustomDjangoListObjectType):
 
 
 class OrderStatisticType(graphene.ObjectType):
-    order_placed_at_date = graphene.Date()
+    created_at_date = graphene.Date()
     total_quantity = graphene.Int()
 
 
@@ -188,8 +188,8 @@ class OrderStatType(graphene.ObjectType):
         stat_from, stat_to = get_stat_daterange()
         return root.filter(
             status=Order.Status.COMPLETED.value,
-            order_placed_at__gte=stat_from,
-            order_placed_at__lte=stat_to
+            created_at__gte=stat_from,
+            created_at__lte=stat_to
         ).count()
 
     @staticmethod
@@ -200,8 +200,8 @@ class OrderStatType(graphene.ObjectType):
         stat_from, stat_to = get_stat_daterange()
         return root.filter(
             status=Order.Status.COMPLETED.value,
-            order_placed_at__gte=stat_from,
-            order_placed_at__lte=stat_to
+            created_at__gte=stat_from,
+            created_at__lte=stat_to
         ).aggregate(Sum('book_order__quantity'))['book_order__quantity__sum']
 
     @staticmethod
@@ -212,11 +212,11 @@ class OrderStatType(graphene.ObjectType):
         stat_from, stat_to = get_stat_daterange()
         return root.filter(
             status=Order.Status.COMPLETED.value,
-            order_placed_at__gte=stat_from,
-            order_placed_at__lte=stat_to
-        ).annotate(order_placed_at_date=Cast('created_at', DateField())).values('order_placed_at_date').annotate(
+            created_at__gte=stat_from,
+            created_at__lte=stat_to
+        ).annotate(created_at_date=Cast('created_at', DateField())).values('created_at_date').annotate(
             total_quantity=Sum('book_order__quantity')
-        ).values('order_placed_at_date', 'total_quantity')
+        ).values('created_at_date', 'total_quantity')
 
 
 class Query(graphene.ObjectType):

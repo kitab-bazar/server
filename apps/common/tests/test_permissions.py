@@ -4,7 +4,6 @@ from config.permissions import UserPermissions
 
 from apps.user.models import User
 from apps.book.models import Book
-from apps.order.models import Order
 
 from apps.user.factories import UserFactory
 from apps.publisher.factories import PublisherFactory
@@ -12,7 +11,6 @@ from apps.book.factories import AuthorFactory, CategoryFactory, BookFactory
 from apps.common.factories import MunicipalityFactory
 from apps.school.factories import SchoolFactory
 from apps.institution.factories import InstitutionFactory
-from apps.order.factories import OrderFactory, BookOrderFactory
 
 
 class TestPermissions(GraphQLTestCase):
@@ -794,155 +792,4 @@ class TestInstitutionPermissions(TestPermissions):
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_DELETE_INSTITUTION)
-        )
-
-
-class TestOrderPermissions(TestPermissions):
-    def setUp(self):
-        super(TestOrderPermissions, self).setUp()
-        self.update_order = '''
-            mutation Mutation($id: ID!, $input: OrderUpdateInputType!) {
-                updateOrder(id: $id data: $input) {
-                    ok
-                    errors
-                    result {
-                      id
-                    }
-                }
-            }
-        '''
-
-        self.delete_order = '''
-            mutation Mutation($id: ID!) {
-                deleteOrder(id: $id) {
-                    ok
-                    errors
-                }
-            }
-        '''
-        self.publisher = PublisherFactory.create()
-        self.book = BookFactory.create(publisher=self.publisher)
-
-        self.order = OrderFactory(created_by=self.individual_user)
-        BookOrderFactory.create(book=self.book, order=self.order, publisher=self.publisher)
-        self.order_minput = {'status': Order.Status.CANCELLED.name}
-
-        super().setUp()
-
-    def test_admin_can_update_any_order(self):
-
-        # Admin case
-        self.force_login(self.super_admin)
-        self.query_check(
-            self.update_order, minput=self.order_minput,
-            variables={'id': self.order.id}, okay=True
-        )
-
-    def test_publisher_should_not_update_other_publisers_order(self):
-        # Create new publihser user
-        publisher_user = UserFactory.create(user_type=User.UserType.PUBLISHER)
-        self.force_login(publisher_user)
-        response = self.query_check(
-            self.update_order, minput=self.order_minput,
-            variables={'id': self.order.id}, assert_for_error=True
-        )
-        self.assertEqual(
-            response['errors'][0]['message'],
-            'Order matching query does not exist.'
-        )
-
-    def test_publisher_can_update_his_order_only(self):
-        self.force_login(self.publisher_user)
-        # Attach publisher profile
-        self.publisher_user.publisher = self.publisher
-        self.publisher_user.save()
-        self.query_check(
-            self.update_order, minput=self.order_minput,
-            variables={'id': self.order.id}, okay=True
-        )
-
-    def test_school_admin_or_institutional_user_or_individual_user_should_not_update_order(self):
-        # School admin case
-        self.force_login(self.school_admin_user)
-        response = self.query_check(
-            self.update_order, minput=self.order_minput, variables={'id': self.order.id},
-            assert_for_error=True
-        )
-        # Object level permission
-        self.assertEqual(
-            response['errors'][0]['message'],
-            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_ORDER)
-        )
-
-        # Institution case
-        self.force_login(self.institutional_user)
-        response = self.query_check(
-            self.update_order, minput=self.order_minput, variables={'id': self.order.id},
-            assert_for_error=True
-        )
-        self.assertEqual(
-            response['errors'][0]['message'],
-            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_ORDER)
-        )
-
-        # Individual user case
-        self.force_login(self.individual_user)
-        response = self.query_check(
-            self.update_order, minput=self.order_minput, variables={'id': self.order.id},
-            assert_for_error=True
-        )
-        self.assertEqual(
-            response['errors'][0]['message'],
-            UserPermissions.get_permission_message(UserPermissions.Permission.UPDATE_ORDER)
-        )
-
-    def test_admin_can_delete_any_order(self):
-        # Admin case
-        self.force_login(self.super_admin)
-        order = OrderFactory.create()
-        self.query_check(self.delete_order, variables={'id': order.id}, okay=True)
-
-    def test_publisher_can_delete_his_orders_only(self):
-        self.force_login(self.publisher_user)
-        self.publisher_user.publisher = self.publisher
-        self.publisher_user.save()
-        # Create order
-        order = OrderFactory(created_by=self.individual_user)
-        BookOrderFactory.create(book=self.book, order=order, publisher=self.publisher_user.publisher)
-        self.query_check(self.delete_order, variables={'id': order.id}, okay=True)
-
-    def test_publisher_can_not_delete_other_publishers_order(self):
-        # Create new publisher
-        publisher_user = UserFactory.create(user_type=User.UserType.PUBLISHER)
-        self.force_login(publisher_user)
-        response = self.query_check(self.delete_order, variables={'id': self.order.id}, assert_for_error=True)
-        self.assertEqual(
-            response['errors'][0]['message'],
-            'Order matching query does not exist.'
-        )
-
-    def test_school_admin_or_institution_admin_or_individual_user_should_not_delete_order(self):
-        order = OrderFactory.create()
-        # School admin case
-        self.force_login(self.school_admin_user)
-        response = self.query_check(self.delete_order, variables={'id': order.id}, assert_for_error=True)
-        self.assertEqual(
-            response['errors'][0]['message'],
-            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_ORDER)
-        )
-
-        # Institution case
-        self.force_login(self.institutional_user)
-        response = self.query_check(self.delete_order, variables={'id': order.id}, assert_for_error=True)
-        self.assertEqual(
-            response['errors'][0]['message'],
-            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_ORDER)
-        )
-
-        # Individual user case
-        self.force_login(self.individual_user)
-        response = self.query_check(self.delete_order, variables={'id': order.id}, assert_for_error=True)
-        self.assertEqual(
-            response['errors'][0]['message'],
-            UserPermissions.get_permission_message(UserPermissions.Permission.DELETE_ORDER)
         )

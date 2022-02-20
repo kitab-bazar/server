@@ -20,7 +20,7 @@ class TestOrderState(TestPermissions):
                 totalBooksOrdered
                 totalBooksUploaded
                 stat {
-                  orderPlacedAtDate
+                  createdAtDate
                   totalQuantity
                 }
               }
@@ -82,7 +82,7 @@ class TestOrderState(TestPermissions):
         self.assertEqual(order_stat['ordersCompletedCount'], 3)
 
         # Test shoudl retrive quantity count
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
+        self.assertEqual(order_stat['stat'][0]['createdAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 15)
 
     def test_publisher_can_see_their_stat_only(self):
@@ -98,7 +98,7 @@ class TestOrderState(TestPermissions):
         self.assertEqual(order_stat['ordersCompletedCount'], 2)
 
         # Test shoudl retrive quantity count
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
+        self.assertEqual(order_stat['stat'][0]['createdAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
         # ------------------------------------
@@ -110,7 +110,7 @@ class TestOrderState(TestPermissions):
         self.assertEqual(order_stat['totalBooksOrdered'], 10)
         self.assertEqual(order_stat['totalBooksUploaded'], 2)
         self.assertEqual(order_stat['ordersCompletedCount'], 2)
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
+        self.assertEqual(order_stat['stat'][0]['createdAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
     def test_school_admin_can_see_their_stat_only(self):
@@ -121,7 +121,7 @@ class TestOrderState(TestPermissions):
         self.force_login(self.school_admin_user)
         content = self.query_check(self.order_stat)
         order_stat = content['data']['orderStat']
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
+        self.assertEqual(order_stat['stat'][0]['createdAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 10)
 
     def test_individual_user_can_see_their_stat_only(self):
@@ -132,5 +132,5 @@ class TestOrderState(TestPermissions):
         self.force_login(self.individual_user)
         content = self.query_check(self.order_stat)
         order_stat = content['data']['orderStat']
-        self.assertEqual(order_stat['stat'][0]['orderPlacedAtDate'], str(self.stat_to.date()))
+        self.assertEqual(order_stat['stat'][0]['createdAtDate'], str(self.stat_to.date()))
         self.assertEqual(order_stat['stat'][0]['totalQuantity'], 30)
