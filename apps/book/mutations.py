@@ -41,7 +41,7 @@ class BookMutationMixin():
     def filter_queryset(cls, qs, info):
         if info.context.user.user_type == User.UserType.PUBLISHER.value:
             return qs.filter(publisher=info.context.user.publisher)
-        elif info.context.user.user_type == User.UserType.ADMIN.value:
+        elif info.context.user.user_type == User.UserType.MODERATOR.value:
             return qs
         return qs.none()
 
@@ -49,7 +49,7 @@ class BookMutationMixin():
 class BookAdminOnlyMutationMixin():
     @classmethod
     def filter_queryset(cls, qs, info):
-        if info.context.user.user_type == User.UserType.ADMIN.value:
+        if info.context.user.user_type == User.UserType.MODERATOR.value:
             return qs
         return qs.none()
 
@@ -57,7 +57,7 @@ class BookAdminOnlyMutationMixin():
 class BookAdminAndAuthorMutationMixin():
     @classmethod
     def filter_queryset(cls, qs, info):
-        if info.context.user.user_type in [User.UserType.ADMIN.value, User.UserType.PUBLISHER.value]:
+        if info.context.user.user_type in [User.UserType.MODERATOR.value, User.UserType.PUBLISHER.value]:
             return qs
         return qs.none()
 

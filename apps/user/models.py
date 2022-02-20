@@ -46,11 +46,11 @@ class User(AbstractUser):
     """ Custom User Model """
 
     class UserType(models.TextChoices):
-        ADMIN = 'admin', 'Admin'
-        PUBLISHER = 'publisher', 'Publisher'
-        INSTITUTIONAL_USER = 'institutional_user', 'Institutional User'
-        SCHOOL_ADMIN = 'school_admin', 'School Admin'
-        INDIVIDUAL_USER = 'individual_user', 'Individual User'
+        MODERATOR = 'moderator', _('Moderator')
+        PUBLISHER = 'publisher', _('Publisher')
+        INSTITUTIONAL_USER = 'institutional_user', _('Institutional User')
+        SCHOOL_ADMIN = 'school_admin', _('School Admin')
+        INDIVIDUAL_USER = 'individual_user', _('Individual User')
 
     # Delete unused fields
     username = None

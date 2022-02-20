@@ -280,7 +280,6 @@ GRAPHENE_NODES_WHITELIST = (
     'createContactMessage',
     'publisher',
     'publishers',
-    'orderWindow',
 )
 
 CLIENT_URL = env('CLIENT_URL')

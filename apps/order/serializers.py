@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from django.db.models import F, Sum
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, gettext
 from django.db import transaction
 
 from config.serializers import CreatedUpdatedBaseSerializer
 
+from apps.user.models import User
 from apps.book.models import WishList
 
 from .models import (
@@ -12,6 +13,7 @@ from .models import (
     Order,
     BookOrder,
     OrderWindow,
+    OrderActivityLog,
 )
 from .tasks import send_notification
 
@@ -111,20 +113,61 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         return order
 
 
-class OrderStatusUpdateSerializer(serializers.ModelSerializer):
+class OrderUpdateSerializer(serializers.ModelSerializer):
     '''
     This serializer is used to update status of order only
     '''
 
+    STATUS_CHANGE_ALLOWED_PERMISSION = {
+        # UserType: [Current status, new status]
+        User.UserType.SCHOOL_ADMIN: [
+            (Order.Status.PENDING, Order.Status.CANCELLED),
+        ],
+        User.UserType.MODERATOR: [
+            (Order.Status.PENDING, Order.Status.CANCELLED),
+            (Order.Status.IN_TRANSIT, Order.Status.COMPLETED),
+            (Order.Status.IN_TRANSIT, Order.Status.CANCELLED),
+        ],
+    }
+
+    comment = serializers.CharField(required=False)
+
     class Meta:
         model = Order
-        fields = ('id', 'status',)
+        fields = ('id', 'status', 'comment')
 
-    def save(self, **kwargs):
-        instance = self.instance
-        updated_order = super().update(instance, self.validated_data)
+    def validate_status(self, status):
+        current_status = self.instance.status
+        user = self.context['request'].user
+        if (
+            # If user is SCHOOL_ADMIN, then the order should be created by that user
+            user.user_type == User.UserType.SCHOOL_ADMIN and self.instance.created_by != user
+        ) or (
+            (current_status, status) not in self.STATUS_CHANGE_ALLOWED_PERMISSION.get(user.user_type) or []
+        ):
+            raise serializers.ValidationError(
+                gettext('Changing from %(current_status)s to %(status)s is not allowed!!' % dict(
+                    current_status=current_status,
+                    status=status,
+                ))
+            )
+        return status
+
+    def update(self, instance, data):
+        # Create a log
+        OrderActivityLog.objects.create(
+            order=self.instance,
+            created_by=self.context['request'].user,
+            system_generated_comment=f"Changed status from {self.instance.status} to {data['status']}",
+            comment=data.pop('comment', '')
+        )
+        # Update
+        updated_order = super().update(instance, data)
         # Send notification
         transaction.on_commit(
             lambda: send_notification.delay(updated_order.id)
         )
         return updated_order
+
+    def create(self, data):
+        raise Exception('Not allowed')

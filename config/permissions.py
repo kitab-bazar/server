@@ -161,7 +161,8 @@ class UserPermissions():
 
     SCHOOL_ADMIN = [
         *INDIVIDUAL_USER,
-        Permission.CAN_UPDATE_SCHOOL
+        Permission.CAN_UPDATE_SCHOOL,
+        Permission.UPDATE_ORDER,
     ]
 
     PUBLISHER = [
@@ -177,7 +178,7 @@ class UserPermissions():
 
     INSTITUTIONAL_USER = [*INDIVIDUAL_USER, Permission.CAN_UPDATE_INSTITUTION]
 
-    ADMIN = [
+    MODERATOR = [
         *INDIVIDUAL_USER, *PUBLISHER, *INSTITUTIONAL_USER, *SCHOOL_ADMIN,
         Permission.CAN_DELETE_BLOG_TAG,
         Permission.CAN_CREATE_PUBLISHER,
@@ -218,7 +219,7 @@ class UserPermissions():
     ))
 
     PERMISSION_MAP = {
-        User.UserType.ADMIN: ADMIN,
+        User.UserType.MODERATOR: MODERATOR,
         User.UserType.PUBLISHER: PUBLISHER,
         User.UserType.INSTITUTIONAL_USER: INSTITUTIONAL_USER,
         User.UserType.SCHOOL_ADMIN: SCHOOL_ADMIN,

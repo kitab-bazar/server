@@ -459,6 +459,12 @@ type CreateInstitution {
   result: InstitutionType
 }
 
+type CreateOrderFromCart {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: OrderType
+}
+
 type CreatePublisher {
   errors: [GenericScalar!]
   ok: Boolean
@@ -551,12 +557,6 @@ type DeleteNotification {
   errors: [GenericScalar!]
   ok: Boolean
   result: NotificationType
-}
-
-type DeleteOrder {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: OrderType
 }
 
 type DeletePublisher {
@@ -721,9 +721,8 @@ type Mutation {
   createCartItem(data: CartItemInputType!): CreateCartItem
   updateCartItem(data: CartItemInputType!, id: ID!): UpdateCartItem
   deleteCartItem(id: ID!): DeleteCartItem
-  placeOrderFromCart: PlaceOrderFromCart
+  createOrderFromCart: CreateOrderFromCart
   updateOrder(data: OrderUpdateInputType!, id: ID!): UpdateOrder
-  deleteOrder(id: ID!): DeleteOrder
   createBook(data: BookCreateInputType!): CreateBook
   updateBook(data: BookCreateInputType!, id: ID!): UpdateBook
   deleteBook(id: ID!): DeleteBook
@@ -783,6 +782,15 @@ type NotificationType {
   order: OrderType
 }
 
+type OrderActivityLogType {
+  id: ID!
+  order: OrderType!
+  createdAt: DateTime!
+  createdBy: UserType!
+  systemGeneratedComment: String!
+  comment: String!
+}
+
 type OrderListType {
   results: [OrderType!]
   totalCount: Int
@@ -813,15 +821,24 @@ type OrderType {
   id: ID!
   totalPrice: Int!
   orderCode: UUID!
+  createdAt: DateTime!
   createdBy: UserType!
   status: OrderStatusEnum
-  orderPlacedAt: DateTime!
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
   totalQuantity: Int
+  activityLog: [OrderActivityLogType!]
 }
 
 input OrderUpdateInputType {
   status: OrderStatusEnum
+  comment: String
+}
+
+type OrderWindowListType {
+  results: [OrderWindowType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
 }
 
 type OrderWindowType {
@@ -830,12 +847,6 @@ type OrderWindowType {
   description: String!
   startDate: Date!
   endDate: Date!
-}
-
-type PlaceOrderFromCart {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: OrderType
 }
 
 type ProvinceListType {
@@ -907,7 +918,9 @@ type Query {
   order(id: ID!): OrderType
   orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   orderStat: OrderStatType
-  orderWindow: OrderWindowType
+  orderWindowActive: OrderWindowType
+  orderWindow(id: ID!): OrderWindowType
+  orderWindows(search: String, startDateGte: Date, startDateLte: Date, endDateGte: Date, endDateLte: Date, page: Int = 1, ordering: String, pageSize: Int): OrderWindowListType
   notification(id: ID!): NotificationType
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
@@ -1227,7 +1240,7 @@ type UserType {
 }
 
 enum UserUserType {
-  ADMIN
+  MODERATOR
   PUBLISHER
   INSTITUTIONAL_USER
   SCHOOL_ADMIN
@@ -1276,7 +1289,7 @@ enum message_type {
 }
 
 enum user_type {
-  ADMIN
+  MODERATOR
   PUBLISHER
   INSTITUTIONAL_USER
   SCHOOL_ADMIN

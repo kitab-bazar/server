@@ -12,6 +12,9 @@ class OrderWindow(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
+    def __str__(self):
+        return f'{self.title} :: {self.start_date} - {self.end_date}'
+
     @classmethod
     def get_active_window(cls):
         now_date = timezone.now().date()
@@ -112,10 +115,10 @@ class BookOrder(models.Model):
 
 class Order(models.Model):
     class Status(models.TextChoices):
-        PENDING = 'pending', 'Pending'  # Order not acknowledged
-        IN_TRANSIT = 'in_transit', 'IN TRANSIT'  # Order is processing
-        COMPLETED = 'completed', 'Completed'
-        CANCELLED = 'cancelled', 'Cancelled'
+        PENDING = 'pending', _('Pending')  # Order not acknowledged
+        IN_TRANSIT = 'in_transit', _('IN TRANSIT')  # Order is in-transit
+        COMPLETED = 'completed', _('Completed')
+        CANCELLED = 'cancelled', _('Cancelled')
 
     assigned_order_window = models.ForeignKey(OrderWindow, null=True, blank=True, on_delete=models.SET_NULL)
     total_price = models.BigIntegerField(verbose_name=_('Total Price'))
@@ -124,6 +127,7 @@ class Order(models.Model):
         default=uuid.uuid4,
         editable=False
     )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Order placed at"))
     created_by = models.ForeignKey(
         'user.User',
         on_delete=models.CASCADE,
@@ -136,9 +140,6 @@ class Order(models.Model):
         default=Status.PENDING,
         verbose_name=_("Order status")
     )
-    order_placed_at = models.DateTimeField(
-        auto_now_add=True, verbose_name=_("Order placed at")
-    )
 
     class Meta:
         verbose_name = _('Order')
@@ -146,3 +147,19 @@ class Order(models.Model):
 
     def __str__(self):
         return self.status
+
+
+class OrderActivityLog(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='activity_logs')
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        'user.User',
+        on_delete=models.CASCADE,
+        related_name='+',
+        verbose_name=_('Created by')
+    )
+    system_generated_comment = models.TextField(blank=True)
+    comment = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ('-id',)

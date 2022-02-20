@@ -51,13 +51,13 @@ class TestOrderState(TestPermissions):
 
         # Create 3 book orders
         order_1 = OrderFactory.create(
-            created_by=self.individual_user, status=Order.Status.COMPLETED, order_placed_at=self.stat_to
+            created_by=self.individual_user, status=Order.Status.COMPLETED, created_at=self.stat_to
         )
         order_2 = OrderFactory.create(
-            created_by=self.individual_user, status=Order.Status.COMPLETED, order_placed_at=self.stat_to
+            created_by=self.individual_user, status=Order.Status.COMPLETED, created_at=self.stat_to
         )
         order_3 = OrderFactory.create(
-            created_by=self.individual_user, status=Order.Status.COMPLETED, order_placed_at=self.stat_to
+            created_by=self.individual_user, status=Order.Status.COMPLETED, created_at=self.stat_to
         )
 
         # Create 4 book orders each having 5 quantity and 500 price

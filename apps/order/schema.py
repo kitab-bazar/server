@@ -14,8 +14,18 @@ from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoLi
 from apps.user.models import User
 from apps.book.models import Book
 
-from .models import CartItem, Order, BookOrder, OrderWindow
-from .filters import BookOrderFilterSet, OrderFilterSet
+from .models import (
+    CartItem,
+    Order,
+    BookOrder,
+    OrderWindow,
+    OrderActivityLog,
+)
+from .filters import (
+    BookOrderFilterSet,
+    OrderFilterSet,
+    OrderWindowFilterSet,
+)
 from .enums import OrderStatusEnum
 
 
@@ -29,7 +39,7 @@ def get_orders_qs(info):
     def _qs():
         if info.context.user.user_type == User.UserType.PUBLISHER.value:
             return Order.objects.filter(book_order__publisher=info.context.user.publisher)
-        elif info.context.user.user_type == User.UserType.ADMIN.value:
+        elif info.context.user.user_type == User.UserType.MODERATOR.value:
             return Order.objects.all()
         return Order.objects.filter(created_by=info.context.user)
     # Making sure only distinct orders are fetched
@@ -40,6 +50,12 @@ class OrderWindowType(DjangoObjectType):
     class Meta:
         model = OrderWindow
         fields = ('id', 'title', 'description', 'start_date', 'end_date')
+
+
+class OrderWindowListType(CustomDjangoListObjectType):
+    class Meta:
+        model = OrderWindow
+        filterset_class = OrderWindowFilterSet
 
 
 class CartItemType(DjangoObjectType):
@@ -90,6 +106,11 @@ class BookOrderListType(CustomDjangoListObjectType):
         filterset_class = BookOrderFilterSet
 
 
+class OrderActivityLogType(DjangoObjectType):
+    class Meta:
+        model = OrderActivityLog
+
+
 class OrderType(DjangoObjectType):
     book_orders = DjangoPaginatedListObjectField(
         BookOrderListType,
@@ -99,18 +120,26 @@ class OrderType(DjangoObjectType):
     )
     total_quantity = graphene.Int()
     status = graphene.Field(OrderStatusEnum)
+    activity_log = graphene.List(graphene.NonNull(OrderActivityLogType))
 
     class Meta:
         model = Order
-        fields = ('id', 'order_code', 'total_price', 'created_by', 'status', 'order_placed_at')
+        fields = ('id', 'order_code', 'total_price', 'created_by', 'status', 'created_at')
 
     @staticmethod
     def get_custom_queryset(queryset, info):
         return get_orders_qs(info)
 
+    @staticmethod
+    def resolve_activity_log(root, info, **kwargs):
+        # FIXME: Use dataloader
+        return root.activity_logs.all()
+
+    @staticmethod
     def resolve_book_orders(root, info, **kwargs):
         return root.book_order
 
+    @staticmethod
     def resolve_total_quantity(root, info, **kwargs):
         return root.book_order.aggregate(Sum('quantity'))['quantity__sum']
 
@@ -145,7 +174,7 @@ class OrderStatType(graphene.ObjectType):
         '''
         Returns total books uploaded count
         '''
-        if info.context.user.user_type == User.UserType.ADMIN.value:
+        if info.context.user.user_type == User.UserType.MODERATOR.value:
             return Book.objects.count()
         elif info.context.user.user_type == User.UserType.PUBLISHER.value:
             return Book.objects.filter(publisher=info.context.user.publisher).count()
@@ -185,7 +214,7 @@ class OrderStatType(graphene.ObjectType):
             status=Order.Status.COMPLETED.value,
             order_placed_at__gte=stat_from,
             order_placed_at__lte=stat_to
-        ).annotate(order_placed_at_date=Cast('order_placed_at', DateField())).values('order_placed_at_date').annotate(
+        ).annotate(order_placed_at_date=Cast('created_at', DateField())).values('order_placed_at_date').annotate(
             total_quantity=Sum('book_order__quantity')
         ).values('order_placed_at_date', 'total_quantity')
 
@@ -205,10 +234,18 @@ class Query(graphene.ObjectType):
         )
     )
     order_stat = graphene.Field(OrderStatType)
-    order_window = graphene.Field(OrderWindowType)
+    # Order window
+    order_window_active = graphene.Field(OrderWindowType)
+    order_window = DjangoObjectField(OrderWindowType)
+    order_windows = DjangoPaginatedListObjectField(
+        OrderWindowListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
 
     @staticmethod
-    def resolve_order_window(root, info, **kwargs) -> Union[None, OrderWindow]:
+    def resolve_order_window_active(root, info, **kwargs) -> Union[None, OrderWindow]:
         return OrderWindow.get_active_window()
 
     @staticmethod

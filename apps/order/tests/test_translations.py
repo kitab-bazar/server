@@ -28,7 +28,7 @@ class TestOrderTranslation(GraphQLTestCase):
               }
             }
         '''
-        self.admin_user = UserFactory.create(user_type=User.UserType.ADMIN.value)
+        self.admin_user = UserFactory.create(user_type=User.UserType.MODERATOR.value)
         self.individual_user = UserFactory.create(user_type=User.UserType.INDIVIDUAL_USER.value)
         publisher = PublisherFactory.create()
         self.book = BookFactory.create(publisher=publisher)

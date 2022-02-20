@@ -24,7 +24,6 @@ class CartItemFactory(DjangoModelFactory):
 class OrderFactory(DjangoModelFactory):
     created_by = factory.SubFactory(UserFactory)
     total_price = fuzzy.FuzzyInteger(50000, 2000000)
-    status = factory.fuzzy.FuzzyChoice(Order.Status.choices)
 
     class Meta:
         model = Order

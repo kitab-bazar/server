@@ -120,7 +120,7 @@ class TestOgFileUpload(GraphQLTestCase):
         }
         self.update_book_variables = dict(self.create_book_variables, **{'id': book.id})
 
-        self.admin = UserFactory.create(user_type=User.UserType.ADMIN.value)
+        self.admin = UserFactory.create(user_type=User.UserType.MODERATOR.value)
         super().setUp()
 
     def check_image_upload_asserts(self, query, variables):

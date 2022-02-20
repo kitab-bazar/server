@@ -21,7 +21,7 @@ class TestPermissions(GraphQLTestCase):
         self.publisher_user = UserFactory.create(user_type=User.UserType.PUBLISHER.value)
         self.school_admin_user = UserFactory.create(user_type=User.UserType.SCHOOL_ADMIN.value)
         self.institutional_user = UserFactory.create(user_type=User.UserType.INSTITUTIONAL_USER.value)
-        self.super_admin = UserFactory.create(user_type=User.UserType.ADMIN.value)
+        self.super_admin = UserFactory.create(user_type=User.UserType.MODERATOR.value)
         super().setUp()
 
 

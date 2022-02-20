@@ -24,7 +24,7 @@ class InstitutionMutationMixin():
     def filter_queryset(cls, qs, info):
         if info.context.user.user_type == User.UserType.INSTITUTIONAL_USER.value:
             return qs.filter(id=info.context.user.institution_id)
-        elif info.context.user.user_type == User.UserType.ADMIN.value:
+        elif info.context.user.user_type == User.UserType.MODERATOR.value:
             return qs
         return Institution.objects.none()
 
