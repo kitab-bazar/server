@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.db.models import F, Sum
-from django.utils.translation import gettext_lazy as _, gettext
+from django.utils.translation import gettext
 from django.db import transaction
 
 from config.serializers import CreatedUpdatedBaseSerializer
@@ -35,7 +35,7 @@ class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializ
         new_count = current_total_cart_items_count + quantity
         if new_count > self.MAX_ITEMS_ALLOWED:
             raise serializers.ValidationError(
-                _('Only %(new_count)d books are allowed. Current request has %(allowed_count)d books.') % dict(
+                gettext('Only %(new_count)d books are allowed. Current request has %(allowed_count)d books.') % dict(
                     new_count=new_count,
                     allowed_count=self.MAX_ITEMS_ALLOWED,
                 )
@@ -47,7 +47,9 @@ class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializ
         if not self.instance and CartItem.objects.filter(
             created_by=created_by, book=book
         ).exists():
-            raise serializers.ValidationError(_('Book is already added in cart.'))
+            raise serializers.ValidationError(
+                gettext('Book is already added in cart.')
+            )
         return book
 
 
@@ -63,12 +65,14 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
             total_price=F('book__price') * F('quantity')
         )
         if not cart_items.exists():
-            raise serializers.ValidationError(_('Your cart is empty.'))
+            raise serializers.ValidationError(
+                gettext('Your cart is empty.')
+            )
 
         active_order_window = OrderWindow.get_active_window()
         if active_order_window is None:
             raise serializers.ValidationError(
-                _('No active order window available right now.')
+                gettext('No active order window available right now.')
             )
 
         # Create order
