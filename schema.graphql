@@ -934,7 +934,7 @@ type Query {
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
   bookDetail(id: ID!): BookDetailType
-  books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, isAddedInWishlist: Boolean, grade: [BookGradeEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
+  books(categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, search: String, isAddedInWishlist: Boolean, grade: [BookGradeEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
   authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
   categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType

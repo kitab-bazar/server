@@ -3,10 +3,11 @@ from utils.graphene.filters import IDListFilter, IDFilter, MultipleInputFilter
 
 from apps.book.models import Book, Tag, Category, Author
 from apps.book.enums import BookGradeEnum
+from django.db.models import Q
 
 
 class BookFilter(django_filters.FilterSet):
-    title = django_filters.CharFilter(method='filter_title')
+    search = django_filters.CharFilter(method='filter_search')
     categories = IDListFilter(method='filter_categories')
     authors = IDListFilter(method='filter_authors')
     tags = IDListFilter(method='filter_tags')
@@ -19,13 +20,17 @@ class BookFilter(django_filters.FilterSet):
     class Meta:
         model = Book
         fields = [
-            'title', 'categories', 'authors', 'tags', 'publisher'
+            'categories', 'authors', 'tags', 'publisher'
         ]
 
-    def filter_title(self, queryset, name, value):
+    def filter_search(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(title__icontains=value)
+        return queryset.filter(
+            Q(title_en__icontains=value) |
+            Q(title_ne__icontains=value) |
+            Q(authors__name__icontains=value)
+        )
 
     def filter_categories(self, queryset, name, value):
         if not value:
