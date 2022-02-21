@@ -150,7 +150,7 @@ input BookCreateInputType {
   description: String
   descriptionEn: String
   descriptionNe: String
-  isbn: String!
+  isbn: String
   numberOfPages: Int!
   language: language!
   weight: Int
@@ -246,8 +246,10 @@ enum BookGradeEnum {
 }
 
 enum BookLanguage {
-  NEPALI
   ENGLISH
+  NEPALI
+  MAITHALI
+  THARU
 }
 
 type BookListType {
@@ -1281,8 +1283,10 @@ enum faq_publish_type {
 }
 
 enum language {
-  NEPALI
   ENGLISH
+  NEPALI
+  MAITHALI
+  THARU
 }
 
 enum message_type {

@@ -55,8 +55,10 @@ class Category(models.Model):
 class Book(models.Model):
 
     class LanguageType(models.TextChoices):
-        NEPALI = 'nepali', 'Nepali'
-        ENGLISH = 'english', 'English'
+        ENGLISH = 'english', _('English')
+        NEPALI = 'nepali', _('Nepali')
+        MAITHALI = 'Maithali', _('Maithali')
+        THARU = 'Tharu', _('Tharu')
 
     class Grade(models.TextChoices):
         GRADE_1 = 'grade_one', _('Grade 1')
@@ -80,7 +82,8 @@ class Book(models.Model):
     )
     isbn = models.CharField(
         max_length=13,
-        verbose_name=_('ISBN')
+        verbose_name=_('ISBN'),
+        blank=True,
     )
     number_of_pages = models.IntegerField(verbose_name=_('Number of pages'))
     language = models.CharField(
