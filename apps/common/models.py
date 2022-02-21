@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -58,3 +60,44 @@ class Municipality(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def activity_image_path(instance, filename):
+    return f'activity-log/{type(instance)._meta.model_name}/{uuid.uuid4()}/{uuid.uuid4()}/{filename}'
+
+
+class BaseActivityLogImage(models.Model):
+    image = models.FileField(
+        verbose_name=_('image'),
+        upload_to=activity_image_path,
+        null=True, blank=True
+    )
+    created_by = models.ForeignKey(
+        'user.User', verbose_name=_('created by'),
+        on_delete=models.PROTECT
+    )
+
+    def __str__(self):
+        return self.image.url if self.image.url else str(self.id)
+
+
+class BaseActivityLog(models.Model):
+    comment = models.TextField(
+        verbose_name=_('comment'),
+        null=True, blank=True
+    )
+    system_comment = models.TextField(
+        null=True, blank=True,
+        verbose_name=_('system comment')
+    )
+    images = models.ManyToManyField(
+        'common.BaseActivityLogImage', verbose_name=_('images'),
+        blank=True
+    )
+    created_by = models.ForeignKey(
+        'user.User', verbose_name=_('created by'),
+        on_delete=models.PROTECT
+    )
+
+    class Meta:
+        abstract = True
