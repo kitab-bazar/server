@@ -22,49 +22,44 @@ class Payment(models.Model):
     transaction_type = models.CharField(
         max_length=20, choices=TransactionType.choices,
         null=True, blank=True,
-        verbose_name=_('transaction type')
+        verbose_name=_('Transaction type')
     )
     payment_type = models.CharField(
         max_length=20, choices=PaymentType.choices,
         null=True, blank=True,
-        verbose_name=_('payment type')
+        verbose_name=_('Payment type')
     )
     created_at = models.DateTimeField(auto_now=True, verbose_name=_('created at'))
     amount = models.FloatField(
-        null=True, blank=True,
-        verbose_name=_('amount')
+        verbose_name=_('Amount')
     )
     status = models.CharField(
-        verbose_name=_('status'), choices=Status.choices,
+        verbose_name=_('Status'), choices=Status.choices,
         default=Status.PENDING,
         max_length=50
     )
-    description = models.TextField(
-        verbose_name=_('description'),
-        null=True, blank=True
-    )
-    user = models.ForeignKey(
+    created_by = models.ForeignKey(
         User, on_delete=models.PROTECT,
-        verbose_name=_('user')
+        verbose_name=_('User')
     )
 
     def __str__(self):
-        return f'{self.user.email} {self.transaction_type} - {self.payment_type}'
+        return f'{self.created_by_id} {self.transaction_type} - {self.payment_type}'
 
     class Meta:
-        verbose_name = _('payment')
-        verbose_name_plural = _('payment')
+        verbose_name = _('Payment')
+        verbose_name_plural = _('Payment')
 
 
 class PaymentLog(BaseActivityLog):
     payment = models.ForeignKey(
-        Payment, verbose_name=_('payment'),
+        Payment, verbose_name=_('Payment'),
         on_delete=models.CASCADE
     )
 
     def __str__(self):
-        return str(self.payment)
+        return str(self.payment_id)
 
     class Meta:
-        verbose_name = _('payment log')
-        verbose_name_plural = _('payment log')
+        verbose_name = _('Payment log')
+        verbose_name_plural = _('Payment log')

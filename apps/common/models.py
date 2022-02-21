@@ -63,18 +63,23 @@ class Municipality(models.Model):
 
 
 def activity_image_path(instance, filename):
-    return f'activity-log/{type(instance)._meta.model_name}/{uuid.uuid4()}/{uuid.uuid4()}/{filename}'
+    return f'activity-log/{instance.type}/{uuid.uuid4()}/{uuid.uuid4()}/{filename}'
 
 
-class BaseActivityLogImage(models.Model):
+class ActivityLogImage(models.Model):
+    class Type(models.TextChoices):
+        PAYMENT = 'payment', _('Payment')
+        ORDER = 'order', _('Order')
+        PACKAGE = 'package', _('Package')
+
+    type = models.CharField(verbose_name=_('Type'), max_length=30, choices=Type.choices)
     image = models.FileField(
-        verbose_name=_('image'),
+        verbose_name=_('Activity log image'),
         upload_to=activity_image_path,
-        null=True, blank=True
     )
     created_by = models.ForeignKey(
-        'user.User', verbose_name=_('created by'),
-        on_delete=models.PROTECT
+        'user.User', verbose_name=_('Created by'),
+        on_delete=models.CASCADE
     )
 
     def __str__(self):
@@ -83,20 +88,21 @@ class BaseActivityLogImage(models.Model):
 
 class BaseActivityLog(models.Model):
     comment = models.TextField(
-        verbose_name=_('comment'),
+        verbose_name=_('Comment'),
         null=True, blank=True
     )
-    system_comment = models.TextField(
+    snapshot = models.JSONField(
         null=True, blank=True,
-        verbose_name=_('system comment')
+        default=None,
+        verbose_name=_('Snapshot')
     )
     images = models.ManyToManyField(
-        'common.BaseActivityLogImage', verbose_name=_('images'),
+        ActivityLogImage, verbose_name=_('Images'),
         blank=True
     )
     created_by = models.ForeignKey(
-        'user.User', verbose_name=_('created by'),
-        on_delete=models.PROTECT
+        'user.User', verbose_name=_('Created by'),
+        on_delete=models.CASCADE
     )
 
     class Meta:
