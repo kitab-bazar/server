@@ -817,6 +817,12 @@ enum OrderStatusEnum {
   CANCELLED
 }
 
+type OrderSummaryType {
+  totalBooks: Int
+  totalBooksQuantity: Int
+  totalPrice: Int
+}
+
 type OrderType {
   id: ID!
   totalPrice: Int!
@@ -918,6 +924,7 @@ type Query {
   order(id: ID!): OrderType
   orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   orderStat: OrderStatType
+  orderSummary: OrderSummaryType
   orderWindowActive: OrderWindowType
   orderWindow(id: ID!): OrderWindowType
   orderWindows(search: String, startDateGte: Date, startDateLte: Date, endDateGte: Date, endDateLte: Date, page: Int = 1, ordering: String, pageSize: Int): OrderWindowListType
