@@ -98,6 +98,7 @@ class User(AbstractUser):
         'school.School', verbose_name=_('School'), related_name='school_user',
         on_delete=models.CASCADE, null=True, blank=True
     )
+    is_verified = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _("User")

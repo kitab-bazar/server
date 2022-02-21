@@ -73,6 +73,8 @@ class UserPermissions():
         CAN_DELETE_BLOG_TAG = auto()
         CAN_RETRIEVE_BLOG_TAG = auto()
 
+        CAN_VERIFY_USER = auto()
+
     Permission.__name__ = 'UserPermissions'
 
     __error_message__ = {
@@ -140,6 +142,8 @@ class UserPermissions():
         Permission.CAN_UPDATE_BLOG_TAG: "You don't have permission to update blog tag",
         Permission.CAN_DELETE_BLOG_TAG: "You don't have permission to delete blog tag",
         Permission.CAN_RETRIEVE_BLOG_TAG: "You don't have permission to retrieve blog tag",
+
+        Permission.CAN_VERIFY_USER: "You don't have permission to verify user",
     }
 
     INDIVIDUAL_USER = [
@@ -209,6 +213,7 @@ class UserPermissions():
         Permission.CAN_DELETE_BLOG_CATEGORY,
         Permission.CAN_CREATE_BLOG_TAG,
         Permission.CAN_UPDATE_BLOG_TAG,
+        Permission.CAN_VERIFY_USER,
     ]
 
     # ----------------------------------------
