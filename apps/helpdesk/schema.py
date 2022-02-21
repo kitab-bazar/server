@@ -12,7 +12,7 @@ from apps.helpdesk.filters import FaqFilter
 
 
 def get_contact_messages_qs(info):
-    if info.context.user.user_type == User.UserType.ADMIN.value:
+    if info.context.user.user_type == User.UserType.MODERATOR.value:
         return ContactMessage.objects.all()
     return ContactMessage.objects.none()
 

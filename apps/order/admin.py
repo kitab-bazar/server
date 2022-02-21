@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from apps.order.models import CartItem, BookOrder, Order
+from apps.order.models import CartItem, BookOrder, Order, OrderWindow
 
 
 class CartItemAdmin(admin.ModelAdmin):
@@ -34,3 +34,4 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(CartItem, CartItemAdmin)
 admin.site.register(BookOrder, BookOrderAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(OrderWindow)

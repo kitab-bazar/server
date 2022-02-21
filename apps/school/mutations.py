@@ -25,7 +25,7 @@ class SchoolMutationMixin():
     def filter_queryset(cls, qs, info):
         if info.context.user.user_type == User.UserType.SCHOOL_ADMIN.value:
             return qs.filter(id=info.context.user.school_id)
-        elif info.context.user.user_type == User.UserType.ADMIN.value:
+        elif info.context.user.user_type == User.UserType.MODERATOR.value:
             return qs
         return School.objects.none()
 

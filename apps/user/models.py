@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.utils.translation import ugettext
+from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -46,11 +46,11 @@ class User(AbstractUser):
     """ Custom User Model """
 
     class UserType(models.TextChoices):
-        ADMIN = 'admin', 'Admin'
-        PUBLISHER = 'publisher', 'Publisher'
-        INSTITUTIONAL_USER = 'institutional_user', 'Institutional User'
-        SCHOOL_ADMIN = 'school_admin', 'School Admin'
-        INDIVIDUAL_USER = 'individual_user', 'Individual User'
+        MODERATOR = 'moderator', _('Moderator')
+        PUBLISHER = 'publisher', _('Publisher')
+        INSTITUTIONAL_USER = 'institutional_user', _('Institutional User')
+        SCHOOL_ADMIN = 'school_admin', _('School Admin')
+        INDIVIDUAL_USER = 'individual_user', _('Individual User')
 
     # Delete unused fields
     username = None
@@ -61,47 +61,47 @@ class User(AbstractUser):
     # removes email from REQUIRED_FIELDS
     REQUIRED_FIELDS = []
 
-    email = models.EmailField(ugettext("Email address"), unique=True)
+    email = models.EmailField(_("Email address"), unique=True)
     first_name = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name=ugettext("First name")
+        verbose_name=_("First name")
     )
     last_name = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name=ugettext("Last name")
+        verbose_name=_("Last name")
     )
     full_name = models.CharField(
         max_length=520,
         blank=True,
-        verbose_name=ugettext("Full Name")
+        verbose_name=_("Full Name")
     )
     phone_number = PhoneNumberField(null=True, blank=True, unique=True)
     user_type = models.CharField(
         choices=UserType.choices, max_length=40,
         default=UserType.INDIVIDUAL_USER,
-        verbose_name=ugettext("User Type")
+        verbose_name=_("User Type")
     )
     image = models.FileField(
         upload_to='user/images/', max_length=255, blank=True
     )
     institution = models.ForeignKey(
-        'institution.Institution', verbose_name=ugettext('Institution'), related_name='institution_user',
+        'institution.Institution', verbose_name=_('Institution'), related_name='institution_user',
         on_delete=models.CASCADE, null=True, blank=True
     )
     publisher = models.ForeignKey(
-        'publisher.Publisher', verbose_name=ugettext('Publisher'), related_name='publisher_user',
+        'publisher.Publisher', verbose_name=_('Publisher'), related_name='publisher_user',
         on_delete=models.CASCADE, null=True, blank=True
     )
     school = models.ForeignKey(
-        'school.School', verbose_name=ugettext('School'), related_name='school_user',
+        'school.School', verbose_name=_('School'), related_name='school_user',
         on_delete=models.CASCADE, null=True, blank=True
     )
 
     class Meta:
-        verbose_name = ugettext("User")
-        verbose_name_plural = ugettext("Users")
+        verbose_name = _("User")
+        verbose_name_plural = _("Users")
 
     # Use the model manager with no username
     objects = UserManager()

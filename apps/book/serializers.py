@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from apps.book.models import Book, WishList, Tag, Author, Category
 from config.serializers import CreatedUpdatedBaseSerializer

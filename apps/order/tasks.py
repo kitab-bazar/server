@@ -1,5 +1,5 @@
 from celery import shared_task
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db import transaction
 
 from apps.order.models import Order
@@ -72,22 +72,12 @@ def send_notfication_to_publisher(order_obj, notification_type, title):
 @shared_task(name="notification_sender")
 def send_notification(order_id):
     order_obj = Order.objects.get(id=order_id)
-    if order_obj.status == Order.OrderStatus.RECEIVED.value:
-        title = _('Book order received.')
-        notification_type = Notification.NotificationType.ORDER_RECEIVED.value
-        send_notfication_to_publisher(order_obj, notification_type, title)
-
-    elif order_obj.status == Order.OrderStatus.PACKED.value:
-        title = _('Book order packed.')
-        notification_type = Notification.NotificationType.ORDER_PACKED.value
-        send_notification_to_customer(order_obj, notification_type, title)
-
-    elif order_obj.status == Order.OrderStatus.COMPLETED.value:
+    if order_obj.status == Order.Status.COMPLETED.value:
         title = _('Book order completed.')
         notification_type = Notification.NotificationType.ORDER_COMPLETED.value
         send_notification_to_customer(order_obj, notification_type, title)
 
-    elif order_obj.status == Order.OrderStatus.CANCELLED.value:
+    elif order_obj.status == Order.Status.CANCELLED.value:
         title = _('Book order cancelled.')
         notification_type = Notification.NotificationType.ORDER_CANCELLED.value
         send_notification_to_customer(order_obj, notification_type, title)

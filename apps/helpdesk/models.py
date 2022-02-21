@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext
+from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -14,24 +14,24 @@ class ContactMessage(models.Model):
         FEATURES_SUGGESTIONS_FEEDBACK = 'feature_suggestions_feedback', 'Features/Suggestions/Feedback'
         OTHER = 'other', 'Any Other'
 
-    full_name = models.CharField(max_length=255, verbose_name=ugettext('Full Name'))
-    email = models.EmailField(ugettext('Email address'))
+    full_name = models.CharField(max_length=255, verbose_name=_('Full Name'))
+    email = models.EmailField(_('Email address'))
     municipality = models.ForeignKey(
-        'common.Municipality', verbose_name=ugettext('Municipality'), related_name='contact_municipality',
+        'common.Municipality', verbose_name=_('Municipality'), related_name='contact_municipality',
         on_delete=models.PROTECT
     )
-    address = models.CharField(verbose_name=ugettext('Local address'), max_length=255, blank=True)
-    message = models.TextField(blank=True, verbose_name=ugettext('Description'))
+    address = models.CharField(verbose_name=_('Local address'), max_length=255, blank=True)
+    message = models.TextField(blank=True, verbose_name=_('Description'))
     phone_number = PhoneNumberField(blank=True)
     message_type = models.CharField(
         choices=MessageType.choices, max_length=80,
         default=MessageType.OTHER,
-        verbose_name=ugettext('Message Type')
+        verbose_name=_('Message Type')
     )
 
     class Meta:
-        verbose_name = ugettext('Contact message')
-        verbose_name_plural = ugettext('Contact messages')
+        verbose_name = _('Contact message')
+        verbose_name_plural = _('Contact messages')
 
     def __str__(self):
         return self.message_type
@@ -42,17 +42,17 @@ class Faq(models.Model):
         PUBLISH = 'publish', 'Publish'
         DRAFT = 'draft', 'Draft'
 
-    question = models.TextField(null=True, blank=True, verbose_name=ugettext('Question'))
-    answer = models.TextField(null=True, blank=True, verbose_name=ugettext('Answer'))
+    question = models.TextField(null=True, blank=True, verbose_name=_('Question'))
+    answer = models.TextField(null=True, blank=True, verbose_name=_('Answer'))
     faq_publish_type = models.CharField(
         choices=FaqPublishType.choices, max_length=40,
         default=FaqPublishType.DRAFT,
-        verbose_name=ugettext('Publish Type')
+        verbose_name=_('Publish Type')
     )
 
     class Meta:
-        verbose_name = ugettext('Faq')
-        verbose_name_plural = ugettext('Faqs')
+        verbose_name = _('Faq')
+        verbose_name_plural = _('Faqs')
 
     def __str__(self):
         return self.question

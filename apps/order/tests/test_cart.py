@@ -1,4 +1,8 @@
 from utils.graphene.tests import GraphQLTestCase
+
+from apps.order.models import CartItem
+
+from apps.order.serializers import CartItemSerializer
 from apps.book.factories import BookFactory
 from apps.user.factories import UserFactory
 from apps.publisher.factories import PublisherFactory
@@ -66,25 +70,42 @@ class TestCart(GraphQLTestCase):
         super().setUp()
 
     def test_can_add_update_delete_cart_items(self):
-        self.force_login(self.user)
+        user = UserFactory.create()
+        book1 = BookFactory.create(publisher=self.publisher, price=10)
+        book2 = BookFactory.create(publisher=self.publisher, price=20)
 
+        self.force_login(user)
         # Test can create cart
-        minput = {'book': self.book.id, 'quantity': 2}
+        minput = {'book': book1.id, 'quantity': CartItemSerializer.MAX_ITEMS_ALLOWED + 1}
+        # - Don't allow new item with > MAX_ITEMS_ALLOWED
+        self.query_check(self.create_cart_item, minput=minput, okay=False)
+
+        minput = {'book': book1.id, 'quantity': CartItemSerializer.MAX_ITEMS_ALLOWED}
         content = self.query_check(self.create_cart_item, minput=minput, okay=True)
         result = content['data']['createCartItem']['result']
-        self.assertEqual(result['book']['id'], str(self.book.id))
+        cart_item_1 = CartItem.objects.get(pk=result['id'])
+        self.assertEqual(result['book']['id'], str(book1.id))
         self.assertEqual(result['quantity'], minput['quantity'])
-        self.assertEqual(result['totalPrice'], minput['quantity'] * self.book.price)
+        self.assertEqual(result['totalPrice'], minput['quantity'] * book1.price)
 
-        # Test can update cart item
-        cart_id = result['id']
-        minput = {'book': self.book.id, 'quantity': 20}
-        content = self.query_check(
-            self.update_cart_item, minput=minput, variables={'id': cart_id}, okay=True
-        )
+        # - Don't allow new item > MAX_ITEMS_ALLOWED
+        minput = {'book': book2.id, 'quantity': 20}
+        content = self.query_check(self.create_cart_item, minput=minput, okay=False)
+
+        # Success if we change previous old cart item quantity
+        cart_item_1.quantity = 1
+        cart_item_1.save(update_fields=('quantity',))
+        content = self.query_check(self.create_cart_item, minput=minput, okay=True)
+
+        # Test can update cart item (Success)
+        content = self.query_check(self.update_cart_item, minput=minput, variables={'id': cart_item_1.pk}, okay=True)
         result = content['data']['updateCartItem']['result']
         self.assertEqual(result['quantity'], minput['quantity'])
-        self.assertEqual(result['totalPrice'], minput['quantity'] * self.book.price)
+        self.assertEqual(result['totalPrice'], minput['quantity'] * book2.price)
+
+        # Failure again for > MAX_ITEMS_ALLOWED
+        minput = {'book': book2.id, 'quantity': CartItemSerializer.MAX_ITEMS_ALLOWED}
+        self.query_check(self.update_cart_item, minput=minput, variables={'id': cart_item_1.pk}, okay=False)
 
         # Test can delete cart item
         # self.query_check(self.delete_cart_item, variables={'id': cart_id}, okay=True)

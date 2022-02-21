@@ -24,7 +24,7 @@ class PublisherMutationMixin():
     def filter_queryset(cls, qs, info):
         if info.context.user.user_type == User.UserType.PUBLISHER.value:
             return qs.filter(id=info.context.user.publisher_id)
-        elif info.context.user.user_type == User.UserType.ADMIN.value:
+        elif info.context.user.user_type == User.UserType.MODERATOR.value:
             return qs
         return Publisher.objects.none()
 

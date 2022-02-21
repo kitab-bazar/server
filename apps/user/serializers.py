@@ -6,7 +6,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 
 from apps.user.models import User
 from apps.common.tasks import generic_email_sender
@@ -37,7 +37,7 @@ class LoginSerializer(serializers.Serializer):
             user = User.objects.get(email=email)
             if not user.is_active:
                 raise serializers.ValidationError(
-                    ugettext('Your accout is not active, please click the activation link we sent to your email')
+                    gettext('Your accout is not active, please click the activation link we sent to your email')
                 )
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             raise serializers.ValidationError('User with this email does not exist.')
@@ -124,17 +124,17 @@ class RegisterSerializer(serializers.ModelSerializer):
             instance.school = school
             instance.save()
 
-        subject = ugettext("Activate your account.")
-        message = ugettext("Please click on the link to confirm your registration")
+        subject = gettext("Activate your account.")
+        message = gettext("Please click on the link to confirm your registration")
         uid = urlsafe_base64_encode(force_bytes(instance.pk))
         token = default_token_generator.make_token(instance)
         button_url = f'{settings.CLIENT_URL}/activate/{uid}/{token}/'
 
         # Prepare message for email
         html_context = {
-            "heading": ugettext("Activate your account"),
+            "heading": gettext("Activate your account"),
             "message": message,
-            "button_text": ugettext("Activate Account"),
+            "button_text": gettext("Activate Account"),
             "full_name": str(instance),
         }
         if button_url:
@@ -163,7 +163,7 @@ class ActivateSerializer(serializers.Serializer):
             user.is_active = True
             user.save()
             return attrs
-        raise serializers.ValidationError(ugettext('Activation link is not valid.'))
+        raise serializers.ValidationError(gettext('Activation link is not valid.'))
 
 
 class GenerateResetPasswordTokenSerializer(serializers.Serializer):
@@ -183,7 +183,7 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             # Get base url by profile type
             button_url = f'{settings.CLIENT_URL}/reset-password/{uid}/{token}/'
-            message = ugettext(
+            message = gettext(
                 "We received a request to reset your account password. "
                 "If you wish to do so, please click below. Otherwise, you may "
                 "safely disregard this email."
@@ -191,12 +191,12 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
         # if no user exists for this email
         except User.DoesNotExist:
             # explanatory email message
-            raise serializers.ValidationError(ugettext('User with this email does not exist.'))
-        subject = ugettext("Reset password")
+            raise serializers.ValidationError(gettext('User with this email does not exist.'))
+        subject = gettext("Reset password")
         html_context = {
-            "heading": ugettext("Reset Password"),
+            "heading": gettext("Reset Password"),
             "message": message,
-            "button_text": ugettext("Reset Password"),
+            "button_text": gettext("Reset Password"),
         }
         if button_url:
             html_context["button_url"] = button_url
@@ -234,7 +234,7 @@ class ResetPasswordSerializer(serializers.Serializer):
             user.set_password(new_password)
             user.save()
             return attrs
-        raise serializers.ValidationError(ugettext('The token is invalid.'))
+        raise serializers.ValidationError(gettext('The token is invalid.'))
 
 
 class UpdateProfileSerializer(serializers.ModelSerializer):

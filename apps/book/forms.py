@@ -1,6 +1,6 @@
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
 from apps.book.models import Book, Author
 

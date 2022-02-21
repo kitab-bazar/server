@@ -21,7 +21,7 @@ BlogInputType = generate_input_type_for_serializer(
 class BaseBlogMutationMixin():
     @classmethod
     def filter_queryset(cls, qs, info):
-        if info.context.user.user_type == User.UserType.ADMIN.value:
+        if info.context.user.user_type == User.UserType.MODERATOR.value:
             return qs
         return qs.none()
 
