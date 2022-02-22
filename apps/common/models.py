@@ -79,7 +79,7 @@ class ActivityLogImage(models.Model):
     )
     created_by = models.ForeignKey(
         'user.User', verbose_name=_('Created by'),
-        on_delete=models.CASCADE
+        on_delete=models.PROTECT
     )
 
     def __str__(self):
@@ -102,7 +102,7 @@ class BaseActivityLog(models.Model):
     )
     created_by = models.ForeignKey(
         'user.User', verbose_name=_('Created by'),
-        on_delete=models.CASCADE
+        on_delete=models.PROTECT
     )
 
     class Meta:
