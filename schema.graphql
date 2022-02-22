@@ -245,6 +245,8 @@ type BookDetailType {
   bookWishList: [WishListType!]!
   bookCartItem: [CartItemType!]!
   bookOrderCartItem: [BookOrderType!]!
+  publisherPackageBook: [PublisherPackageBookType!]!
+  schoolPackageBook: [SchoolPackageBookType!]!
   wishlistId: ID
   cartDetails: CartItemType
   gradeDisplay: EnumDescription
@@ -1044,6 +1046,46 @@ type PublisherListType {
   pageSize: Int
 }
 
+type PublisherPackageBookListType {
+  results: [PublisherPackageBookType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PublisherPackageBookType {
+  id: ID!
+  quantity: Int!
+  book: BookType!
+}
+
+type PublisherPackageListType {
+  results: [PublisherPackageType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+enum PublisherPackageStatus {
+  PENDING
+  ISSUE
+  DELIVERED
+}
+
+enum PublisherPackageStatusEnum {
+  PENDING
+  ISSUE
+  DELIVERED
+}
+
+type PublisherPackageType {
+  id: ID!
+  packageId: UUID!
+  status: PublisherPackageStatus!
+  relatedOrders: [OrderType!]!
+  publisherPackageBooks(quantity: Int, book: ID, publisherPackage: ID, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageBookListType
+}
+
 type PublisherType {
   id: ID!
   name: String!
@@ -1063,6 +1105,12 @@ input PublisherUpdateInputType {
 }
 
 type Query {
+  publisherPackage(id: ID!): PublisherPackageType
+  publisherPackages(status: [PublisherPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
+  schoolPackage(id: ID!): PublisherPackageType
+  schoolPackages(status: [PublisherPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
+  courierPackage(id: ID!): PublisherPackageType
+  courierPackages(status: [PublisherPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
   blog(id: ID!): BlogType
   blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
   blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
@@ -1158,6 +1206,12 @@ type SchoolListType {
   totalCount: Int
   page: Int
   pageSize: Int
+}
+
+type SchoolPackageBookType {
+  id: ID!
+  quantity: Int!
+  book: BookType!
 }
 
 type SchoolQueryType {
