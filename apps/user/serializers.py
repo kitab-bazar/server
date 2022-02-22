@@ -166,19 +166,6 @@ class ActivateSerializer(serializers.Serializer):
         raise serializers.ValidationError(gettext('Activation link is not valid.'))
 
 
-class UserVerifySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ('id', 'is_verified')
-
-    def validate(self, attrs):
-        user_type = self.context['request'].user.user_type
-        if not user_type == User.UserType.MODERATOR:
-            raise serializers.ValidationError(gettext('Permission denied'))
-        return attrs
-
-
 class GenerateResetPasswordTokenSerializer(serializers.Serializer):
     """
     Serializer for password forgot endpoint.
