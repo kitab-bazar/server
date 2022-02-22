@@ -77,3 +77,7 @@ class Query(graphene.ObjectType):
         if info.context.user.is_authenticated:
             return info.context.user
         return None
+
+    def resolve_moderator_query(parent, info):
+        if info.context.user.user_type == User.UserType.MODERATOR:
+            return {}

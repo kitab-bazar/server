@@ -48,6 +48,6 @@ class UpdatePayment(PaymentMixin, CreateUpdateGrapheneMutation):
     permissions = [UserPermissions.Permission.CAN_UPDATE_PAYMENT]
 
 
-class Mutation(graphene.ObjectType):
+class Mutation():
     create_payement = CreatePayment.Field()
     update_payement = UpdatePayment.Field()

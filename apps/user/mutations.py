@@ -2,12 +2,18 @@ import graphene
 
 from django.contrib.auth import login, logout
 
-from utils.graphene.mutation import generate_input_type_for_serializer, CreateUpdateGrapheneMutation
+from utils.graphene.mutation import (
+    generate_input_type_for_serializer,
+    CreateUpdateGrapheneMutation
+)
 from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 from config.permissions import UserPermissions
 
-from apps.user.schema import UserType, UserMeType
-from apps.user.serializers import (
+from apps.payment.mutations import Mutation as PaymentMutation
+
+from .schema import UserType, UserMeType
+from .models import User
+from .serializers import (
     LoginSerializer,
     RegisterSerializer,
     ActivateSerializer,
@@ -17,9 +23,6 @@ from apps.user.serializers import (
     ResetPasswordSerializer,
     UpdateProfileSerializer,
 )
-from apps.payment.mutations import Mutation as PaymentMutation
-
-from .models import User
 
 
 RegisterInputType = generate_input_type_for_serializer(
@@ -243,7 +246,8 @@ class ModeratorMutationType(
 
     @staticmethod
     def mutate(root, info, *args, **kwargs):
-        pass
+        if info.context.user.user_type == User.UserType.MODERATOR:
+            return {}
 
 
 class Mutation(graphene.ObjectType):
