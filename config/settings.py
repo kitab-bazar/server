@@ -70,6 +70,7 @@ LOCAL_APPS = [
     'apps.helpdesk',
     'apps.blog',
     'apps.payment',
+    'apps.package',
 ]
 
 INSTALLED_APPS = [
