@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -58,3 +60,50 @@ class Municipality(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def activity_image_path(instance, filename):
+    return f'activity-log/{instance.type}/{uuid.uuid4()}/{uuid.uuid4()}/{filename}'
+
+
+class ActivityLogImage(models.Model):
+    class Type(models.TextChoices):
+        PAYMENT = 'payment', _('Payment')
+        ORDER = 'order', _('Order')
+        PACKAGE = 'package', _('Package')
+
+    type = models.CharField(verbose_name=_('Type'), max_length=30, choices=Type.choices)
+    image = models.FileField(
+        verbose_name=_('Activity log image'),
+        upload_to=activity_image_path,
+    )
+    created_by = models.ForeignKey(
+        'user.User', verbose_name=_('Created by'),
+        on_delete=models.PROTECT
+    )
+
+    def __str__(self):
+        return self.image.url if self.image.url else str(self.id)
+
+
+class BaseActivityLog(models.Model):
+    comment = models.TextField(
+        verbose_name=_('Comment'),
+        null=True, blank=True
+    )
+    snapshot = models.JSONField(
+        null=True, blank=True,
+        default=None,
+        verbose_name=_('Snapshot')
+    )
+    images = models.ManyToManyField(
+        ActivityLogImage, verbose_name=_('Images'),
+        blank=True
+    )
+    created_by = models.ForeignKey(
+        'user.User', verbose_name=_('Created by'),
+        on_delete=models.PROTECT
+    )
+
+    class Meta:
+        abstract = True
