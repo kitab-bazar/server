@@ -17,6 +17,8 @@ from apps.user.serializers import (
     ResetPasswordSerializer,
     UpdateProfileSerializer,
 )
+from apps.payment.mutations import Mutation as PaymentMutation
+
 from .models import User
 
 
@@ -232,6 +234,18 @@ class UpdateProfile(graphene.Mutation):
         )
 
 
+class ModeratorMutationType(
+    # --- Start scopped entities
+    PaymentMutation,
+    # --- End scopped entities
+    graphene.Mutation
+):
+
+    @staticmethod
+    def mutate(root, info, *args, **kwargs):
+        pass
+
+
 class Mutation(graphene.ObjectType):
     register = Register.Field()
     login = Login.Field()
@@ -243,3 +257,4 @@ class Mutation(graphene.ObjectType):
     update_profile = UpdateProfile.Field()
     # TODO: Move this to moderator query scope.
     user_verify = VerifyUser.Field()
+    moderator_mutation = ModeratorMutationType.Field()

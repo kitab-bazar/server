@@ -9,6 +9,7 @@ from .enums import UserByTypePermissionEnum
 
 from apps.user.models import User
 from apps.user.filters import UserFilter
+from apps.payment.schema import Query as PaymentQuery
 
 
 class UserType(DjangoObjectType):
@@ -51,6 +52,16 @@ class UserMeType(DjangoObjectType):
         return UserPermissions.get_permissions(info.context.request.user.user_type)
 
 
+class ModeratorQueryType(
+    # ---Start --Moderator scopped entities
+    PaymentQuery,
+    # ---End --Moderator scopped entities
+    graphene.ObjectType
+):
+
+    pass
+
+
 class Query(graphene.ObjectType):
     me = graphene.Field(UserMeType)
     user = DjangoObjectField(UserType)
@@ -60,6 +71,7 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    moderator_query = graphene.Field(ModeratorQueryType)
 
     def resolve_me(parent, info):
         if info.context.user.is_authenticated:
