@@ -11,6 +11,7 @@ from apps.order import schema as order_schema, mutations as order_mutations
 from apps.notification import schema as notification_schema, mutations as notification_mutations
 from apps.helpdesk import schema as helpdesk_schema, mutations as helpdesk_mutations
 from apps.blog import schema as blog_schema, mutations as blog_mutations
+from apps.package import schema as package_schema
 
 
 # schemas
@@ -25,6 +26,7 @@ class Query(
     order_schema.Query,
     helpdesk_schema.Query,
     blog_schema.Query,
+    package_schema.Query,
     graphene.ObjectType,
 ):
     pass
