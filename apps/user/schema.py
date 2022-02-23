@@ -17,8 +17,8 @@ class UserType(DjangoObjectType):
         model = User
         fields = (
             'id', 'first_name', 'last_name', 'full_name',
-            'is_active', 'last_login', 'user_type', 'institution',
-            'publisher', 'school', 'image'
+            'is_active', 'is_verified', 'last_login', 'user_type', 'institution',
+            'publisher', 'school', 'image',
         )
     image = graphene.Field(FileFieldType)
 
@@ -41,8 +41,8 @@ class UserMeType(DjangoObjectType):
         skip_registry = True
         fields = (
             'id', 'first_name', 'last_name', 'full_name', 'email',
-            'is_active', 'last_login', 'user_type', 'institution',
-            'publisher', 'school', 'phone_number', 'image'
+            'is_active', 'is_verified', 'last_login', 'user_type', 'institution',
+            'publisher', 'school', 'phone_number', 'image',
         )
     image = graphene.Field(FileFieldType)
 

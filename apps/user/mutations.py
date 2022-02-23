@@ -2,19 +2,22 @@ import graphene
 
 from django.contrib.auth import login, logout
 
-from utils.graphene.mutation import generate_input_type_for_serializer
+from utils.graphene.mutation import generate_input_type_for_serializer, CreateUpdateGrapheneMutation
 from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
+from config.permissions import UserPermissions
 
 from apps.user.schema import UserType, UserMeType
 from apps.user.serializers import (
     LoginSerializer,
     RegisterSerializer,
     ActivateSerializer,
+    UserVerifySerializer,
     UserPasswordSerializer,
     GenerateResetPasswordTokenSerializer,
     ResetPasswordSerializer,
     UpdateProfileSerializer,
 )
+from .models import User
 
 
 RegisterInputType = generate_input_type_for_serializer(
@@ -84,7 +87,7 @@ class Login(graphene.Mutation):
 
 ActivateInputType = generate_input_type_for_serializer(
     'ActivateInputType',
-    ActivateSerializer
+    ActivateSerializer,
 )
 
 
@@ -105,6 +108,17 @@ class Activate(graphene.Mutation):
         if errors:
             return Activate(errors=errors, ok=False)
         return Activate(errors=None, ok=True)
+
+
+class VerifyUser(CreateUpdateGrapheneMutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+
+    model = User
+    serializer_class = UserVerifySerializer
+    result = graphene.Field(UserType)
+    ok = graphene.Boolean()
+    permissions = [UserPermissions.Permission.CAN_VERIFY_USER]
 
 
 ChangePasswordInputType = generate_input_type_for_serializer(
@@ -227,3 +241,5 @@ class Mutation(graphene.ObjectType):
     generate_reset_password_token = GenerateResetPasswordToken.Field()
     reset_password = ResetPassword.Field()
     update_profile = UpdateProfile.Field()
+    # TODO: Move this to moderator query scope.
+    user_verify = VerifyUser.Field()

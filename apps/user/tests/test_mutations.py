@@ -1,6 +1,7 @@
 from django.contrib.auth.hashers import check_password
 
 from utils.graphene.tests import GraphQLTestCase
+from config.permissions import UserPermissions
 
 from apps.user.models import User
 from apps.user.factories import UserFactory
@@ -80,6 +81,22 @@ class TestUser(GraphQLTestCase):
                 }
             }
         '''
+        self.verify_user = '''
+            mutation MyMutation($id: ID!) {
+                userVerify(id: $id) {
+                    errors
+                    ok
+                    result {
+                        id
+                        fullName
+                        isActive
+                        userType
+                        isVerified
+                    }
+                }
+            }
+        '''
+
         self.municipality = MunicipalityFactory.create()
         super().setUp()
 
@@ -224,3 +241,34 @@ class TestUser(GraphQLTestCase):
         self.assertEqual(content['school'], None)
         # Test can update multiple times
         self.query_check(self.update_profile, minput=minput, okay=True)
+
+    def test_verify_user(self):
+        user = UserFactory.create(user_type=User.UserType.INDIVIDUAL_USER.value, is_verified=False)
+        school_user = UserFactory.create(user_type=User.UserType.SCHOOL_ADMIN.value)
+        moderator = UserFactory.create(user_type=User.UserType.MODERATOR.value)
+
+        # test : school admin cannot verify user
+        self.force_login(school_user)
+
+        def _query_check(**kwargs):
+            return self.query_check(self.verify_user, variables={'id': str(user.id)}, **kwargs)
+
+        self.assertEqual(user.is_verified, False)
+        self.assertEqual(user.verified_by, None)
+        response = _query_check(assert_for_error=True)
+        self.assertEqual(
+            response['errors'][0]['message'],
+            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_VERIFY_USER)
+        )
+        user.refresh_from_db()
+        self.assertEqual(user.is_verified, False)
+        self.assertEqual(user.verified_by, None)
+
+        # Login
+        self.force_login(moderator)
+
+        content = _query_check()['data']['userVerify']['result']
+        self.assertEqual(content['isVerified'], True)
+        user.refresh_from_db()
+        self.assertEqual(user.is_verified, True)
+        self.assertEqual(user.verified_by, moderator)

@@ -756,6 +756,7 @@ type Mutation {
   generateResetPasswordToken(data: GenerateResetPasswordTokenType!): GenerateResetPasswordToken
   resetPassword(data: ResetPasswordType!): ResetPassword
   updateProfile(data: UpdateProfileType!): UpdateProfile
+  userVerify(id: ID!): VerifyUser
 }
 
 type NotificationListType {
@@ -953,7 +954,7 @@ type Query {
   districts(name: String, provinces: [ID!], page: Int = 1, ordering: String, pageSize: Int): DistrictListType
   me: UserMeType
   user(id: ID!): UserType
-  users(email: String, isActive: Boolean, fullName: String, page: Int = 1, ordering: String, pageSize: Int): UserListType
+  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, page: Int = 1, ordering: String, pageSize: Int): UserListType
 }
 
 type Register {
@@ -1174,6 +1175,7 @@ type UserMeType {
   institution: InstitutionType
   publisher: PublisherType
   school: SchoolType
+  isVerified: Boolean!
   email: String!
   phoneNumber: String
   allowedPermissions: [UserPermissions!]!
@@ -1232,6 +1234,7 @@ enum UserPermissions {
   CAN_UPDATE_BLOG_TAG
   CAN_DELETE_BLOG_TAG
   CAN_RETRIEVE_BLOG_TAG
+  CAN_VERIFY_USER
 }
 
 type UserType {
@@ -1246,6 +1249,15 @@ type UserType {
   institution: InstitutionType
   publisher: PublisherType
   school: SchoolType
+  isVerified: Boolean!
+}
+
+enum UserTypeEnum {
+  MODERATOR
+  PUBLISHER
+  INSTITUTIONAL_USER
+  SCHOOL_ADMIN
+  INDIVIDUAL_USER
 }
 
 enum UserUserType {
@@ -1254,6 +1266,12 @@ enum UserUserType {
   INSTITUTIONAL_USER
   SCHOOL_ADMIN
   INDIVIDUAL_USER
+}
+
+type VerifyUser {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: UserType
 }
 
 input WishListInputType {

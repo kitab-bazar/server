@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -97,6 +98,11 @@ class User(AbstractUser):
     school = models.ForeignKey(
         'school.School', verbose_name=_('School'), related_name='school_user',
         on_delete=models.CASCADE, null=True, blank=True
+    )
+    is_verified = models.BooleanField(default=False)
+    verified_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='verified_by_user',
+        null=True, blank=True, verbose_name=_('Verified by')
     )
 
     class Meta:

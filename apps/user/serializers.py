@@ -275,3 +275,15 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         if instance.user_type != User.UserType.INDIVIDUAL_USER.value:
             self._save_profile_data(instance, self.validated_data)
         return super().update(instance, self.validated_data)
+
+
+class UserVerifySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ()
+
+    def update(self, instance, _):
+        instance.is_verified = True
+        instance.verified_by = self.context['request'].user
+        instance.save(update_fields=('is_verified', 'verified_by'))
+        return instance
