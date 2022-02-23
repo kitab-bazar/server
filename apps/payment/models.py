@@ -21,12 +21,10 @@ class Payment(models.Model):
 
     transaction_type = models.CharField(
         max_length=20, choices=TransactionType.choices,
-        null=True, blank=True,
         verbose_name=_('Transaction type')
     )
     payment_type = models.CharField(
         max_length=20, choices=PaymentType.choices,
-        null=True, blank=True,
         verbose_name=_('Payment type')
     )
     created_at = models.DateTimeField(auto_now=True, verbose_name=_('created at'))
@@ -40,7 +38,17 @@ class Payment(models.Model):
     )
     created_by = models.ForeignKey(
         User, on_delete=models.PROTECT,
-        verbose_name=_('User')
+        verbose_name=_('User'),
+        related_name='payment_created_by'
+    )
+    modified_by = models.ForeignKey(
+        User, on_delete=models.PROTECT,
+        verbose_name=_('User'),
+        related_name='payment_modified_by',
+    )
+    paid_for = models.ForeignKey(
+        User, on_delete=models.PROTECT,
+        verbose_name='payment_paid_for'
     )
 
     def __str__(self):
