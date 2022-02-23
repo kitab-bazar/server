@@ -9,7 +9,7 @@ class SchoolSerializer(serializers.ModelSerializer):
         model = School
         fields = (
             'id', 'name', 'municipality', 'ward_number',
-            'local_address', 'pan_number', 'vat_number'
+            'local_address', 'pan_number', 'vat_number', 'school_id'
         )
 
     def validate(self, attrs):
@@ -26,7 +26,7 @@ class SchoolUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = School
         fields = (
-            'id', 'name', 'municipality', 'ward_number', 'local_address'
+            'id', 'name', 'municipality', 'ward_number', 'local_address', 'school_id'
         )
 
     def validate(self, attrs):

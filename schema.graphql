@@ -1076,6 +1076,7 @@ input SchoolCreateInputType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  schoolId: String
 }
 
 input SchoolInputType {
@@ -1086,6 +1087,7 @@ input SchoolInputType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  schoolId: String
 }
 
 type SchoolListType {
@@ -1103,6 +1105,7 @@ type SchoolType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  schoolId: String
 }
 
 input SchoolUpdateInputType {
@@ -1111,6 +1114,7 @@ input SchoolUpdateInputType {
   municipality: String!
   wardNumber: Int!
   localAddress: String
+  schoolId: String
 }
 
 enum StatusEnum {

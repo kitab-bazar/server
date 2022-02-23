@@ -14,7 +14,7 @@ class SchoolType(DjangoObjectType):
         model = School
         fields = (
             'id', 'name', 'municipality', 'ward_number', 'local_address',
-            'vat_number', 'pan_number'
+            'vat_number', 'pan_number', 'school_id'
         )
 
     @staticmethod

@@ -35,6 +35,12 @@ class School(models.Model):
         unique=True,
         verbose_name=_("Vat number")
     )
+    school_id = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("School id")
+    )
 
     class Meta:
         verbose_name = _("School")
