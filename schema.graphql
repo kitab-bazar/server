@@ -415,6 +415,33 @@ type CreateActivityLogFile {
   errors: [GenericScalar!]
   ok: Boolean
   result: ActivityFileType
+type CourierPackageListType {
+  results: [CourierPackageType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+enum CourierPackageStatus {
+  PENDING
+  IN_TRANSIT
+  ISSUE
+  DELIVERED
+}
+
+enum CourierPackageStatusEnum {
+  PENDING
+  IN_TRANSIT
+  ISSUE
+  DELIVERED
+}
+
+type CourierPackageType {
+  id: ID!
+  packageId: UUID!
+  status: CourierPackageStatus!
+  relatedOrders: [OrderType!]!
+  courierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
 }
 
 type CreateBlog {
@@ -1107,10 +1134,10 @@ input PublisherUpdateInputType {
 type Query {
   publisherPackage(id: ID!): PublisherPackageType
   publisherPackages(status: [PublisherPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
-  schoolPackage(id: ID!): PublisherPackageType
-  schoolPackages(status: [PublisherPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
-  courierPackage(id: ID!): PublisherPackageType
-  courierPackages(status: [PublisherPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
+  schoolPackage(id: ID!): SchoolPackageType
+  schoolPackages(status: [SchoolPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
+  courierPackage(id: ID!): CourierPackageType
+  courierPackages(status: [CourierPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
   blog(id: ID!): BlogType
   blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
   blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
@@ -1208,10 +1235,46 @@ type SchoolListType {
   pageSize: Int
 }
 
+type SchoolPackageBookListType {
+  results: [SchoolPackageBookType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
 type SchoolPackageBookType {
   id: ID!
   quantity: Int!
   book: BookType!
+}
+
+type SchoolPackageListType {
+  results: [SchoolPackageType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+enum SchoolPackageStatus {
+  PENDING
+  IN_TRANSIT
+  ISSUE
+  DELIVERED
+}
+
+enum SchoolPackageStatusEnum {
+  PENDING
+  IN_TRANSIT
+  ISSUE
+  DELIVERED
+}
+
+type SchoolPackageType {
+  id: ID!
+  packageId: UUID!
+  status: SchoolPackageStatus!
+  relatedOrders: [OrderType!]!
+  schoolPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
 }
 
 type SchoolQueryType {
