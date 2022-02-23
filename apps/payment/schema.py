@@ -16,9 +16,16 @@ from apps.payment.enums import (
     PaymentTypeEnum
 )
 from apps.payment.filter_set import PaymentFilterSet
+from apps.user.models import User
 
 
 def get_payment_qs(info):
+    # NOTE: SCHOOL_ADMIN can see his payement
+    # MODERATOR can see all other payment
+    if info.context.user.user_type == User.UserType.SCHOOL_ADMIN:
+        return Payment.objects.filter(paid_by=info.context.user)
+    elif info.context.user.user_type == User.UserType.MODERATOR:
+        return Payment.objects.filter(created_by=info.context.user)
     return Payment.objects.all().distinct()
 
 
