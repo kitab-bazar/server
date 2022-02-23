@@ -53,6 +53,12 @@ class PublisherPackage(models.Model):
         related_name='publisher_packages',
         verbose_name=_('Publisher')
     )
+    order_window = models.ForeignKey(
+        'order.OrderWindow',
+        on_delete=models.PROTECT,
+        related_name='+',
+        verbose_name=_('Order window')
+    )
 
     class Meta:
         verbose_name = _('Publisher Package')
@@ -112,6 +118,13 @@ class SchoolPackage(models.Model):
         related_name='school_packages',
         verbose_name=_('School')
     )
+    order_window = models.ForeignKey(
+        'order.OrderWindow',
+        on_delete=models.PROTECT,
+        related_name='+',
+        verbose_name=_('Order window'),
+        null=True
+    )
 
     class Meta:
         verbose_name = _('School Package')
@@ -144,6 +157,12 @@ class CourierPackage(models.Model):
     )
     school_package_books = models.ManyToManyField(
         'package.SchoolPackageBook', verbose_name=_('School package books'), related_name='courier_school_package_books',
+    )
+    order_window = models.ForeignKey(
+        'order.OrderWindow',
+        on_delete=models.PROTECT,
+        related_name='+',
+        verbose_name=_('Order window')
     )
 
     class Meta:
