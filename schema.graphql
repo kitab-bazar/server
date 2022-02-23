@@ -152,7 +152,7 @@ input BookCreateInputType {
   descriptionNe: String
   isbn: String
   numberOfPages: Int!
-  language: language!
+  language: LanguageTypeEnum!
   weight: Int
   publishedDate: Date!
   edition: String
@@ -673,6 +673,13 @@ input InstitutionUpdateInputType {
   localAddress: String
 }
 
+enum LanguageTypeEnum {
+  ENGLISH
+  NEPALI
+  MAITHALI
+  THARU
+}
+
 type Login {
   result: UserMeType
   errors: [GenericScalar!]
@@ -934,7 +941,7 @@ type Query {
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
   bookDetail(id: ID!): BookDetailType
-  books(categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, search: String, isAddedInWishlist: Boolean, grade: [BookGradeEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
+  books(categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, search: String, publishers: ID, isAddedInWishlist: Boolean, grade: [BookGradeEnum!], language: [LanguageTypeEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
   authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
   categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
@@ -1280,13 +1287,6 @@ enum blog_publish_type {
 enum faq_publish_type {
   PUBLISH
   DRAFT
-}
-
-enum language {
-  ENGLISH
-  NEPALI
-  MAITHALI
-  THARU
 }
 
 enum message_type {

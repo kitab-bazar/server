@@ -11,7 +11,7 @@ class BookFilter(django_filters.FilterSet):
     categories = IDListFilter(method='filter_categories')
     authors = IDListFilter(method='filter_authors')
     tags = IDListFilter(method='filter_tags')
-    publisher = IDFilter(method='filter_publisher')
+    publishers = IDFilter(method='filter_publishers')
     is_added_in_wishlist = django_filters.rest_framework.BooleanFilter(
         method='filter_is_added_in_wishlist', initial=False
     )
@@ -48,10 +48,10 @@ class BookFilter(django_filters.FilterSet):
             return queryset
         return queryset.filter(tags__in=value)
 
-    def filter_publisher(self, queryset, name, value):
+    def filter_publishers(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(publisher=value)
+        return queryset.filter(publisher__in=value)
 
     def filter_is_added_in_wishlist(self, queryset, name, value):
         if value is True:
