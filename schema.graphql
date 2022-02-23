@@ -697,6 +697,7 @@ type Logout {
 type ModeratorMutationType {
   createPayment(data: PaymentInputType!): CreatePayment
   updatePayment(data: PaymentInputType!, id: ID!): UpdatePayment
+  userVerify(id: ID!): VerifyUser
 }
 
 type ModeratorQueryType {
@@ -772,7 +773,6 @@ type Mutation {
   generateResetPasswordToken(data: GenerateResetPasswordTokenType!): GenerateResetPasswordToken
   resetPassword(data: ResetPasswordType!): ResetPassword
   updateProfile(data: UpdateProfileType!): UpdateProfile
-  userVerify(id: ID!): VerifyUser
   moderatorMutation: ModeratorMutationType
 }
 

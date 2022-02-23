@@ -1,6 +1,4 @@
 import graphene
-from typing import Union
-from django.utils import timezone
 from graphene_django import DjangoObjectType
 from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
 

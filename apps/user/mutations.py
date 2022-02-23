@@ -243,6 +243,7 @@ class ModeratorMutationType(
     # --- End scopped entities
     graphene.Mutation
 ):
+    user_verify = VerifyUser.Field()
 
     @staticmethod
     def mutate(root, info, *args, **kwargs):
@@ -259,6 +260,4 @@ class Mutation(graphene.ObjectType):
     generate_reset_password_token = GenerateResetPasswordToken.Field()
     reset_password = ResetPassword.Field()
     update_profile = UpdateProfile.Field()
-    # TODO: Move this to moderator query scope.
-    user_verify = VerifyUser.Field()
     moderator_mutation = ModeratorMutationType.Field()

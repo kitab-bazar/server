@@ -83,15 +83,17 @@ class TestUser(GraphQLTestCase):
         '''
         self.verify_user = '''
             mutation MyMutation($id: ID!) {
-                userVerify(id: $id) {
-                    errors
-                    ok
-                    result {
-                        id
-                        fullName
-                        isActive
-                        userType
-                        isVerified
+                moderatorMutation {
+                    userVerify(id: $id) {
+                        errors
+                        ok
+                        result {
+                            id
+                            fullName
+                            isActive
+                            userType
+                            isVerified
+                        }
                     }
                 }
             }
@@ -267,7 +269,7 @@ class TestUser(GraphQLTestCase):
         # Login
         self.force_login(moderator)
 
-        content = _query_check()['data']['userVerify']['result']
+        content = _query_check()['data']['moderatorMutation']['userVerify']['result']
         self.assertEqual(content['isVerified'], True)
         user.refresh_from_db()
         self.assertEqual(user.is_verified, True)
