@@ -61,6 +61,7 @@ class PublisherPackage(models.Model):
     )
 
     class Meta:
+        unique_together = ('publisher', 'order_window')
         verbose_name = _('Publisher Package')
         verbose_name_plural = _('Publisher packages')
 
@@ -126,6 +127,7 @@ class SchoolPackage(models.Model):
     )
 
     class Meta:
+        unique_together = ('school', 'order_window')
         verbose_name = _('School Package')
         verbose_name_plural = _('School packages')
 
