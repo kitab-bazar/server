@@ -87,6 +87,11 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('The email is already taken.')
         return email
 
+    def validate_user_type(self, user_type):
+        if user_type == User.UserType.MODERATOR:
+            raise serializers.ValidationError('Registration as moderator is not allowed.')
+        return user_type
+
     def save(self, **kwargs):
         instance = User.objects.create_user(
             first_name=self.validated_data.get('first_name', ''),
