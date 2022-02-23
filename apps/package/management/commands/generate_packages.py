@@ -41,7 +41,9 @@ class Command(BaseCommand):
                 total_quantity=Sum('quantity')
             ).values('book', 'total_quantity')
             package = PublisherPackage.objects.create(
-                status=PublisherPackage.Status.PENDING.value, publisher=publisher
+                status=PublisherPackage.Status.PENDING.value,
+                publisher=publisher,
+                order_window=latest_order_window
             )
             package.related_orders.set(related_orders)
             PublisherPackageBook.objects.bulk_create(
@@ -75,7 +77,9 @@ class Command(BaseCommand):
                 total_quantity=Sum('quantity')
             ).values('book', 'total_quantity')
             school_package = SchoolPackage.objects.create(
-                status=SchoolPackage.Status.PENDING.value, school=school
+                status=SchoolPackage.Status.PENDING.value,
+                school=school,
+                order_window=latest_order_window
             )
             school_package.related_orders.set(related_orders)
             school_package_created = SchoolPackageBook.objects.bulk_create(
@@ -92,7 +96,10 @@ class Command(BaseCommand):
             # ------------------------------------------------------------------
             # Create courier packages
             # ------------------------------------------------------------------
-            courier_package = CourierPackage.objects.create(status=SchoolPackage.Status.PENDING.value)
+            courier_package = CourierPackage.objects.create(
+                status=SchoolPackage.Status.PENDING.value,
+                order_window=latest_order_window
+            )
             courier_package.related_orders.add(*related_orders)
             courier_package.school_package_books.add(*school_package_created)
             courier_package_count += 1
