@@ -95,7 +95,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=self.validated_data['password'],
             user_type=self.validated_data.get('user_type', None),
             phone_number=self.validated_data.get('phone_number', None),
-            is_active=False
+            is_active=True
         )
         if instance.user_type == User.UserType.INSTITUTIONAL_USER.value:
             institution_data = self.validated_data['institution']
