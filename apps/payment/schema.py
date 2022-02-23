@@ -25,8 +25,8 @@ def get_payment_qs(info):
     if info.context.user.user_type == User.UserType.SCHOOL_ADMIN:
         return Payment.objects.filter(paid_by=info.context.user)
     elif info.context.user.user_type == User.UserType.MODERATOR:
-        return Payment.objects.filter(created_by=info.context.user)
-    return Payment.objects.all().distinct()
+        return Payment.objects.all()
+    return Payment.objects.none()
 
 
 class PaymentType(DjangoObjectType):
@@ -34,9 +34,12 @@ class PaymentType(DjangoObjectType):
         skip_registry = True
         model = Payment
         fields = (
-            'id', 'created_at',
-            'amount', 'created_by',
-            'modified_by', 'paid_by'
+            'id',
+            'created_at',
+            'amount',
+            'created_by',
+            'modified_by',
+            'paid_by'
         )
     status = graphene.Field(StatusEnum, required=True)
     transaction_type = graphene.Field(TransactionTypeEnum, required=True)

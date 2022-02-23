@@ -1,6 +1,7 @@
 import graphene
 
 from django.contrib.auth import login, logout
+from django.utils.translation import gettext
 
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
@@ -8,6 +9,7 @@ from utils.graphene.mutation import (
 )
 from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 from config.permissions import UserPermissions
+from config.exceptions import PermissionDeniedException
 
 from apps.payment.mutations import Mutation as PaymentMutation
 
@@ -249,6 +251,9 @@ class ModeratorMutationType(
     def mutate(root, info, *args, **kwargs):
         if info.context.user.user_type == User.UserType.MODERATOR:
             return {}
+        raise PermissionDeniedException(
+            gettext('Only allowed for moderator users.')
+        )
 
 
 class Mutation(graphene.ObjectType):

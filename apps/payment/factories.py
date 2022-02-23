@@ -13,6 +13,8 @@ class PaymentFactory(DjangoModelFactory):
     modified_by = factory.SubFactory(UserFactory)
     paid_by = factory.SubFactory(UserFactory)
     amount = fuzzy.FuzzyInteger(100, 5000)
+    transaction_type = factory.fuzzy.FuzzyChoice(Payment.TransactionType.choices, getter=lambda c: c[0])
+    payment_type = factory.fuzzy.FuzzyChoice(Payment.PaymentType.choices, getter=lambda c: c[0])
 
     class Meta:
         model = Payment

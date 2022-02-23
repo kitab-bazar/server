@@ -17,6 +17,7 @@ class TestPaymentQuery(GraphQLTestCase):
             query MyQuery {
               moderatorQuery {
                 payments (ordering: "id") {
+                    totalCount
                     results {
                         amount
                         createdAt
@@ -25,8 +26,7 @@ class TestPaymentQuery(GraphQLTestCase):
                         status
                         transactionType
                     }
-                    totalCount
-                    }
+                  }
                 }
             }
         '''

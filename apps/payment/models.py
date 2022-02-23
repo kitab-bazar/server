@@ -20,11 +20,13 @@ class Payment(models.Model):
         CANCELLED = 'cancelled', _('Cancelled')
 
     transaction_type = models.CharField(
-        max_length=20, choices=TransactionType.choices,
+        max_length=20,
+        choices=TransactionType.choices,
         verbose_name=_('Transaction type')
     )
     payment_type = models.CharField(
-        max_length=20, choices=PaymentType.choices,
+        max_length=20,
+        choices=PaymentType.choices,
         verbose_name=_('Payment type')
     )
     created_at = models.DateTimeField(auto_now=True, verbose_name=_('created at'))
@@ -32,7 +34,8 @@ class Payment(models.Model):
         verbose_name=_('Amount')
     )
     status = models.CharField(
-        verbose_name=_('Status'), choices=Status.choices,
+        verbose_name=_('Status'),
+        choices=Status.choices,
         default=Status.PENDING,
         max_length=50
     )
