@@ -83,15 +83,15 @@ class TestUser(GraphQLTestCase):
         '''
         self.verify_user = '''
             mutation MyMutation($id: ID!) {
-                verify(id: $id) {
+                userVerify(id: $id) {
                     errors
                     ok
                     result {
-                    fullName
-                    id
-                    isActive
-                    isVerified
-                    userType
+                        id
+                        fullName
+                        isActive
+                        userType
+                        isVerified
                     }
                 }
             }
@@ -246,24 +246,29 @@ class TestUser(GraphQLTestCase):
         user = UserFactory.create(user_type=User.UserType.INDIVIDUAL_USER.value, is_verified=False)
         school_user = UserFactory.create(user_type=User.UserType.SCHOOL_ADMIN.value)
         moderator = UserFactory.create(user_type=User.UserType.MODERATOR.value)
-        var = {"id": str(user.id)}
 
         # test : school admin cannot verify user
         self.force_login(school_user)
 
-        response = self.query_check(self.verify_user, variables=var, assert_for_error=True)
+        def _query_check(**kwargs):
+            return self.query_check(self.verify_user, variables={'id': str(user.id)}, **kwargs)
+
+        self.assertEqual(user.is_verified, False)
+        self.assertEqual(user.verified_by, None)
+        response = _query_check(assert_for_error=True)
         self.assertEqual(
             response['errors'][0]['message'],
             UserPermissions.get_permission_message(UserPermissions.Permission.CAN_VERIFY_USER)
         )
         user.refresh_from_db()
         self.assertEqual(user.is_verified, False)
+        self.assertEqual(user.verified_by, None)
 
         # Login
         self.force_login(moderator)
 
-        response = self.query_check(self.verify_user, variables=var, okay=True)
-        is_verified = response['data']['verify']['result']['isVerified']
-        self.assertEqual(is_verified, True)
+        content = _query_check()['data']['userVerify']['result']
+        self.assertEqual(content['isVerified'], True)
         user.refresh_from_db()
         self.assertEqual(user.is_verified, True)
+        self.assertEqual(user.verified_by, moderator)

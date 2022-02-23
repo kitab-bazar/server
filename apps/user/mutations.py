@@ -11,6 +11,7 @@ from apps.user.serializers import (
     LoginSerializer,
     RegisterSerializer,
     ActivateSerializer,
+    UserVerifySerializer,
     UserPasswordSerializer,
     GenerateResetPasswordTokenSerializer,
     ResetPasswordSerializer,
@@ -86,7 +87,7 @@ class Login(graphene.Mutation):
 
 ActivateInputType = generate_input_type_for_serializer(
     'ActivateInputType',
-    ActivateSerializer
+    ActivateSerializer,
 )
 
 
@@ -113,17 +114,11 @@ class VerifyUser(CreateUpdateGrapheneMutation):
     class Arguments:
         id = graphene.ID(required=True)
 
+    model = User
+    serializer_class = UserVerifySerializer
     result = graphene.Field(UserType)
     ok = graphene.Boolean()
     permissions = [UserPermissions.Permission.CAN_VERIFY_USER]
-
-    @classmethod
-    def mutate(cls, root, info, id):
-        user = User.objects.get(pk=id)
-        user.is_verified = True
-        user.verified_by = info.context.request.user
-        user.save()
-        return VerifyUser(result=user, ok=True)
 
 
 ChangePasswordInputType = generate_input_type_for_serializer(
@@ -241,9 +236,10 @@ class Mutation(graphene.ObjectType):
     register = Register.Field()
     login = Login.Field()
     activate = Activate.Field()
-    verify = VerifyUser.Field()
     logout = Logout.Field()
     change_password = ChangeUserPassword.Field()
     generate_reset_password_token = GenerateResetPasswordToken.Field()
     reset_password = ResetPassword.Field()
     update_profile = UpdateProfile.Field()
+    # TODO: Move this to moderator query scope.
+    user_verify = VerifyUser.Field()
