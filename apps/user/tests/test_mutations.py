@@ -21,6 +21,7 @@ class TestUser(GraphQLTestCase):
                         firstName
                         lastName
                         fullName
+                        isActive
                     }
                 }
             }
@@ -90,8 +91,10 @@ class TestUser(GraphQLTestCase):
         content = self.query_check(self.register_mutation, minput=minput, okay=True)
         first_name = content['data']['register']['result']['firstName']
         last_name = content['data']['register']['result']['lastName']
+        is_active = content['data']['register']['result']['isActive']
         self.assertEqual(first_name, minput['firstName'], content)
         self.assertEqual(last_name, minput['lastName'], content)
+        self.assertTrue(is_active)
         self.assertEqual(content['data']['register']['result']['fullName'], f'{first_name} {last_name}', content)
 
     def test_login(self):
