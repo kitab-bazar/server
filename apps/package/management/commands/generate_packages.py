@@ -1,6 +1,8 @@
 from django.core.management.base import BaseCommand
+from django.db.models import Sum
+
 from apps.publisher.models import Publisher
-from apps.order.models import Order, OrderWindow
+from apps.order.models import Order, OrderWindow, BookOrder
 from apps.package.models import PublisherPackage, PublisherPackageBook, SchoolPackage, SchoolPackageBook, CourierPackage
 from apps.user.models import User
 
@@ -35,6 +37,9 @@ class Command(BaseCommand):
         for publisher_id in publisher_ids:
             publisher = Publisher.objects.get(id=publisher_id)
             related_orders = orders.filter(book_order__publisher=publisher)
+            related_book_orders = BookOrder.objects.filter(order__in=related_orders).values('book').annotate(
+                total_quantity=Sum('quantity')
+            ).values('book', 'total_quantity')
             package = PublisherPackage.objects.create(
                 status=PublisherPackage.Status.PENDING.value, publisher=publisher
             )
@@ -42,10 +47,10 @@ class Command(BaseCommand):
             PublisherPackageBook.objects.bulk_create(
                 [
                     PublisherPackageBook(
-                        book_id=related_book_order['book_order__book'],
-                        quantity=related_book_order['book_order__quantity'],
+                        book_id=related_book_order['book'],
+                        quantity=related_book_order['total_quantity'],
                         publisher_package=package
-                    ) for related_book_order in related_orders.values('book_order__book', 'book_order__quantity')
+                    ) for related_book_order in related_book_orders
                 ]
             )
             publisher_package_count += 1
@@ -66,6 +71,9 @@ class Command(BaseCommand):
         for school_id in school_ids:
             school = User.objects.get(id=school_id)
             related_orders = orders.filter(created_by=school)
+            related_book_orders = BookOrder.objects.filter(order__in=related_orders).values('book').annotate(
+                total_quantity=Sum('quantity')
+            ).values('book', 'total_quantity')
             school_package = SchoolPackage.objects.create(
                 status=SchoolPackage.Status.PENDING.value, school=school
             )
@@ -73,10 +81,10 @@ class Command(BaseCommand):
             school_package_created = SchoolPackageBook.objects.bulk_create(
                 [
                     SchoolPackageBook(
-                        book_id=related_book_order['book_order__book'],
-                        quantity=related_book_order['book_order__quantity'],
+                        book_id=related_book_order['book'],
+                        quantity=related_book_order['total_quantity'],
                         school_package=school_package
-                    ) for related_book_order in related_orders.values('book_order__book', 'book_order__quantity')
+                    ) for related_book_order in related_book_orders
                 ]
             )
             school_package_count += 1
