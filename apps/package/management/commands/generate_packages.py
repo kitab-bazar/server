@@ -85,8 +85,8 @@ class Command(BaseCommand):
             # Create courier packages
             # ------------------------------------------------------------------
             courier_package = CourierPackage.objects.create(status=SchoolPackage.Status.PENDING.value)
-            courier_package.related_orders.set(related_orders)
-            courier_package.school_package_books.set(school_package_created)
+            courier_package.related_orders.add(*related_orders)
+            courier_package.school_package_books.add(*school_package_created)
             courier_package_count += 1
 
         self.stdout.write(self.style.SUCCESS(f'{school_package_count} School packages created.'))

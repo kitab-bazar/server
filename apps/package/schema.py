@@ -31,8 +31,8 @@ def publisher_package_qs(info):
 
 
 def school_package_qs(info):
-    if info.context.user.user_type == User.UserType.SCHOOL.value:
-        return SchoolPackage.objects.filter(school__user_type=info.context.user.school)
+    if info.context.user.user_type == User.UserType.SCHOOL_ADMIN.value:
+        return SchoolPackage.objects.filter(school=info.context.user)
     elif info.context.user.user_type == User.UserType.MODERATOR.value:
         return SchoolPackage.objects.all()
     return SchoolPackage.objects.none()
@@ -96,7 +96,7 @@ class SchoolPackageBookListType(CustomDjangoListObjectType):
 
 
 class SchoolPackageType(DjangoObjectType):
-    publisher_package_books = DjangoPaginatedListObjectField(
+    school_package_books = DjangoPaginatedListObjectField(
         SchoolPackageBookListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
@@ -121,7 +121,7 @@ class SchoolPackageListType(CustomDjangoListObjectType):
 
 
 class CourierPackageType(DjangoObjectType):
-    publisher_package_books = DjangoPaginatedListObjectField(
+    courier_package_books = DjangoPaginatedListObjectField(
         SchoolPackageBookListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
@@ -135,7 +135,7 @@ class CourierPackageType(DjangoObjectType):
     class Meta:
         model = CourierPackage
         fields = (
-            'id', 'package_id', 'status', 'related_orders', 'school_package_books'
+            'id', 'package_id', 'status', 'related_orders'
         )
 
 
@@ -153,16 +153,16 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
-    school_package = DjangoObjectField(PublisherPackageType)
+    school_package = DjangoObjectField(SchoolPackageType)
     school_packages = DjangoPaginatedListObjectField(
-        PublisherPackageListType,
+        SchoolPackageListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
     )
-    courier_package = DjangoObjectField(PublisherPackageType)
+    courier_package = DjangoObjectField(CourierPackageType)
     courier_packages = DjangoPaginatedListObjectField(
-        PublisherPackageListType,
+        CourierPackageListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
