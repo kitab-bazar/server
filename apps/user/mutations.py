@@ -1,13 +1,21 @@
 import graphene
 
 from django.contrib.auth import login, logout
+from django.utils.translation import gettext
 
-from utils.graphene.mutation import generate_input_type_for_serializer, CreateUpdateGrapheneMutation
+from utils.graphene.mutation import (
+    generate_input_type_for_serializer,
+    CreateUpdateGrapheneMutation
+)
 from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
 from config.permissions import UserPermissions
+from config.exceptions import PermissionDeniedException
 
-from apps.user.schema import UserType, UserMeType
-from apps.user.serializers import (
+from apps.payment.mutations import Mutation as PaymentMutation
+
+from .schema import ModeratorQueryUserType, UserMeType
+from .models import User
+from .serializers import (
     LoginSerializer,
     RegisterSerializer,
     ActivateSerializer,
@@ -17,7 +25,6 @@ from apps.user.serializers import (
     ResetPasswordSerializer,
     UpdateProfileSerializer,
 )
-from .models import User
 
 
 RegisterInputType = generate_input_type_for_serializer(
@@ -32,7 +39,7 @@ class Register(graphene.Mutation):
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
-    result = graphene.Field(UserType)
+    result = graphene.Field(UserMeType)
 
     @staticmethod
     def mutate(root, info, data):
@@ -116,7 +123,7 @@ class VerifyUser(CreateUpdateGrapheneMutation):
 
     model = User
     serializer_class = UserVerifySerializer
-    result = graphene.Field(UserType)
+    result = graphene.Field(ModeratorQueryUserType)
     ok = graphene.Boolean()
     permissions = [UserPermissions.Permission.CAN_VERIFY_USER]
 
@@ -133,7 +140,7 @@ class ChangeUserPassword(graphene.Mutation):
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
-    result = graphene.Field(UserType)
+    result = graphene.Field(UserMeType)
 
     @staticmethod
     def mutate(root, info, data):
@@ -232,6 +239,23 @@ class UpdateProfile(graphene.Mutation):
         )
 
 
+class ModeratorMutationType(
+    # --- Start scopped entities
+    PaymentMutation,
+    # --- End scopped entities
+    graphene.Mutation
+):
+    user_verify = VerifyUser.Field()
+
+    @staticmethod
+    def mutate(root, info, *args, **kwargs):
+        if info.context.user.user_type == User.UserType.MODERATOR:
+            return {}
+        raise PermissionDeniedException(
+            gettext('Only allowed for moderator users.')
+        )
+
+
 class Mutation(graphene.ObjectType):
     register = Register.Field()
     login = Login.Field()
@@ -241,5 +265,4 @@ class Mutation(graphene.ObjectType):
     generate_reset_password_token = GenerateResetPasswordToken.Field()
     reset_password = ResetPassword.Field()
     update_profile = UpdateProfile.Field()
-    # TODO: Move this to moderator query scope.
-    user_verify = VerifyUser.Field()
+    moderator_mutation = ModeratorMutationType.Field()

@@ -74,6 +74,8 @@ class UserPermissions():
         CAN_RETRIEVE_BLOG_TAG = auto()
 
         CAN_VERIFY_USER = auto()
+        CAN_CREATE_PAYMENT = auto()
+        CAN_UPDATE_PAYMENT = auto()
 
     Permission.__name__ = 'UserPermissions'
 
@@ -144,6 +146,8 @@ class UserPermissions():
         Permission.CAN_RETRIEVE_BLOG_TAG: "You don't have permission to retrieve blog tag",
 
         Permission.CAN_VERIFY_USER: "You don't have permission to verify user",
+        Permission.CAN_CREATE_PAYMENT: "You don't have permission to create payment",
+        Permission.CAN_UPDATE_PAYMENT: "You don't have permission to edit payment"
     }
 
     INDIVIDUAL_USER = [
@@ -214,6 +218,8 @@ class UserPermissions():
         Permission.CAN_CREATE_BLOG_TAG,
         Permission.CAN_UPDATE_BLOG_TAG,
         Permission.CAN_VERIFY_USER,
+        Permission.CAN_CREATE_PAYMENT,
+        Permission.CAN_UPDATE_PAYMENT,
     ]
 
     # ----------------------------------------

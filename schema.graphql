@@ -237,6 +237,7 @@ type BookDetailType {
   bookOrderCartItem: [BookOrderType!]!
   wishlistId: ID
   cartDetails: CartItemType
+  gradeDisplay: EnumDescription
 }
 
 enum BookGradeEnum {
@@ -310,6 +311,7 @@ type BookType {
   ogType: String
   wishlistId: ID
   cartDetails: CartItemType
+  gradeDisplay: EnumDescription
 }
 
 input CartItemInputType {
@@ -354,7 +356,7 @@ input ChangePasswordInputType {
 type ChangeUserPassword {
   errors: [GenericScalar!]
   ok: Boolean
-  result: UserType
+  result: UserMeType
 }
 
 input ContactMessageInputType {
@@ -465,6 +467,12 @@ type CreateOrderFromCart {
   errors: [GenericScalar!]
   ok: Boolean
   result: OrderType
+}
+
+type CreatePayment {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: PaymentType
 }
 
 type CreatePublisher {
@@ -592,6 +600,8 @@ type DistrictType {
   province: ProvinceType!
 }
 
+scalar EnumDescription
+
 input FaqCreateInputType {
   question: String
   questionEn: String
@@ -688,6 +698,44 @@ type Logout {
   ok: Boolean
 }
 
+type ModeratorMutationType {
+  createPayment(data: PaymentInputType!): CreatePayment
+  updatePayment(data: PaymentInputType!, id: ID!): UpdatePayment
+  userVerify(id: ID!): VerifyUser
+}
+
+type ModeratorQueryType {
+  payment(id: ID!): PaymentType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  user(id: ID!): ModeratorQueryUserType
+  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
+}
+
+type ModeratorQueryUserListType {
+  results: [ModeratorQueryUserType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type ModeratorQueryUserType {
+  id: ID!
+  fullName: String!
+  lastLogin: DateTime
+  isActive: Boolean!
+  email: String!
+  phoneNumber: String
+  userType: UserTypeEnum!
+  image: FileFieldType
+  institution: InstitutionType
+  publisher: PublisherType
+  school: SchoolType
+  isVerified: Boolean!
+  verifiedBy: UserType
+  canonicalName: String!
+  userTypeDisplay: EnumDescription!
+}
+
 type MunicipalityListType {
   results: [MunicipalityType!]
   totalCount: Int
@@ -756,7 +804,7 @@ type Mutation {
   generateResetPasswordToken(data: GenerateResetPasswordTokenType!): GenerateResetPasswordToken
   resetPassword(data: ResetPasswordType!): ResetPassword
   updateProfile(data: UpdateProfileType!): UpdateProfile
-  userVerify(id: ID!): VerifyUser
+  moderatorMutation: ModeratorMutationType
 }
 
 type NotificationListType {
@@ -836,6 +884,7 @@ type OrderType {
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
   totalQuantity: Int
   activityLog: [OrderActivityLogType!]
+  statusDisplay: EnumDescription
 }
 
 input OrderUpdateInputType {
@@ -856,6 +905,41 @@ type OrderWindowType {
   description: String!
   startDate: Date!
   endDate: Date!
+}
+
+input PaymentInputType {
+  transactionType: TransactionTypeEnum!
+  paymentType: PaymentTypeEnum!
+  amount: Float!
+  status: StatusEnum
+  paidBy: String!
+}
+
+type PaymentListType {
+  results: [PaymentType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PaymentType {
+  id: ID!
+  createdAt: DateTime!
+  amount: Float!
+  createdBy: UserType!
+  modifiedBy: UserType!
+  paidBy: UserType!
+  status: StatusEnum!
+  transactionType: TransactionTypeEnum!
+  paymentType: PaymentTypeEnum!
+  statusDisplay: EnumDescription!
+  transactionTypeDisplay: EnumDescription!
+  paymentTypeDisplay: EnumDescription!
+}
+
+enum PaymentTypeEnum {
+  CASH
+  CHEQUE
 }
 
 type ProvinceListType {
@@ -925,7 +1009,7 @@ type Query {
   contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
   order(id: ID!): OrderType
-  orders(status: [String!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  orders(status: [OrderStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   orderStat: OrderStatType
   orderSummary: OrderSummaryType
   orderWindowActive: OrderWindowType
@@ -953,14 +1037,13 @@ type Query {
   district(id: ID!): DistrictType
   districts(name: String, provinces: [ID!], page: Int = 1, ordering: String, pageSize: Int): DistrictListType
   me: UserMeType
-  user(id: ID!): UserType
-  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, page: Int = 1, ordering: String, pageSize: Int): UserListType
+  moderatorQuery: ModeratorQueryType
 }
 
 type Register {
   errors: [GenericScalar!]
   ok: Boolean
-  result: UserType
+  result: UserMeType
 }
 
 input RegisterInputType {
@@ -1030,6 +1113,12 @@ input SchoolUpdateInputType {
   localAddress: String
 }
 
+enum StatusEnum {
+  PENDING
+  VERIFIED
+  CANCELLED
+}
+
 type TagListType {
   results: [TagType!]
   totalCount: Int
@@ -1050,6 +1139,11 @@ type ToggleNotificationReadStatus {
   errors: [GenericScalar!]
   ok: Boolean
   result: NotificationType
+}
+
+enum TransactionTypeEnum {
+  CREDIT
+  DEBIT
 }
 
 scalar UUID
@@ -1126,6 +1220,12 @@ type UpdateOrder {
   result: OrderType
 }
 
+type UpdatePayment {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: PaymentType
+}
+
 type UpdateProfile {
   errors: [GenericScalar!]
   ok: Boolean
@@ -1156,28 +1256,23 @@ type UpdateSchool {
 
 scalar Upload
 
-type UserListType {
-  results: [UserType!]
-  totalCount: Int
-  page: Int
-  pageSize: Int
-}
-
 type UserMeType {
   id: ID!
+  fullName: String!
   lastLogin: DateTime
   isActive: Boolean!
+  email: String!
   firstName: String!
   lastName: String!
-  fullName: String!
-  userType: UserUserType!
+  phoneNumber: String
+  userType: UserTypeEnum!
   image: FileFieldType
   institution: InstitutionType
   publisher: PublisherType
   school: SchoolType
   isVerified: Boolean!
-  email: String!
-  phoneNumber: String
+  canonicalName: String!
+  userTypeDisplay: EnumDescription!
   allowedPermissions: [UserPermissions!]!
 }
 
@@ -1235,21 +1330,17 @@ enum UserPermissions {
   CAN_DELETE_BLOG_TAG
   CAN_RETRIEVE_BLOG_TAG
   CAN_VERIFY_USER
+  CAN_CREATE_PAYMENT
+  CAN_UPDATE_PAYMENT
 }
 
 type UserType {
   id: ID!
-  lastLogin: DateTime
-  isActive: Boolean!
-  firstName: String!
-  lastName: String!
   fullName: String!
-  userType: UserUserType!
+  canonicalName: String!
   image: FileFieldType
-  institution: InstitutionType
-  publisher: PublisherType
-  school: SchoolType
-  isVerified: Boolean!
+  userType: UserTypeEnum!
+  userTypeDisplay: EnumDescription!
 }
 
 enum UserTypeEnum {
@@ -1260,18 +1351,10 @@ enum UserTypeEnum {
   INDIVIDUAL_USER
 }
 
-enum UserUserType {
-  MODERATOR
-  PUBLISHER
-  INSTITUTIONAL_USER
-  SCHOOL_ADMIN
-  INDIVIDUAL_USER
-}
-
 type VerifyUser {
   errors: [GenericScalar!]
   ok: Boolean
-  result: UserType
+  result: ModeratorQueryUserType
 }
 
 input WishListInputType {

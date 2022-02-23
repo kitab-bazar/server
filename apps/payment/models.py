@@ -20,13 +20,13 @@ class Payment(models.Model):
         CANCELLED = 'cancelled', _('Cancelled')
 
     transaction_type = models.CharField(
-        max_length=20, choices=TransactionType.choices,
-        null=True, blank=True,
+        max_length=20,
+        choices=TransactionType.choices,
         verbose_name=_('Transaction type')
     )
     payment_type = models.CharField(
-        max_length=20, choices=PaymentType.choices,
-        null=True, blank=True,
+        max_length=20,
+        choices=PaymentType.choices,
         verbose_name=_('Payment type')
     )
     created_at = models.DateTimeField(auto_now=True, verbose_name=_('created at'))
@@ -34,13 +34,24 @@ class Payment(models.Model):
         verbose_name=_('Amount')
     )
     status = models.CharField(
-        verbose_name=_('Status'), choices=Status.choices,
+        verbose_name=_('Status'),
+        choices=Status.choices,
         default=Status.PENDING,
         max_length=50
     )
     created_by = models.ForeignKey(
         User, on_delete=models.PROTECT,
-        verbose_name=_('User')
+        verbose_name=_('Created by'),
+        related_name='payment_created_by'
+    )
+    modified_by = models.ForeignKey(
+        User, on_delete=models.PROTECT,
+        verbose_name=_('Modified by'),
+        related_name='payment_modified_by',
+    )
+    paid_by = models.ForeignKey(
+        User, on_delete=models.PROTECT,
+        verbose_name='payment_paid_by'
     )
 
     def __str__(self):

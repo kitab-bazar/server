@@ -1,7 +1,6 @@
 from django.contrib.auth.hashers import check_password
 
 from utils.graphene.tests import GraphQLTestCase
-from config.permissions import UserPermissions
 
 from apps.user.models import User
 from apps.user.factories import UserFactory
@@ -83,15 +82,17 @@ class TestUser(GraphQLTestCase):
         '''
         self.verify_user = '''
             mutation MyMutation($id: ID!) {
-                userVerify(id: $id) {
-                    errors
-                    ok
-                    result {
-                        id
-                        fullName
-                        isActive
-                        userType
-                        isVerified
+                moderatorMutation {
+                    userVerify(id: $id) {
+                        errors
+                        ok
+                        result {
+                            id
+                            fullName
+                            isActive
+                            userType
+                            isVerified
+                        }
                     }
                 }
             }
@@ -255,11 +256,7 @@ class TestUser(GraphQLTestCase):
 
         self.assertEqual(user.is_verified, False)
         self.assertEqual(user.verified_by, None)
-        response = _query_check(assert_for_error=True)
-        self.assertEqual(
-            response['errors'][0]['message'],
-            UserPermissions.get_permission_message(UserPermissions.Permission.CAN_VERIFY_USER)
-        )
+        _query_check(assert_for_error=True)
         user.refresh_from_db()
         self.assertEqual(user.is_verified, False)
         self.assertEqual(user.verified_by, None)
@@ -267,7 +264,7 @@ class TestUser(GraphQLTestCase):
         # Login
         self.force_login(moderator)
 
-        content = _query_check()['data']['userVerify']['result']
+        content = _query_check()['data']['moderatorMutation']['userVerify']['result']
         self.assertEqual(content['isVerified'], True)
         user.refresh_from_db()
         self.assertEqual(user.is_verified, True)
