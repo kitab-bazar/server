@@ -10,6 +10,7 @@ from django.db.models.functions import Cast
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoListField
+from utils.graphene.enums import EnumDescription
 
 from apps.user.models import User
 from apps.book.models import Book
@@ -119,8 +120,10 @@ class OrderType(DjangoObjectType):
         )
     )
     total_quantity = graphene.Int()
-    status = graphene.Field(OrderStatusEnum)
     activity_log = graphene.List(graphene.NonNull(OrderActivityLogType))
+
+    status = graphene.Field(OrderStatusEnum)
+    status_display = EnumDescription(source='get_status_display')
 
     class Meta:
         model = Order

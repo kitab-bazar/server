@@ -11,19 +11,21 @@ from apps.institution.factories import InstitutionFactory
 class UserQueryTest(GraphQLTestCase):
     USER_QUERY = '''
         query MyQuery {
-          users(ordering: "id") {
-            results {
-              id
-              fullName
-              canonicalName
+          moderatorQuery {
+            users(ordering: "id") {
+              results {
+                id
+                fullName
+                canonicalName
+              }
+              totalCount
             }
-            totalCount
           }
         }
     '''
 
     def test_user_canonical_name(self):
-        user = UserFactory.create(first_name='', last_name='')
+        user = UserFactory.create(first_name='', last_name='', user_type=User.UserType.MODERATOR)
         publisher_user = UserFactory.create(
             user_type=User.UserType.PUBLISHER,
             publisher=PublisherFactory.create(),
@@ -43,7 +45,7 @@ class UserQueryTest(GraphQLTestCase):
         self.force_login(user)
 
         # Make sure cart items exists
-        content = self.query_check(self.USER_QUERY)['data']['users']['results']
+        content = self.query_check(self.USER_QUERY)['data']['moderatorQuery']['users']['results']
         self.assertEqual(content, [
             dict(
                 id=str(user.id),

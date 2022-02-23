@@ -237,6 +237,7 @@ type BookDetailType {
   bookOrderCartItem: [BookOrderType!]!
   wishlistId: ID
   cartDetails: CartItemType
+  gradeDisplay: EnumDescription
 }
 
 enum BookGradeEnum {
@@ -310,6 +311,7 @@ type BookType {
   ogType: String
   wishlistId: ID
   cartDetails: CartItemType
+  gradeDisplay: EnumDescription
 }
 
 input CartItemInputType {
@@ -598,6 +600,8 @@ type DistrictType {
   province: ProvinceType!
 }
 
+scalar EnumDescription
+
 input FaqCreateInputType {
   question: String
   questionEn: String
@@ -721,14 +725,15 @@ type ModeratorQueryUserType {
   isActive: Boolean!
   email: String!
   phoneNumber: String
-  userType: UserUserType!
+  userType: UserTypeEnum!
   image: FileFieldType
-  publisher: ID
-  school: ID
+  institution: InstitutionType
+  publisher: PublisherType
+  school: SchoolType
   isVerified: Boolean!
-  institution: ID
   verifiedBy: UserType
   canonicalName: String!
+  userTypeDisplay: EnumDescription!
 }
 
 type MunicipalityListType {
@@ -879,6 +884,7 @@ type OrderType {
   bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
   totalQuantity: Int
   activityLog: [OrderActivityLogType!]
+  statusDisplay: EnumDescription
 }
 
 input OrderUpdateInputType {
@@ -926,6 +932,9 @@ type PaymentType {
   status: StatusEnum!
   transactionType: TransactionTypeEnum!
   paymentType: PaymentTypeEnum!
+  statusDisplay: EnumDescription!
+  transactionTypeDisplay: EnumDescription!
+  paymentTypeDisplay: EnumDescription!
 }
 
 enum PaymentTypeEnum {
@@ -1256,13 +1265,14 @@ type UserMeType {
   firstName: String!
   lastName: String!
   phoneNumber: String
-  userType: UserUserType!
+  userType: UserTypeEnum!
   image: FileFieldType
-  publisher: ID
-  school: ID
+  institution: InstitutionType
+  publisher: PublisherType
+  school: SchoolType
   isVerified: Boolean!
   canonicalName: String!
-  institution: ID
+  userTypeDisplay: EnumDescription!
   allowedPermissions: [UserPermissions!]!
 }
 
@@ -1329,20 +1339,11 @@ type UserType {
   fullName: String!
   canonicalName: String!
   image: FileFieldType
-  institution: ID
-  school: ID
-  publisher: ID
+  userType: UserTypeEnum!
+  userTypeDisplay: EnumDescription!
 }
 
 enum UserTypeEnum {
-  MODERATOR
-  PUBLISHER
-  INSTITUTIONAL_USER
-  SCHOOL_ADMIN
-  INDIVIDUAL_USER
-}
-
-enum UserUserType {
   MODERATOR
   PUBLISHER
   INSTITUTIONAL_USER

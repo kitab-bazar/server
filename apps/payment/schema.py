@@ -6,15 +6,17 @@ from django.db.models import QuerySet
 
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
+from utils.graphene.enums import EnumDescription
 
-from apps.payment.models import Payment
-from apps.payment.enums import (
+from apps.user.models import User
+
+from .models import Payment
+from .filter_set import PaymentFilterSet
+from .enums import (
     StatusEnum,
     TransactionTypeEnum,
     PaymentTypeEnum
 )
-from apps.payment.filter_set import PaymentFilterSet
-from apps.user.models import User
 
 
 def get_payment_qs(info):
@@ -39,6 +41,10 @@ class PaymentType(DjangoObjectType):
     status = graphene.Field(StatusEnum, required=True)
     transaction_type = graphene.Field(TransactionTypeEnum, required=True)
     payment_type = graphene.Field(PaymentTypeEnum, required=True)
+
+    status_display = EnumDescription(source='get_status_display', required=True)
+    transaction_type_display = EnumDescription(source='get_transaction_type_display', required=True)
+    payment_type_display = EnumDescription(source='get_payment_type_display', required=True)
 
 
 class PaymentListType(CustomDjangoListObjectType):

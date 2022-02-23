@@ -5,20 +5,21 @@ from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 from config.permissions import UserPermissions
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
+from utils.graphene.enums import EnumDescription
+
 from apps.payment.schema import Query as PaymentQuery
 
 from .models import User
 from .filters import UserFilter
-from .enums import UserByTypePermissionEnum
+from .enums import UserByTypePermissionEnum, UserTypeEnum
 
 
 class UserTypeMixin():
     canonical_name = graphene.String(required=True)
     image = graphene.Field(FileFieldType)
 
-    institution = graphene.ID()
-    school = graphene.ID()
-    publisher = graphene.ID()
+    user_type = graphene.Field(UserTypeEnum, required=True)
+    user_type_display = EnumDescription(source='get_user_type_display', required=True)
 
     @staticmethod
     def resolve_canonical_name(root, info):
@@ -53,6 +54,9 @@ class UserMeType(UserTypeMixin, DjangoObjectType):
             'school',
             'phone_number',
             'image',
+            'institution',
+            'publisher',
+            'school',
         )
 
     allowed_permissions = graphene.List(
@@ -77,12 +81,12 @@ class ModeratorQueryUserType(UserTypeMixin, DjangoObjectType):
             'is_verified',
             'last_login',
             'user_type',
-            'institution',
-            'publisher',
-            'school',
             'phone_number',
             'image',
-            'verified_by',  # TODO: Add dataloader for this
+            'institution',  # TODO: Add dataloader
+            'publisher',  # TODO: Add dataloader
+            'school',  # TODO: Add dataloader
+            'verified_by',  # TODO: Add dataloader
         )
 
 
