@@ -11,7 +11,7 @@ from config.permissions import UserPermissions
 
 from apps.payment.mutations import Mutation as PaymentMutation
 
-from .schema import UserType, UserMeType
+from .schema import ModeratorQueryUserType, UserMeType
 from .models import User
 from .serializers import (
     LoginSerializer,
@@ -37,7 +37,7 @@ class Register(graphene.Mutation):
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
-    result = graphene.Field(UserType)
+    result = graphene.Field(UserMeType)
 
     @staticmethod
     def mutate(root, info, data):
@@ -121,7 +121,7 @@ class VerifyUser(CreateUpdateGrapheneMutation):
 
     model = User
     serializer_class = UserVerifySerializer
-    result = graphene.Field(UserType)
+    result = graphene.Field(ModeratorQueryUserType)
     ok = graphene.Boolean()
     permissions = [UserPermissions.Permission.CAN_VERIFY_USER]
 
@@ -138,7 +138,7 @@ class ChangeUserPassword(graphene.Mutation):
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
-    result = graphene.Field(UserType)
+    result = graphene.Field(UserMeType)
 
     @staticmethod
     def mutate(root, info, data):

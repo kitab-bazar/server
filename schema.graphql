@@ -354,7 +354,7 @@ input ChangePasswordInputType {
 type ChangeUserPassword {
   errors: [GenericScalar!]
   ok: Boolean
-  result: UserType
+  result: UserMeType
 }
 
 input ContactMessageInputType {
@@ -703,6 +703,32 @@ type ModeratorMutationType {
 type ModeratorQueryType {
   payment(id: ID!): PaymentType
   payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  user(id: ID!): ModeratorQueryUserType
+  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
+}
+
+type ModeratorQueryUserListType {
+  results: [ModeratorQueryUserType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type ModeratorQueryUserType {
+  id: ID!
+  fullName: String!
+  lastLogin: DateTime
+  isActive: Boolean!
+  email: String!
+  phoneNumber: String
+  userType: UserUserType!
+  image: FileFieldType
+  publisher: ID
+  school: ID
+  isVerified: Boolean!
+  institution: ID
+  verifiedBy: UserType
+  canonicalName: String!
 }
 
 type MunicipalityListType {
@@ -1002,15 +1028,13 @@ type Query {
   district(id: ID!): DistrictType
   districts(name: String, provinces: [ID!], page: Int = 1, ordering: String, pageSize: Int): DistrictListType
   me: UserMeType
-  user(id: ID!): UserType
-  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, page: Int = 1, ordering: String, pageSize: Int): UserListType
   moderatorQuery: ModeratorQueryType
 }
 
 type Register {
   errors: [GenericScalar!]
   ok: Boolean
-  result: UserType
+  result: UserMeType
 }
 
 input RegisterInputType {
@@ -1223,28 +1247,22 @@ type UpdateSchool {
 
 scalar Upload
 
-type UserListType {
-  results: [UserType!]
-  totalCount: Int
-  page: Int
-  pageSize: Int
-}
-
 type UserMeType {
   id: ID!
+  fullName: String!
   lastLogin: DateTime
   isActive: Boolean!
+  email: String!
   firstName: String!
   lastName: String!
-  fullName: String!
+  phoneNumber: String
   userType: UserUserType!
   image: FileFieldType
-  institution: InstitutionType
-  publisher: PublisherType
-  school: SchoolType
+  publisher: ID
+  school: ID
   isVerified: Boolean!
-  email: String!
-  phoneNumber: String
+  canonicalName: String!
+  institution: ID
   allowedPermissions: [UserPermissions!]!
 }
 
@@ -1308,18 +1326,12 @@ enum UserPermissions {
 
 type UserType {
   id: ID!
-  lastLogin: DateTime
-  isActive: Boolean!
-  firstName: String!
-  lastName: String!
   fullName: String!
-  userType: UserUserType!
-  image: FileFieldType
-  institution: InstitutionType
-  publisher: PublisherType
-  school: SchoolType
-  isVerified: Boolean!
   canonicalName: String!
+  image: FileFieldType
+  institution: ID
+  school: ID
+  publisher: ID
 }
 
 enum UserTypeEnum {
@@ -1341,7 +1353,7 @@ enum UserUserType {
 type VerifyUser {
   errors: [GenericScalar!]
   ok: Boolean
-  result: UserType
+  result: ModeratorQueryUserType
 }
 
 input WishListInputType {
