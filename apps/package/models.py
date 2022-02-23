@@ -123,7 +123,6 @@ class SchoolPackage(models.Model):
         on_delete=models.PROTECT,
         related_name='+',
         verbose_name=_('Order window'),
-        null=True
     )
 
     class Meta:
