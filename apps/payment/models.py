@@ -38,17 +38,17 @@ class Payment(models.Model):
     )
     created_by = models.ForeignKey(
         User, on_delete=models.PROTECT,
-        verbose_name=_('User'),
+        verbose_name=_('Created by'),
         related_name='payment_created_by'
     )
     modified_by = models.ForeignKey(
         User, on_delete=models.PROTECT,
-        verbose_name=_('User'),
+        verbose_name=_('Modified by'),
         related_name='payment_modified_by',
     )
-    paid_for = models.ForeignKey(
+    paid_by = models.ForeignKey(
         User, on_delete=models.PROTECT,
-        verbose_name='payment_paid_for'
+        verbose_name='payment_paid_by'
     )
 
     def __str__(self):

@@ -116,6 +116,7 @@ class CustomDjangoListObjectType(DjangoListObjectType):
         filter_fields=None,
         queryset=None,
         filterset_class=None,
+        base_type=None,
         **options,
     ):
 
@@ -137,7 +138,7 @@ class CustomDjangoListObjectType(DjangoListObjectType):
 
         results_field_name = results_field_name or "results"
 
-        baseType = get_global_registry().get_type_for_model(model)
+        baseType = base_type or get_global_registry().get_type_for_model(model)
 
         if not baseType:
             factory_kwargs = {

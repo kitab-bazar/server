@@ -467,6 +467,12 @@ type CreateOrderFromCart {
   result: OrderType
 }
 
+type CreatePayment {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: PaymentType
+}
+
 type CreatePublisher {
   errors: [GenericScalar!]
   ok: Boolean
@@ -688,6 +694,16 @@ type Logout {
   ok: Boolean
 }
 
+type ModeratorMutationType {
+  createPayment(data: PaymentInputType!): CreatePayment
+  updatePayment(data: PaymentInputType!, id: ID!): UpdatePayment
+}
+
+type ModeratorQueryType {
+  payment(id: ID!): PaymentType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+}
+
 type MunicipalityListType {
   results: [MunicipalityType!]
   totalCount: Int
@@ -757,6 +773,7 @@ type Mutation {
   resetPassword(data: ResetPasswordType!): ResetPassword
   updateProfile(data: UpdateProfileType!): UpdateProfile
   userVerify(id: ID!): VerifyUser
+  moderatorMutation: ModeratorMutationType
 }
 
 type NotificationListType {
@@ -858,6 +875,38 @@ type OrderWindowType {
   endDate: Date!
 }
 
+input PaymentInputType {
+  transactionType: TransactionTypeEnum!
+  paymentType: PaymentTypeEnum!
+  amount: Float!
+  status: StatusEnum
+  paidBy: String!
+}
+
+type PaymentListType {
+  results: [PaymentType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PaymentType {
+  id: ID!
+  createdAt: DateTime!
+  amount: Float!
+  createdBy: UserType!
+  modifiedBy: UserType!
+  paidBy: UserType!
+  status: StatusEnum!
+  transactionType: TransactionTypeEnum!
+  paymentType: PaymentTypeEnum!
+}
+
+enum PaymentTypeEnum {
+  CASH
+  CHEQUE
+}
+
 type ProvinceListType {
   results: [ProvinceType!]
   totalCount: Int
@@ -955,6 +1004,7 @@ type Query {
   me: UserMeType
   user(id: ID!): UserType
   users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, page: Int = 1, ordering: String, pageSize: Int): UserListType
+  moderatorQuery: ModeratorQueryType
 }
 
 type Register {
@@ -1030,6 +1080,12 @@ input SchoolUpdateInputType {
   localAddress: String
 }
 
+enum StatusEnum {
+  PENDING
+  VERIFIED
+  CANCELLED
+}
+
 type TagListType {
   results: [TagType!]
   totalCount: Int
@@ -1050,6 +1106,11 @@ type ToggleNotificationReadStatus {
   errors: [GenericScalar!]
   ok: Boolean
   result: NotificationType
+}
+
+enum TransactionTypeEnum {
+  CREDIT
+  DEBIT
 }
 
 scalar UUID
@@ -1124,6 +1185,12 @@ type UpdateOrder {
   errors: [GenericScalar!]
   ok: Boolean
   result: OrderType
+}
+
+type UpdatePayment {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: PaymentType
 }
 
 type UpdateProfile {
@@ -1235,6 +1302,8 @@ enum UserPermissions {
   CAN_DELETE_BLOG_TAG
   CAN_RETRIEVE_BLOG_TAG
   CAN_VERIFY_USER
+  CAN_CREATE_PAYMENT
+  CAN_UPDATE_PAYMENT
 }
 
 type UserType {

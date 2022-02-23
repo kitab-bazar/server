@@ -28,17 +28,19 @@ class PaymentType(DjangoObjectType):
         model = Payment
         fields = (
             'id', 'created_at',
-            'amount', 'created_by'
+            'amount', 'created_by',
+            'modified_by', 'paid_by'
         )
-    status = graphene.Field(StatusEnum)
-    transaction_type = graphene.Field(TransactionTypeEnum)
-    payment_type = graphene.Field(PaymentTypeEnum)
+    status = graphene.Field(StatusEnum, required=True)
+    transaction_type = graphene.Field(TransactionTypeEnum, required=True)
+    payment_type = graphene.Field(PaymentTypeEnum, required=True)
 
 
 class PaymentListType(CustomDjangoListObjectType):
     class Meta:
         model = Payment
         filterset_class = PaymentFilterSet
+        base_type = PaymentType
 
 
 class Query(graphene.ObjectType):
