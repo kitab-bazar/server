@@ -1,9 +1,14 @@
 import django_filters
 from django.db import models
 
-from utils.graphene.filters import StringListFilter, DateGteFilter, DateLteFilter
+from utils.graphene.filters import (
+    DateGteFilter,
+    DateLteFilter,
+    MultipleInputFilter,
+)
 
 from .models import BookOrder, Order, OrderWindow
+from .enums import OrderStatusEnum
 
 
 class BookOrderFilterSet(django_filters.FilterSet):
@@ -13,24 +18,18 @@ class BookOrderFilterSet(django_filters.FilterSet):
         model = BookOrder
         fields = ('title',)
 
-    def filter_title(self, queryset, name, value):
+    def filter_title(self, queryset, _, value):
         if not value:
             return queryset
         return queryset.filter(title__icontains=value)
 
 
 class OrderFilterSet(django_filters.FilterSet):
-    status = StringListFilter(method='filter_order_status')
+    status = MultipleInputFilter(OrderStatusEnum)
 
     class Meta:
         model = Order
         fields = ('status',)
-
-    def filter_order_status(self, queryset, name, value):
-        if not value:
-            return queryset
-        order_status_list = list(map(str.lower, value))
-        return queryset.filter(status__in=order_status_list)
 
 
 class OrderWindowFilterSet(django_filters.FilterSet):

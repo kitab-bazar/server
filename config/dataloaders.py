@@ -2,12 +2,17 @@ from django.utils.functional import cached_property
 
 from utils.graphene.dataloaders import WithContextMixin
 
+from apps.user.dataloaders import DataLoaders as UserDataloader
 from apps.order.dataloaders import DataLoaders as OrderDataloader
 from apps.book.dataloaders import DataLoaders as BookDataloader
 from apps.notification.dataloaders import DataLoaders as NotificationDataloader
 
 
 class GlobalDataLoaders(WithContextMixin):
+    @cached_property
+    def user(self):
+        return UserDataloader(context=self.context)
+
     @cached_property
     def cart_item(self):
         return OrderDataloader(context=self.context)

@@ -21,7 +21,12 @@ class UserType(DjangoObjectType):
             'is_active', 'is_verified', 'last_login', 'user_type', 'institution',
             'publisher', 'school', 'image',
         )
+    canonical_name = graphene.String(required=True)
     image = graphene.Field(FileFieldType)
+
+    @staticmethod
+    def resolve_canonical_name(root, info):
+        return info.context.dl.user.canonical_name.load(root.pk)
 
     @staticmethod
     def get_queryset(queryset, info):
