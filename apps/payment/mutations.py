@@ -50,4 +50,4 @@ class UpdatePayment(PaymentMixin, CreateUpdateGrapheneMutation):
 
 class Mutation():
     create_payment = CreatePayment.Field()
-    update_payement = UpdatePayment.Field()
+    update_payment = UpdatePayment.Field()
