@@ -11,7 +11,7 @@ from utils.common import to_camelcase
 
 def enum_description(v: enum.Enum) -> Union[str, None]:
     try:
-        return str(v.label)
+        return v.label
     except AttributeError:
         return None
 
