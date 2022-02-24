@@ -2,13 +2,14 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
 
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Sum
 
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
 from utils.graphene.enums import EnumDescription
 
 from apps.user.models import User
+from apps.order.models import Order
 
 from .models import Payment
 from .filter_set import PaymentFilterSet
@@ -50,7 +51,31 @@ class PaymentType(DjangoObjectType):
     payment_type_display = EnumDescription(source='get_payment_type_display', required=True)
 
 
-class PaymentListType(CustomDjangoListObjectType):
+class OutStandingBalanceType(graphene.ObjectType):
+    outstanding_balance = graphene.Float()
+
+    class Meta:
+        fields = ()
+
+    @staticmethod
+    def resolve_outstanding_balance(root, info, **kwargs) -> QuerySet:
+        payment_credit = get_payment_qs(info).filter(
+            transaction_type=Payment.TransactionType.CREDIT.value
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+        payment_debit = get_payment_qs(info).filter(
+            transaction_type=Payment.TransactionType.DEBIT.value
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+        order_price = Order.objects.filter(
+            created_by=info.context.user, status__in=[
+                Order.Status.PENDING.value, Order.Status.IN_TRANSIT.value, Order.Status.COMPLETED.value
+            ]
+        ).aggregate(Sum('book_order__price'))['book_order__price__sum'] or 0
+        return payment_credit - payment_debit - order_price
+
+
+class PaymentListType(CustomDjangoListObjectType, OutStandingBalanceType):
     class Meta:
         model = Payment
         filterset_class = PaymentFilterSet

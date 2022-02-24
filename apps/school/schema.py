@@ -6,7 +6,9 @@ from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
 
 from apps.school.models import School
+from apps.user.models import User
 from apps.school.filters import SchoolFilter
+from apps.payment.schema import Query as PaymentQuery
 
 
 class SchoolType(DjangoObjectType):
@@ -28,7 +30,7 @@ class SchoolListType(CustomDjangoListObjectType):
         filterset_class = SchoolFilter
 
 
-class Query(graphene.ObjectType):
+class SchoolQuery(graphene.ObjectType):
     school = DjangoObjectField(SchoolType)
     schools = DjangoPaginatedListObjectField(
         SchoolListType,
@@ -36,3 +38,18 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+
+
+class SchoolQueryType(
+    SchoolQuery,
+    PaymentQuery
+):
+    pass
+
+
+class Query(graphene.ObjectType):
+    school_query = graphene.Field(SchoolQueryType)
+
+    def resolve_school_query(parent, info):
+        if info.context.user.user_type == User.UserType.SCHOOL_ADMIN:
+            return {}
