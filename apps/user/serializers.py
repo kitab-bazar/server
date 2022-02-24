@@ -40,7 +40,7 @@ class LoginSerializer(serializers.Serializer):
                     gettext('Your accout is not active, please click the activation link we sent to your email')
                 )
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            raise serializers.ValidationError('User with this email does not exist.')
+            raise serializers.ValidationError('Invalid Credentials')
         user = authenticate(email=email, password=password)
         if not user:
             raise serializers.ValidationError('Invalid Credentials')
@@ -86,6 +86,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         if User.objects.filter(email__iexact=email).exists():
             raise serializers.ValidationError('The email is already taken.')
         return email
+
+    def validate_user_type(self, user_type):
+        if user_type == User.UserType.MODERATOR:
+            raise serializers.ValidationError('Registration as moderator is not allowed.')
+        return user_type
 
     def save(self, **kwargs):
         instance = User.objects.create_user(
@@ -191,7 +196,7 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
         # if no user exists for this email
         except User.DoesNotExist:
             # explanatory email message
-            raise serializers.ValidationError(gettext('User with this email does not exist.'))
+            raise serializers.ValidationError(gettext('Invalid Credentials'))
         subject = gettext("Reset password")
         html_context = {
             "heading": gettext("Reset Password"),
