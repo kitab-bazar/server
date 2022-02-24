@@ -1,8 +1,8 @@
 import django_filters
-from utils.graphene.filters import IDListFilter, IDFilter, MultipleInputFilter
+from utils.graphene.filters import IDListFilter, MultipleInputFilter
 
 from apps.book.models import Book, Tag, Category, Author
-from apps.book.enums import BookGradeEnum
+from apps.book.enums import BookGradeEnum, BookLanguageEnum
 from django.db.models import Q
 
 
@@ -11,11 +11,12 @@ class BookFilter(django_filters.FilterSet):
     categories = IDListFilter(method='filter_categories')
     authors = IDListFilter(method='filter_authors')
     tags = IDListFilter(method='filter_tags')
-    publisher = IDFilter(method='filter_publisher')
+    publishers = IDListFilter(method='filter_publishers')
     is_added_in_wishlist = django_filters.rest_framework.BooleanFilter(
         method='filter_is_added_in_wishlist', initial=False
     )
-    grade = MultipleInputFilter(BookGradeEnum, field_name='grade')
+    grade = MultipleInputFilter(BookGradeEnum)
+    language = MultipleInputFilter(BookLanguageEnum)
 
     class Meta:
         model = Book
@@ -47,10 +48,10 @@ class BookFilter(django_filters.FilterSet):
             return queryset
         return queryset.filter(tags__in=value)
 
-    def filter_publisher(self, queryset, name, value):
+    def filter_publishers(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(publisher=value)
+        return queryset.filter(publisher__in=value)
 
     def filter_is_added_in_wishlist(self, queryset, name, value):
         if value is True:
