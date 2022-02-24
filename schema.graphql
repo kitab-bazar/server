@@ -152,7 +152,7 @@ input BookCreateInputType {
   descriptionNe: String
   isbn: String
   numberOfPages: Int!
-  language: language!
+  language: BookLanguageEnum!
   weight: Int
   publishedDate: Date!
   edition: String
@@ -197,7 +197,7 @@ type BookDetailType {
   tags: [TagType!]!
   isbn: String!
   numberOfPages: Int!
-  language: BookLanguage!
+  language: BookLanguageEnum
   weight: Int
   publishedDate: Date!
   edition: String
@@ -238,6 +238,7 @@ type BookDetailType {
   wishlistId: ID
   cartDetails: CartItemType
   gradeDisplay: EnumDescription
+  languageDisplay: EnumDescription
 }
 
 enum BookGradeEnum {
@@ -246,7 +247,7 @@ enum BookGradeEnum {
   GRADE_3
 }
 
-enum BookLanguage {
+enum BookLanguageEnum {
   ENGLISH
   NEPALI
   MAITHALI
@@ -293,7 +294,7 @@ type BookType {
   tags: [TagType!]!
   isbn: String!
   numberOfPages: Int!
-  language: BookLanguage!
+  language: BookLanguageEnum
   weight: Int
   publishedDate: Date!
   edition: String
@@ -312,6 +313,7 @@ type BookType {
   wishlistId: ID
   cartDetails: CartItemType
   gradeDisplay: EnumDescription
+  languageDisplay: EnumDescription
 }
 
 input CartItemInputType {
@@ -1019,7 +1021,7 @@ type Query {
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
   bookDetail(id: ID!): BookDetailType
-  books(categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, search: String, isAddedInWishlist: Boolean, grade: [BookGradeEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
+  books(categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, search: String, publishers: [ID!], isAddedInWishlist: Boolean, grades: [BookGradeEnum!], languages: [BookLanguageEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
   authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
   categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
@@ -1385,13 +1387,6 @@ enum blog_publish_type {
 enum faq_publish_type {
   PUBLISH
   DRAFT
-}
-
-enum language {
-  ENGLISH
-  NEPALI
-  MAITHALI
-  THARU
 }
 
 enum message_type {
