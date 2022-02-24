@@ -15,8 +15,8 @@ class BookFilter(django_filters.FilterSet):
     is_added_in_wishlist = django_filters.rest_framework.BooleanFilter(
         method='filter_is_added_in_wishlist', initial=False
     )
-    grade = MultipleInputFilter(BookGradeEnum)
-    language = MultipleInputFilter(LanguageTypeEnum)
+    grades = MultipleInputFilter(BookGradeEnum)
+    languages = MultipleInputFilter(LanguageTypeEnum)
 
     class Meta:
         model = Book
