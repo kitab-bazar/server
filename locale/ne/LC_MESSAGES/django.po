@@ -3,28 +3,28 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-24 15:44+0545\n"
-"PO-Revision-Date: 2022-02-20 19:52+0545\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: ne\n"
+"POT-Creation-Date: 2022-02-23 15:38+0545\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
 
 #: apps/blog/forms.py:12 apps/book/forms.py:12
 msgid "Description [en]"
-msgstr "विवरण अंग्रेजी"
+msgstr ""
 
 #: apps/blog/forms.py:14 apps/book/forms.py:14
 msgid "Description [ne]"
-msgstr "विवरण नेपाली"
+msgstr ""
 
 #: apps/blog/models.py:10 apps/book/models.py:9 apps/common/models.py:9
 #: apps/common/models.py:45 apps/institution/models.py:9
@@ -153,10 +153,8 @@ msgid "Tharu"
 msgstr "थारु"
 
 #: apps/book/models.py:64
-#, fuzzy
-#| msgid "Grade 2"
 msgid "Grade 1"
-msgstr "ग्रेड २"
+msgstr "ग्रेड १"
 
 #: apps/book/models.py:65
 msgid "Grade 2"
@@ -306,101 +304,101 @@ msgstr ""
 msgid "Images"
 msgstr ""
 
-#: apps/helpdesk/models.py:17 apps/user/models.py:79
+#: apps/helpdesk/models.py:17 apps/user/models.py:78
 msgid "Full Name"
-msgstr "पूरा नाम"
+msgstr ""
 
-#: apps/helpdesk/models.py:18 apps/user/models.py:65
+#: apps/helpdesk/models.py:18 apps/user/models.py:64
 msgid "Email address"
-msgstr "ईमेल ठेगाना"
+msgstr ""
 
 #: apps/helpdesk/models.py:23 apps/institution/models.py:24
 #: apps/publisher/models.py:24 apps/school/models.py:23
 msgid "Local address"
-msgstr "स्थानीय ठेगाना"
+msgstr ""
 
 #: apps/helpdesk/models.py:29
 msgid "Message Type"
-msgstr "मेसेजको प्रकार"
+msgstr ""
 
 #: apps/helpdesk/models.py:33
 msgid "Contact message"
-msgstr "सम्पर्क मेसेज"
+msgstr ""
 
 #: apps/helpdesk/models.py:34
 msgid "Contact messages"
-msgstr "सम्पर्क मेसेजहरू"
+msgstr ""
 
 #: apps/helpdesk/models.py:45
 msgid "Question"
-msgstr "प्रश्न"
+msgstr ""
 
 #: apps/helpdesk/models.py:46
 msgid "Answer"
-msgstr "उत्तर"
+msgstr ""
 
 #: apps/helpdesk/models.py:54
 msgid "Faq"
-msgstr "बारम्बार सोधिने प्रश्न"
+msgstr ""
 
 #: apps/helpdesk/models.py:55
 msgid "Faqs"
-msgstr "बारम्बार सोधिने प्रश्नहरू"
+msgstr ""
 
 #: apps/institution/models.py:23 apps/publisher/models.py:23
 #: apps/school/models.py:22
 msgid "Ward Number"
-msgstr "वडा नम्बर"
+msgstr ""
 
 #: apps/institution/models.py:30 apps/publisher/models.py:30
 #: apps/school/models.py:29
 msgid "Pan number"
-msgstr "प्यान नम्बर"
+msgstr ""
 
 #: apps/institution/models.py:37 apps/publisher/models.py:37
 #: apps/school/models.py:36
 msgid "Vat number"
-msgstr "भ्याट नम्बर"
+msgstr ""
 
-#: apps/institution/models.py:41 apps/user/models.py:91
+#: apps/institution/models.py:41 apps/user/models.py:90
 msgid "Institution"
-msgstr "संस्था"
+msgstr ""
 
 #: apps/institution/models.py:42
 msgid "Institutions"
-msgstr "संस्थाहरू"
+msgstr ""
 
 #: apps/notification/models.py:20
 msgid "Notification Type"
-msgstr "नोटिफिकेसन प्रकार"
+msgstr ""
 
 #: apps/notification/models.py:24
 msgid "For user"
-msgstr "प्रयोगकर्ताको लागि"
+msgstr ""
 
 #: apps/notification/models.py:27
 msgid "Read"
-msgstr "पढ्नुहोस्"
+msgstr ""
 
 #: apps/notification/models.py:27
 msgid "Whether notification has been marked as read"
-msgstr "नोटिफिकेसन हेरिएको भनी चिन्ह लगाइएको छ कि छैन"
+msgstr ""
 
 #: apps/notification/models.py:30
 msgid "Created at"
-msgstr "मा सिर्जना गरिएको"
+msgstr ""
 
 #: apps/notification/models.py:30
 msgid "When notification was created"
-msgstr "जब नोटिफिकेसन सिर्जना गरियो"
+msgstr ""
 
 #: apps/notification/models.py:38
 msgid "Notification"
-msgstr "नोटिफिकेसन"
+msgstr ""
 
 #: apps/notification/models.py:39
 msgid "Notifications"
-msgstr "नोटिफिकेसनहरू"
+msgstr ""
 
 #: apps/order/models.py:38
 msgid "Start date should not be greater than end date"
@@ -567,44 +565,36 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
-#: apps/user/models.py:50
+#: apps/user/models.py:49
 msgid "Moderator"
 msgstr "मध्यस्थ"
 
-#: apps/user/models.py:52
+#: apps/user/models.py:51
 msgid "Institutional User"
 msgstr "संस्थागत प्रयोगकर्ता"
 
-#: apps/user/models.py:53
+#: apps/user/models.py:52
 msgid "School Admin"
 msgstr "विद्यालय प्रशासन"
 
-#: apps/user/models.py:54
+#: apps/user/models.py:53
 msgid "Individual User"
 msgstr "व्यक्तिगत प्रयोगकर्ता"
 
-#: apps/user/models.py:69
+#: apps/user/models.py:68
 msgid "First name"
-msgstr "पहिलो नाम"
-
-#: apps/user/models.py:74
-msgid "Last name"
-msgstr "थर"
-
-#: apps/user/models.py:85
-msgid "User Type"
-msgstr "प्रयोगकर्ता प्रकार"
-
-#: apps/user/models.py:105
-msgid "Verified by"
 msgstr ""
 
-#: apps/user/models.py:110
-msgid "Users"
-msgstr "प्रयोगकर्ताहरू"
+#: apps/user/models.py:73
+msgid "Last name"
+msgstr ""
 
-#: apps/user/mutations.py:255
-msgid "Only allowed for moderator users."
+#: apps/user/models.py:84
+msgid "User Type"
+msgstr ""
+
+#: apps/user/models.py:104
+msgid "Users"
 msgstr ""
 
 #: apps/user/serializers.py:40
@@ -612,70 +602,57 @@ msgid ""
 "Your accout is not active, please click the activation link we sent to your "
 "email"
 msgstr ""
-"तपाईंको खाता सक्रिय छैन, कृपया हामीले तपाईंको इमेलमा पठाएको लिङ्कमा क्लिक गर्नुहोस्"
 
 #: apps/user/serializers.py:127
 msgid "Activate your account."
-msgstr "आफ्नो खाता एक्टिभेट गर्नुहोस्।"
+msgstr ""
 
 #: apps/user/serializers.py:128
 msgid "Please click on the link to confirm your registration"
-msgstr "कृपया आफ्नो दर्ता पुष्टि गर्न लिङ्कमा क्लिक गर्नुहोस्"
+msgstr ""
 
 #: apps/user/serializers.py:135
 msgid "Activate your account"
-msgstr "आफ्नो खाता सक्रिय गर्नुहोस्"
+msgstr ""
 
 #: apps/user/serializers.py:137
 msgid "Activate Account"
-msgstr "खाता सक्रिय गर्नुहोस्"
+msgstr ""
 
 #: apps/user/serializers.py:166
 msgid "Activation link is not valid."
-msgstr "एक्टिभेसन लिङ्क मान्य छैन।"
+msgstr ""
 
 #: apps/user/serializers.py:187
 msgid ""
 "We received a request to reset your account password. If you wish to do so, "
 "please click below. Otherwise, you may safely disregard this email."
 msgstr ""
-"हामीले तपाईंको खाता पासवर्ड रिसेट गर्न अनुरोध प्राप्त गर्यौं। यदि तपाईं त्यसो गर्न "
-"चाहनुहुन्छ भने कृपया तल क्लिक गर्नुहोस्। अन्यथा, तपाईं सुरक्षित रूपमा यो इमेल बेवास्ता गर्न "
-"सक्नुहुन्छ।"
 
 #: apps/user/serializers.py:194
 msgid "User with this email does not exist."
-msgstr "यो इमेल सहित प्रयोगकर्ता दर्ता भएको छैन।"
+msgstr ""
 
 #: apps/user/serializers.py:195
 msgid "Reset password"
-msgstr "पासवर्ड रिसेट गर्नुहोस्"
+msgstr ""
 
 #: apps/user/serializers.py:197 apps/user/serializers.py:199
 msgid "Reset Password"
-msgstr "पासवर्ड रिसेट गर्नुहोस्"
+msgstr ""
 
 #: apps/user/serializers.py:237
 msgid "The token is invalid."
-msgstr "टोकन मान्य छैन।"
+msgstr ""
 
 #: config/auth.py:5 config/exceptions.py:6 utils/permissions.py:6
 msgid "You do not have permission to perform this action."
-msgstr "यो कार्य गर्ने तपाईंसँग अनुमति छैन।"
+msgstr ""
 
 #: config/exceptions.py:13
 msgid "You are not authenticated"
-msgstr "तपाईं प्रमाणित हुनुहुन्न"
+msgstr ""
 
 #: config/urls.py:66
 msgid "Kitab Bazar administration"
-msgstr "किताब बजार प्रशासन"
-
-#~ msgid "Invalid book id."
-#~ msgstr "पुस्तक आईडी उपलब्ध छैन।"
-
-#~ msgid "Book order received."
-#~ msgstr "पुस्तक अर्डर प्राप्त भयो।"
-
-#~ msgid "Book order packed."
-#~ msgstr "पुस्तक अर्डर प्याक भयो।"
+msgstr ""
