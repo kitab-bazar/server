@@ -6,10 +6,12 @@ from utils.graphene.enums import (
 from apps.book.models import Book
 
 BookGradeEnum = convert_enum_to_graphene_enum(Book.Grade, name='BookGradeEnum')
+BookLanguageEnum = convert_enum_to_graphene_enum(Book.LanguageType, name='BookLanguageEnum')
 
 enum_map = {
     get_enum_name_from_django_field(field): enum
     for field, enum in (
         (Book.grade, BookGradeEnum),
+        (Book.language, BookLanguageEnum),
     )
 }

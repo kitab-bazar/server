@@ -9,7 +9,7 @@ from utils.graphene.enums import EnumDescription
 
 from apps.book.models import Book, Tag, Category, Author, WishList
 from apps.book.filters import BookFilter, TagFilter, CategoryFilter, AuthorFilter
-from apps.book.enums import BookGradeEnum
+from apps.book.enums import BookGradeEnum, BookLanguageEnum
 from apps.order.schema import CartItemType
 
 
@@ -62,8 +62,12 @@ class AuthorListType(CustomDjangoListObjectType):
 class BookType(DjangoObjectType):
     wishlist_id = graphene.ID()
     cart_details = graphene.Field(CartItemType)
+
     grade = graphene.Field(BookGradeEnum)
     grade_display = EnumDescription(source='get_grade_display')
+
+    language = graphene.Field(BookLanguageEnum)
+    language_display = EnumDescription(source='get_language_display')
 
     class Meta:
         model = Book
