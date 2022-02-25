@@ -1,5 +1,5 @@
 import django_filters
-from apps.common.models import Province, Municipality, District, ActivityLogFile
+from apps.common.models import Province, Municipality, District
 from utils.graphene.filters import IDListFilter
 
 
