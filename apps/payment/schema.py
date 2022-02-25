@@ -9,6 +9,7 @@ from utils.graphene.fields import DjangoPaginatedListObjectField
 from utils.graphene.enums import EnumDescription
 
 from apps.user.models import User
+from apps.order.models import Order
 
 from .models import Payment
 from .filter_set import PaymentFilterSet
@@ -57,6 +58,7 @@ class PaymentSummaryType(graphene.ObjectType):
     total_verifield_payment_count = graphene.Float()
     total_unverifield_payment = graphene.Float()
     total_unverifield_payment_count = graphene.Float()
+    outstanding_balance = graphene.Float()
 
     class Meta:
         fields = ()
@@ -85,7 +87,7 @@ class Query(graphene.ObjectType):
 
     @staticmethod
     def resolve_payment_summary(root, info, **kwargs):
-        return get_payment_qs(info).aggregate(
+        payemnt_summary = get_payment_qs(info).aggregate(
             payment_credit_sum=Sum('amount', filter=Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.VERIFIED.value
@@ -116,3 +118,11 @@ class Query(graphene.ObjectType):
                 status=Payment.Status.VERIFIED.value,
             ))
         )
+        order_price_total = Order.objects.filter(
+            created_by=info.context.user, status=Order.Status.IN_TRANSIT.value
+        ).aggregate(Sum('book_order__price'))['book_order__price__sum'] or 0
+        payment_credit_sum = payemnt_summary['payment_credit_sum'] or 0
+        payment_debit_sum = payemnt_summary['payment_debit_sum'] or 0
+        outstanding_balance = payment_credit_sum - payment_debit_sum - order_price_total
+        payemnt_summary['outstanding_balance'] = outstanding_balance
+        return payemnt_summary
