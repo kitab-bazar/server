@@ -5,11 +5,12 @@ from utils.graphene.mutation import (
     DeleteMutation
 )
 
+from config.permissions import UserPermissions
+
 from apps.user.models import User
 from apps.common.models import ActivityLogFile
-from apps.common.schema import ActivityLogFileType
+from apps.common.schema import ActivityFileType
 from apps.common.serializers import ActivityLogFileSerializer
-from config.permissions import UserPermissions
 
 
 ActivityLogFileInputType = generate_input_type_for_serializer(
@@ -31,7 +32,7 @@ class CreateActivityLogFile(BaseActivityLogFileMutationMixin, CreateUpdateGraphe
         data = ActivityLogFileInputType(required=True)
     model = ActivityLogFile
     serializer_class = ActivityLogFileSerializer
-    result = graphene.Field(ActivityLogFileType)
+    result = graphene.Field(ActivityFileType)
     permissions = [UserPermissions.Permission.ACTIVITY_LOG_FILE]
 
 
@@ -39,7 +40,7 @@ class DeleteActivityLogFile(BaseActivityLogFileMutationMixin, DeleteMutation):
     class Arguments:
         id = graphene.ID(required=True)
     model = ActivityLogFile
-    result = graphene.Field(ActivityLogFileType)
+    result = graphene.Field(ActivityFileType)
     permissions = [UserPermissions.Permission.ACTIVITY_LOG_FILE]
 
 

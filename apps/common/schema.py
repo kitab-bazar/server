@@ -10,7 +10,6 @@ from apps.common.filters import (
     DistrictFilter,
     ProvinceFilter,
     MunicipalityFilter,
-    ActivityLogFileFilter,
 )
 
 
@@ -58,10 +57,9 @@ class DistrictListType(CustomDjangoListObjectType):
         filterset_class = DistrictFilter
 
 
-class ActivityLogFileType(CustomDjangoListObjectType):
+class ActivityFileType(DjangoObjectType):
     class Meta:
         model = ActivityLogFile
-        filterset_class = ActivityLogFileFilter
 
     file = graphene.Field(FileFieldType)
 
