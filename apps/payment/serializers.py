@@ -21,7 +21,7 @@ class PaymentLogSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerial
 class PaymentSnapshotSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = ('status',)
+        fields = ('status', 'amount')
 
 
 class PaymentSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
@@ -34,6 +34,31 @@ class PaymentSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerialize
     def create(self, validated_data):
         payment_log_data = validated_data.pop('payment_log', None)
         payment = super().create(validated_data)
+        snapshot_serializer = PaymentSnapshotSerializer(instance=payment)
+        if payment_log_data:
+            files = payment_log_data.pop('files', None)
+            payment_log = PaymentLog.objects.create(
+                payment=payment,
+                snapshot=snapshot_serializer.data,
+                **payment_log_data,
+                created_by=self.context['request'].user
+            )
+            if files:
+                payment_log.add(*files)
+        return payment
+
+
+class PaymentUpdateSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
+    payment_log = PaymentLogSerializer(required=False)
+
+    class Meta:
+        model = Payment
+        fields = ('status', 'amount', 'payment_log')
+
+    def update(self, instance, validated_data):
+        print(validated_data)
+        payment_log_data = validated_data.pop('payment_log', None)
+        payment = super().update(instance, validated_data)
         snapshot_serializer = PaymentSnapshotSerializer(instance=payment)
         if payment_log_data:
             files = payment_log_data.pop('files', None)
