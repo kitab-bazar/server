@@ -68,16 +68,3 @@ class DistrictFilter(django_filters.FilterSet):
         if not value:
             return queryset
         return queryset.filter(province__in=value)
-
-
-class ActivityLogFileFilter(django_filters.FilterSet):
-    created_by_user_ids = IDListFilter(method='filter_created_by_user_ids')
-
-    class Meta:
-        model = ActivityLogFile
-        fields = ()
-
-    def filter_created_by_user_ids(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(created_by__in=value)
