@@ -2,14 +2,13 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
 
-from django.db.models import QuerySet, Sum
+from django.db.models import QuerySet, Sum, Q, Count
 
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField
 from utils.graphene.enums import EnumDescription
 
 from apps.user.models import User
-from apps.order.models import Order
 
 from .models import Payment
 from .filter_set import PaymentFilterSet
@@ -51,8 +50,9 @@ class PaymentType(DjangoObjectType):
     payment_type_display = EnumDescription(source='get_payment_type_display', required=True)
 
 
-class OutStandingBalanceType(graphene.ObjectType):
-    outstanding_balance = graphene.Float()
+class PaymentSummaryType(graphene.ObjectType):
+    payment_credit_sum = graphene.Float()
+    payment_debit_sum = graphene.Float()
     total_verifield_payment = graphene.Float()
     total_verifield_payment_count = graphene.Float()
     total_unverifield_payment = graphene.Float()
@@ -61,53 +61,8 @@ class OutStandingBalanceType(graphene.ObjectType):
     class Meta:
         fields = ()
 
-    @staticmethod
-    def resolve_outstanding_balance(root, info, **kwargs) -> float:
-        payment_credit = get_payment_qs(info).filter(
-            transaction_type=Payment.TransactionType.CREDIT.value,
-            status=Payment.Status.VERIFIED.value
-        ).aggregate(Sum('amount'))['amount__sum'] or 0
 
-        payment_debit = get_payment_qs(info).filter(
-            transaction_type=Payment.TransactionType.DEBIT.value,
-            status=Payment.Status.VERIFIED.value
-        ).aggregate(Sum('amount'))['amount__sum'] or 0
-
-        order_price = Order.objects.filter(
-            created_by=info.context.user, status=Order.Status.IN_TRANSIT.value
-        ).aggregate(Sum('book_order__price'))['book_order__price__sum'] or 0
-        return payment_credit - payment_debit - order_price
-
-    @staticmethod
-    def resolve_total_verifield_payment(root, info, **kwargs) -> float:
-        return get_payment_qs(info).filter(
-            transaction_type=Payment.TransactionType.CREDIT.value,
-            status=Payment.Status.VERIFIED.value,
-        ).aggregate(Sum('amount'))['amount__sum'] or 0
-
-    @staticmethod
-    def resolve_total_verifield_payment_count(root, info, **kwargs) -> float:
-        return get_payment_qs(info).filter(
-            transaction_type=Payment.TransactionType.CREDIT.value,
-            status=Payment.Status.VERIFIED.value,
-        ).count()
-
-    @staticmethod
-    def resolve_total_unverifield_payment(root, info, **kwargs) -> float:
-        return get_payment_qs(info).filter(
-            transaction_type=Payment.TransactionType.CREDIT.value,
-            status=Payment.Status.PENDING.value,
-        ).aggregate(Sum('amount'))['amount__sum'] or 0
-
-    @staticmethod
-    def resolve_total_unverifield_payment_count(root, info, **kwargs) -> float:
-        return get_payment_qs(info).filter(
-            transaction_type=Payment.TransactionType.CREDIT.value,
-            status=Payment.Status.PENDING.value,
-        ).count()
-
-
-class PaymentListType(CustomDjangoListObjectType, OutStandingBalanceType):
+class PaymentListType(CustomDjangoListObjectType):
     class Meta:
         model = Payment
         filterset_class = PaymentFilterSet
@@ -122,7 +77,42 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    payment_summary = graphene.Field(PaymentSummaryType)
 
     @staticmethod
     def resolve_payments(root, info, **kwargs) -> QuerySet:
         return get_payment_qs(info)
+
+    @staticmethod
+    def resolve_payment_summary(root, info, **kwargs):
+        return get_payment_qs(info).aggregate(
+            payment_credit_sum=Sum('amount', filter=Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.VERIFIED.value
+            )),
+
+            payment_debit_sum=Sum('amount', filter=Q(
+                transaction_type=Payment.TransactionType.DEBIT.value,
+                status=Payment.Status.VERIFIED.value
+            )),
+
+            total_verifield_payment=Sum('amount', filter=Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.VERIFIED.value,
+            )),
+
+            total_unverifield_payment=Sum('amount', filter=Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.PENDING.value,
+            )),
+
+            total_unverifield_payment_count=Count('id', filter=Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.PENDING.value,
+            )),
+
+            total_verifield_payment_count=Count('id', filter=Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.VERIFIED.value,
+            ))
+        )
