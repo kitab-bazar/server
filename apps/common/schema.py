@@ -2,11 +2,16 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
-from utils.graphene.types import CustomDjangoListObjectType
+from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
 
-from apps.common.models import District, Province, Municipality
-from apps.common.filters import DistrictFilter, ProvinceFilter, MunicipalityFilter
+from apps.common.models import District, Province, Municipality, ActivityLogFile
+from apps.common.filters import (
+    DistrictFilter,
+    ProvinceFilter,
+    MunicipalityFilter,
+    ActivityLogFileFilter,
+)
 
 
 class ProvinceType(DjangoObjectType):
@@ -51,6 +56,14 @@ class DistrictListType(CustomDjangoListObjectType):
     class Meta:
         model = District
         filterset_class = DistrictFilter
+
+
+class ActivityLogFileType(CustomDjangoListObjectType):
+    class Meta:
+        model = ActivityLogFile
+        filterset_class = ActivityLogFileFilter
+
+    file = graphene.Field(FileFieldType)
 
 
 class Query(graphene.ObjectType):
