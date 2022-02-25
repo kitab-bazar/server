@@ -923,6 +923,10 @@ type PaymentListType {
   page: Int
   pageSize: Int
   outstandingBalance: Float
+  totalVerifieldPayment: Float
+  totalVerifieldPaymentCount: Float
+  totalUnverifieldPayment: Float
+  totalUnverifieldPaymentCount: Float
 }
 
 type PaymentType {
