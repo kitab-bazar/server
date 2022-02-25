@@ -77,6 +77,8 @@ class UserPermissions():
         CAN_CREATE_PAYMENT = auto()
         CAN_UPDATE_PAYMENT = auto()
 
+        ACTIVITY_LOG_FILE = auto()
+
     Permission.__name__ = 'UserPermissions'
 
     __error_message__ = {
@@ -147,7 +149,9 @@ class UserPermissions():
 
         Permission.CAN_VERIFY_USER: "You don't have permission to verify user",
         Permission.CAN_CREATE_PAYMENT: "You don't have permission to create payment",
-        Permission.CAN_UPDATE_PAYMENT: "You don't have permission to edit payment"
+        Permission.CAN_UPDATE_PAYMENT: "You don't have permission to edit payment",
+
+        Permission.ACTIVITY_LOG_FILE: "You don't have permission in activity log files"
     }
 
     INDIVIDUAL_USER = [
@@ -220,6 +224,7 @@ class UserPermissions():
         Permission.CAN_VERIFY_USER,
         Permission.CAN_CREATE_PAYMENT,
         Permission.CAN_UPDATE_PAYMENT,
+        Permission.ACTIVITY_LOG_FILE,
     ]
 
     # ----------------------------------------
