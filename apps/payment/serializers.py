@@ -5,7 +5,7 @@ from apps.payment.models import Payment, PaymentLog
 from config.serializers import CreatedUpdatedBaseSerializer
 
 
-class PaymentLogSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
+class LogSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
 
     class Meta:
         model = PaymentLog
@@ -25,7 +25,7 @@ class PaymentSnapshotSerializer(CreatedUpdatedBaseSerializer, serializers.ModelS
 
 
 class PaymentSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
-    payment_log = PaymentLogSerializer(required=False)
+    payment_log = LogSerializer(required=False)
 
     class Meta:
         model = Payment
@@ -49,14 +49,13 @@ class PaymentSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerialize
 
 
 class PaymentUpdateSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
-    payment_log = PaymentLogSerializer(required=False)
+    payment_log = LogSerializer(required=False)
 
     class Meta:
         model = Payment
         fields = ('status', 'amount', 'payment_log')
 
     def update(self, instance, validated_data):
-        print(validated_data)
         payment_log_data = validated_data.pop('payment_log', None)
         payment = super().update(instance, validated_data)
         snapshot_serializer = PaymentSnapshotSerializer(instance=payment)
