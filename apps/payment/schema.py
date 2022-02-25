@@ -53,26 +53,58 @@ class PaymentType(DjangoObjectType):
 
 class OutStandingBalanceType(graphene.ObjectType):
     outstanding_balance = graphene.Float()
+    total_verifield_payment = graphene.Float()
+    total_verifield_payment_count = graphene.Float()
+    total_unverifield_payment = graphene.Float()
+    total_unverifield_payment_count = graphene.Float()
 
     class Meta:
         fields = ()
 
     @staticmethod
-    def resolve_outstanding_balance(root, info, **kwargs) -> QuerySet:
+    def resolve_outstanding_balance(root, info, **kwargs) -> float:
         payment_credit = get_payment_qs(info).filter(
-            transaction_type=Payment.TransactionType.CREDIT.value
+            transaction_type=Payment.TransactionType.CREDIT.value,
+            status=Payment.Status.VERIFIED.value
         ).aggregate(Sum('amount'))['amount__sum'] or 0
 
         payment_debit = get_payment_qs(info).filter(
-            transaction_type=Payment.TransactionType.DEBIT.value
+            transaction_type=Payment.TransactionType.DEBIT.value,
+            status=Payment.Status.VERIFIED.value
         ).aggregate(Sum('amount'))['amount__sum'] or 0
 
         order_price = Order.objects.filter(
-            created_by=info.context.user, status__in=[
-                Order.Status.PENDING.value, Order.Status.IN_TRANSIT.value, Order.Status.COMPLETED.value
-            ]
+            created_by=info.context.user, status=Order.Status.IN_TRANSIT.value
         ).aggregate(Sum('book_order__price'))['book_order__price__sum'] or 0
         return payment_credit - payment_debit - order_price
+
+    @staticmethod
+    def resolve_total_verifield_payment(root, info, **kwargs) -> float:
+        return get_payment_qs(info).filter(
+            transaction_type=Payment.TransactionType.CREDIT.value,
+            status=Payment.Status.VERIFIED.value,
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+    @staticmethod
+    def resolve_total_verifield_payment_count(root, info, **kwargs) -> float:
+        return get_payment_qs(info).filter(
+            transaction_type=Payment.TransactionType.CREDIT.value,
+            status=Payment.Status.VERIFIED.value,
+        ).count()
+
+    @staticmethod
+    def resolve_total_unverifield_payment(root, info, **kwargs) -> float:
+        return get_payment_qs(info).filter(
+            transaction_type=Payment.TransactionType.CREDIT.value,
+            status=Payment.Status.PENDING.value,
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+    @staticmethod
+    def resolve_total_unverifield_payment_count(root, info, **kwargs) -> float:
+        return get_payment_qs(info).filter(
+            transaction_type=Payment.TransactionType.CREDIT.value,
+            status=Payment.Status.PENDING.value,
+        ).count()
 
 
 class PaymentListType(CustomDjangoListObjectType, OutStandingBalanceType):
