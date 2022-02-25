@@ -13,6 +13,24 @@ input ActivateInputType {
   token: String!
 }
 
+type ActivityFileType {
+  id: ID!
+  type: ActivityLogFileType!
+  file: FileFieldType
+  createdBy: UserType!
+}
+
+input ActivityLogFileInputType {
+  type: type!
+  file: Upload!
+}
+
+enum ActivityLogFileType {
+  PAYMENT
+  ORDER
+  PACKAGE
+}
+
 type AuthorListType {
   results: [AuthorType!]
   totalCount: Int
@@ -399,6 +417,12 @@ type ContactMessageType {
   messageType: ContactMessageMessageType!
 }
 
+type CreateActivityLogFile {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: ActivityFileType
+}
+
 type CreateBlog {
   errors: [GenericScalar!]
   ok: Boolean
@@ -498,6 +522,12 @@ type CreateWishList {
 scalar Date
 
 scalar DateTime
+
+type DeleteActivityLogFile {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: ActivityFileType
+}
 
 type DeleteBlog {
   errors: [GenericScalar!]
@@ -685,6 +715,11 @@ input InstitutionUpdateInputType {
   localAddress: String
 }
 
+input LogInputType {
+  comment: String
+  files: [ID!]
+}
+
 type Login {
   result: UserMeType
   errors: [GenericScalar!]
@@ -702,7 +737,7 @@ type Logout {
 
 type ModeratorMutationType {
   createPayment(data: PaymentInputType!): CreatePayment
-  updatePayment(data: PaymentInputType!, id: ID!): UpdatePayment
+  updatePayment(data: PaymentUpdateInputType!, id: ID!): UpdatePayment
   userVerify(id: ID!): VerifyUser
 }
 
@@ -799,6 +834,8 @@ type Mutation {
   createInstitution(data: InstitutionCreateInputType!): CreateInstitution
   updateInstitution(data: InstitutionCreateInputType!, id: ID!): UpdateInstitution
   deleteInstitution(id: ID!): DeleteInstitution
+  createActivityLogFile(data: ActivityLogFileInputType!): CreateActivityLogFile
+  deleteActivityLogFile(id: ID!): DeleteActivityLogFile
   register(data: RegisterInputType!): Register
   login(data: LoginInputType!): Login
   activate(data: ActivateInputType!): Activate
@@ -911,6 +948,7 @@ type OrderWindowType {
 }
 
 input PaymentInputType {
+  paymentLog: LogInputType
   transactionType: TransactionTypeEnum!
   paymentType: PaymentTypeEnum!
   amount: Float!
@@ -953,6 +991,12 @@ type PaymentType {
 enum PaymentTypeEnum {
   CASH
   CHEQUE
+}
+
+input PaymentUpdateInputType {
+  status: StatusEnum
+  amount: Float!
+  paymentLog: LogInputType
 }
 
 type ProvinceListType {
@@ -1356,6 +1400,7 @@ enum UserPermissions {
   CAN_VERIFY_USER
   CAN_CREATE_PAYMENT
   CAN_UPDATE_PAYMENT
+  ACTIVITY_LOG_FILE
 }
 
 type UserType {
@@ -1415,6 +1460,12 @@ enum message_type {
   BUSINESS_RELATED
   FEATURE_SUGGESTIONS_FEEDBACK
   OTHER
+}
+
+enum type {
+  PAYMENT
+  ORDER
+  PACKAGE
 }
 
 enum user_type {
