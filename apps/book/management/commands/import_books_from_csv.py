@@ -119,7 +119,7 @@ class Command(BaseCommand):
             isbn = row['ISBN no'].replace('-', '')
             title_en = row['Title of the book']
             if Book.objects.filter(
-                models.Q(isbn=isbn) |
+                # models.Q(isbn=isbn) |
                 models.Q(title_en=title_en, publisher__name=publisher_name)
             ).exists():
                 self.stdout.write(
