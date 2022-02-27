@@ -709,6 +709,7 @@ type ModeratorMutationType {
 type ModeratorQueryType {
   payment(id: ID!): PaymentType
   payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  paymentSummary: PaymentSummaryType
   user(id: ID!): ModeratorQueryUserType
   users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
 }
@@ -924,6 +925,16 @@ type PaymentListType {
   pageSize: Int
 }
 
+type PaymentSummaryType {
+  paymentCreditSum: Float
+  paymentDebitSum: Float
+  totalVerifiedPayment: Float
+  totalVerifiedPaymentCount: Float
+  totalUnverifiedPayment: Float
+  totalUnverifiedPaymentCount: Float
+  outstandingBalance: Float
+}
+
 type PaymentType {
   id: ID!
   createdAt: DateTime!
@@ -1026,8 +1037,7 @@ type Query {
   authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
   categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
   wishList(createdBy: ID, book: ID, page: Int = 1, ordering: String, pageSize: Int): WishListListType
-  school(id: ID!): SchoolType
-  schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
+  schoolQuery: SchoolQueryType
   publisher(id: ID!): PublisherType
   publishers(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): PublisherListType
   institution(id: ID!): InstitutionType
@@ -1097,6 +1107,14 @@ type SchoolListType {
   totalCount: Int
   page: Int
   pageSize: Int
+}
+
+type SchoolQueryType {
+  payment(id: ID!): PaymentType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  paymentSummary: PaymentSummaryType
+  school(id: ID!): SchoolType
+  schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
 }
 
 type SchoolType {
