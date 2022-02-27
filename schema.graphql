@@ -928,10 +928,10 @@ type PaymentListType {
 type PaymentSummaryType {
   paymentCreditSum: Float
   paymentDebitSum: Float
-  totalVerifieldPayment: Float
-  totalVerifieldPaymentCount: Float
-  totalUnverifieldPayment: Float
-  totalUnverifieldPaymentCount: Float
+  totalVerifiedPayment: Float
+  totalVerifiedPaymentCount: Float
+  totalUnverifiedPayment: Float
+  totalUnverifiedPaymentCount: Float
   outstandingBalance: Float
 }
 

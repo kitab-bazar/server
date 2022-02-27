@@ -54,10 +54,10 @@ class PaymentType(DjangoObjectType):
 class PaymentSummaryType(graphene.ObjectType):
     payment_credit_sum = graphene.Float()
     payment_debit_sum = graphene.Float()
-    total_verifield_payment = graphene.Float()
-    total_verifield_payment_count = graphene.Float()
-    total_unverifield_payment = graphene.Float()
-    total_unverifield_payment_count = graphene.Float()
+    total_verified_payment = graphene.Float()
+    total_verified_payment_count = graphene.Float()
+    total_unverified_payment = graphene.Float()
+    total_unverified_payment_count = graphene.Float()
     outstanding_balance = graphene.Float()
 
     class Meta:
@@ -98,22 +98,22 @@ class Query(graphene.ObjectType):
                 status=Payment.Status.VERIFIED.value
             )),
 
-            total_verifield_payment=Sum('amount', filter=Q(
+            total_verified_payment=Sum('amount', filter=Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.VERIFIED.value,
             )),
 
-            total_unverifield_payment=Sum('amount', filter=Q(
+            total_unverified_payment=Sum('amount', filter=Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.PENDING.value,
             )),
 
-            total_unverifield_payment_count=Count('id', filter=Q(
+            total_unverified_payment_count=Count('id', filter=Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.PENDING.value,
             )),
 
-            total_verifield_payment_count=Count('id', filter=Q(
+            total_verified_payment_count=Count('id', filter=Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.VERIFIED.value,
             ))
