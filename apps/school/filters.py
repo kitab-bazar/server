@@ -1,12 +1,15 @@
 import django_filters
+
+from utils.graphene.filters import IDListFilter
+from apps.common.filters import SearchFilterMixin
 from apps.school.models import School
 
 
-class SchoolFilter(django_filters.FilterSet):
+class SchoolFilter(SearchFilterMixin, django_filters.FilterSet):
     name = django_filters.CharFilter(method='filter_name')
-    provinces = django_filters.CharFilter(method='filter_provinces')
-    districts = django_filters.CharFilter(method='filter_districts')
-    municipalities = django_filters.CharFilter(method='filter_municipalities')
+    provinces = IDListFilter(method='filter_provinces')
+    districts = IDListFilter(method='filter_districts')
+    municipalities = IDListFilter(method='filter_municipalities')
     ward_number = django_filters.CharFilter(method='filter_ward_number')
     local_address = django_filters.CharFilter(method='filter_local_address')
     pan_number = django_filters.CharFilter(method='filter_pan_number')
@@ -14,30 +17,8 @@ class SchoolFilter(django_filters.FilterSet):
 
     class Meta:
         model = School
-        fields = [
-            'name', 'provinces', 'districts', 'municipalities', 'ward_number',
-            'local_address', 'pan_number', 'vat_number'
-        ]
-
-    def filter_name(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(name__icontains=value)
-
-    def filter_provinces(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(province__in=value)
-
-    def filter_districts(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(district__in=value)
-
-    def filter_municipalities(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(municipality__in=value)
+        fields = ()
+        search_fields = ('name',)
 
     def filter_ward_number(self, queryset, name, value):
         if not value:

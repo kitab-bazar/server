@@ -1,13 +1,12 @@
 import django_filters
 from utils.graphene.filters import IDListFilter, MultipleInputFilter
 
+from apps.common.filters import SearchFilterMixin
 from apps.book.models import Book, Tag, Category, Author
 from apps.book.enums import BookGradeEnum, BookLanguageEnum
-from django.db.models import Q
 
 
-class BookFilter(django_filters.FilterSet):
-    search = django_filters.CharFilter(method='filter_search')
+class BookFilter(SearchFilterMixin, django_filters.FilterSet):
     categories = IDListFilter(method='filter_categories')
     authors = IDListFilter(method='filter_authors')
     tags = IDListFilter(method='filter_tags')
@@ -23,15 +22,7 @@ class BookFilter(django_filters.FilterSet):
         fields = [
             'categories', 'authors', 'tags', 'publisher'
         ]
-
-    def filter_search(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(
-            Q(title_en__icontains=value) |
-            Q(title_ne__icontains=value) |
-            Q(authors__name__icontains=value)
-        )
+        search_fields = ('title', 'authors__name')
 
     def filter_categories(self, queryset, name, value):
         if not value:
@@ -60,40 +51,22 @@ class BookFilter(django_filters.FilterSet):
             return queryset.filter(book_wish_list__isnull=True)
 
 
-class TagFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(method='filter_name')
-
+class TagFilter(SearchFilterMixin, django_filters.FilterSet):
     class Meta:
         model = Tag
-        fields = ['name']
-
-    def filter_name(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(name__icontains=value)
+        fields = ()
+        search_fields = ('name',)
 
 
-class CategoryFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(method='filter_name')
-
+class CategoryFilter(SearchFilterMixin, django_filters.FilterSet):
     class Meta:
         model = Category
-        fields = ['name']
-
-    def filter_name(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(name__icontains=value)
+        fields = ()
+        search_fields = ['name']
 
 
-class AuthorFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(method='filter_name')
-
+class AuthorFilter(SearchFilterMixin, django_filters.FilterSet):
     class Meta:
         model = Author
-        fields = ['name']
-
-    def filter_name(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(name__icontains=value)
+        fields = ()
+        search_fields = ['name']

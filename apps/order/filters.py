@@ -7,21 +7,16 @@ from utils.graphene.filters import (
     MultipleInputFilter,
 )
 
+from apps.common.filters import SearchFilterMixin
 from .models import BookOrder, Order, OrderWindow
 from .enums import OrderStatusEnum
 
 
-class BookOrderFilterSet(django_filters.FilterSet):
-    title = django_filters.CharFilter(method='filter_title')
-
+class BookOrderFilterSet(SearchFilterMixin, django_filters.FilterSet):
     class Meta:
         model = BookOrder
         fields = ('title',)
-
-    def filter_title(self, queryset, _, value):
-        if not value:
-            return queryset
-        return queryset.filter(title__icontains=value)
+        search_fields = ('title',)
 
 
 class OrderFilterSet(django_filters.FilterSet):

@@ -884,7 +884,7 @@ type OrderType {
   createdAt: DateTime!
   createdBy: UserType!
   status: OrderStatusEnum
-  bookOrders(title: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
+  bookOrders(title: String, search: String, page: Int = 1, ordering: String, pageSize: Int): BookOrderListType
   totalQuantity: Int
   activityLog: [OrderActivityLogType!]
   statusDisplay: EnumDescription
@@ -1033,21 +1033,21 @@ type Query {
   book(id: ID!): BookType
   bookDetail(id: ID!): BookDetailType
   books(categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, search: String, publishers: [ID!], isAddedInWishlist: Boolean, grade: [BookGradeEnum!], language: [BookLanguageEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
-  tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
-  authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
-  categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
+  tags(search: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
+  authors(search: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
+  categories(search: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
   wishList(createdBy: ID, book: ID, page: Int = 1, ordering: String, pageSize: Int): WishListListType
   schoolQuery: SchoolQueryType
   publisher(id: ID!): PublisherType
-  publishers(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): PublisherListType
+  publishers(search: String, provinces: [ID!], districts: [ID!], municipalities: [ID!], wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): PublisherListType
   institution(id: ID!): InstitutionType
   institutions(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): InstitutionListType
   province(id: ID!): ProvinceType
-  provinces(name: String, page: Int = 1, ordering: String, pageSize: Int): ProvinceListType
+  provinces(search: String, page: Int = 1, ordering: String, pageSize: Int): ProvinceListType
   municipality(id: ID!): MunicipalityType
-  municipalities(name: String, provinces: [ID!], districts: [ID!], page: Int = 1, ordering: String, pageSize: Int): MunicipalityListType
+  municipalities(search: String, provinces: [ID!], districts: [ID!], page: Int = 1, ordering: String, pageSize: Int): MunicipalityListType
   district(id: ID!): DistrictType
-  districts(name: String, provinces: [ID!], page: Int = 1, ordering: String, pageSize: Int): DistrictListType
+  districts(name: String, search: String, provinces: [ID!], page: Int = 1, ordering: String, pageSize: Int): DistrictListType
   me: UserMeType
   moderatorQuery: ModeratorQueryType
 }
@@ -1114,7 +1114,7 @@ type SchoolQueryType {
   payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
   school(id: ID!): SchoolType
-  schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
+  schools(search: String, name: String, provinces: [ID!], districts: [ID!], municipalities: [ID!], wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
 }
 
 type SchoolType {
