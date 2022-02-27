@@ -14,9 +14,9 @@ from apps.publisher.models import Publisher
 
 
 class ModelLookupHelper():
-    def __init__(self, model, auto_create=True):
+    def __init__(self, model, create_extra_params=None):
         self.model = model
-        self.auto_create = auto_create
+        self.create_extra_params = create_extra_params or {}
         self.refetch()
 
     def refetch(self):
@@ -26,11 +26,18 @@ class ModelLookupHelper():
         }
 
     def get_id_by_name(self, name, ne=None):
-        if name not in self.id_collection_by_name and self.auto_create:
+        if name not in self.id_collection_by_name:
+            create_params = {
+                **self.create_extra_params,
+            }
             if ne:
-                self.id_collection_by_name[name] = self.model.objects.create(name_en=name, name_ne=ne).id
+                create_params.update(dict(
+                    name_en=name,
+                    name_ne=ne,
+                ))
             else:
-                self.id_collection_by_name[name] = self.model.objects.create(name=name).id
+                create_params.update(dict(name=name))
+            self.id_collection_by_name[name] = self.model.objects.create(create_params).id
         return self.id_collection_by_name[name]
 
 
@@ -87,10 +94,6 @@ class Command(BaseCommand):
         input_file = options['input_file']
         images_source_uri = options['images_source_uri']
 
-        category_lookup = ModelLookupHelper(Category)
-        author_lookup = ModelLookupHelper(Author)
-        publisher_lookup = ModelLookupHelper(Publisher, auto_create=False)
-
         # create publisher
         default_publisher_params = dict(
             province_id=3,  # Bagmati
@@ -98,13 +101,10 @@ class Command(BaseCommand):
             municipality_id=27006,  # Kathmandu
             ward_number=1,
         )
-        for publisher_name in ['Bhundipuran', 'Ekta', 'Kathalaya', 'Parichaya']:
-            if publisher_name not in publisher_lookup.id_collection_by_name:
-                Publisher.objects.create(
-                    name=publisher_name,
-                    **default_publisher_params,
-                )
-        publisher_lookup.refetch()
+
+        category_lookup = ModelLookupHelper(Category)
+        author_lookup = ModelLookupHelper(Author)
+        publisher_lookup = ModelLookupHelper(Publisher, create_extra_params=default_publisher_params)
 
         reader = csv.DictReader(input_file)
         for row in reader:
@@ -117,7 +117,7 @@ class Command(BaseCommand):
             publisher_name = row['publisher']
 
             isbn = row['ISBN no'].replace('-', '')
-            title_en = row['Title of the book (English)']
+            title_en = row['Title of the book']
             if Book.objects.filter(
                 models.Q(isbn=isbn) |
                 models.Q(title_en=title_en, publisher__name=publisher_name)
@@ -128,25 +128,28 @@ class Command(BaseCommand):
 
             new_book = Book.objects.create(
                 title_en=title_en,
-                title_ne=row['Title of the book(Nepali)'],
-                edition=row['Edition - Optional'],
+                title_ne=row['Title of the book (Nepali)'],
+                edition=row['Edition'],
                 grade=GRADE_MAP[str(row['Grade'])],
                 published_date=published_date,
-                description_en=row['About the book (English)'],
+                description_en=row['About the book'],
                 description_ne=row['About the book (Nepali)'],
                 isbn=isbn,
                 price=row['Price of the book'] or 0,
                 number_of_pages=(row['Number of pages'] or '0').replace('+', ''),
                 language=LANGUAGE_MAP[str(row['Language'])],
-                publisher_id=publisher_lookup.get_id_by_name(publisher_name),
+                publisher_id=publisher_lookup.get_id_by_name(publisher_name, ne=row['Publisher (Nepali)']),
                 is_published=True,
             )
             new_book.categories.set([
-                category_lookup.get_id_by_name(row['Category']),
+                category_lookup.get_id_by_name(
+                    row['Category'],
+                    ne=row['Category (Nepali)'],
+                ),
             ])
             new_book.authors.set([
                 author_lookup.get_id_by_name(
-                    row['Author’s name (English)'],
+                    row["Author's name"],
                     ne=row['Author’s name (Nepali)']
                 )
             ])
