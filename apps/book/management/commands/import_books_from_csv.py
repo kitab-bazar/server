@@ -37,7 +37,7 @@ class ModelLookupHelper():
                 ))
             else:
                 create_params.update(dict(name=name))
-            self.id_collection_by_name[name] = self.model.objects.create(create_params).id
+            self.id_collection_by_name[name] = self.model.objects.create(**create_params).id
         return self.id_collection_by_name[name]
 
 
@@ -114,7 +114,7 @@ class Command(BaseCommand):
                 month=1,
                 day=1,
             ).date()
-            publisher_name = row['publisher']
+            publisher_name = row['Publisher']
 
             isbn = row['ISBN no'].replace('-', '')
             title_en = row['Title of the book']
