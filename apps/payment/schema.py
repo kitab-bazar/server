@@ -110,35 +110,7 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_payment_summary(root, info, **kwargs):
         payemnt_summary = get_payment_qs(info).aggregate(
-            payment_credit_sum=Sum('amount', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.VERIFIED.value
-            )),
-
-            payment_debit_sum=Sum('amount', filter=Q(
-                transaction_type=Payment.TransactionType.DEBIT.value,
-                status=Payment.Status.VERIFIED.value
-            )),
-
-            total_verified_payment=Sum('amount', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.VERIFIED.value,
-            )),
-
-            total_unverified_payment=Sum('amount', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.PENDING.value,
-            )),
-
-            total_unverified_payment_count=Count('id', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.PENDING.value,
-            )),
-
-            total_verified_payment_count=Count('id', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.VERIFIED.value,
-            ))
+            **User.annotate_user_payment_statement()
         )
         order_price_total = Order.objects.filter(
             created_by=info.context.user, status=Order.Status.IN_TRANSIT.value
