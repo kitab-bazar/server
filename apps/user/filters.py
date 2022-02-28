@@ -10,6 +10,9 @@ from .enums import UserTypeEnum
 class UserFilter(django_filters.FilterSet):
     user_type = MultipleInputFilter(UserTypeEnum)
     search = django_filters.CharFilter(method='filter_search')
+    order_mismatch_users = django_filters.rest_framework.BooleanFilter(
+        method='filter_order_mismatch_users', initial=True
+    )
 
     class Meta:
         model = User
@@ -23,3 +26,10 @@ class UserFilter(django_filters.FilterSet):
             Q(school__name__icontains=value) |
             Q(publisher__name__icontains=value)
         )
+
+    def filter_order_mismatch_users(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.annotate(
+            **User.annotate_mismatch_order_statements()
+        ).filter(outstanding_balance__lt=0)
