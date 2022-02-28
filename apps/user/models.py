@@ -124,3 +124,83 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.full_name = self.get_full_name()
         super().save(*args, **kwargs)
+
+    @classmethod
+    def annotate_user_payment_statement(cls):
+        from apps.payment.models import Payment
+        return {
+            'payment_credit_sum': models.Sum('amount', filter=models.Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.VERIFIED.value
+            ), output_field=models.FloatField()),
+
+            'payment_debit_sum': models.Sum('amount', filter=models.Q(
+                transaction_type=Payment.TransactionType.DEBIT.value,
+                status=Payment.Status.VERIFIED.value
+            ), output_field=models.FloatField()),
+
+            'total_verified_payment': models.Sum('amount', filter=models.Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.VERIFIED.value,
+            ), output_field=models.FloatField()),
+
+            'total_unverified_payment': models.Sum('amount', filter=models.Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.PENDING.value,
+            ), output_field=models.FloatField()),
+
+            'total_unverified_payment_count': models.Count('id', filter=models.Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.PENDING.value,
+            )),
+
+            'total_verified_payment_count': models.Count('id', filter=models.Q(
+                transaction_type=Payment.TransactionType.CREDIT.value,
+                status=Payment.Status.VERIFIED.value,
+            )),
+        }
+
+    @classmethod
+    def annotate_mismatch_order_statements(cls):
+        # NOTE: Try to move this login in dataloaders
+        from apps.payment.models import Payment
+        from apps.order.models import Order
+        return {
+            'payment_credit_sum': models.Sum('payment_created_by__amount', filter=models.Q(
+                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                payment_created_by__status=Payment.Status.VERIFIED.value
+            ), output_field=models.FloatField()),
+
+            'payment_debit_sum': models.Sum('payment_created_by__amount', filter=models.Q(
+                payment_created_by__transaction_type=Payment.TransactionType.DEBIT.value,
+                payment_created_by__status=Payment.Status.VERIFIED.value
+            ), output_field=models.FloatField()),
+
+            'total_verified_payment': models.Sum('payment_created_by__amount', filter=models.Q(
+                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                payment_created_by__status=Payment.Status.VERIFIED.value,
+            ), output_field=models.FloatField()),
+
+            'total_unverified_payment': models.Sum('payment_created_by__amount', filter=models.Q(
+                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                payment_created_by__status=Payment.Status.PENDING.value,
+            ), output_field=models.FloatField()),
+
+            'total_unverified_payment_count': models.Count('payment__id', filter=models.Q(
+                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                payment_created_by__status=Payment.Status.PENDING.value,
+            )),
+
+            'total_verified_payment_count': models.Count('payment__id', filter=models.Q(
+                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                payment_created_by__status=Payment.Status.VERIFIED.value,
+            )),
+
+            'total_order_pending_price': models.Sum('order__book_order__price', filter=models.Q(
+                order__status=Order.Status.PENDING.value
+            ), output_field=models.FloatField()),
+
+            'outstanding_balance': (
+                models.F('total_order_pending_price') - models.F('payment_credit_sum') - models.F('payment_debit_sum')
+            )
+        }
