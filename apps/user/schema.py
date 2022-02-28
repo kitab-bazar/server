@@ -70,6 +70,15 @@ class UserMeType(UserTypeMixin, DjangoObjectType):
 
 
 class ModeratorQueryUserType(UserTypeMixin, DjangoObjectType):
+    payment_credit_sum = graphene.Int()
+    payment_debit_sum = graphene.Int()
+    total_verified_payment = graphene.Int()
+    total_unverified_payment = graphene.Int()
+    total_unverified_payment_count = graphene.Int()
+    total_verified_payment_count = graphene.Int()
+    total_order_pending_price = graphene.Int()
+    outstanding_balance = graphene.Int()
+
     class Meta:
         model = User
         skip_registry = True
@@ -106,6 +115,12 @@ class ModeratorUserQueryType(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+
+    @staticmethod
+    def resolve_users(root, info, **kwargs):
+        return User.objects.annotate(
+            **User.annotate_mismatch_order_statements()
+        )
 
 
 class ModeratorQueryType(
