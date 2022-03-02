@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('type', models.CharField(choices=[('payment', 'Payment'), ('order', 'Order'), ('package', 'Package')], max_length=30, verbose_name='Type')),
-                ('image', models.FileField(upload_to=apps.common.models.activity_image_path, verbose_name='Activity log image')),
+                ('image', models.FileField(upload_to=apps.common.models.activity_file_path, verbose_name='Activity log image')),
             ],
         ),
         migrations.CreateModel(
