@@ -44,7 +44,7 @@ class PaymentSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerialize
                 created_by=self.context['request'].user
             )
             if files:
-                payment_log.add(*files)
+                payment_log.files.add(*files)
         return payment
 
 
@@ -68,5 +68,5 @@ class PaymentUpdateSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSer
                 created_by=self.context['request'].user
             )
             if files:
-                payment_log.add(*files)
+                payment_log.files.add(*files)
         return payment

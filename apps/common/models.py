@@ -63,7 +63,7 @@ class Municipality(models.Model):
 
 
 def activity_file_path(instance, filename):
-    return f'activity-log/{instance.type}/{uuid.uuid4()}/{uuid.uuid4()}/{filename}'
+    return f'activity-log/{instance.type}/{filename}'
 
 
 class ActivityLogFile(models.Model):
