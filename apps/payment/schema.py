@@ -36,7 +36,7 @@ class PaymentLogType(DjangoObjectType):
 
     class Meta:
         model = PaymentLog
-        fields = ('comment', 'snapshot')
+        fields = ('comment', 'snapshot', 'id')
 
 
 class PaymentLogListType(CustomDjangoListObjectType):
