@@ -15,20 +15,12 @@ input ActivateInputType {
 
 type ActivityFileType {
   id: ID!
-  type: ActivityLogFileType!
   file: FileFieldType
-  createdBy: UserType!
 }
 
 input ActivityLogFileInputType {
   type: type!
   file: Upload!
-}
-
-enum ActivityLogFileType {
-  PAYMENT
-  ORDER
-  PACKAGE
 }
 
 type AuthorListType {
@@ -963,6 +955,19 @@ type PaymentListType {
   pageSize: Int
 }
 
+type PaymentLogListType {
+  results: [PaymentLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PaymentLogType {
+  comment: String
+  snapshot: GenericScalar
+  files: [ActivityFileType!]
+}
+
 type PaymentSummaryType {
   paymentCreditSum: Float
   paymentDebitSum: Float
@@ -986,6 +991,7 @@ type PaymentType {
   statusDisplay: EnumDescription!
   transactionTypeDisplay: EnumDescription!
   paymentTypeDisplay: EnumDescription!
+  paymentLog(search: String, page: Int = 1, ordering: String, pageSize: Int): PaymentLogListType
 }
 
 enum PaymentTypeEnum {

@@ -5,19 +5,20 @@ from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
 from django.db.models import QuerySet, Sum, Q, Count
 
 from utils.graphene.types import CustomDjangoListObjectType
-from utils.graphene.fields import DjangoPaginatedListObjectField
+from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoListField
 from utils.graphene.enums import EnumDescription
 
 from apps.user.models import User
 from apps.order.models import Order
 
-from .models import Payment
-from .filter_set import PaymentFilterSet
+from .models import Payment, PaymentLog
+from .filter_set import PaymentFilterSet, PaymentLogFilterSet
 from .enums import (
     StatusEnum,
     TransactionTypeEnum,
-    PaymentTypeEnum
+    PaymentTypeEnum,
 )
+from apps.common.schema import ActivityFileType
 
 
 def get_payment_qs(info):
@@ -28,6 +29,21 @@ def get_payment_qs(info):
     elif info.context.user.user_type == User.UserType.MODERATOR:
         return Payment.objects.all()
     return Payment.objects.none()
+
+
+class PaymentLogType(DjangoObjectType):
+    files = CustomDjangoListField(ActivityFileType, required=False)
+
+    class Meta:
+        model = PaymentLog
+        fields = ('comment', 'snapshot')
+
+
+class PaymentLogListType(CustomDjangoListObjectType):
+
+    class Meta:
+        model = PaymentLog
+        filterset_class = PaymentLogFilterSet
 
 
 class PaymentType(DjangoObjectType):
@@ -49,6 +65,12 @@ class PaymentType(DjangoObjectType):
     status_display = EnumDescription(source='get_status_display', required=True)
     transaction_type_display = EnumDescription(source='get_transaction_type_display', required=True)
     payment_type_display = EnumDescription(source='get_payment_type_display', required=True)
+    payment_log = DjangoPaginatedListObjectField(
+        PaymentLogListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
 
 
 class PaymentSummaryType(graphene.ObjectType):
