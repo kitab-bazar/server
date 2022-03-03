@@ -963,6 +963,7 @@ type PaymentLogListType {
 }
 
 type PaymentLogType {
+  id: ID!
   comment: String
   snapshot: GenericScalar
   files: [ActivityFileType!]
