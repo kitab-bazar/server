@@ -5,9 +5,10 @@ from utils.graphene.filters import (
     DateGteFilter,
     DateLteFilter,
     MultipleInputFilter,
+    IDListFilter,
 )
 
-from .models import BookOrder, Order, OrderWindow
+from .models import BookOrder, Order, OrderWindow, OrderActivityLog
 from .enums import OrderStatusEnum
 
 
@@ -50,3 +51,16 @@ class OrderWindowFilterSet(django_filters.FilterSet):
                 models.Q(description__icontains=value)
             )
         return qs
+
+
+class OrderActivityLogFilterSet(django_filters.FilterSet):
+    create_by_users = IDListFilter(method='filter_create_by_users')
+
+    class Meta:
+        model = OrderActivityLog
+        fields = ()
+
+    def filter_create_by_users(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(created_by__in=value)

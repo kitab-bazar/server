@@ -8,6 +8,7 @@ from utils.graphene.fields import DjangoPaginatedListObjectField
 from utils.graphene.enums import EnumDescription
 
 from apps.payment.schema import Query as PaymentQuery
+from apps.order.schema import OrderActivityLogQuery
 
 from .models import User
 from .filters import UserFilter
@@ -112,6 +113,7 @@ class ModeratorQueryType(
     ModeratorUserQueryType,
     PaymentQuery,
     # ---End --Moderator scopped entities
+    OrderActivityLogQuery,
     graphene.ObjectType
 ):
     pass

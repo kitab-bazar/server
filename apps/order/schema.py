@@ -26,6 +26,7 @@ from .filters import (
     BookOrderFilterSet,
     OrderFilterSet,
     OrderWindowFilterSet,
+    OrderActivityLogFilterSet,
 )
 from .enums import OrderStatusEnum
 
@@ -110,6 +111,12 @@ class BookOrderListType(CustomDjangoListObjectType):
 class OrderActivityLogType(DjangoObjectType):
     class Meta:
         model = OrderActivityLog
+
+
+class OrderActivityLogListType(CustomDjangoListObjectType):
+    class Meta:
+        model = OrderActivityLog
+        filterset_class = OrderActivityLogFilterSet
 
 
 class OrderType(DjangoObjectType):
@@ -291,3 +298,13 @@ class Query(graphene.ObjectType):
         if info.context.user.is_authenticated:
             return get_orders_qs(info)
         return None
+
+
+class OrderActivityLogQuery(graphene.ObjectType):
+    order_activity_log = DjangoObjectField(OrderActivityLogType)
+    order_activity_logs = DjangoPaginatedListObjectField(
+        OrderActivityLogListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )

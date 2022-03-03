@@ -707,6 +707,8 @@ type ModeratorMutationType {
 }
 
 type ModeratorQueryType {
+  orderActivityLog(id: ID!): OrderActivityLogType
+  orderActivityLogs(createByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderActivityLogListType
   payment(id: ID!): PaymentType
   payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
@@ -834,6 +836,13 @@ type NotificationType {
   read: Boolean!
   createdAt: DateTime!
   order: OrderType
+}
+
+type OrderActivityLogListType {
+  results: [OrderActivityLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
 }
 
 type OrderActivityLogType {
