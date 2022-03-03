@@ -1,7 +1,7 @@
 import graphene
 from django.db.models import F
 
-from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
+from utils.graphene.error_types import CustomErrorType
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
     CreateUpdateGrapheneMutation,
