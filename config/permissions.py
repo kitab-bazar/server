@@ -79,6 +79,7 @@ class UserPermissions():
         CAN_DEACTIVATE_TOGGLE_USER = auto()
 
         ACTIVITY_LOG_FILE = auto()
+        CAN_CRUD_CART_ITEM = auto()
 
     Permission.__name__ = 'UserPermissions'
 
@@ -154,6 +155,7 @@ class UserPermissions():
 
         Permission.ACTIVITY_LOG_FILE: "You don't have permission in activity log files",
         Permission.CAN_DEACTIVATE_TOGGLE_USER: "You don't have permission to deactivate/activate user",
+        Permission.CAN_CRUD_CART_ITEM: "You don't have permission in cart.",
     }
 
     INDIVIDUAL_USER = [
@@ -171,6 +173,7 @@ class UserPermissions():
         Permission.CAN_RETRIEVE_BLOG,
         Permission.CAN_RETRIEVE_BLOG_CATEGORY,
         Permission.CAN_RETRIEVE_BLOG_TAG,
+        Permission.CAN_CRUD_CART_ITEM,
     ]
 
     SCHOOL_ADMIN = [
@@ -235,6 +238,13 @@ class UserPermissions():
     # -----------------------------------------
     PUBLISHER = list(set(PUBLISHER) - set([
         Permission.CREATE_ORDER]
+    ))
+
+    # ----------------------------------------
+    # Remove special permission from moderator
+    # -----------------------------------------
+    MODERATOR = list(set(MODERATOR) - set(
+        [Permission.CREATE_ORDER, Permission.CAN_CRUD_CART_ITEM]
     ))
 
     PERMISSION_MAP = {
