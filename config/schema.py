@@ -1,4 +1,5 @@
 import graphene
+from .graphene_converter import *  # type: ignore # noqa F401
 
 from apps.user import schema as user_schema, mutations as user_mutations
 from apps.common import schema as common_schema, mutations as common_mutations
