@@ -60,6 +60,7 @@ class DistrictListType(CustomDjangoListObjectType):
 class ActivityFileType(DjangoObjectType):
     class Meta:
         model = ActivityLogFile
+        fields = ('id', 'file',)
 
     file = graphene.Field(FileFieldType)
 
