@@ -1,7 +1,7 @@
 import django_filters
 
 from utils.graphene.filters import SimpleInputFilter
-from apps.payment.models import Payment
+from apps.payment.models import Payment, PaymentLog
 from apps.payment.enums import (
     StatusEnum,
     TransactionTypeEnum,
@@ -17,3 +17,16 @@ class PaymentFilterSet(django_filters.FilterSet):
     class Meta:
         model = Payment
         fields = ()
+
+
+class PaymentLogFilterSet(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='filter_search')
+
+    class Meta:
+        model = PaymentLog
+        fields = ()
+
+    def filter_search(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(comment__icontains=value)
