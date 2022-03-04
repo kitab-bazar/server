@@ -639,6 +639,8 @@ type GenerateResetPasswordToken {
 
 input GenerateResetPasswordTokenType {
   email: String!
+  captcha: String!
+  siteKey: String!
 }
 
 scalar GenericScalar
@@ -689,11 +691,14 @@ type Login {
   result: UserMeType
   errors: [GenericScalar!]
   ok: Boolean!
+  captchaRequired: Boolean!
 }
 
 input LoginInputType {
   email: String!
   password: String!
+  captcha: String
+  siteKey: String
 }
 
 type Logout {
@@ -1068,6 +1073,8 @@ input RegisterInputType {
   institution: InstitutionInputType
   publisher: PublisherInputType
   school: SchoolInputType
+  captcha: String!
+  siteKey: String!
 }
 
 type ResetPassword {
