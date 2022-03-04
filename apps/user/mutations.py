@@ -1,3 +1,4 @@
+from django.conf import settings
 import graphene
 
 from django.contrib.auth import login, logout
@@ -25,6 +26,7 @@ from .serializers import (
     ResetPasswordSerializer,
     UpdateProfileSerializer,
 )
+from utils.validations import MissingCaptchaException
 
 
 RegisterInputType = generate_input_type_for_serializer(
@@ -70,6 +72,7 @@ class Login(graphene.Mutation):
     result = graphene.Field(UserMeType)
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean(required=True)
+    captcha_required = graphene.Boolean(required=True, default_value=False)
 
     @staticmethod
     def mutate(root, info, data):
@@ -77,11 +80,16 @@ class Login(graphene.Mutation):
             data=data,
             context={'request': info.context.request}
         )
-        errors = mutation_is_not_valid(serializer)
+        try:
+            errors = mutation_is_not_valid(serializer)
+        except MissingCaptchaException:
+            return Login(ok=False, captcha_required=True)
         if errors:
+            attempts = User._get_login_attempt(data['email'])
             return Login(
                 errors=errors,
                 ok=False,
+                captcha_required=attempts >= settings.MAX_LOGIN_ATTEMPTS
             )
         if user := serializer.validated_data.get('user'):
             login(info.context.request, user)

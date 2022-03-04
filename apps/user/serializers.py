@@ -1,3 +1,5 @@
+import time
+from django.utils import timezone
 from rest_framework import serializers
 
 from django.contrib.auth import authenticate
@@ -16,6 +18,7 @@ from apps.institution.serializers import InstitutionSerializer, InstitutionUpdat
 from apps.institution.models import Institution
 from apps.school.models import School
 from apps.publisher.models import Publisher
+from utils.validations import validate_hcaptcha, MissingCaptchaException
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -29,8 +32,46 @@ class UserSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.CharField(required=True, write_only=True)
     password = serializers.CharField(required=True, write_only=True)
+    captcha = serializers.CharField(required=False, allow_null=True, write_only=True)
+    site_key = serializers.CharField(required=False, allow_null=True, write_only=True)
+
+    def _validate_captcha(self, attrs):
+        captcha = attrs.get('captcha')
+        site_key = attrs.get('site_key')
+        email = attrs.get('email')
+        attempts = User._get_login_attempt(email)
+
+        def throttle_login_attempt():
+            if attempts >= settings.MAX_CAPTCHA_LOGIN_ATTEMPTS:
+                now = time.mktime(timezone.now().timetuple())
+                last_tried = User._get_last_login_attempt(email)
+                if not last_tried:
+                    User._set_last_login_attempt(email, now)
+                    raise serializers.ValidationError(
+                        gettext('Please try again in %s seconds.') % settings.LOGIN_TIMEOUT
+                    )
+                elapsed = now - last_tried
+                if elapsed < settings.LOGIN_TIMEOUT:
+                    raise serializers.ValidationError(
+                        gettext('Please try again in %s seconds.') % (settings.LOGIN_TIMEOUT - int(elapsed))
+                    )
+                else:
+                    # reset
+                    User._reset_login_cache(email)
+
+        if attempts >= settings.MAX_LOGIN_ATTEMPTS and not captcha:
+            raise MissingCaptchaException()
+        if attempts >= settings.MAX_LOGIN_ATTEMPTS and captcha and not validate_hcaptcha(captcha, site_key):
+            attempts = User._get_login_attempt(email)
+            User._set_login_attempt(email, attempts + 1)
+
+            throttle_login_attempt()
+            raise serializers.ValidationError(dict(
+                captcha=gettext('The captcha is invalid.')
+            ))
 
     def validate(self, attrs):
+        self._validate_captcha(attrs)
         email = attrs.get('email', '')
         password = attrs.get('password', '')
         try:
@@ -43,7 +84,10 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError('Invalid Credentials')
         user = authenticate(email=email, password=password)
         if not user:
+            attempts = User._get_login_attempt(email)
+            User._set_login_attempt(email, attempts + 1)
             raise serializers.ValidationError('Invalid Credentials')
+        User._reset_login_cache(email)
         return dict(user=user)
 
 
@@ -70,12 +114,14 @@ class RegisterSerializer(serializers.ModelSerializer):
     institution = InstitutionSerializer(required=False)
     school = SchoolSerializer(required=False)
     publisher = PublisherSerializer(required=False)
+    captcha = serializers.CharField(required=True, write_only=True)
+    site_key = serializers.CharField(required=True, write_only=True)
 
     class Meta:
         model = User
         fields = [
             'email', 'first_name', 'last_name', 'password', 'phone_number', 'user_type',
-            'institution', 'publisher', 'school'
+            'institution', 'publisher', 'school', 'captcha', 'site_key'
         ]
 
     def validate_password(self, password):
@@ -91,6 +137,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         if user_type == User.UserType.MODERATOR:
             raise serializers.ValidationError('Registration as moderator is not allowed.')
         return user_type
+
+    def validate_captcha(self, captcha):
+        if not validate_hcaptcha(captcha, self.initial_data.get('site_key', '')):
+            raise serializers.ValidationError(dict(
+                captcha=gettext('The captcha is invalid.')
+            ))
 
     def save(self, **kwargs):
         instance = User.objects.create_user(
@@ -176,6 +228,14 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
     Serializer for password forgot endpoint.
     """
     email = serializers.EmailField(write_only=True, required=True)
+    captcha = serializers.CharField(required=True, write_only=True)
+    site_key = serializers.CharField(required=True, write_only=True)
+
+    def validate_captcha(self, captcha):
+        if not validate_hcaptcha(captcha, self.initial_data.get('site_key', '')):
+            raise serializers.ValidationError(dict(
+                captcha=gettext('The captcha is invalid.')
+            ))
 
     def validate(self, attrs):
         email = attrs.get("email", None)

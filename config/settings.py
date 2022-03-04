@@ -41,7 +41,11 @@ env = environ.Env(
     # is not set otherwise these variables are not required
     AWS_S3_ACCESS_KEY_ID=(str, None),
     AWS_S3_SECRET_ACCESS_KEY=(str, None),
-    TEMP_DIR=(str, '/tmp')
+    TEMP_DIR=(str, '/tmp'),
+    HCAPTCHA_SECRET=(str, '0x0000000000000000000000000000000000000000'),
+    MAX_LOGIN_ATTEMPTS=(int, 3),
+    MAX_CAPTCHA_LOGIN_ATTEMPTS=(int, 10),
+    LOGIN_TIMEOUT=(int, 10 * 60),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -330,3 +334,9 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 # Used to save og images temporarily
 TEMP_DIR = env('TEMP_DIR')
+
+# Hcaptcha
+HCAPTCHA_SECRET = env('HCAPTCHA_SECRET')
+MAX_LOGIN_ATTEMPTS = env('MAX_LOGIN_ATTEMPTS')
+MAX_CAPTCHA_LOGIN_ATTEMPTS = env('MAX_CAPTCHA_LOGIN_ATTEMPTS')
+LOGIN_TIMEOUT = env('LOGIN_TIMEOUT')
