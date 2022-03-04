@@ -13,6 +13,8 @@ import os
 import environ
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+from utils import sentry
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,6 +48,11 @@ env = environ.Env(
     MAX_LOGIN_ATTEMPTS=(int, 3),
     MAX_CAPTCHA_LOGIN_ATTEMPTS=(int, 10),
     LOGIN_TIMEOUT=(int, 10 * 60),
+    # Sentry settings
+    SENTRY_DSN=(str, None),
+    ENVIRONMENT=(str, 'local'),
+    DJANGO_API_HOST=(str, 'localhost'),
+    SENTRY_SAMPLE_RATE=(float, 0.2),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -248,6 +255,7 @@ GRAPHENE = {
     'SCHEMA_INDENT': 2,
     'MIDDLEWARE': [
         'config.auth.WhiteListMiddleware',
+        'utils.sentry.SentryGrapheneMiddleware',
     ],
 }
 
@@ -341,3 +349,22 @@ HCAPTCHA_SECRET = env('HCAPTCHA_SECRET')
 MAX_LOGIN_ATTEMPTS = env('MAX_LOGIN_ATTEMPTS')
 MAX_CAPTCHA_LOGIN_ATTEMPTS = env('MAX_CAPTCHA_LOGIN_ATTEMPTS')
 LOGIN_TIMEOUT = env('LOGIN_TIMEOUT')
+
+# Sentry Config
+SENTRY_DSN = env('SENTRY_DSN')
+SENTRY_SAMPLE_RATE = env('SENTRY_SAMPLE_RATE')
+if SENTRY_DSN:
+    SENTRY_CONFIG = {
+        'dsn': env('SENTRY_DSN'),
+        'send_default_pii': True,
+        'release': sentry.fetch_git_sha(BASE_DIR),
+        'environment': env('ENVIRONMENT'),
+        'debug': DEBUG,
+        'tags': {
+            'site': env('DJANGO_API_HOST'),
+        },
+    }
+    sentry.init_sentry(
+        app_type='API',
+        **SENTRY_CONFIG,
+    )
