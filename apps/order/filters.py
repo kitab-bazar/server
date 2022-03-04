@@ -5,6 +5,7 @@ from utils.graphene.filters import (
     DateGteFilter,
     DateLteFilter,
     MultipleInputFilter,
+    IDListFilter,
 )
 
 from .models import BookOrder, Order, OrderWindow
@@ -26,10 +27,16 @@ class BookOrderFilterSet(django_filters.FilterSet):
 
 class OrderFilterSet(django_filters.FilterSet):
     status = MultipleInputFilter(OrderStatusEnum)
+    users = IDListFilter(method='filter_users')
 
     class Meta:
         model = Order
-        fields = ('status',)
+        fields = ('status', 'users')
+
+    def filter_users(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(created_by__in=value)
 
 
 class OrderWindowFilterSet(django_filters.FilterSet):

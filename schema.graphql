@@ -1022,7 +1022,7 @@ type Query {
   contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
   order(id: ID!): OrderType
-  orders(status: [OrderStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  orders(status: [OrderStatusEnum!], users: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   orderStat: OrderStatType
   orderSummary: OrderSummaryType
   orderWindowActive: OrderWindowType
