@@ -56,7 +56,8 @@ env = environ.Env(
     AWS_ACCESS_KEY_ID=(str, 'AWS_ACCESS_KEY_ID'),
     AWS_SECRET_ACCESS_KEY=(str, 'AWS_SECRET_ACCESS_KEY'),
     DEFAULT_FROM_EMAIL=(str, 'Kitab Bazar <kitabbazar@togglecorp.com>'),
-    USE_LOCAL_STORATE=(bool, True)
+    USE_LOCAL_STORATE=(bool, True),
+    ENABLE_INTROSEPTION_SCHEMA=(bool, False),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -268,6 +269,8 @@ GRAPHENE_DJANGO_EXTRAS = {
     'DEFAULT_PAGE_SIZE': 20,
     'MAX_PAGE_SIZE': 50
 }
+
+ENABLE_INTROSEPTION_SCHEMA = env('ENABLE_INTROSEPTION_SCHEMA')
 
 if not DEBUG:
     GRAPHENE['MIDDLEWARE'].append('utils.graphene.middleware.DisableIntrospectionSchemaMiddleware')
