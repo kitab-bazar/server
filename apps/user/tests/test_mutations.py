@@ -1,4 +1,6 @@
+import mock
 from django.contrib.auth.hashers import check_password
+from django.test import override_settings
 
 from utils.graphene.tests import GraphQLTestCase
 
@@ -23,6 +25,7 @@ class TestUser(GraphQLTestCase):
                         fullName
                         isActive
                     }
+                    errors
                 }
             }
         '''
@@ -33,6 +36,8 @@ class TestUser(GraphQLTestCase):
                 result {
                     id
                 }
+                errors
+                captchaRequired
             }
         }
         '''
@@ -99,12 +104,16 @@ class TestUser(GraphQLTestCase):
         '''
 
         self.municipality = MunicipalityFactory.create()
+        self.user = UserFactory.create(user_type=User.UserType.INDIVIDUAL_USER)
         super().setUp()
 
-    def test_register_individual_user(self):
+    @mock.patch('apps.user.serializers.validate_hcaptcha')
+    def test_register_individual_user(self, validate_captcha):
+        validate_captcha.return_value = True
         minput = {
             "firstName": "Rosy", "lastName": "Rosy", "email": "rosy@gmail.com",
             "password": "nsPzXEVKGCIriVu", "userType": User.UserType.INDIVIDUAL_USER.name,
+            'captcha': '11111111111', 'siteKey': '2222222222222',
         }
         content = self.query_check(self.register_mutation, minput=minput, okay=True)
         first_name = content['data']['register']['result']['firstName']
@@ -269,3 +278,112 @@ class TestUser(GraphQLTestCase):
         user.refresh_from_db()
         self.assertEqual(user.is_verified, True)
         self.assertEqual(user.verified_by, moderator)
+
+    @override_settings(
+        MAX_LOGIN_ATTEMPTS=1,
+        MAX_CAPTCHA_LOGIN_ATTEMPTS=2,
+    )
+    @mock.patch('apps.user.serializers.validate_hcaptcha')
+    def test_too_many_logins_needs_captcha_and_more_will_throttle(self, validate):
+        User._reset_login_cache(self.user.email)
+        validate.return_value = False
+        self.query_check(
+            self.login_mutation,
+            minput={'email': self.user.email, 'password': self.user.password_text},
+            okay=True
+        )
+
+        # attempt 1
+        self.query_check(
+            self.login_mutation,
+            minput={'email': self.user.email, 'password': 'wrong_password'},
+            okay=False
+        )
+
+        # attempt 2
+        self.query_check(
+            self.login_mutation,
+            minput={'email': self.user.email, 'password': 'wrong_password'},
+            okay=False
+        )
+
+        # attempt 3
+        # try again and it should fail with captcha error
+        content = self.query_check(
+            self.login_mutation,
+            minput={'email': self.user.email, 'password': 'wrong_password'},
+            okay=False
+        )
+        self.assertFalse(content['data']['login']['ok'])
+        self.assertTrue(content['data']['login']['captchaRequired'])
+
+        # attempt 4
+        # invalid password and invalid captcha should raise invalid captcha
+        content = self.query_check(
+            self.login_mutation,
+            input_data={
+                'email': self.user.email,
+                'password': 'wrong_password',
+                'captcha': 'wrong=kaj',
+                'siteKey': 'fffffff',
+            },
+            okay=False
+        )
+        self.assertFalse(content['data']['login']['ok'])
+        self.assertTrue(content['data']['login']['captchaRequired'])
+        self.assertIn('the captcha is invalid.', content['data']['login']['errors'][0]['messages'].lower())
+
+    @override_settings(
+        MAX_LOGIN_ATTEMPTS=1
+    )
+    @mock.patch('apps.user.serializers.validate_hcaptcha')
+    def test_too_many_logins_with_valid_captcha(self, validate):
+        User._reset_login_cache(self.user.email)
+        self.query_check(
+            self.login_mutation,
+            input_data={'email': self.user.email, 'password': self.user.password_text},
+            okay=True
+        )
+
+        # attempt 1
+        self.query_check(
+            self.login_mutation,
+            input_data={'email': self.user.email, 'password': 'worng'},
+            okay=False
+        )
+
+        # attempt 2
+        # try again and it should fail with captcha error
+        self.query_check(
+            self.login_mutation,
+            input_data={'email': self.user.email, 'password': 'wrong'},
+            okay=False
+        )
+
+        # again with captcha but wrong
+        validate.return_value = False
+        content = self.query_check(
+            self.login_mutation,
+            input_data={
+                'email': self.user.email,
+                'password': self.user.password_text,
+                'captcha': 'random',
+                'siteKey': 'random',
+            },
+            okay=False
+        )
+        self.assertTrue(content['data']['login']['captchaRequired'])
+        self.assertIn('the captcha is invalid.', content['data']['login']['errors'][0]['messages'].lower())
+
+        # with correct captcha
+        validate.return_value = True
+        self.query_check(
+            self.login_mutation,
+            input_data={
+                'email': self.user.email,
+                'password': self.user.password_text,
+                'captcha': 'aa',
+                'siteKey': 'aa',
+            },
+            okay=True
+        )
