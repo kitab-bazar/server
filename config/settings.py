@@ -13,6 +13,8 @@ import os
 import environ
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+from utils import sentry
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +43,12 @@ env = environ.Env(
     # is not set otherwise these variables are not required
     AWS_S3_ACCESS_KEY_ID=(str, None),
     AWS_S3_SECRET_ACCESS_KEY=(str, None),
-    TEMP_DIR=(str, '/tmp')
+    TEMP_DIR=(str, '/tmp'),
+    # Sentry settings
+    SENTRY_DSN=(str, None),
+    ENVIRONMENT=(str, 'local'),
+    DJANGO_API_HOST=(str, 'localhost'),
+    SENTRY_SAMPLE_RATE=(float, 0.2),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -243,6 +250,7 @@ GRAPHENE = {
     'SCHEMA_INDENT': 2,
     'MIDDLEWARE': [
         'config.auth.WhiteListMiddleware',
+        'utils.sentry.SentryGrapheneMiddleware',
     ],
 }
 
@@ -330,3 +338,22 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 # Used to save og images temporarily
 TEMP_DIR = env('TEMP_DIR')
+
+# Sentry Config
+SENTRY_DSN = env('SENTRY_DSN')
+SENTRY_SAMPLE_RATE = env('SENTRY_SAMPLE_RATE')
+if SENTRY_DSN:
+    SENTRY_CONFIG = {
+        'dsn': env('SENTRY_DSN'),
+        'send_default_pii': True,
+        'release': sentry.fetch_git_sha(BASE_DIR),
+        'environment': env('ENVIRONMENT'),
+        'debug': DEBUG,
+        'tags': {
+            'site': env('DJANGO_API_HOST'),
+        },
+    }
+    sentry.init_sentry(
+        app_type='API',
+        **SENTRY_CONFIG,
+    )
