@@ -29,7 +29,10 @@ class UserFilter(django_filters.FilterSet):
 
     def filter_order_mismatch_users(self, queryset, name, value):
         if not value:
-            return queryset
+            return queryset.annotate(
+                **User.annotate_mismatch_order_statements()
+            ).filter(outstanding_balance__gte=0)
+
         return queryset.annotate(
             **User.annotate_mismatch_order_statements()
         ).filter(outstanding_balance__lt=0)

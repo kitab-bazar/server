@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
+from django.db.models.functions import Coalesce
 
 
 class UserManager(BaseUserManager):
@@ -166,39 +167,39 @@ class User(AbstractUser):
         from apps.payment.models import Payment
         from apps.order.models import Order
         return {
-            'payment_credit_sum': models.Sum('payment_created_by__amount', filter=models.Q(
+            'payment_credit_sum': Coalesce(models.Sum('payment_created_by__amount', filter=models.Q(
                 payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
                 payment_created_by__status=Payment.Status.VERIFIED.value
-            ), output_field=models.FloatField()),
+            )), 0, output_field=models.FloatField()),
 
-            'payment_debit_sum': models.Sum('payment_created_by__amount', filter=models.Q(
+            'payment_debit_sum': Coalesce(models.Sum('payment_created_by__amount', filter=models.Q(
                 payment_created_by__transaction_type=Payment.TransactionType.DEBIT.value,
                 payment_created_by__status=Payment.Status.VERIFIED.value
-            ), output_field=models.FloatField()),
+            )), 0, output_field=models.FloatField()),
 
-            'total_verified_payment': models.Sum('payment_created_by__amount', filter=models.Q(
+            'total_verified_payment': Coalesce(models.Sum('payment_created_by__amount', filter=models.Q(
                 payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
                 payment_created_by__status=Payment.Status.VERIFIED.value,
-            ), output_field=models.FloatField()),
+            )), 0, output_field=models.FloatField()),
 
-            'total_unverified_payment': models.Sum('payment_created_by__amount', filter=models.Q(
+            'total_unverified_payment': Coalesce(models.Sum('payment_created_by__amount', filter=models.Q(
                 payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
                 payment_created_by__status=Payment.Status.PENDING.value,
-            ), output_field=models.FloatField()),
+            )), 0, output_field=models.FloatField()),
 
-            'total_unverified_payment_count': models.Count('payment__id', filter=models.Q(
+            'total_unverified_payment_count': Coalesce(models.Count('payment__id', filter=models.Q(
                 payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
                 payment_created_by__status=Payment.Status.PENDING.value,
-            )),
+            )), 0, output_field=models.FloatField()),
 
-            'total_verified_payment_count': models.Count('payment__id', filter=models.Q(
+            'total_verified_payment_count': Coalesce(models.Count('payment__id', filter=models.Q(
                 payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
                 payment_created_by__status=Payment.Status.VERIFIED.value,
-            )),
+            )), 0, output_field=models.FloatField()),
 
-            'total_order_pending_price': models.Sum('order__book_order__price', filter=models.Q(
+            'total_order_pending_price': Coalesce(models.Sum('order__book_order__price', filter=models.Q(
                 order__status=Order.Status.PENDING.value
-            ), output_field=models.FloatField()),
+            ), output_field=models.FloatField()), 0, output_field=models.FloatField()),
 
             'outstanding_balance': (
                 models.F('total_order_pending_price') - models.F('payment_credit_sum') - models.F('payment_debit_sum')
