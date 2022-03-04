@@ -25,6 +25,7 @@ Pillow = "^9.0.0"
 django-tinymce = "^3.4.0"
 boto3 = "*"
 django-storages = "*"
+mock = "^4.0.3"
 
 [tool.poetry.dev-dependencies]
 pytest-profiling = "*"
