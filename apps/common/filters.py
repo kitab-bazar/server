@@ -1,4 +1,6 @@
 import django_filters
+from django.db.models import Q
+
 from apps.common.models import Province, Municipality, District
 from utils.graphene.filters import IDListFilter
 
@@ -13,7 +15,10 @@ class ProvinceFilter(django_filters.FilterSet):
     def filter_name(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(name__icontains=value)
+        return queryset.filter(
+            Q(name_en__icontains=value) |
+            Q(name_ne__icontains=value)
+        )
 
 
 class MunicipalityFilter(django_filters.FilterSet):
@@ -28,7 +33,10 @@ class MunicipalityFilter(django_filters.FilterSet):
     def filter_name(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(name__icontains=value)
+        return queryset.filter(
+            Q(name_en__icontains=value) |
+            Q(name_ne__icontains=value)
+        )
 
     def filter_provinces(self, queryset, name, value):
         if not value:
@@ -52,7 +60,10 @@ class DistrictFilter(django_filters.FilterSet):
     def filter_name(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(name__icontains=value)
+        return queryset.filter(
+            Q(name_en__icontains=value) |
+            Q(name_ne__icontains=value)
+        )
 
     def filter_provinces(self, queryset, name, value):
         if not value:
