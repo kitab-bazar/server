@@ -12,6 +12,7 @@ from config.permissions import UserPermissions
 from config.exceptions import PermissionDeniedException
 
 from apps.payment.mutations import Mutation as PaymentMutation
+from apps.package.mutations import Mutation as PackageMutation
 
 from .schema import ModeratorQueryUserType, UserMeType
 from .models import User
@@ -243,7 +244,8 @@ class ModeratorMutationType(
     # --- Start scopped entities
     PaymentMutation,
     # --- End scopped entities
-    graphene.Mutation
+    graphene.Mutation,
+    PackageMutation,
 ):
     user_verify = VerifyUser.Field()
 
