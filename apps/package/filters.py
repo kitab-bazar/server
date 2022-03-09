@@ -1,5 +1,5 @@
 import django_filters
-from utils.graphene.filters import MultipleInputFilter
+from utils.graphene.filters import MultipleInputFilter, IDListFilter
 from apps.package.models import (
     PublisherPackage,
     SchoolPackage,
@@ -18,19 +18,31 @@ from apps.package.enums import (
 class PublisherPackageFilterSet(django_filters.FilterSet):
 
     status = MultipleInputFilter(PublisherPackageStatusEnum, field_name='status')
+    publishers = IDListFilter(method='filter_publishers')
 
     class Meta:
         model = PublisherPackage
         fields = ()
 
+    def filter_publishers(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(publisher__in=value)
+
 
 class SchoolPackageFilterSet(django_filters.FilterSet):
 
     status = MultipleInputFilter(SchoolPackageStatusEnum, field_name='status')
+    schools = IDListFilter(method='filter_schools')
 
     class Meta:
         model = SchoolPackage
         fields = ()
+
+    def filter_schools(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(school__in=value)
 
 
 class CourierPackageFilterSet(django_filters.FilterSet):
