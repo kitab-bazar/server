@@ -1,7 +1,13 @@
 import django_filters
 from utils.graphene.filters import MultipleInputFilter
-
-from apps.package.models import PublisherPackage, SchoolPackage, CourierPackage
+from apps.package.models import (
+    PublisherPackage,
+    SchoolPackage,
+    CourierPackage,
+    PublisherPackageLog,
+    SchoolPackageLog,
+    CourierPackageLog,
+)
 from apps.package.enums import (
     PublisherPackageStatusEnum,
     SchoolPackageStatusEnum,
@@ -34,3 +40,42 @@ class CourierPackageFilterSet(django_filters.FilterSet):
     class Meta:
         model = CourierPackage
         fields = ()
+
+
+class PublisherPackageLogFilterSet(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='filter_search')
+
+    class Meta:
+        model = PublisherPackageLog
+        fields = ()
+
+    def filter_search(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(comment__icontains=value)
+
+
+class SchoolPackageLogFilterSet(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='filter_search')
+
+    class Meta:
+        model = SchoolPackageLog
+        fields = ()
+
+    def filter_search(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(comment__icontains=value)
+
+
+class CourierPackageLogFilterSet(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='filter_search')
+
+    class Meta:
+        model = CourierPackageLog
+        fields = ()
+
+    def filter_search(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(comment__icontains=value)

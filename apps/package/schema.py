@@ -4,7 +4,7 @@ from django.db.models import QuerySet
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
-from utils.graphene.fields import DjangoPaginatedListObjectField
+from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoListField
 from utils.graphene.types import CustomDjangoListObjectType
 
 from apps.package.models import (
@@ -12,14 +12,27 @@ from apps.package.models import (
     PublisherPackageBook,
     SchoolPackage,
     SchoolPackageBook,
-    CourierPackage
+    CourierPackage,
+    PublisherPackageLog,
+    SchoolPackageLog,
+    CourierPackageLog,
 )
 from apps.user.models import User
 from apps.package.filters import (
     PublisherPackageFilterSet,
     SchoolPackageFilterSet,
     CourierPackageFilterSet,
+    PublisherPackageLogFilterSet,
+    SchoolPackageLogFilterSet,
+    CourierPackageLogFilterSet,
 )
+from apps.package.enums import (
+    PublisherPackageStatusEnum,
+    SchoolPackageStatusEnum,
+    CourierPackageStatusEnum
+)
+from utils.graphene.enums import EnumDescription
+from apps.common.schema import ActivityFileType
 
 
 def publisher_package_qs(info):
@@ -57,9 +70,32 @@ class PublisherPackageBookListType(CustomDjangoListObjectType):
         model = PublisherPackageBook
 
 
+class PublisherPackageLogType(DjangoObjectType):
+    files = CustomDjangoListField(ActivityFileType, required=False)
+
+    class Meta:
+        model = PublisherPackageLog
+        fields = ('comment', 'snapshot', 'id')
+
+
+class PublisherPackageLogListType(CustomDjangoListObjectType):
+    class Meta:
+        model = PublisherPackageLog
+        filterset_class = PublisherPackageLogFilterSet
+
+
 class PublisherPackageType(DjangoObjectType):
+    status = graphene.Field(PublisherPackageStatusEnum, required=True)
+    status_display = EnumDescription(source='get_status_display')
+
     publisher_package_books = DjangoPaginatedListObjectField(
         PublisherPackageBookListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+    logs = DjangoPaginatedListObjectField(
+        PublisherPackageLogListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
@@ -72,8 +108,13 @@ class PublisherPackageType(DjangoObjectType):
     class Meta:
         model = PublisherPackage
         fields = (
-            'id', 'package_id', 'status', 'related_orders'
+            'id', 'package_id', 'status', 'related_orders', 'publisher',
+            'total_price', 'total_quantity'
         )
+
+    @staticmethod
+    def resolve_logs(root, info, **kwargs) -> QuerySet:
+        return root.publisher_package_logs
 
 
 class PublisherPackageListType(CustomDjangoListObjectType):
@@ -95,9 +136,32 @@ class SchoolPackageBookListType(CustomDjangoListObjectType):
         model = SchoolPackageBook
 
 
+class SchoolPackageLogType(DjangoObjectType):
+    files = CustomDjangoListField(ActivityFileType, required=False)
+
+    class Meta:
+        model = SchoolPackageLog
+        fields = ('comment', 'snapshot', 'id')
+
+
+class SchoolPackageLogListType(CustomDjangoListObjectType):
+    class Meta:
+        model = SchoolPackageLog
+        filterset_class = SchoolPackageLogFilterSet
+
+
 class SchoolPackageType(DjangoObjectType):
+    status = graphene.Field(SchoolPackageStatusEnum, required=True)
+    status_display = EnumDescription(source='get_status_display')
+
     school_package_books = DjangoPaginatedListObjectField(
         SchoolPackageBookListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+    logs = DjangoPaginatedListObjectField(
+        SchoolPackageLogListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
@@ -110,8 +174,13 @@ class SchoolPackageType(DjangoObjectType):
     class Meta:
         model = SchoolPackage
         fields = (
-            'id', 'package_id', 'status', 'related_orders'
+            'id', 'package_id', 'status', 'related_orders', 'school',
+            'total_price', 'total_quantity'
         )
+
+    @staticmethod
+    def resolve_logs(root, info, **kwargs) -> QuerySet:
+        return root.school_package_logs
 
 
 class SchoolPackageListType(CustomDjangoListObjectType):
@@ -120,9 +189,32 @@ class SchoolPackageListType(CustomDjangoListObjectType):
         filterset_class = SchoolPackageFilterSet
 
 
+class CourierPackageLogType(DjangoObjectType):
+    files = CustomDjangoListField(ActivityFileType, required=False)
+
+    class Meta:
+        model = CourierPackageLog
+        fields = ('comment', 'snapshot', 'id')
+
+
+class CourierPackageLogListType(CustomDjangoListObjectType):
+    class Meta:
+        model = SchoolPackageLog
+        filterset_class = CourierPackageLogFilterSet
+
+
 class CourierPackageType(DjangoObjectType):
+    status = graphene.Field(CourierPackageStatusEnum, required=True)
+    status_display = EnumDescription(source='get_status_display')
+
     courier_package_books = DjangoPaginatedListObjectField(
-        SchoolPackageBookListType,
+        CourierPackageLogListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+    logs = DjangoPaginatedListObjectField(
+        PublisherPackageLogListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
@@ -132,10 +224,14 @@ class CourierPackageType(DjangoObjectType):
     def get_custom_queryset(queryset, info):
         return courier_package_qs(info)
 
+    @staticmethod
+    def resolve_logs(root, info, **kwargs) -> QuerySet:
+        return root.courier_package_logs
+
     class Meta:
         model = CourierPackage
         fields = (
-            'id', 'package_id', 'status', 'related_orders'
+            'id', 'package_id', 'status', 'related_orders', 'total_price', 'total_quantity'
         )
 
 
