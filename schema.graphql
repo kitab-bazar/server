@@ -411,10 +411,6 @@ type ContactMessageType {
   messageType: ContactMessageMessageType!
 }
 
-type CreateActivityLogFile {
-  errors: [GenericScalar!]
-  ok: Boolean
-  result: ActivityFileType
 type CourierPackageListType {
   results: [CourierPackageType!]
   totalCount: Int
@@ -422,11 +418,11 @@ type CourierPackageListType {
   pageSize: Int
 }
 
-enum CourierPackageStatus {
-  PENDING
-  IN_TRANSIT
-  ISSUE
-  DELIVERED
+type CourierPackageLogListType {
+  results: [SchoolPackageLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
 }
 
 enum CourierPackageStatusEnum {
@@ -439,9 +435,25 @@ enum CourierPackageStatusEnum {
 type CourierPackageType {
   id: ID!
   packageId: UUID!
-  status: CourierPackageStatus!
+  status: CourierPackageStatusEnum!
   relatedOrders: [OrderType!]!
-  courierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
+  totalPrice: Int!
+  totalQuantity: Int!
+  statusDisplay: EnumDescription
+  courierPackageBooks(search: String, page: Int = 1, ordering: String, pageSize: Int): CourierPackageLogListType
+  logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
+}
+
+input CourierPackageUpdateInputType {
+  status: CourierPackageStatusEnum
+  files: Upload
+  comment: String
+}
+
+type CreateActivityLogFile {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: ActivityFileType
 }
 
 type CreateBlog {
@@ -757,6 +769,9 @@ type Logout {
 }
 
 type ModeratorMutationType {
+  updateSchoolPackage(data: SchoolPackageUpdateInputType!, id: ID!): UpdateSchoolPackage
+  updatePublisherPackage(data: PublisherPackageUpdateInputType!, id: ID!): UpdatePublisherPackage
+  updateCourierPackage(data: CourierPackageUpdateInputType!, id: ID!): UpdateCourierPackage
   createPayment(data: PaymentInputType!): CreatePayment
   updatePayment(data: PaymentUpdateInputType!, id: ID!): UpdatePayment
   userVerify(id: ID!): VerifyUser
@@ -1093,10 +1108,18 @@ type PublisherPackageListType {
   pageSize: Int
 }
 
-enum PublisherPackageStatus {
-  PENDING
-  ISSUE
-  DELIVERED
+type PublisherPackageLogListType {
+  results: [PublisherPackageLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PublisherPackageLogType {
+  id: ID!
+  comment: String
+  snapshot: GenericScalar
+  files: [ActivityFileType!]
 }
 
 enum PublisherPackageStatusEnum {
@@ -1108,9 +1131,20 @@ enum PublisherPackageStatusEnum {
 type PublisherPackageType {
   id: ID!
   packageId: UUID!
-  status: PublisherPackageStatus!
+  status: PublisherPackageStatusEnum!
   relatedOrders: [OrderType!]!
+  publisher: PublisherType!
+  totalPrice: Int!
+  totalQuantity: Int!
+  statusDisplay: EnumDescription
   publisherPackageBooks(quantity: Int, book: ID, publisherPackage: ID, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageBookListType
+  logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
+}
+
+input PublisherPackageUpdateInputType {
+  status: PublisherPackageStatusEnum
+  files: Upload
+  comment: String
 }
 
 type PublisherType {
@@ -1255,11 +1289,18 @@ type SchoolPackageListType {
   pageSize: Int
 }
 
-enum SchoolPackageStatus {
-  PENDING
-  IN_TRANSIT
-  ISSUE
-  DELIVERED
+type SchoolPackageLogListType {
+  results: [SchoolPackageLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type SchoolPackageLogType {
+  id: ID!
+  comment: String
+  snapshot: GenericScalar
+  files: [ActivityFileType!]
 }
 
 enum SchoolPackageStatusEnum {
@@ -1272,9 +1313,20 @@ enum SchoolPackageStatusEnum {
 type SchoolPackageType {
   id: ID!
   packageId: UUID!
-  status: SchoolPackageStatus!
+  status: SchoolPackageStatusEnum!
   relatedOrders: [OrderType!]!
+  school: UserType!
+  totalPrice: Int!
+  totalQuantity: Int!
+  statusDisplay: EnumDescription
   schoolPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
+  logs(search: String, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageLogListType
+}
+
+input SchoolPackageUpdateInputType {
+  status: SchoolPackageStatusEnum
+  files: Upload
+  comment: String
 }
 
 type SchoolQueryType {
@@ -1394,6 +1446,12 @@ type UpdateContactMessage {
   result: ContactMessageType
 }
 
+type UpdateCourierPackage {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CourierPackageType
+}
+
 type UpdateFaq {
   errors: [GenericScalar!]
   ok: Boolean
@@ -1440,10 +1498,22 @@ type UpdatePublisher {
   result: PublisherType
 }
 
+type UpdatePublisherPackage {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: PublisherPackageType
+}
+
 type UpdateSchool {
   errors: [GenericScalar!]
   ok: Boolean
   result: SchoolType
+}
+
+type UpdateSchoolPackage {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: SchoolPackageType
 }
 
 scalar Upload
