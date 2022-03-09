@@ -12,17 +12,46 @@ from apps.package.models import (
 from config.serializers import CreatedUpdatedBaseSerializer
 
 
-class PublisherPackageSnapshotSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
+class SnapshotSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
     class Meta:
         model = PublisherPackage
         fields = ('status',)
 
 
-class PublisherPackageLogSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
+class UpdateLogMixin(metaclass=serializers.SerializerMetaclass):
+    files = serializers.FileField(max_length=None, allow_null=True, required=False)
+    comment = serializers.CharField(required=False)
 
-    class Meta:
-        model = PublisherPackageLog
-        fields = ('comment', 'files')
+    def update(self, instance, validated_data):
+        print(instance.__class__.__name__)
+        log_model = {
+            'PublisherPackage': PublisherPackageLog,
+            'SchoolPackage': SchoolPackageLog,
+            'CourierPackage': CourierPackageLog,
+        }.get(instance.__class__.__name__)
+
+        log_field = {
+            'PublisherPackage': 'publisher_package',
+            'SchoolPackage': 'school_package',
+            'CourierPackage': 'courier_package',
+        }.get(instance.__class__.__name__)
+
+        comment = validated_data.get('comment', None)
+        files = validated_data.get('files', None)
+        package = super().update(instance, validated_data)
+        snapshot_serializer = SnapshotSerializer(instance=package)
+        log_data = {log_field: package}
+
+        if comment or files:
+            log = log_model.objects.create(
+                **log_data,
+                snapshot=snapshot_serializer.data,
+                comment=comment,
+                created_by=self.context['request'].user
+            )
+            if files:
+                log.files.add(*files)
+        return package
 
     def validate_files(self, files):
         for file in files:
@@ -31,67 +60,31 @@ class PublisherPackageLogSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
         return files
 
 
-class PublisherPackageUpdateSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
-    log = PublisherPackageLogSerializer(required=False)
+class PublisherPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer):
 
     class Meta:
         model = PublisherPackage
-        fields = ('id', 'status', 'log')
-
-    def update(self, instance, validated_data):
-        log_data = validated_data.pop('log', None)
-        package = super().update(instance, validated_data)
-        snapshot_serializer = PublisherPackageSnapshotSerializer(instance=package)
-        if log_data:
-            files = log_data.pop('files', None)
-            log = PublisherPackageLog.objects.create(
-                package=package,
-                snapshot=snapshot_serializer.data,
-                **log_data,
-                created_by=self.context['request'].user
-            )
-            if files:
-                log.files.add(*files)
-        return package
+        fields = ('id', 'status', 'files', 'comment')
 
     def create(self, data):
         raise Exception('Not allowed')
 
 
-class SchoolPackageUpdateSerializer(serializers.ModelSerializer):
+class SchoolPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer):
 
     class Meta:
         model = SchoolPackage
-        fields = ('id', 'status')
-
-    def update(self, instance, data):
-        # Create a log
-        SchoolPackageLog.objects.create(
-            school_package=self.instance,
-            created_by=self.context['request'].user,
-            comment=data.pop('comment', '')
-        )
-        # Update
-        return super().update(instance, data)
+        fields = ('id', 'status', 'files', 'comment')
 
     def create(self, data):
         raise Exception('Not allowed')
 
 
-class CourierPackageUpdateSerializer(serializers.ModelSerializer):
+class CourierPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer):
 
     class Meta:
         model = CourierPackage
-        fields = ('id', 'status')
-
-    def update(self, instance, data):
-        # Create a log
-        CourierPackageLog.objects.create(
-            courier_package=self.instance,
-            created_by=self.context['request'].user,
-            comment=data.pop('comment', '')
-        )
-        return super().update(instance, data)
+        fields = ('id', 'status', 'files', 'comment')
 
     def create(self, data):
         raise Exception('Not allowed')
