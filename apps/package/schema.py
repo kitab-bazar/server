@@ -208,7 +208,7 @@ class CourierPackageType(DjangoObjectType):
     status_display = EnumDescription(source='get_status_display')
 
     courier_package_books = DjangoPaginatedListObjectField(
-        CourierPackageLogListType,
+        SchoolPackageBookListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )

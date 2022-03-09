@@ -418,13 +418,6 @@ type CourierPackageListType {
   pageSize: Int
 }
 
-type CourierPackageLogListType {
-  results: [SchoolPackageLogType!]
-  totalCount: Int
-  page: Int
-  pageSize: Int
-}
-
 enum CourierPackageStatusEnum {
   PENDING
   IN_TRANSIT
@@ -440,7 +433,7 @@ type CourierPackageType {
   totalPrice: Int!
   totalQuantity: Int!
   statusDisplay: EnumDescription
-  courierPackageBooks(search: String, page: Int = 1, ordering: String, pageSize: Int): CourierPackageLogListType
+  courierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
 }
 
@@ -1167,9 +1160,9 @@ input PublisherUpdateInputType {
 
 type Query {
   publisherPackage(id: ID!): PublisherPackageType
-  publisherPackages(status: [PublisherPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
+  publisherPackages(status: [PublisherPackageStatusEnum!], publishers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
   schoolPackage(id: ID!): SchoolPackageType
-  schoolPackages(status: [SchoolPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
+  schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
   courierPackage(id: ID!): CourierPackageType
   courierPackages(status: [CourierPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
   blog(id: ID!): BlogType
