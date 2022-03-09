@@ -3,6 +3,8 @@ import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from apps.common.models import BaseActivityLog
+
 
 class PublisherPackageBook(models.Model):
     quantity = models.PositiveIntegerField(verbose_name=_('Quantity'))
@@ -59,6 +61,8 @@ class PublisherPackage(models.Model):
         related_name='+',
         verbose_name=_('Order window')
     )
+    total_price = models.IntegerField(verbose_name=_('Total price'), default=0)
+    total_quantity = models.IntegerField(verbose_name=_('Total quantity'), default=0)
 
     class Meta:
         unique_together = ('publisher', 'order_window')
@@ -125,6 +129,8 @@ class SchoolPackage(models.Model):
         related_name='+',
         verbose_name=_('Order window'),
     )
+    total_price = models.IntegerField(verbose_name=_('Total price'), default=0)
+    total_quantity = models.IntegerField(verbose_name=_('Total quantity'), default=0)
 
     class Meta:
         unique_together = ('school', 'order_window')
@@ -165,7 +171,30 @@ class CourierPackage(models.Model):
         related_name='+',
         verbose_name=_('Order window')
     )
+    total_price = models.IntegerField(verbose_name=_('Total price'), default=0)
+    total_quantity = models.IntegerField(verbose_name=_('Total quantity'), default=0)
 
     class Meta:
         verbose_name = _('Courier Package')
         verbose_name_plural = _('Courier Packages')
+
+
+class SchoolPackageLog(BaseActivityLog):
+    school_package = models.ForeignKey(
+        'package.SchoolPackage', verbose_name=_('School package'), related_name='school_package_logs',
+        on_delete=models.CASCADE
+    )
+
+
+class PublisherPackageLog(BaseActivityLog):
+    publisher_package = models.ForeignKey(
+        'package.PublisherPackage', verbose_name=_('Publisher package'), related_name='publisher_package_logs',
+        on_delete=models.CASCADE
+    )
+
+
+class CourierPackageLog(BaseActivityLog):
+    courier_package = models.ForeignKey(
+        'package.CourierPackage', verbose_name=_('Courier package'), related_name='courier_package_logs',
+        on_delete=models.CASCADE
+    )

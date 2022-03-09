@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from django.db.models import Sum
+from django.db.models import Sum, F
 
 from apps.publisher.models import Publisher
 from apps.order.models import Order, OrderWindow, BookOrder
@@ -38,12 +38,17 @@ class Command(BaseCommand):
             publisher = Publisher.objects.get(id=publisher_id)
             related_orders = orders.filter(book_order__publisher=publisher)
             related_book_orders = BookOrder.objects.filter(order__in=related_orders).values('book').annotate(
-                total_quantity=Sum('quantity')
-            ).values('book', 'total_quantity')
+                total_quantity=Sum('quantity'),
+                total_price=Sum('quantity') * F('price')
+            ).values('book', 'total_quantity', 'total_price')
             package = PublisherPackage.objects.create(
                 status=PublisherPackage.Status.PENDING.value,
                 publisher=publisher,
-                order_window=latest_order_window
+                order_window=latest_order_window,
+                total_quantity=related_book_orders.aggregate(
+                    grand_total_quantity=Sum('total_quantity'))['grand_total_quantity'],
+                total_price=related_book_orders.aggregate(
+                    grand_total_price=Sum('total_price'))['grand_total_price']
             )
             package.related_orders.set(related_orders)
             PublisherPackageBook.objects.bulk_create(
@@ -74,12 +79,17 @@ class Command(BaseCommand):
             school = User.objects.get(id=school_id)
             related_orders = orders.filter(created_by=school)
             related_book_orders = BookOrder.objects.filter(order__in=related_orders).values('book').annotate(
-                total_quantity=Sum('quantity')
-            ).values('book', 'total_quantity')
+                total_quantity=Sum('quantity'),
+                total_price=Sum('quantity') * F('price')
+            ).values('book', 'total_quantity', 'total_price')
             school_package = SchoolPackage.objects.create(
                 status=SchoolPackage.Status.PENDING.value,
                 school=school,
-                order_window=latest_order_window
+                order_window=latest_order_window,
+                total_quantity=related_book_orders.aggregate(
+                    grand_total_quantity=Sum('total_quantity'))['grand_total_quantity'],
+                total_price=related_book_orders.aggregate(
+                    grand_total_price=Sum('total_price'))['grand_total_price']
             )
             school_package.related_orders.set(related_orders)
             school_package_created = SchoolPackageBook.objects.bulk_create(
@@ -87,7 +97,7 @@ class Command(BaseCommand):
                     SchoolPackageBook(
                         book_id=related_book_order['book'],
                         quantity=related_book_order['total_quantity'],
-                        school_package=school_package
+                        school_package=school_package,
                     ) for related_book_order in related_book_orders
                 ]
             )
@@ -98,7 +108,11 @@ class Command(BaseCommand):
             # ------------------------------------------------------------------
             courier_package = CourierPackage.objects.create(
                 status=SchoolPackage.Status.PENDING.value,
-                order_window=latest_order_window
+                order_window=latest_order_window,
+                total_quantity=related_book_orders.aggregate(
+                    grand_total_quantity=Sum('total_quantity'))['grand_total_quantity'],
+                total_price=related_book_orders.aggregate(
+                    grand_total_price=Sum('total_price'))['grand_total_price']
             )
             courier_package.related_orders.add(*related_orders)
             courier_package.school_package_books.add(*school_package_created)
