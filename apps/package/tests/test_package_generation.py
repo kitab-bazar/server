@@ -33,6 +33,8 @@ class TestPackageGeneration(GraphQLTestCase):
                   quantity
                 }
               }
+              totalPrice
+              totalQuantity
             }
           }
         }
@@ -53,6 +55,8 @@ class TestPackageGeneration(GraphQLTestCase):
                 totalPrice
                 totalQuantity
               }
+              totalPrice
+              totalQuantity
             }
           }
         }
@@ -73,6 +77,8 @@ class TestPackageGeneration(GraphQLTestCase):
                 totalPrice
                 totalQuantity
               }
+              totalPrice
+              totalQuantity
             }
           }
         }
@@ -88,8 +94,8 @@ class TestPackageGeneration(GraphQLTestCase):
         self.s_1, self.s_2 = UserFactory.create_batch(2, user_type=User.UserType.SCHOOL_ADMIN)
 
         # Create books
-        self.p_1_b_1, self.p_1_b_2, self.p_1_b_3 = BookFactory.create_batch(3, publisher=self.p_1)
-        self.p_2_b_1, self.p_2_b_2, self.p_2_b_3 = BookFactory.create_batch(3, publisher=self.p_2)
+        self.p_1_b_1, self.p_1_b_2, self.p_1_b_3 = BookFactory.create_batch(3, publisher=self.p_1, price=100)
+        self.p_2_b_1, self.p_2_b_2, self.p_2_b_3 = BookFactory.create_batch(3, publisher=self.p_2, price=100)
 
         order_window = OrderWindowFactory.create(
             start_date=timezone.now() - timezone.timedelta(5),
@@ -130,6 +136,8 @@ class TestPackageGeneration(GraphQLTestCase):
         # Test should create 3 related oorders and 3 school package books
         self.assertEqual(len(content['schoolPackages']['results'][0]['relatedOrders']), 3)
         self.assertEqual(len(content['schoolPackages']['results'][0]['schoolPackageBooks']['results']), 3)
+        self.assertEqual(content['schoolPackages']['results'][0]['totalPrice'], 9000)
+        self.assertEqual(content['schoolPackages']['results'][0]['totalQuantity'], 90)
 
         # Test school 2
         self.force_login(self.s_2)
@@ -142,6 +150,8 @@ class TestPackageGeneration(GraphQLTestCase):
         # Test should create 2 related oorders and 2 school package books
         self.assertEqual(len(content['schoolPackages']['results'][0]['relatedOrders']), 2)
         self.assertEqual(len(content['schoolPackages']['results'][0]['schoolPackageBooks']['results']), 2)
+        self.assertEqual(content['schoolPackages']['results'][0]['totalPrice'], 8000)
+        self.assertEqual(content['schoolPackages']['results'][0]['totalQuantity'], 80)
 
     def test_publisher_packages(self):
 
@@ -156,6 +166,8 @@ class TestPackageGeneration(GraphQLTestCase):
         # Test should create 3 related oorders and 3 publisher package books
         self.assertEqual(len(content['publisherPackages']['results'][0]['relatedOrders']), 3)
         self.assertEqual(len(content['publisherPackages']['results'][0]['publisherPackageBooks']['results']), 3)
+        self.assertEqual(content['publisherPackages']['results'][0]['totalPrice'], 9000)
+        self.assertEqual(content['publisherPackages']['results'][0]['totalQuantity'], 90)
 
         # # Test publisher 2
         self.force_login(self.u2_p2)
@@ -168,6 +180,8 @@ class TestPackageGeneration(GraphQLTestCase):
         # Test should create 2 related oorders and 2 publisher package books
         self.assertEqual(len(content['publisherPackages']['results'][0]['relatedOrders']), 2)
         self.assertEqual(len(content['publisherPackages']['results'][0]['publisherPackageBooks']['results']), 2)
+        self.assertEqual(content['publisherPackages']['results'][0]['totalPrice'], 8000)
+        self.assertEqual(content['publisherPackages']['results'][0]['totalQuantity'], 80)
 
     def test_courier_packages(self):
 
@@ -184,3 +198,8 @@ class TestPackageGeneration(GraphQLTestCase):
         self.assertEqual(len(content['courierPackages']['results'][0]['courierPackageBooks']['results']), 3)
         self.assertEqual(len(content['courierPackages']['results'][1]['relatedOrders']), 2)
         self.assertEqual(len(content['courierPackages']['results'][1]['courierPackageBooks']['results']), 2)
+        self.assertEqual(content['courierPackages']['results'][0]['totalPrice'], 9000)
+        self.assertEqual(content['courierPackages']['results'][0]['totalQuantity'], 90)
+
+        self.assertEqual(content['courierPackages']['results'][1]['totalPrice'], 8000)
+        self.assertEqual(content['courierPackages']['results'][1]['totalQuantity'], 80)
