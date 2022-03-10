@@ -85,13 +85,12 @@ class TestPackageGeneration(GraphQLTestCase):
     '''
 
     def setUp(self):
-        self.user = UserFactory.create()
         self.p_1, self.p_2 = PublisherFactory.create_batch(2)
-        self.u1_p1 = UserFactory.create(publisher=self.p_1, user_type=User.UserType.PUBLISHER)
-        self.u2_p2 = UserFactory.create(publisher=self.p_2, user_type=User.UserType.PUBLISHER)
-        self.moderator = UserFactory.create(user_type=User.UserType.MODERATOR)
+        self.u1_p1 = UserFactory.create(publisher=self.p_1, user_type=User.UserType.PUBLISHER, is_verified=True)
+        self.u2_p2 = UserFactory.create(publisher=self.p_2, user_type=User.UserType.PUBLISHER, is_verified=True)
+        self.moderator = UserFactory.create(user_type=User.UserType.MODERATOR, is_verified=True)
 
-        self.s_1, self.s_2 = UserFactory.create_batch(2, user_type=User.UserType.SCHOOL_ADMIN)
+        self.s_1, self.s_2 = UserFactory.create_batch(2, user_type=User.UserType.SCHOOL_ADMIN, is_verified=True)
 
         # Create books
         self.p_1_b_1, self.p_1_b_2, self.p_1_b_3 = BookFactory.create_batch(3, publisher=self.p_1, price=100)
@@ -119,7 +118,7 @@ class TestPackageGeneration(GraphQLTestCase):
         BookOrderFactory.create(order=self.s_2_o_2, book=self.p_2_b_2, quantity=40)
 
         # Generate packages
-        call_command('generate_packages')
+        call_command('generate_packages', order_window.id)
 
         super().setUp()
 
