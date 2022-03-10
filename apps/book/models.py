@@ -43,6 +43,9 @@ class Category(models.Model):
         blank=True,
         verbose_name=_('Parent category')
     )
+    image = models.FileField(
+        upload_to='books/category/images/', max_length=255, null=True, blank=True, default=None,
+    )
 
     class Meta:
         verbose_name = _('Category')
