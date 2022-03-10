@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.db.models import Sum, F
+from django.db import IntegrityError
 
 from apps.publisher.models import Publisher
 from apps.order.models import Order, OrderWindow, BookOrder
@@ -10,23 +11,13 @@ from apps.user.models import User
 class Command(BaseCommand):
     help = 'Generate publisher packages'
 
-    def handle(self, *args, **options):
+    def add_arguments(self, parser):
+        parser.add_argument('order_window_id', type=int, help='order window id')
+
+    def _generate_packages(self, latest_order_window, orders):
         # ------------------------------------------------------------------
         # Create publihser packages
         # ------------------------------------------------------------------
-        # Get latest order window
-        latest_order_window = OrderWindow.objects.last()
-
-        if not latest_order_window:
-            self.stdout.write(self.style.ERROR('Active order window does not exist.'))
-            return
-
-        # Get orders in latest order window
-        orders = Order.objects.filter(
-            book_order__publisher__isnull=False,
-            assigned_order_window__id=latest_order_window.id,
-            status=Order.Status.PENDING.value
-        )
 
         # Get unique publishers in order
         publisher_ids = orders.values_list('book_order__publisher', flat=True).distinct()
@@ -120,3 +111,50 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(f'{school_package_count} School packages created.'))
         self.stdout.write(self.style.SUCCESS(f'{courier_package_count} School courier created.'))
+
+    def _format_unverified_users(self, unverified_user_qs):
+        return '\n'.join(
+            ['id = %s ---- full name = %s' % (user['id'], user['created_by__full_name']) for user in unverified_user_qs]
+        )
+
+    def _format_unverified_payments(self, unverified_payments_qs):
+        return '\n'.join(
+            ['id = %s ---- full name = %s' % (user['id'], user['paid_by__full_name']) for user in unverified_payments_qs]
+        )
+
+    def handle(self, *args, **options):
+
+        order_window_id = options['order_window_id']
+        # Check if order window exists
+        try:
+            latest_order_window = OrderWindow.objects.get(id=order_window_id)
+        except OrderWindow.DoesNotExist:
+            self.stdout.write(self.style.ERROR('Invalid order window id supplied.'))
+            return
+
+        # Get orders belongs to order window
+        orders = Order.objects.filter(
+            book_order__publisher__isnull=False,
+            assigned_order_window__id=latest_order_window.id,
+            status=Order.Status.PENDING.value
+        )
+
+        # Check if unverified users exists
+        unverified_users_qs = orders.filter(created_by__is_verified=False).distinct()
+        if unverified_users_qs.exists():
+            unverified_users = unverified_users_qs.values('id', 'created_by__full_name')
+            formated_unverified_users = self._format_unverified_users(unverified_users)
+            self.stdout.write(self.style.ERROR(
+                'Following users are not verified\n'
+                f'{formated_unverified_users}'
+            ))
+            return
+
+        # Check if packages are already created
+        try:
+            self._generate_packages(latest_order_window, orders)
+        except IntegrityError:
+            self.stdout.write(self.style.ERROR(
+                f'Packages for order window {latest_order_window} are already created.'
+            ))
+            return
