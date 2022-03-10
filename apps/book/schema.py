@@ -35,8 +35,9 @@ class CategoryType(DjangoObjectType):
     class Meta:
         model = Category
         fields = (
-            'id', 'name', 'parent_category'
+            'id', 'name', 'parent_category', 'image',
         )
+    image = graphene.Field(FileFieldType)
 
 
 class CategoryListType(CustomDjangoListObjectType):
