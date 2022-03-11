@@ -106,6 +106,11 @@ class User(AbstractUser):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='verified_by_user',
         null=True, blank=True, verbose_name=_('Verified by')
     )
+    is_deactivated = models.BooleanField(default=False)
+    is_deactivated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='is_deactivated_by_user',
+        null=True, blank=True, verbose_name=_('Deactivated by')
+    )
 
     class Meta:
         verbose_name = _("User")
