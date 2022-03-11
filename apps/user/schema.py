@@ -98,6 +98,8 @@ class ModeratorQueryUserType(UserTypeMixin, DjangoObjectType):
             'school',  # TODO: Add dataloader
             'verified_by',  # TODO: Add dataloader
             'date_joined',
+            'is_deactivated',
+            'is_deactivated_by'
         )
 
 

@@ -76,6 +76,7 @@ class UserPermissions():
         CAN_VERIFY_USER = auto()
         CAN_CREATE_PAYMENT = auto()
         CAN_UPDATE_PAYMENT = auto()
+        CAN_DEACTIVATE_TOGGLE_USER = auto()
 
         ACTIVITY_LOG_FILE = auto()
 
@@ -151,7 +152,8 @@ class UserPermissions():
         Permission.CAN_CREATE_PAYMENT: "You don't have permission to create payment",
         Permission.CAN_UPDATE_PAYMENT: "You don't have permission to edit payment",
 
-        Permission.ACTIVITY_LOG_FILE: "You don't have permission in activity log files"
+        Permission.ACTIVITY_LOG_FILE: "You don't have permission in activity log files",
+        Permission.CAN_DEACTIVATE_TOGGLE_USER: "You don't have permission to deactivate/activate user",
     }
 
     INDIVIDUAL_USER = [
@@ -225,6 +227,7 @@ class UserPermissions():
         Permission.CAN_CREATE_PAYMENT,
         Permission.CAN_UPDATE_PAYMENT,
         Permission.ACTIVITY_LOG_FILE,
+        Permission.CAN_DEACTIVATE_TOGGLE_USER,
     ]
 
     # ----------------------------------------
