@@ -292,3 +292,19 @@ class UserVerifySerializer(serializers.ModelSerializer):
         instance.verified_by = self.context['request'].user
         instance.save(update_fields=('is_verified', 'verified_by'))
         return instance
+
+
+class UserDeactivateToggleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('is_deactivated',)
+
+    def validate_is_deactivated(self, is_deactivated):
+        if self.instance.is_verified:
+            raise serializers.ValidationError(gettext('Can not activate/deactivate verifield user'))
+        return is_deactivated
+
+    def update(self, instance, _):
+        instance.is_deactivated_by = self.context['request'].user
+        instance.save(update_fields=('is_deactivated', 'is_deactivated_by'))
+        return instance

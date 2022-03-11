@@ -24,6 +24,7 @@ from .serializers import (
     GenerateResetPasswordTokenSerializer,
     ResetPasswordSerializer,
     UpdateProfileSerializer,
+    UserDeactivateToggleSerializer,
 )
 
 
@@ -125,7 +126,7 @@ class VerifyUser(CreateUpdateGrapheneMutation):
     serializer_class = UserVerifySerializer
     result = graphene.Field(ModeratorQueryUserType)
     ok = graphene.Boolean()
-    permissions = [UserPermissions.Permission.CAN_VERIFY_USER]
+    permissions = [UserPermissions.Permission.CAN_DEACTIVATE_TOGGLE_USER]
 
 
 ChangePasswordInputType = generate_input_type_for_serializer(
@@ -239,6 +240,23 @@ class UpdateProfile(graphene.Mutation):
         )
 
 
+UserDeactivateToggleInputType = generate_input_type_for_serializer(
+    'UserDeactivateToggleInputType',
+    UserDeactivateToggleSerializer
+)
+
+
+class UserDeactivateToggle(CreateUpdateGrapheneMutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+        data = UserDeactivateToggleInputType(required=True)
+    model = User
+    serializer_class = UserDeactivateToggleSerializer
+    result = graphene.Field(ModeratorQueryUserType)
+    ok = graphene.Boolean()
+    permissions = [UserPermissions.Permission.CAN_VERIFY_USER]
+
+
 class ModeratorMutationType(
     # --- Start scopped entities
     PaymentMutation,
@@ -246,6 +264,7 @@ class ModeratorMutationType(
     graphene.Mutation
 ):
     user_verify = VerifyUser.Field()
+    user_deactivate_toggle = UserDeactivateToggle.Field()
 
     @staticmethod
     def mutate(root, info, *args, **kwargs):
