@@ -22,4 +22,8 @@ class UserFilter(django_filters.FilterSet):
             Q(full_name__icontains=value) |
             Q(school__name__icontains=value) |
             Q(publisher__name__icontains=value)
-        )
+        ).distinct()
+
+    @property
+    def qs(self):
+        return super().qs.order_by('-id').distinct()
