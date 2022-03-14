@@ -752,11 +752,7 @@ type ModeratorQueryType {
   payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
   user(id: ID!): ModeratorQueryUserType
-<<<<<<< HEAD
-  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
-=======
-  users(email: String, isActive: Boolean, isVerified: Boolean, isDeactivated: Boolean, userType: [UserTypeEnum!], search: String, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
->>>>>>> 9033fc0 (Add mutation and query to activate/deactivate user)
+  users(email: String, isActive: Boolean, isVerified: Boolean, isDeactivated: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
 }
 
 type ModeratorQueryUserListType {
@@ -1599,11 +1595,8 @@ enum UserPermissions {
   CAN_VERIFY_USER
   CAN_CREATE_PAYMENT
   CAN_UPDATE_PAYMENT
-<<<<<<< HEAD
-  ACTIVITY_LOG_FILE
-=======
   CAN_DEACTIVATE_TOGGLE_USER
->>>>>>> 9033fc0 (Add mutation and query to activate/deactivate user)
+  ACTIVITY_LOG_FILE
 }
 
 type UserType {
