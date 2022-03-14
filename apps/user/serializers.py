@@ -251,7 +251,7 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
             message = gettext(
                 "We received a request to reset your account password. "
                 "If you wish to do so, please click below. Otherwise, you may "
-                "safely disregard this email."
+                "safely discard this email."
             )
         # if no user exists for this email
         except User.DoesNotExist:

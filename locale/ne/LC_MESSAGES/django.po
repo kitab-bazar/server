@@ -626,7 +626,7 @@ msgstr ""
 #: apps/user/serializers.py:187
 msgid ""
 "We received a request to reset your account password. If you wish to do so, "
-"please click below. Otherwise, you may safely disregard this email."
+"please click below. Otherwise, you may safely discard this email."
 msgstr ""
 
 #: apps/user/serializers.py:194
