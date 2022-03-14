@@ -167,85 +167,20 @@ input BookCategoryInputType {
 }
 
 input BookCreateInputType {
-  title: String!
-  titleEn: String
-  titleNe: String
-  image: Upload
-  description: String
-  descriptionEn: String
-  descriptionNe: String
-  isbn: String
-  numberOfPages: Int!
-  language: BookLanguageEnum!
   categories: [ID!]!
   authors: [ID!]!
   tags: [ID!]
-  isbn: String!
+  isbn: String
   numberOfPages: Int!
   price: Int!
   image: Upload
-  language: language!
+  language: BookLanguageEnum!
   weight: Int
   publishedDate: Date!
   edition: String
   publisher: String!
   grade: BookGradeEnum
   isPublished: Boolean
-  price: Int!
-  metaTitle: String
-  metaTitleEn: String
-  metaTitleNe: String
-  metaKeywords: String
-  metaKeywordsEn: String
-  metaKeywordsNe: String
-  metaDescription: String
-  metaDescriptionEn: String
-  metaDescriptionNe: String
-  ogTitle: String
-  ogTitleEn: String
-  ogTitleNe: String
-  ogDescription: String
-  ogDescriptionEn: String
-  ogDescriptionNe: String
-  ogImage: Upload
-  ogLocale: String
-  ogLocaleEn: String
-  ogLocaleNe: String
-  ogType: String
-  ogTypeEn: String
-  ogTypeNe: String
-  publisher: String!
-  categories: [ID!]!
-  authors: [ID!]!
-  tags: [ID!]
-}
-
-type BookDetailType {
-  id: ID!
-  title: String!
-  image: FileFieldType
-  description: String
-  categories: [CategoryType!]!
-  authors: [AuthorType!]!
-  tags: [TagType!]!
-  isbn: String!
-  numberOfPages: Int!
-  language: BookLanguageEnum
-  weight: Int
-  publishedDate: Date!
-  edition: String
-  publisher: PublisherType!
-  grade: BookGradeEnum
-  isPublished: Boolean!
-  price: Int!
-  metaTitle: String
-  metaKeywords: String
-  metaDescription: String
-  ogTitle: String
-  ogDescription: String
-  ogImage: FileFieldType
-  ogLocale: String
-  ogType: String
   titleEn: String
   descriptionEn: String
   metaTitleEn: String
@@ -264,15 +199,6 @@ type BookDetailType {
   ogDescriptionNe: String
   ogLocaleNe: String
   ogTypeNe: String
-  bookWishList: [WishListType!]!
-  bookCartItem: [CartItemType!]!
-  bookOrderCartItem: [BookOrderType!]!
-  publisherPackageBook: [PublisherPackageBookType!]!
-  schoolPackageBook: [SchoolPackageBookType!]!
-  wishlistId: ID
-  cartDetails: CartItemType
-  gradeDisplay: EnumDescription
-  languageDisplay: EnumDescription
 }
 
 enum BookGradeEnum {
@@ -848,6 +774,7 @@ type ModeratorQueryUserType {
   publisher: PublisherType
   school: SchoolType
   isVerified: Boolean!
+  dateJoined: DateTime!
   verifiedBy: UserType
   canonicalName: String!
   userTypeDisplay: EnumDescription!
@@ -1249,9 +1176,7 @@ type Query {
   notification(id: ID!): NotificationType
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
-  bookDetail(id: ID!): BookDetailType
   books(categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, search: String, publishers: [ID!], isAddedInWishlist: Boolean, grade: [BookGradeEnum!], language: [BookLanguageEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
-  books(title: String, categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, isAddedInWishlist: Boolean, grade: [BookGradeEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
   authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
   categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
@@ -1702,16 +1627,6 @@ type WishListType {
 enum blog_publish_type {
   PUBLISH
   DRAFT
-}
-
-enum faq_publish_type {
-  PUBLISH
-  DRAFT
-}
-
-enum language {
-  NEPALI
-  ENGLISH
 }
 
 enum message_type {
