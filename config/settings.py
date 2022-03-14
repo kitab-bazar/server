@@ -53,6 +53,9 @@ env = environ.Env(
     ENVIRONMENT=(str, 'local'),
     DJANGO_API_HOST=(str, 'localhost'),
     SENTRY_SAMPLE_RATE=(float, 0.2),
+    AWS_ACCESS_KEY_ID=(str, 'AWS_ACCESS_KEY_ID'),
+    AWS_SECRET_ACCESS_KEY=(str, 'AWS_SECRET_ACCESS_KEY'),
+    DEFAULT_FROM_EMAIL=(str, 'Kitab Bazar <kitabbazar@togglecorp.com>')
 )
 
 # Quick-start development settings - unsuitable for production
@@ -298,9 +301,14 @@ GRAPHENE_NODES_WHITELIST = (
 
 CLIENT_URL = env('CLIENT_URL')
 
+# Smtp settings
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    DEFAULT_FROM_EMAIL = "Kitab Bazar <kitabbazar@togglecorp.com>"
+else:
+    EMAIL_BACKEND = 'django_ses.SESBackend'
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 
 USE_I18N = True
 USE_L10N = True
