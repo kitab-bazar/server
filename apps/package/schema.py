@@ -33,6 +33,7 @@ from apps.package.enums import (
 )
 from utils.graphene.enums import EnumDescription
 from apps.common.schema import ActivityFileType
+from apps.order.schema import OrderType
 
 
 def publisher_package_qs(info):
@@ -207,18 +208,19 @@ class CourierPackageType(DjangoObjectType):
     status = graphene.Field(CourierPackageStatusEnum, required=True)
     status_display = EnumDescription(source='get_status_display')
 
-    courier_package_books = DjangoPaginatedListObjectField(
-        SchoolPackageBookListType,
-        pagination=PageGraphqlPagination(
-            page_size_query_param='pageSize'
-        )
-    )
     logs = DjangoPaginatedListObjectField(
         PublisherPackageLogListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
     )
+    courier_package_books = DjangoPaginatedListObjectField(
+        SchoolPackageBookListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+    related_orders = CustomDjangoListField(OrderType, required=False)
 
     @staticmethod
     def get_custom_queryset(queryset, info):
@@ -228,10 +230,21 @@ class CourierPackageType(DjangoObjectType):
     def resolve_logs(root, info, **kwargs) -> QuerySet:
         return root.courier_package_logs
 
+    @staticmethod
+    def resolve_courier_package_books(root, info, **kwargs) -> QuerySet:
+        # TODO: Use dataloader
+        return root.courier_package.first().school_package.all()
+
+    @staticmethod
+    def resolve_related_orders(root, info, **kwargs) -> QuerySet:
+        # TODO: use dataloader
+        return root.courier_package.first().related_orders
+
     class Meta:
         model = CourierPackage
         fields = (
-            'id', 'package_id', 'status', 'related_orders', 'total_price', 'total_quantity'
+            'id', 'package_id', 'status', 'total_price', 'total_quantity', 'municipality',
+            'related_orders'
         )
 
 

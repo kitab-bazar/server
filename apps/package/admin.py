@@ -30,8 +30,7 @@ class SchoolPackageAdmin(admin.ModelAdmin):
 
 
 class CourierPackageAdmin(admin.ModelAdmin):
-    search_fields = ['school_packages__id', 'related_orders__id']
-    autocomplete_fields = ['school_package_books', 'related_orders']
+    pass
 
 
 admin.site.register(PublisherPackageBook, PublisherPackageBookAdmin)

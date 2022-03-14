@@ -15,6 +15,8 @@ from apps.order.factories import (
     OrderWindowFactory,
 )
 from apps.package.models import SchoolPackage, PublisherPackage, CourierPackage
+from apps.school.factories import SchoolFactory
+from apps.common.factories import MunicipalityFactory
 
 
 class TestPackageGeneration(GraphQLTestCase):
@@ -77,6 +79,9 @@ class TestPackageGeneration(GraphQLTestCase):
                 totalPrice
                 totalQuantity
               }
+              municipality {
+                id
+              }
               totalPrice
               totalQuantity
             }
@@ -90,7 +95,13 @@ class TestPackageGeneration(GraphQLTestCase):
         self.u2_p2 = UserFactory.create(publisher=self.p_2, user_type=User.UserType.PUBLISHER, is_verified=True)
         self.moderator = UserFactory.create(user_type=User.UserType.MODERATOR, is_verified=True)
 
-        self.s_1, self.s_2 = UserFactory.create_batch(2, user_type=User.UserType.SCHOOL_ADMIN, is_verified=True)
+        m1, m2 = MunicipalityFactory.create_batch(2)
+        self.s_1 = UserFactory.create(
+            user_type=User.UserType.SCHOOL_ADMIN, is_verified=True, school=SchoolFactory.create(municipality=m1)
+        )
+        self.s_2 = UserFactory.create(
+            user_type=User.UserType.SCHOOL_ADMIN, is_verified=True, school=SchoolFactory.create(municipality=m2)
+        )
 
         # Create books
         self.p_1_b_1, self.p_1_b_2, self.p_1_b_3 = BookFactory.create_batch(3, publisher=self.p_1, price=100)
