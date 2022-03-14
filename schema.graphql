@@ -429,12 +429,13 @@ type CourierPackageType {
   id: ID!
   packageId: UUID!
   status: CourierPackageStatusEnum!
-  relatedOrders: [OrderType!]!
   totalPrice: Int!
   totalQuantity: Int!
+  municipality: MunicipalityType!
   statusDisplay: EnumDescription
-  courierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
+  courierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
+  relatedOrders: [OrderType!]
 }
 
 input CourierPackageUpdateInputType {
@@ -1164,7 +1165,7 @@ type Query {
   schoolPackage(id: ID!): SchoolPackageType
   schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
   courierPackage(id: ID!): CourierPackageType
-  courierPackages(status: [CourierPackageStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
+  courierPackages(status: [CourierPackageStatusEnum!], municipalities: [ID!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
   blog(id: ID!): BlogType
   blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
   blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType

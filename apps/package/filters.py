@@ -48,10 +48,16 @@ class SchoolPackageFilterSet(django_filters.FilterSet):
 class CourierPackageFilterSet(django_filters.FilterSet):
 
     status = MultipleInputFilter(CourierPackageStatusEnum, field_name='status')
+    municipalities = IDListFilter(method='filter_municipalities')
 
     class Meta:
         model = CourierPackage
         fields = ()
+
+    def filter_municipalities(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(municipality__in=value)
 
 
 class PublisherPackageLogFilterSet(django_filters.FilterSet):

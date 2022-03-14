@@ -131,6 +131,12 @@ class SchoolPackage(models.Model):
     )
     total_price = models.IntegerField(verbose_name=_('Total price'), default=0)
     total_quantity = models.IntegerField(verbose_name=_('Total quantity'), default=0)
+    courier_package = models.ForeignKey(
+        'package.CourierPackage',
+        on_delete=models.PROTECT,
+        related_name='courier_package',
+        verbose_name=_('Courier package'),
+    )
 
     class Meta:
         unique_together = ('school', 'order_window')
@@ -159,12 +165,6 @@ class CourierPackage(models.Model):
         default=Status.PENDING,
         verbose_name=_("Courier package status")
     )
-    related_orders = models.ManyToManyField(
-        'order.Order', verbose_name=_('School related order'), related_name='courier_related_orders',
-    )
-    school_package_books = models.ManyToManyField(
-        'package.SchoolPackageBook', verbose_name=_('School package books'), related_name='courier_school_package_books',
-    )
     order_window = models.ForeignKey(
         'order.OrderWindow',
         on_delete=models.PROTECT,
@@ -173,6 +173,10 @@ class CourierPackage(models.Model):
     )
     total_price = models.IntegerField(verbose_name=_('Total price'), default=0)
     total_quantity = models.IntegerField(verbose_name=_('Total quantity'), default=0)
+    municipality = models.ForeignKey(
+        'common.Municipality', verbose_name=_('Municipality'), related_name='courier_package_municipality',
+        on_delete=models.PROTECT
+    )
 
     class Meta:
         verbose_name = _('Courier Package')
