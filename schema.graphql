@@ -325,8 +325,8 @@ type CategoryType {
   id: ID!
   name: String!
   nameEn: String
-  nameNe: String
   parentCategory: CategoryType
+  image: FileFieldType
 }
 
 input ChangePasswordInputType {
