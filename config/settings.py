@@ -55,7 +55,8 @@ env = environ.Env(
     SENTRY_SAMPLE_RATE=(float, 0.2),
     AWS_ACCESS_KEY_ID=(str, 'AWS_ACCESS_KEY_ID'),
     AWS_SECRET_ACCESS_KEY=(str, 'AWS_SECRET_ACCESS_KEY'),
-    DEFAULT_FROM_EMAIL=(str, 'Kitab Bazar <kitabbazar@togglecorp.com>')
+    DEFAULT_FROM_EMAIL=(str, 'Kitab Bazar <kitabbazar@togglecorp.com>'),
+    USE_LOCAL_STORATE=(bool, True)
 )
 
 # Quick-start development settings - unsuitable for production
@@ -185,7 +186,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-if DEBUG:
+if DEBUG or env('USE_LOCAL_STORATE'):
     STATIC_URL = env('DJANGO_STATIC_URL')
     MEDIA_URL = env('DJANGO_MEDIA_URL')
     STATIC_ROOT = env('DJANGO_STATIC_ROOT')
