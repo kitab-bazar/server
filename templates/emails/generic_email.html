@@ -117,7 +117,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                   <tbody><tr>
                     <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                      <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
+                      <div style="font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
                         {{ message }}
                       </div>
                     </td>
@@ -139,7 +139,7 @@
                   </tr>
                   <tr>
                     <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">If you are having trouble with the button above, copy and paste the URL below into your web browser. <a href="{{ button_url }}">{{ button_url }}</a></div>
+                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:400;line-height:24px;text-align:left;color:#434245;"> {{ footer_message }} <a href="{{ button_url }}">{{ button_url }}</a></div>
 
                     </td>
                   </tr>
@@ -148,6 +148,7 @@
                       <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:bold;line-height:24px;text-align:left;color:#434245;">Kitab Bazar</div>
                     </td>
                   </tr>
+                  {% comment %}
                   <tr>
                     <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                       <table align="left" border="0" cellpadding="0" cellspacing="0" role="presentation" style="float:none;display:inline-table;">
@@ -197,6 +198,7 @@
                       </tbody></table>
                     </td>
                   </tr>
+                  {% endcomment %}
                 </tbody></table>
               </div>
             </td>
