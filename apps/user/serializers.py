@@ -80,6 +80,10 @@ class LoginSerializer(serializers.Serializer):
                 raise serializers.ValidationError(
                     gettext('Your accout is not active, please click the activation link we sent to your email')
                 )
+            if not user.is_deactivated:
+                raise serializers.ValidationError(
+                    gettext('Your accout deactivated, please contact administrator')
+                )
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             raise serializers.ValidationError('Invalid Credentials')
         user = authenticate(email=email, password=password)
@@ -355,9 +359,11 @@ class UserVerifySerializer(serializers.ModelSerializer):
 
 
 class UserDeactivateToggleSerializer(serializers.ModelSerializer):
+    is_deactivated = serializers.BooleanField(required=True)
+
     class Meta:
         model = User
-        fields = ('is_deactivated',)
+        fields = ('id', 'is_deactivated',)
 
     def validate_is_deactivated(self, is_deactivated):
         if self.instance.is_verified:
