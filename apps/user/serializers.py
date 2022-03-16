@@ -80,7 +80,7 @@ class LoginSerializer(serializers.Serializer):
                 raise serializers.ValidationError(
                     gettext('Your accout is not active, please click the activation link we sent to your email')
                 )
-            if not user.is_deactivated:
+            if user.is_deactivated:
                 raise serializers.ValidationError(
                     gettext('Your accout deactivated, please contact administrator')
                 )
@@ -372,5 +372,6 @@ class UserDeactivateToggleSerializer(serializers.ModelSerializer):
 
     def update(self, instance, _):
         instance.is_deactivated_by = self.context['request'].user
+        instance.is_deactivated = self.validated_data['is_deactivated']
         instance.save(update_fields=('is_deactivated', 'is_deactivated_by'))
         return instance
