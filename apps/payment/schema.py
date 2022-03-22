@@ -9,7 +9,6 @@ from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoLi
 from utils.graphene.enums import EnumDescription
 
 from apps.user.models import User
-from apps.order.models import Order
 
 from .models import Payment, PaymentLog
 from .filter_set import PaymentFilterSet, PaymentLogFilterSet
@@ -19,6 +18,7 @@ from .enums import (
     PaymentTypeEnum,
 )
 from apps.common.schema import ActivityFileType
+from apps.order.models import Order
 
 
 def get_payment_qs(info):
@@ -109,14 +109,15 @@ class Query(graphene.ObjectType):
 
     @staticmethod
     def resolve_payment_summary(root, info, **kwargs):
-        payemnt_summary = get_payment_qs(info).aggregate(
+        payment_summary = get_payment_qs(info).aggregate(
             **User.annotate_user_payment_statement()
         )
-        order_price_total = Order.objects.filter(
-            created_by=info.context.user, status=Order.Status.IN_TRANSIT.value
-        ).aggregate(Sum('book_order__price'))['book_order__price__sum'] or 0
-        payment_credit_sum = payemnt_summary['payment_credit_sum'] or 0
-        payment_debit_sum = payemnt_summary['payment_debit_sum'] or 0
-        outstanding_balance = payment_credit_sum - payment_debit_sum - order_price_total
-        payemnt_summary['outstanding_balance'] = outstanding_balance
-        return payemnt_summary
+        payment_summary['total_order_pending_price'] = Order.objects.filter(
+            status=Order.Status.PENDING.value
+        ).aggregate(Sum('total_price'))['total_price__sum'] or 0
+        payment_summary['outstanding_balance'] = (
+            payment_summary['payment_credit_sum'] -
+            payment_summary['payment_debit_sum'] -
+            payment_summary['total_order_pending_price']
+        )
+        return payment_summary

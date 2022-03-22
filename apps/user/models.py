@@ -168,36 +168,41 @@ class User(AbstractUser):
     @classmethod
     def annotate_user_payment_statement(cls):
         from apps.payment.models import Payment
+        from apps.order.models import Order
         return {
-            'payment_credit_sum': models.Sum('amount', filter=models.Q(
+            'payment_credit_sum': Coalesce(models.Sum('amount', filter=models.Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.VERIFIED.value
-            ), output_field=models.FloatField()),
+            ), distinct=True), 0, output_field=models.FloatField()),
 
-            'payment_debit_sum': models.Sum('amount', filter=models.Q(
+            'payment_debit_sum': Coalesce(models.Sum('amount', filter=models.Q(
                 transaction_type=Payment.TransactionType.DEBIT.value,
                 status=Payment.Status.VERIFIED.value
-            ), output_field=models.FloatField()),
+            ), distinct=True), 0, output_field=models.FloatField()),
 
-            'total_verified_payment': models.Sum('amount', filter=models.Q(
+            'total_verified_payment': Coalesce(models.Sum('amount', filter=models.Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.VERIFIED.value,
-            ), output_field=models.FloatField()),
+            ), distinct=True), 0, output_field=models.FloatField()),
 
-            'total_unverified_payment': models.Sum('amount', filter=models.Q(
+            'total_unverified_payment': Coalesce(models.Sum('amount', filter=models.Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.PENDING.value,
-            ), output_field=models.FloatField()),
+            ), distinct=True), 0, output_field=models.FloatField()),
 
-            'total_unverified_payment_count': models.Count('id', filter=models.Q(
+            'total_unverified_payment_count': Coalesce(models.Count('id', filter=models.Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.PENDING.value,
-            )),
+            ), distinct=True), 0, output_field=models.FloatField()),
 
-            'total_verified_payment_count': models.Count('id', filter=models.Q(
+            'total_verified_payment_count': Coalesce(models.Count('id', filter=models.Q(
                 transaction_type=Payment.TransactionType.CREDIT.value,
                 status=Payment.Status.VERIFIED.value,
-            )),
+            ), distinct=True), 0, output_field=models.FloatField()),
+
+            'total_order_pending_price': Coalesce(models.Sum('paid_by__order__book_order__price', filter=models.Q(
+                paid_by__order__status=Order.Status.PENDING.value
+            ), distinct=True, output_field=models.FloatField()), 0, output_field=models.FloatField()),
         }
 
     @classmethod
@@ -206,41 +211,75 @@ class User(AbstractUser):
         from apps.payment.models import Payment
         from apps.order.models import Order
         return {
-            'payment_credit_sum': Coalesce(models.Sum('payment_created_by__amount', filter=models.Q(
-                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
-                payment_created_by__status=Payment.Status.VERIFIED.value
-            )), 0, output_field=models.FloatField()),
+            'payment_credit_sum': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.VERIFIED.value
+                ).order_by().values('paid_by').annotate(
+                    payment_credit_sum=models.Sum('amount')
+                ).values('payment_credit_sum')
+            ), 0, output_field=models.FloatField()),
 
-            'payment_debit_sum': Coalesce(models.Sum('payment_created_by__amount', filter=models.Q(
-                payment_created_by__transaction_type=Payment.TransactionType.DEBIT.value,
-                payment_created_by__status=Payment.Status.VERIFIED.value
-            )), 0, output_field=models.FloatField()),
+            'payment_debit_sum': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.DEBIT.value,
+                    status=Payment.Status.VERIFIED.value
+                ).order_by().values('paid_by').annotate(
+                    payment_debit_sum=models.Sum('amount')
+                ).values('payment_debit_sum')
+            ), 0, output_field=models.FloatField()),
 
-            'total_verified_payment': Coalesce(models.Sum('payment_created_by__amount', filter=models.Q(
-                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
-                payment_created_by__status=Payment.Status.VERIFIED.value,
-            )), 0, output_field=models.FloatField()),
+            'total_verified_payment': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.VERIFIED.value
+                ).order_by().values('paid_by').annotate(
+                    payment_credit_sum=models.Sum('amount')
+                ).values('payment_credit_sum')
+            ), 0, output_field=models.FloatField()),
 
-            'total_unverified_payment': Coalesce(models.Sum('payment_created_by__amount', filter=models.Q(
-                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
-                payment_created_by__status=Payment.Status.PENDING.value,
-            )), 0, output_field=models.FloatField()),
+            'total_unverified_payment': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.PENDING.value
+                ).order_by().values('paid_by')[:1].annotate(
+                    payment_credit_sum=models.Sum('amount')
+                ).values('payment_credit_sum')
+            ), 0, output_field=models.FloatField()),
 
-            'total_unverified_payment_count': Coalesce(models.Count('payment__id', filter=models.Q(
-                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
-                payment_created_by__status=Payment.Status.PENDING.value,
-            )), 0, output_field=models.FloatField()),
+            'total_unverified_payment_count': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.PENDING.value
+                ).order_by().values('paid_by').annotate(total_count=models.Count('paid_by')).values('total_count')
+            ), 0, output_field=models.FloatField()),
 
-            'total_verified_payment_count': Coalesce(models.Count('payment__id', filter=models.Q(
-                payment_created_by__transaction_type=Payment.TransactionType.CREDIT.value,
-                payment_created_by__status=Payment.Status.VERIFIED.value,
-            )), 0, output_field=models.FloatField()),
+            'total_verified_payment_count': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.VERIFIED.value
+                ).order_by().values('paid_by').annotate(total_count=models.Count('paid_by')).values('total_count')
+            ), 0, output_field=models.FloatField()),
 
-            'total_order_pending_price': Coalesce(models.Sum('order__book_order__price', filter=models.Q(
-                order__status=Order.Status.PENDING.value
-            ), output_field=models.FloatField()), 0, output_field=models.FloatField()),
+            'total_order_pending_price': Coalesce(models.Subquery(
+                Order.objects.filter(
+                    created_by=models.OuterRef('pk'),
+                    status=Order.Status.PENDING.value,
+                ).order_by().values('created_by').annotate(
+                    grand_total_price=models.ExpressionWrapper(
+                        models.Sum(models.F('book_order__price') * models.F('book_order__quantity')),
+                        output_field=models.FloatField()
+                    )
+                ).values('grand_total_price')
+            ), 0, output_field=models.FloatField()),
 
             'outstanding_balance': (
-                models.F('total_order_pending_price') - models.F('payment_credit_sum') - models.F('payment_debit_sum')
+                models.F('payment_credit_sum') - models.F('payment_debit_sum') - models.F('total_order_pending_price')
             )
         }

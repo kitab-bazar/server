@@ -9,6 +9,7 @@ from config.permissions import UserPermissions
 from apps.payment.serializers import PaymentSerializer, PaymentUpdateSerializer
 from apps.payment.models import Payment
 from apps.payment.schema import PaymentType
+from apps.user.models import User
 
 
 PaymentInputType = generate_input_type_for_serializer(
@@ -25,11 +26,9 @@ PaymentUpdateInputType = generate_input_type_for_serializer(
 class PaymentMixin():
     @classmethod
     def filter_queryset(cls, qs, info):
-        return qs.filter(created_by=info.context.user)
-
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
+        if info.context.user.user_type == User.UserType.MODERATOR.value:
+            return qs
+        return qs.none()
 
 
 class CreatePayment(PaymentMixin, CreateUpdateGrapheneMutation):
