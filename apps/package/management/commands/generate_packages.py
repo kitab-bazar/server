@@ -152,7 +152,8 @@ class Command(BaseCommand):
         orders = Order.objects.filter(
             book_order__publisher__isnull=False,
             assigned_order_window__id=latest_order_window.id,
-            status=Order.Status.PENDING.value
+            status=Order.Status.PENDING.value,
+            created_by__is_deactivated=False
         )
         user_ids = orders.values_list('created_by__id', flat=True)
         if User.objects.filter(id__in=user_ids).annotate(**User.annotate_mismatch_order_statements()).filter(
