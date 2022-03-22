@@ -9,7 +9,7 @@ from apps.publisher.factories import PublisherFactory
 from apps.book.factories import BookFactory
 
 
-class UserQueryTest(GraphQLTestCase):
+class UserPaymentTest(GraphQLTestCase):
     PAYMENT_QUERY = '''
         query MyQuery {
           moderatorQuery {
@@ -28,6 +28,22 @@ class UserQueryTest(GraphQLTestCase):
             }
           }
         }
+    '''
+
+    PAYMENT_SUMMARY = '''
+    query MyQuery {
+      schoolQuery {
+        paymentSummary {
+          outstandingBalance
+          paymentCreditSum
+          paymentDebitSum
+          totalUnverifiedPayment
+          totalUnverifiedPaymentCount
+          totalVerifiedPayment
+          totalVerifiedPaymentCount
+        }
+      }
+    }
     '''
 
     def setUp(self):
@@ -110,3 +126,17 @@ class UserQueryTest(GraphQLTestCase):
         self.assertEqual(content['moderatorQuery']['users']['results'][0]['totalUnverifiedPaymentCount'], 4)
         self.assertEqual(content['moderatorQuery']['users']['results'][0]['totalVerifiedPayment'], 40000)
         self.assertEqual(content['moderatorQuery']['users']['results'][0]['totalVerifiedPaymentCount'], 2)
+
+        self.force_login(self.school_1)
+        content = self.query_check(self.PAYMENT_SUMMARY)['data']['schoolQuery']['paymentSummary']
+        self.assertEqual(
+            content['outstandingBalance'],
+            20000 - (100 * 10 + 200 * 20 + 300 * 30)
+        )
+        self.assertEqual(content['paymentCreditSum'], 40000)
+        self.assertEqual(content['paymentDebitSum'], 20000)
+
+        self.assertEqual(content['totalUnverifiedPayment'], 120000)
+        self.assertEqual(content['totalUnverifiedPaymentCount'], 4)
+        self.assertEqual(content['totalVerifiedPayment'], 40000)
+        self.assertEqual(content['totalVerifiedPaymentCount'], 2)

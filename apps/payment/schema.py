@@ -2,7 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
 
-from django.db.models import QuerySet, Sum
+from django.db.models import QuerySet, Sum, F
 
 from utils.graphene.types import CustomDjangoListObjectType
 from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoListField
@@ -109,15 +109,37 @@ class Query(graphene.ObjectType):
 
     @staticmethod
     def resolve_payment_summary(root, info, **kwargs):
-        payment_summary = get_payment_qs(info).aggregate(
+        payment_summary = get_payment_qs(info).annotate(
             **User.annotate_user_payment_statement()
+        ).aggregate(
+            Sum('payment_credit_sum'),
+            Sum('payment_debit_sum'),
+            Sum('total_verified_payment'),
+            Sum('total_verified_payment_count'),
+            Sum('total_unverified_payment'),
+            Sum('total_unverified_payment_count'),
         )
-        payment_summary['total_order_pending_price'] = Order.objects.filter(
-            status=Order.Status.PENDING.value
-        ).aggregate(Sum('total_price'))['total_price__sum'] or 0
-        payment_summary['outstanding_balance'] = (
-            payment_summary['payment_credit_sum'] -
-            payment_summary['payment_debit_sum'] -
-            payment_summary['total_order_pending_price']
+
+        total_order_pending_price = Order.objects.filter(
+            status=Order.Status.PENDING.value,
+            created_by=info.context.user
+        ).annotate(grand_total_price=F('book_order__price') * F('book_order__quantity')).aggregate(
+            Sum('grand_total_price')
+        )['grand_total_price__sum'] or 0
+
+        outstanding_balance = (
+            payment_summary['payment_credit_sum__sum'] -
+            payment_summary['payment_debit_sum__sum'] -
+            total_order_pending_price
         )
-        return payment_summary
+
+        return {
+            'payment_credit_sum': payment_summary['payment_credit_sum__sum'],
+            'payment_debit_sum': payment_summary['payment_debit_sum__sum'],
+            'total_verified_payment': payment_summary['total_verified_payment__sum'],
+            'total_verified_payment_count': payment_summary['total_verified_payment_count__sum'],
+            'total_unverified_payment': payment_summary['total_unverified_payment__sum'],
+            'total_unverified_payment_count': payment_summary['total_unverified_payment_count__sum'],
+            'total_order_pending_price': total_order_pending_price,
+            'outstanding_balance': outstanding_balance
+        }
