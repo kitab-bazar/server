@@ -154,10 +154,18 @@ class Command(BaseCommand):
             assigned_order_window__id=latest_order_window.id,
             status=Order.Status.PENDING.value
         )
+        user_ids = orders.values_list('created_by__id', flat=True)
+        if User.objects.filter(id__in=user_ids).annotate(**User.annotate_mismatch_order_statements()).filter(
+            outstanding_balance__lt=0
+        ).exists():
+            self.stdout.write(self.style.ERROR(
+                'Mismatched orders exists please fix those'
+            ))
+            return
 
         # Check if unverified users exists
         unverified_users_qs = orders.filter(
-            Q(created_by__is_verified=False) | Q(created_by__school__isnull=True)
+            Q(created_by__is_verified=False) | Q(created_by__school__isnull=True) | Q(created_by__is_deactivated=True)
         ).distinct()
         if unverified_users_qs.exists():
             unverified_users = unverified_users_qs.values('id', 'created_by__full_name')
