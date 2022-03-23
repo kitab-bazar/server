@@ -16,7 +16,7 @@ class UserFilter(django_filters.FilterSet):
 
     class Meta:
         model = User
-        fields = ['email', 'is_active', 'is_verified', 'is_deactivated']
+        fields = ['email', 'is_active', 'is_verified']
 
     @property
     def qs(self):
