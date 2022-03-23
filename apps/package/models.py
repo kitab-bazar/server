@@ -63,6 +63,7 @@ class PublisherPackage(models.Model):
     )
     total_price = models.IntegerField(verbose_name=_('Total price'), default=0)
     total_quantity = models.IntegerField(verbose_name=_('Total quantity'), default=0)
+    incentive = models.IntegerField(verbose_name=_('Incentive'), default=0)
 
     class Meta:
         unique_together = ('publisher', 'order_window')
@@ -137,6 +138,7 @@ class SchoolPackage(models.Model):
         related_name='courier_package',
         verbose_name=_('Courier package'),
     )
+    is_eligible_for_incentive = models.BooleanField(default=False, verbose_name=_('Is eligible for incentive'),)
 
     class Meta:
         unique_together = ('school', 'order_window')
@@ -177,6 +179,7 @@ class CourierPackage(models.Model):
         'common.Municipality', verbose_name=_('Municipality'), related_name='courier_package_municipality',
         on_delete=models.PROTECT
     )
+    is_eligible_for_incentive = models.BooleanField(default=False, verbose_name=_('Is eligible for incentive'),)
 
     class Meta:
         verbose_name = _('Courier Package')

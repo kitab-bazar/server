@@ -110,7 +110,7 @@ class PublisherPackageType(DjangoObjectType):
         model = PublisherPackage
         fields = (
             'id', 'package_id', 'status', 'related_orders', 'publisher',
-            'total_price', 'total_quantity'
+            'total_price', 'total_quantity', 'incentive'
         )
 
     @staticmethod
@@ -176,7 +176,7 @@ class SchoolPackageType(DjangoObjectType):
         model = SchoolPackage
         fields = (
             'id', 'package_id', 'status', 'related_orders', 'school',
-            'total_price', 'total_quantity'
+            'total_price', 'total_quantity', 'is_eligible_for_incentive'
         )
 
     @staticmethod
@@ -244,7 +244,7 @@ class CourierPackageType(DjangoObjectType):
         model = CourierPackage
         fields = (
             'id', 'package_id', 'status', 'total_price', 'total_quantity', 'municipality',
-            'related_orders'
+            'related_orders', 'is_eligible_for_incentive'
         )
 
 

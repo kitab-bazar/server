@@ -399,6 +399,7 @@ type CourierPackageType {
   totalPrice: Int!
   totalQuantity: Int!
   municipality: MunicipalityType!
+  isEligibleForIncentive: Boolean!
   statusDisplay: EnumDescription
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
   courierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
@@ -1125,6 +1126,7 @@ type PublisherPackageType {
   publisher: PublisherType!
   totalPrice: Int!
   totalQuantity: Int!
+  incentive: Int!
   statusDisplay: EnumDescription
   publisherPackageBooks(quantity: Int, book: ID, publisherPackage: ID, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageBookListType
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
@@ -1308,6 +1310,7 @@ type SchoolPackageType {
   school: UserType!
   totalPrice: Int!
   totalQuantity: Int!
+  isEligibleForIncentive: Boolean!
   statusDisplay: EnumDescription
   schoolPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageLogListType

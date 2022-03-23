@@ -16,6 +16,7 @@ class Command(BaseCommand):
         parser.add_argument('order_window_id', type=int, help='order window id')
 
     def _generate_packages(self, latest_order_window, orders):
+        INCENTIVE_LIMIT = 20
         # ------------------------------------------------------------------
         # Create publihser packages
         # ------------------------------------------------------------------
@@ -73,7 +74,7 @@ class Command(BaseCommand):
                 total_price=Sum('book_order__quantity') * F('book_order__price')
             ).values('total_quantity', 'total_price')
 
-            CourierPackage.objects.create(
+            courier_package = CourierPackage.objects.create(
                 status=CourierPackage.Status.PENDING.value,
                 order_window=latest_order_window,
                 municipality=Municipality.objects.get(id=municipality_id),
@@ -82,6 +83,9 @@ class Command(BaseCommand):
                 total_price=courier_related_book_orders.aggregate(
                     grand_total_price=Sum('total_price'))['grand_total_price']
             )
+            if courier_package.total_quantity >= INCENTIVE_LIMIT:
+                courier_package.is_eligible_for_incentive = True
+                courier_package.save()
             courier_package_count += 1
         self.stdout.write(self.style.SUCCESS(f'{courier_package_count} municipality/courier packages created.'))
 
@@ -115,6 +119,15 @@ class Command(BaseCommand):
                     grand_total_price=Sum('total_price'))['grand_total_price']
             )
             school_package.related_orders.set(related_orders)
+            if school_package.total_quantity >= INCENTIVE_LIMIT:
+                school_package.is_eligible_for_incentive = True
+                school_package.save()
+
+                # Increment incentive
+                PublisherPackage.objects.filter(related_orders__in=related_orders).distinct().update(
+                    incentive=F('incentive') + 1
+                )
+
             SchoolPackageBook.objects.bulk_create(
                 [
                     SchoolPackageBook(
