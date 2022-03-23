@@ -130,12 +130,19 @@ class Command(BaseCommand):
 
     def _format_unverified_users(self, unverified_user_qs):
         return '\n'.join(
-            ['id = %s ---- full name = %s' % (user['id'], user['created_by__full_name']) for user in unverified_user_qs]
+            ['id = %s ---- full name = %s' % (
+                user['created_by__id'], user['created_by__full_name']) for user in unverified_user_qs]
         )
 
     def _format_unverified_payments(self, unverified_payments_qs):
         return '\n'.join(
             ['id = %s ---- full name = %s' % (user['id'], user['paid_by__full_name']) for user in unverified_payments_qs]
+        )
+
+    def _format_mismatched_order_users(self, unverified_user_qs):
+        return '\n'.join(
+            ['id = %s ---- full name = %s' % (
+                user['id'], user['full_name']) for user in unverified_user_qs]
         )
 
     def handle(self, *args, **options):
@@ -156,20 +163,25 @@ class Command(BaseCommand):
             created_by__is_deactivated=False
         )
         user_ids = orders.values_list('created_by__id', flat=True)
-        if User.objects.filter(id__in=user_ids).annotate(**User.annotate_mismatch_order_statements()).filter(
+        mismatched_order_users = User.objects.filter(
+            id__in=user_ids, is_deactivated=False).annotate(**User.annotate_mismatch_order_statements()).filter(
             outstanding_balance__lt=0
-        ).exists():
+        )
+        if mismatched_order_users.exists():
+            formatted_mismatched_order_users = mismatched_order_users.values('id', 'full_name')
+            formated_unverified_users = self._format_mismatched_order_users(formatted_mismatched_order_users)
             self.stdout.write(self.style.ERROR(
-                'Mismatched orders exists please fix those'
+                'Mismatched orders exists please fix those \n'
+                f'{formated_unverified_users}'
             ))
             return
 
         # Check if unverified users exists
         unverified_users_qs = orders.filter(
-            Q(created_by__is_verified=False) | Q(created_by__school__isnull=True) | Q(created_by__is_deactivated=True)
+            Q(created_by__is_verified=False) | Q(created_by__school__isnull=True)
         ).distinct()
         if unverified_users_qs.exists():
-            unverified_users = unverified_users_qs.values('id', 'created_by__full_name')
+            unverified_users = unverified_users_qs.values('created_by__id', 'created_by__full_name')
             formated_unverified_users = self._format_unverified_users(unverified_users)
             self.stdout.write(self.style.ERROR(
                 'Following users are not verified or school profile is not attached \n'
