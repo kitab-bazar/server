@@ -16,6 +16,7 @@ from .models import (
     OrderActivityLog,
 )
 from .tasks import send_notification
+from apps.package.models import SchoolPackage
 
 
 class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
@@ -140,6 +141,10 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
     def validate_status(self, status):
         current_status = self.instance.status
         user = self.context['request'].user
+        if SchoolPackage.objects.filter(school=self.instance.created_by, related_orders=self.instance).exists():
+            raise serializers.ValidationError(
+                gettext('Order window is expired, you can not cancell order.')
+            )
         if (
             # If user is SCHOOL_ADMIN, then the order should be created by that user
             user.user_type == User.UserType.SCHOOL_ADMIN and self.instance.created_by != user
