@@ -753,6 +753,7 @@ type ModeratorQueryType {
   paymentSummary: PaymentSummaryType
   user(id: ID!): ModeratorQueryUserType
   users(email: String, isActive: Boolean, isVerified: Boolean, isDeactivated: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
+  deactivatedUsers(email: String, isActive: Boolean, isVerified: Boolean, isDeactivated: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
 }
 
 type ModeratorQueryUserListType {

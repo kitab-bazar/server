@@ -118,10 +118,22 @@ class ModeratorUserQueryType(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    deactivated_users = DjangoPaginatedListObjectField(
+        ModeratorQueryUserListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
 
     @staticmethod
     def resolve_users(root, info, **kwargs):
-        return User.objects.annotate(
+        return User.objects.filter(is_deactivated=False).annotate(
+            **User.annotate_mismatch_order_statements()
+        )
+
+    @staticmethod
+    def resolve_deactivated_users(root, info, **kwargs):
+        return User.objects.filter(is_deactivated=True).annotate(
             **User.annotate_mismatch_order_statements()
         )
 
