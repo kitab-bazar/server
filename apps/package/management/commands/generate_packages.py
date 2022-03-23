@@ -30,7 +30,9 @@ class Command(BaseCommand):
         for publisher_id in publisher_ids:
             publisher = Publisher.objects.get(id=publisher_id)
             related_orders = orders.filter(book_order__publisher=publisher)
-            related_book_orders = BookOrder.objects.filter(order__in=related_orders).values('book').annotate(
+            related_book_orders = BookOrder.objects.filter(
+                order__in=related_orders, publisher=publisher
+            ).values('book').annotate(
                 total_quantity=Sum('quantity'),
                 total_price=Sum('quantity') * F('price')
             ).values('book', 'total_quantity', 'total_price')

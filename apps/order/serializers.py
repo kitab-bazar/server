@@ -143,7 +143,7 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         if SchoolPackage.objects.filter(school=self.instance.created_by, related_orders=self.instance).exists():
             raise serializers.ValidationError(
-                gettext('Order window is expired, you can not cancell order.')
+                gettext('Order is packed, you can not cancel order.')
             )
         if (
             # If user is SCHOOL_ADMIN, then the order should be created by that user
