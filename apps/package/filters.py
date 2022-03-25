@@ -19,6 +19,7 @@ class PublisherPackageFilterSet(django_filters.FilterSet):
 
     status = MultipleInputFilter(PublisherPackageStatusEnum, field_name='status')
     publishers = IDListFilter(method='filter_publishers')
+    order_windows = IDListFilter(method='filter_order_windows')
 
     class Meta:
         model = PublisherPackage
@@ -29,11 +30,17 @@ class PublisherPackageFilterSet(django_filters.FilterSet):
             return queryset
         return queryset.filter(publisher__in=value)
 
+    def filter_order_windows(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(order_window__in=value)
+
 
 class SchoolPackageFilterSet(django_filters.FilterSet):
 
     status = MultipleInputFilter(SchoolPackageStatusEnum, field_name='status')
     schools = IDListFilter(method='filter_schools')
+    order_windows = IDListFilter(method='filter_order_windows')
 
     class Meta:
         model = SchoolPackage
@@ -44,11 +51,17 @@ class SchoolPackageFilterSet(django_filters.FilterSet):
             return queryset
         return queryset.filter(school__in=value)
 
+    def filter_order_windows(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(order_window__in=value)
+
 
 class CourierPackageFilterSet(django_filters.FilterSet):
 
     status = MultipleInputFilter(CourierPackageStatusEnum, field_name='status')
     municipalities = IDListFilter(method='filter_municipalities')
+    order_windows = IDListFilter(method='filter_order_windows')
 
     class Meta:
         model = CourierPackage
@@ -58,6 +71,11 @@ class CourierPackageFilterSet(django_filters.FilterSet):
         if not value:
             return queryset
         return queryset.filter(municipality__in=value)
+
+    def filter_order_windows(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(order_window__in=value)
 
 
 class PublisherPackageLogFilterSet(django_filters.FilterSet):

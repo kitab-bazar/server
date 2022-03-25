@@ -28,6 +28,7 @@ class BookOrderFilterSet(django_filters.FilterSet):
 class OrderFilterSet(django_filters.FilterSet):
     status = MultipleInputFilter(OrderStatusEnum)
     users = IDListFilter(method='filter_users')
+    order_windows = IDListFilter(method='filter_order_windows')
 
     class Meta:
         model = Order
@@ -37,6 +38,11 @@ class OrderFilterSet(django_filters.FilterSet):
         if not value:
             return queryset
         return queryset.filter(created_by__in=value)
+
+    def filter_order_windows(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(assigned_order_window__in=value)
 
 
 class OrderWindowFilterSet(django_filters.FilterSet):
