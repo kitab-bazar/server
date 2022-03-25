@@ -127,19 +127,22 @@ class Query(graphene.ObjectType):
             Sum('grand_total_price')
         )['grand_total_price__sum'] or 0
 
+        payment_credit_sum = payment_summary['payment_credit_sum__sum'] or 0
+        payment_debit_sum = payment_summary['payment_debit_sum__sum'] or 0
+
         outstanding_balance = (
-            payment_summary['payment_credit_sum__sum'] -
-            payment_summary['payment_debit_sum__sum'] -
+            payment_credit_sum -
+            payment_debit_sum -
             total_order_pending_price
         )
 
         return {
-            'payment_credit_sum': payment_summary['payment_credit_sum__sum'],
-            'payment_debit_sum': payment_summary['payment_debit_sum__sum'],
-            'total_verified_payment': payment_summary['total_verified_payment__sum'],
-            'total_verified_payment_count': payment_summary['total_verified_payment_count__sum'],
-            'total_unverified_payment': payment_summary['total_unverified_payment__sum'],
-            'total_unverified_payment_count': payment_summary['total_unverified_payment_count__sum'],
+            'payment_credit_sum': payment_summary['payment_credit_sum__sum'] or 0,
+            'payment_debit_sum': payment_summary['payment_debit_sum__sum'] or 0,
+            'total_verified_payment': payment_summary['total_verified_payment__sum'] or 0,
+            'total_verified_payment_count': payment_summary['total_verified_payment_count__sum'] or 0,
+            'total_unverified_payment': payment_summary['total_unverified_payment__sum'] or 0,
+            'total_unverified_payment_count': payment_summary['total_unverified_payment_count__sum'] or 0,
             'total_order_pending_price': total_order_pending_price,
             'outstanding_balance': outstanding_balance
         }
