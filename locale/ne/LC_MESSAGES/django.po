@@ -154,15 +154,15 @@ msgstr "थारु"
 
 #: apps/book/models.py:64
 msgid "Grade 1"
-msgstr "ग्रेड १"
+msgstr "कक्षा १"
 
 #: apps/book/models.py:65
 msgid "Grade 2"
-msgstr "ग्रेड २"
+msgstr "कक्षा २"
 
 #: apps/book/models.py:66
 msgid "Grade 3"
-msgstr "ग्रेड ३"
+msgstr "कक्षा ३"
 
 #: apps/book/models.py:69 apps/notification/models.py:22
 #: apps/order/models.py:79
