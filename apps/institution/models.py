@@ -36,6 +36,9 @@ class Institution(models.Model):
         unique=True,
         verbose_name=_("Vat number")
     )
+    logo_url = models.URLField(null=True, blank=True)
+    website_url = models.URLField(null=True, blank=True)
+    library_url = models.URLField(null=True, blank=True)
 
     class Meta:
         verbose_name = _("Institution")

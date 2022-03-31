@@ -678,6 +678,9 @@ input InstitutionCreateInputType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  logoUrl: String
+  websiteUrl: String
+  libraryUrl: String
 }
 
 input InstitutionInputType {
@@ -687,6 +690,9 @@ input InstitutionInputType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  logoUrl: String
+  websiteUrl: String
+  libraryUrl: String
 }
 
 type InstitutionListType {
@@ -704,6 +710,9 @@ type InstitutionType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  logoUrl: String
+  websiteUrl: String
+  libraryUrl: String
 }
 
 input InstitutionUpdateInputType {
@@ -1158,11 +1167,11 @@ input PublisherUpdateInputType {
 
 type Query {
   publisherPackage(id: ID!): PublisherPackageType
-  publisherPackages(status: [PublisherPackageStatusEnum!], publishers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
+  publisherPackages(status: [PublisherPackageStatusEnum!], publishers: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
   schoolPackage(id: ID!): SchoolPackageType
-  schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
+  schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
   courierPackage(id: ID!): CourierPackageType
-  courierPackages(status: [CourierPackageStatusEnum!], municipalities: [ID!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
+  courierPackages(status: [CourierPackageStatusEnum!], municipalities: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
   blog(id: ID!): BlogType
   blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
   blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
@@ -1173,7 +1182,7 @@ type Query {
   contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
   order(id: ID!): OrderType
-  orders(status: [OrderStatusEnum!], users: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  orders(status: [OrderStatusEnum!], users: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   orderStat: OrderStatType
   orderSummary: OrderSummaryType
   orderWindowActive: OrderWindowType

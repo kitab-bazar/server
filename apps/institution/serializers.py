@@ -9,7 +9,8 @@ class InstitutionSerializer(serializers.ModelSerializer):
         model = Institution
         fields = (
             'name', 'municipality', 'ward_number',
-            'local_address', 'pan_number', 'vat_number'
+            'local_address', 'pan_number', 'vat_number',
+            'logo_url', 'website_url', 'library_url',
         )
 
     def validate(self, attrs):
