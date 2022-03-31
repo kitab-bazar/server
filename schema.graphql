@@ -678,6 +678,9 @@ input InstitutionCreateInputType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  logoUrl: String
+  websiteUrl: String
+  libraryUrl: String
 }
 
 input InstitutionInputType {
@@ -687,6 +690,9 @@ input InstitutionInputType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  logoUrl: String
+  websiteUrl: String
+  libraryUrl: String
 }
 
 type InstitutionListType {
@@ -704,6 +710,9 @@ type InstitutionType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  logoUrl: String
+  websiteUrl: String
+  libraryUrl: String
 }
 
 input InstitutionUpdateInputType {

@@ -14,7 +14,7 @@ class InstitutionType(DjangoObjectType):
         model = Institution
         fields = (
             'id', 'name', 'municipality', 'ward_number', 'local_address',
-            'vat_number', 'pan_number'
+            'vat_number', 'pan_number', 'logo_url', 'website_url', 'library_url',
         )
 
     @staticmethod
