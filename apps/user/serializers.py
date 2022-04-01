@@ -1,6 +1,7 @@
 import time
 from django.utils import timezone
 from rest_framework import serializers
+from django.core.cache import cache
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
@@ -59,16 +60,17 @@ class LoginSerializer(serializers.Serializer):
                     # reset
                     User._reset_login_cache(email)
 
-        if attempts >= settings.MAX_LOGIN_ATTEMPTS and not captcha:
-            raise MissingCaptchaException()
-        if attempts >= settings.MAX_LOGIN_ATTEMPTS and captcha and not validate_hcaptcha(captcha, site_key):
-            attempts = User._get_login_attempt(email)
-            User._set_login_attempt(email, attempts + 1)
+        if cache.get('enable_captcha'):
+            if attempts >= settings.MAX_LOGIN_ATTEMPTS and not captcha:
+                raise MissingCaptchaException()
+            if attempts >= settings.MAX_LOGIN_ATTEMPTS and captcha and not validate_hcaptcha(captcha, site_key):
+                attempts = User._get_login_attempt(email)
+                User._set_login_attempt(email, attempts + 1)
 
-            throttle_login_attempt()
-            raise serializers.ValidationError(dict(
-                captcha=gettext('The captcha is invalid.')
-            ))
+                throttle_login_attempt()
+                raise serializers.ValidationError(dict(
+                    captcha=gettext('The captcha is invalid.')
+                ))
 
     def validate(self, attrs):
         self._validate_captcha(attrs)
@@ -118,8 +120,8 @@ class RegisterSerializer(serializers.ModelSerializer):
     institution = InstitutionSerializer(required=False)
     school = SchoolSerializer(required=False)
     publisher = PublisherSerializer(required=False)
-    captcha = serializers.CharField(required=True, write_only=True)
-    site_key = serializers.CharField(required=True, write_only=True)
+    captcha = serializers.CharField(required=False, write_only=True)
+    site_key = serializers.CharField(required=False, write_only=True)
 
     class Meta:
         model = User
@@ -127,6 +129,10 @@ class RegisterSerializer(serializers.ModelSerializer):
             'email', 'first_name', 'last_name', 'password', 'phone_number', 'user_type',
             'institution', 'publisher', 'school', 'captcha', 'site_key'
         ]
+
+    def validate_site_key(self, captcha):
+        if cache.get('enable_captcha'):
+            raise serializers.ValidationError('This field is required')
 
     def validate_password(self, password):
         validate_password(password)
@@ -143,10 +149,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user_type
 
     def validate_captcha(self, captcha):
-        if not validate_hcaptcha(captcha, self.initial_data.get('site_key', '')):
-            raise serializers.ValidationError(dict(
-                captcha=gettext('The captcha is invalid.')
-            ))
+        if cache.get('enable_captcha'):
+            if not validate_hcaptcha(captcha, self.initial_data.get('site_key', '')):
+                raise serializers.ValidationError(dict(
+                    captcha=gettext('The captcha is invalid.')
+                ))
 
     def save(self, **kwargs):
         instance = User.objects.create_user(
@@ -232,14 +239,15 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
     Serializer for password forgot endpoint.
     """
     email = serializers.EmailField(write_only=True, required=True)
-    captcha = serializers.CharField(required=True, write_only=True)
-    site_key = serializers.CharField(required=True, write_only=True)
+    captcha = serializers.CharField(required=False, write_only=True)
+    site_key = serializers.CharField(required=False, write_only=True)
 
     def validate_captcha(self, captcha):
-        if not validate_hcaptcha(captcha, self.initial_data.get('site_key', '')):
-            raise serializers.ValidationError(dict(
-                captcha=gettext('The captcha is invalid.')
-            ))
+        if cache.get('enable_captcha'):
+            if not validate_hcaptcha(captcha, self.initial_data.get('site_key', '')):
+                raise serializers.ValidationError(dict(
+                    captcha=gettext('The captcha is invalid.')
+                ))
 
     def validate(self, attrs):
         email = attrs.get("email", None)

@@ -3,6 +3,7 @@ import graphene
 
 from django.contrib.auth import login, logout
 from django.utils.translation import gettext
+from django.core.cache import cache
 
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
@@ -53,7 +54,7 @@ class Register(graphene.Mutation):
             context={'request': info.context.request}
         )
         if errors := mutation_is_not_valid(serializer):
-            return Register(errors=errors, ok=False, captcha_required=False)
+            return Register(errors=errors, ok=False, captcha_required=cache.get('enable_captcha'))
         instance = serializer.save()
         return Register(
             result=instance,

@@ -15,12 +15,12 @@ from apps.user.models import User
 def enable_disable_captcha(request):
     if not request.user.is_superuser:
         raise PermissionDenied
-    if cache.get('enable_captcha') is True:
+    if cache.get('enable_captcha') in [True, None]:
         cache.set('enable_captcha', False)
-        messages.add_message(request, messages.INFO, mark_safe("Captcha Enabled"))
+        messages.add_message(request, messages.INFO, mark_safe("Captchad Disabled"))
     else:
         cache.set('enable_captcha', True)
-        messages.add_message(request, messages.INFO, mark_safe("Captcha Disabled"))
+        messages.add_message(request, messages.INFO, mark_safe("Captcha Enabled"))
     return HttpResponseRedirect(reverse('admin:user_user_changelist'))
 
 
