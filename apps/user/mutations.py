@@ -44,6 +44,7 @@ class Register(graphene.Mutation):
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
     result = graphene.Field(UserMeType)
+    captcha_required = graphene.Boolean(required=True, default_value=False)
 
     @staticmethod
     def mutate(root, info, data):
@@ -52,7 +53,7 @@ class Register(graphene.Mutation):
             context={'request': info.context.request}
         )
         if errors := mutation_is_not_valid(serializer):
-            return Register(errors=errors, ok=False)
+            return Register(errors=errors, ok=False, captcha_required=False)
         instance = serializer.save()
         return Register(
             result=instance,
@@ -91,7 +92,7 @@ class Login(graphene.Mutation):
             return Login(
                 errors=errors,
                 ok=False,
-                captcha_required=attempts >= settings.MAX_LOGIN_ATTEMPTS
+                captcha_required=attempts >= settings.MAX_LOGIN_ATTEMPTS and True
             )
         if user := serializer.validated_data.get('user'):
             login(info.context.request, user)

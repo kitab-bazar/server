@@ -24,6 +24,8 @@ from utils.graphene.context import GQLContext
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 
+# from apps.user.admin import enable_disable_captcha
+
 
 class CustomGraphQLView(FileUploadGraphQLView):
     """Handles multipart/form-data content type in django views"""
@@ -57,6 +59,7 @@ urlpatterns += [
     path('graphql/', csrf_exempt(CustomGraphQLView.as_view())),
     # tinymce urls
     path('tinymce/', include('tinymce.urls')),
+    path('user/', include('apps.user.urls')),
 ]
 
 # Static and media file urls
