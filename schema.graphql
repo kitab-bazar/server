@@ -750,7 +750,7 @@ type ModeratorQueryType {
   orderActivityLog(id: ID!): OrderActivityLogType
   orderActivityLogs(createByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderActivityLogListType
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
   user(id: ID!): ModeratorQueryUserType
   users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
@@ -1158,11 +1158,11 @@ input PublisherUpdateInputType {
 
 type Query {
   publisherPackage(id: ID!): PublisherPackageType
-  publisherPackages(status: [PublisherPackageStatusEnum!], publishers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
+  publisherPackages(status: [PublisherPackageStatusEnum!], publishers: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
   schoolPackage(id: ID!): SchoolPackageType
-  schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
+  schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
   courierPackage(id: ID!): CourierPackageType
-  courierPackages(status: [CourierPackageStatusEnum!], municipalities: [ID!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
+  courierPackages(status: [CourierPackageStatusEnum!], municipalities: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
   blog(id: ID!): BlogType
   blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
   blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
@@ -1173,7 +1173,7 @@ type Query {
   contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
   order(id: ID!): OrderType
-  orders(status: [OrderStatusEnum!], users: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  orders(status: [OrderStatusEnum!], users: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   orderStat: OrderStatType
   orderSummary: OrderSummaryType
   orderWindowActive: OrderWindowType
@@ -1324,7 +1324,7 @@ input SchoolPackageUpdateInputType {
 
 type SchoolQueryType {
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
   school(id: ID!): SchoolType
   schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
