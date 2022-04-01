@@ -665,8 +665,8 @@ type GenerateResetPasswordToken {
 
 input GenerateResetPasswordTokenType {
   email: String!
-  captcha: String!
-  siteKey: String!
+  captcha: String
+  siteKey: String
 }
 
 scalar GenericScalar
@@ -1209,12 +1209,14 @@ type Query {
   districts(name: String, provinces: [ID!], page: Int = 1, ordering: String, pageSize: Int): DistrictListType
   me: UserMeType
   moderatorQuery: ModeratorQueryType
+  getCaptchaStatus: Boolean
 }
 
 type Register {
   errors: [GenericScalar!]
   ok: Boolean
   result: UserMeType
+  captchaRequired: Boolean!
 }
 
 input RegisterInputType {
@@ -1227,8 +1229,8 @@ input RegisterInputType {
   institution: InstitutionInputType
   publisher: PublisherInputType
   school: SchoolInputType
-  captcha: String!
-  siteKey: String!
+  captcha: String
+  siteKey: String
 }
 
 type ResetPassword {
