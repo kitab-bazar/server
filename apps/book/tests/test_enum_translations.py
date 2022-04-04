@@ -26,7 +26,7 @@ class TestBookEnumTranslation(GraphQLTestCase):
             variables={'id': district.id},
             headers={'HTTP_ACCEPT_LANGUAGE': 'ne'}
         )
-        self.assertEqual(response['data']['gradeList']['enumValues'][0]['description'], 'ग्रेड १')
+        self.assertEqual(response['data']['gradeList']['enumValues'][0]['description'], 'कक्षा १')
 
         response = self.query_check(
             self.book_query,
