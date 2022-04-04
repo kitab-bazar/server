@@ -28,7 +28,8 @@ class UserFilter(django_filters.FilterSet):
         return queryset.filter(
             Q(full_name__icontains=value) |
             Q(school__name__icontains=value) |
-            Q(publisher__name__icontains=value)
+            Q(publisher__name__icontains=value) |
+            Q(institution__name__icontains=value)
         ).distinct()
 
     def filter_order_mismatch_users(self, queryset, name, value):
