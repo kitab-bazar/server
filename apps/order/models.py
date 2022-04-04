@@ -8,10 +8,18 @@ from django.db import models
 
 
 class OrderWindow(models.Model):
+
+    class OrderWindowType(models.TextChoices):
+        SCHOOL = 'school', _('School')
+        INSTITUTION = 'institution', _('Institution')
+
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
+    type = models.CharField(
+        choices=OrderWindowType.choices, max_length=40, verbose_name=_('Order window type'), blank=True
+    )
 
     def __str__(self):
         return f'{self.title} :: {self.start_date} - {self.end_date}'
