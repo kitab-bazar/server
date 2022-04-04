@@ -60,20 +60,20 @@ class LoginSerializer(serializers.Serializer):
                     # reset
                     User._reset_login_cache(email)
 
-        if cache.get('enable_captcha'):
-            if attempts >= settings.MAX_LOGIN_ATTEMPTS and not captcha:
-                raise MissingCaptchaException()
-            if attempts >= settings.MAX_LOGIN_ATTEMPTS and captcha and not validate_hcaptcha(captcha, site_key):
-                attempts = User._get_login_attempt(email)
-                User._set_login_attempt(email, attempts + 1)
+        if attempts >= settings.MAX_LOGIN_ATTEMPTS and not captcha:
+            raise MissingCaptchaException()
+        if attempts >= settings.MAX_LOGIN_ATTEMPTS and captcha and not validate_hcaptcha(captcha, site_key):
+            attempts = User._get_login_attempt(email)
+            User._set_login_attempt(email, attempts + 1)
 
-                throttle_login_attempt()
-                raise serializers.ValidationError(dict(
-                    captcha=gettext('The captcha is invalid.')
-                ))
+            throttle_login_attempt()
+            raise serializers.ValidationError(dict(
+                captcha=gettext('The captcha is invalid.')
+            ))
 
     def validate(self, attrs):
-        self._validate_captcha(attrs)
+        if cache.get('enable_captcha'):
+            self._validate_captcha(attrs)
         email = attrs.get('email', '')
         password = attrs.get('password', '')
         try:
@@ -250,6 +250,10 @@ class GenerateResetPasswordTokenSerializer(serializers.Serializer):
                 ))
 
     def validate(self, attrs):
+        if cache.get('enable_captcha'):
+            raise serializers.ValidationError(dict(
+                captcha=gettext('The captcha is invalid.')
+            ))
         email = attrs.get("email", None)
         button_url = None
         # if user exists for this email
