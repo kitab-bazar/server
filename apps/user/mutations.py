@@ -180,12 +180,13 @@ class GenerateResetPasswordToken(graphene.Mutation):
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
+    captcha_required = graphene.Boolean(required=True, default_value=False)
 
     @staticmethod
     def mutate(root, info, data):
         serializer = GenerateResetPasswordTokenSerializer(data=data)
         if errors := mutation_is_not_valid(serializer):
-            return GenerateResetPasswordToken(errors=errors, ok=False)
+            return GenerateResetPasswordToken(errors=errors, ok=False, captcha_required=cache.get('enable_captcha'))
         return GenerateResetPasswordToken(errors=None, ok=True)
 
 
