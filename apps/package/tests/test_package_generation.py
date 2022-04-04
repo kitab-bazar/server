@@ -5,6 +5,7 @@ from utils.graphene.tests import GraphQLTestCase
 
 from apps.user.models import User
 from apps.order.models import Order
+from apps.payment.models import Payment
 
 from apps.user.factories import UserFactory
 from apps.book.factories import BookFactory
@@ -17,6 +18,7 @@ from apps.order.factories import (
 from apps.package.models import SchoolPackage, PublisherPackage, CourierPackage
 from apps.school.factories import SchoolFactory
 from apps.common.factories import MunicipalityFactory
+from apps.payment.factories import PaymentFactory
 
 
 class TestPackageGeneration(GraphQLTestCase):
@@ -96,6 +98,7 @@ class TestPackageGeneration(GraphQLTestCase):
         self.moderator = UserFactory.create(user_type=User.UserType.MODERATOR, is_verified=True)
 
         m1, m2 = MunicipalityFactory.create_batch(2)
+
         self.s_1 = UserFactory.create(
             user_type=User.UserType.SCHOOL_ADMIN, is_verified=True, school=SchoolFactory.create(municipality=m1)
         )
@@ -127,6 +130,18 @@ class TestPackageGeneration(GraphQLTestCase):
         # Create book order for second school
         BookOrderFactory.create(order=self.s_2_o_1, book=self.p_2_b_1, quantity=40)
         BookOrderFactory.create(order=self.s_2_o_2, book=self.p_2_b_2, quantity=40)
+
+        # Create payment for each school
+        for school in [self.s_1, self.s_2]:
+            PaymentFactory.create(
+                created_by=self.moderator,
+                modified_by=self.moderator,
+                paid_by=school,
+                amount=30000,
+                transaction_type=Payment.TransactionType.CREDIT,
+                payment_type=Payment.PaymentType.CASH,
+                status=Payment.Status.VERIFIED.value
+            )
 
         # Generate packages
         call_command('generate_packages', order_window.id)
