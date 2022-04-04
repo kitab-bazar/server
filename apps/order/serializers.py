@@ -70,7 +70,7 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
                 gettext('Your cart is empty.')
             )
 
-        active_order_window = OrderWindow.get_active_window()
+        active_order_window = OrderWindow.get_active_window(created_by)
         if active_order_window is None:
             raise serializers.ValidationError(
                 gettext('No active order window available right now.')

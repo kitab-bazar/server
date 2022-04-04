@@ -4,7 +4,7 @@ from django.core.management import call_command
 from utils.graphene.tests import GraphQLTestCase
 
 from apps.user.models import User
-from apps.order.models import Order
+from apps.order.models import Order, OrderWindow
 from apps.payment.models import Payment
 
 from apps.user.factories import UserFactory
@@ -97,7 +97,7 @@ class TestPackageGeneration(GraphQLTestCase):
         self.u2_p2 = UserFactory.create(publisher=self.p_2, user_type=User.UserType.PUBLISHER, is_verified=True)
         self.moderator = UserFactory.create(user_type=User.UserType.MODERATOR, is_verified=True)
 
-        m1, m2 = MunicipalityFactory.create_batch(2)
+        m1, m2, m3, m4 = MunicipalityFactory.create_batch(4)
 
         self.s_1 = UserFactory.create(
             user_type=User.UserType.SCHOOL_ADMIN, is_verified=True, school=SchoolFactory.create(municipality=m1)
@@ -113,6 +113,7 @@ class TestPackageGeneration(GraphQLTestCase):
         order_window = OrderWindowFactory.create(
             start_date=timezone.now() - timezone.timedelta(5),
             end_date=timezone.now() + timezone.timedelta(5),
+            type=OrderWindow.OrderWindowType.SCHOOL
         )
         # Create orders for each school
         self.s_1_o_1, self.s_1_o_2, self.s_1_o_3 = OrderFactory.create_batch(

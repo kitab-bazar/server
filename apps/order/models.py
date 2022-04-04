@@ -25,12 +25,22 @@ class OrderWindow(models.Model):
         return f'{self.title} :: {self.start_date} - {self.end_date}'
 
     @classmethod
-    def get_active_window(cls):
+    def get_active_window(cls, user):
+        from apps.user.models import User
         now_date = timezone.now().date()
-        return cls.objects.filter(
-            start_date__lte=now_date,
-            end_date__gte=now_date,
-        ).first()
+        if user.user_type == User.UserType.SCHOOL_ADMIN:
+            return cls.objects.filter(
+                start_date__lte=now_date,
+                end_date__gte=now_date,
+                type=cls.OrderWindowType.SCHOOL
+            ).first()
+        elif user.user_type == User.UserType.INSTITUTIONAL_USER:
+            return cls.objects.filter(
+                start_date__lte=now_date,
+                end_date__gte=now_date,
+                type=cls.OrderWindowType.INSTITUTION
+            ).first()
+        return None
 
     def clean(self):
         conflicting_order_window_qs = OrderWindow.objects.filter(

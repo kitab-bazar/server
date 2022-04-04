@@ -28,7 +28,7 @@ from .filters import (
     OrderWindowFilterSet,
     OrderActivityLogFilterSet,
 )
-from .enums import OrderStatusEnum
+from .enums import OrderStatusEnum, OrderWindowTypeEnum
 
 
 def get_cart_items_qs(info):
@@ -49,9 +49,11 @@ def get_orders_qs(info):
 
 
 class OrderWindowType(DjangoObjectType):
+    type = graphene.Field(OrderWindowTypeEnum)
+
     class Meta:
         model = OrderWindow
-        fields = ('id', 'title', 'description', 'start_date', 'end_date')
+        fields = ('id', 'title', 'description', 'start_date', 'end_date', 'type')
 
 
 class OrderWindowListType(CustomDjangoListObjectType):
@@ -280,7 +282,7 @@ class Query(graphene.ObjectType):
 
     @staticmethod
     def resolve_order_window_active(root, info, **kwargs) -> Union[None, OrderWindow]:
-        return OrderWindow.get_active_window()
+        return OrderWindow.get_active_window(info.context.user)
 
     @staticmethod
     def resolve_cart_grand_total_price(root, info, **kwargs) -> QuerySet:

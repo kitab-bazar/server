@@ -8,6 +8,8 @@ from apps.package.models import PublisherPackage, PublisherPackageBook, SchoolPa
 from apps.user.models import User
 from apps.common.models import Municipality
 
+INCENTIVE_LIMIT = 20
+
 
 class Command(BaseCommand):
     help = 'Generate publisher packages'
@@ -15,8 +17,24 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('order_window_id', type=int, help='order window id')
 
-    def _generate_packages(self, latest_order_window, orders):
-        INCENTIVE_LIMIT = 20
+    def _format_unverified_users(self, unverified_user_qs):
+        return '\n'.join(
+            ['id = %s ---- full name = %s' % (
+                user['created_by__id'], user['created_by__full_name']) for user in unverified_user_qs]
+        )
+
+    def _format_unverified_payments(self, unverified_payments_qs):
+        return '\n'.join(
+            ['id = %s ---- full name = %s' % (user['id'], user['paid_by__full_name']) for user in unverified_payments_qs]
+        )
+
+    def _format_mismatched_order_users(self, unverified_user_qs):
+        return '\n'.join(
+            ['id = %s ---- full name = %s' % (
+                user['id'], user['full_name']) for user in unverified_user_qs]
+        )
+
+    def _create_publihser_packages(self, latest_order_window, orders):
         # ------------------------------------------------------------------
         # Create publihser packages
         # ------------------------------------------------------------------
@@ -59,6 +77,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(f'{publisher_package_count} Publisher packages created.'))
 
+    def _create_courier_packages(self, latest_order_window, orders):
         # ------------------------------------------------------------------
         # Create courier packages
         # ------------------------------------------------------------------
@@ -91,6 +110,7 @@ class Command(BaseCommand):
             courier_package_count += 1
         self.stdout.write(self.style.SUCCESS(f'{courier_package_count} municipality/courier packages created.'))
 
+    def _create_school_packages(self, latest_order_window, orders):
         # ------------------------------------------------------------------
         # Create school packages
         # ------------------------------------------------------------------
@@ -143,22 +163,55 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(f'{school_package_count} School packages created.'))
 
-    def _format_unverified_users(self, unverified_user_qs):
-        return '\n'.join(
-            ['id = %s ---- full name = %s' % (
-                user['created_by__id'], user['created_by__full_name']) for user in unverified_user_qs]
-        )
+    def _create_institution_packages(self, latest_order_window, orders):
+        # ------------------------------------------------------------------
+        # Create institution packages
+        # ------------------------------------------------------------------
 
-    def _format_unverified_payments(self, unverified_payments_qs):
-        return '\n'.join(
-            ['id = %s ---- full name = %s' % (user['id'], user['paid_by__full_name']) for user in unverified_payments_qs]
-        )
+        # Get unique institution in order
+        institution_user_ids = orders.values_list('created_by', flat=True).distinct('created_by')
+        school_package_count = 0
 
-    def _format_mismatched_order_users(self, unverified_user_qs):
-        return '\n'.join(
-            ['id = %s ---- full name = %s' % (
-                user['id'], user['full_name']) for user in unverified_user_qs]
-        )
+        # Create packages for each institution
+        for institution_user_id in institution_user_ids:
+            institution_user = User.objects.get(id=institution_user_id)
+            related_orders = orders.filter(created_by=institution_user)
+            related_book_orders = BookOrder.objects.filter(order__in=related_orders).values('book__created_by').annotate(
+                total_quantity=Sum('quantity'),
+                total_price=Sum('quantity') * F('price')
+            ).values('book', 'total_quantity', 'total_price')
+            institution_package = SchoolPackage.objects.create(
+                status=SchoolPackage.Status.PENDING.value,
+                school=institution_user,
+                is_eligible_for_incentive=False,
+                order_window=latest_order_window,
+                total_quantity=related_book_orders.aggregate(
+                    grand_total_quantity=Sum('total_quantity'))['grand_total_quantity'],
+                total_price=related_book_orders.aggregate(
+                    grand_total_price=Sum('total_price'))['grand_total_price']
+            )
+            institution_package.related_orders.set(related_orders)
+            SchoolPackageBook.objects.bulk_create(
+                [
+                    SchoolPackageBook(
+                        book_id=related_book_order['book'],
+                        quantity=related_book_order['total_quantity'],
+                        school_package=institution_package,
+                    ) for related_book_order in related_book_orders
+                ]
+            )
+            school_package_count += 1
+
+        self.stdout.write(self.style.SUCCESS(f'{school_package_count} School packages created.'))
+
+    def _generate_school_packages(self, latest_order_window, orders):
+        self._create_publihser_packages(latest_order_window, orders)
+        self._create_courier_packages(latest_order_window, orders)
+        self._create_school_packages(latest_order_window, orders)
+
+    def _generate_institution_packages(self, latest_order_window, orders):
+        self._create_publihser_packages(latest_order_window, orders)
+        self._create_institution_packages(latest_order_window, orders)
 
     def handle(self, *args, **options):
 
@@ -213,7 +266,12 @@ class Command(BaseCommand):
             f'Packages for order window {latest_order_window} are already created.'
 
         try:
-            self._generate_packages(latest_order_window, orders)
+            if latest_order_window.type == OrderWindow.OrderWindowType.SCHOOL:
+                self._generate_school_packages(latest_order_window, orders)
+            elif latest_order_window.type == OrderWindow.OrderWindowType.INSTITUTION:
+                self._generate_institution_packages(latest_order_window, orders)
+            else:
+                self.stdout.write(self.style.ERROR('Invalid order window'))
         except IntegrityError:
             self.stdout.write(self.style.ERROR(
                 f'Packages for order window {latest_order_window} are already created.'
