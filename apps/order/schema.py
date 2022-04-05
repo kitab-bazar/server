@@ -40,9 +40,11 @@ def get_cart_items_qs(info):
 def get_orders_qs(info):
     def _qs():
         if info.context.user.user_type == User.UserType.PUBLISHER.value:
-            return Order.objects.filter(book_order__publisher=info.context.user.publisher)
+            return Order.objects.filter(
+                book_order__publisher=info.context.user.publisher, created_by__is_deactivated=False
+            )
         elif info.context.user.user_type == User.UserType.MODERATOR.value:
-            return Order.objects.all()
+            return Order.objects.filter(created_by__is_deactivated=False)
         return Order.objects.filter(created_by=info.context.user)
     # Making sure only distinct orders are fetched
     return _qs().distinct()
