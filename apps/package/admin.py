@@ -33,7 +33,7 @@ class SchoolPackageAdmin(admin.ModelAdmin):
 
 class InstitutionPackageBookAdmin(admin.ModelAdmin):
     search_fields = ['book__name', 'school_package__id']
-    autocomplete_fields = ['book',]
+    autocomplete_fields = ['book', ]
 
 
 class InstitutionPackageAdmin(admin.ModelAdmin):
