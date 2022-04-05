@@ -26,6 +26,9 @@ def get_payment_qs(info):
     # MODERATOR can see all other payment
     if info.context.user.user_type == User.UserType.SCHOOL_ADMIN:
         return Payment.objects.filter(paid_by=info.context.user)
+    if info.context.user.user_type == User.UserType.INSTITUTIONAL_USER:
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        return Payment.objects.filter(paid_by=info.context.user)
     elif info.context.user.user_type == User.UserType.MODERATOR:
         return Payment.objects.all()
     return Payment.objects.none()

@@ -45,7 +45,7 @@ class Register(graphene.Mutation):
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
     result = graphene.Field(UserMeType)
-    captcha_required = graphene.Boolean(required=True, default_value=False)
+    captcha_required = graphene.Boolean(default_value=False)
 
     @staticmethod
     def mutate(root, info, data):
@@ -76,7 +76,7 @@ class Login(graphene.Mutation):
     result = graphene.Field(UserMeType)
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean(required=True)
-    captcha_required = graphene.Boolean(required=True, default_value=False)
+    captcha_required = graphene.Boolean(default_value=False)
 
     @staticmethod
     def mutate(root, info, data):
@@ -180,7 +180,7 @@ class GenerateResetPasswordToken(graphene.Mutation):
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
-    captcha_required = graphene.Boolean(required=True, default_value=False)
+    captcha_required = graphene.Boolean(default_value=False)
 
     @staticmethod
     def mutate(root, info, data):

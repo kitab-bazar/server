@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from utils.graphene.tests import GraphQLTestCase
 
 from apps.user.models import User
-from apps.order.models import Order
+from apps.order.models import Order, OrderWindow
 
 from apps.user.factories import UserFactory
 from apps.book.factories import BookFactory, WishListFactory
@@ -105,7 +105,7 @@ class TestOrder(GraphQLTestCase):
     '''
 
     def setUp(self):
-        self.user = UserFactory.create()
+        self.user = UserFactory.create(user_type=User.UserType.SCHOOL_ADMIN)
         publisher = PublisherFactory.create()
         self.book1, self.book2 = BookFactory.create_batch(2, publisher=publisher)
         self.cart_item_1 = CartItemFactory.create(book=self.book1, created_by=self.user)
@@ -135,6 +135,7 @@ class TestOrder(GraphQLTestCase):
         OrderWindowFactory.create(
             start_date=self.now_datetime.date() - timezone.timedelta(20),
             end_date=self.now_datetime.date() - timezone.timedelta(10),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         self.query_check(self.CREATE_ORDER_FROM_CART_MUTATION, okay=False)
 
@@ -142,6 +143,7 @@ class TestOrder(GraphQLTestCase):
         active_order_window = OrderWindowFactory.create(
             start_date=self.now_datetime.date() - timezone.timedelta(9),
             end_date=self.now_datetime.date() + timezone.timedelta(10),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         self.query_check(self.CREATE_ORDER_FROM_CART_MUTATION, okay=True)
 
@@ -296,7 +298,7 @@ class OrderWindowTest(GraphQLTestCase):
     '''
 
     def test_query(self):
-        user = UserFactory.create()
+        user = UserFactory.create(user_type=User.UserType.SCHOOL_ADMIN)
         self.force_login(user)
         content = self.query_check(self.ORDER_WINDOW_QUERY)
         self.assertEqual(content['data']['orderWindowActive'], None)
@@ -306,27 +308,32 @@ class OrderWindowTest(GraphQLTestCase):
             OrderWindowFactory.create(
                 start_date=self.now_datetime.date() + timezone.timedelta(10),
                 end_date=self.now_datetime.date() - timezone.timedelta(10),
+                type=OrderWindow.OrderWindowType.SCHOOL,
             )
         # In different window -20 -10
         OrderWindowFactory.create(
             start_date=self.now_datetime.date() - timezone.timedelta(20),
             end_date=self.now_datetime.date() - timezone.timedelta(10),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         # Current -9 +10
         order_window = OrderWindowFactory.create(
             start_date=self.now_datetime.date() - timezone.timedelta(9),
             end_date=self.now_datetime.date() + timezone.timedelta(10),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         # In different window +10 +30 (This should throw error)
         with self.assertRaises(ValidationError):
             OrderWindowFactory.create(
                 start_date=self.now_datetime.date() + timezone.timedelta(10),
                 end_date=self.now_datetime.date() + timezone.timedelta(30),
+                type=OrderWindow.OrderWindowType.SCHOOL,
             )
         # In different window +11 +30 (this shouldn't throw any error)
         OrderWindowFactory.create(
             start_date=self.now_datetime.date() + timezone.timedelta(11),
             end_date=self.now_datetime.date() + timezone.timedelta(30),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         # Updating this shouldn't throw any error. (Exclude itself while validating)
         order_window.save()

@@ -30,18 +30,7 @@ class SchoolListType(CustomDjangoListObjectType):
         filterset_class = SchoolFilter
 
 
-class SchoolQuery(graphene.ObjectType):
-    school = DjangoObjectField(SchoolType)
-    schools = DjangoPaginatedListObjectField(
-        SchoolListType,
-        pagination=PageGraphqlPagination(
-            page_size_query_param='pageSize'
-        )
-    )
-
-
 class SchoolQueryType(
-    SchoolQuery,
     PaymentQuery
 ):
     pass
@@ -49,6 +38,13 @@ class SchoolQueryType(
 
 class Query(graphene.ObjectType):
     school_query = graphene.Field(SchoolQueryType)
+    school = DjangoObjectField(SchoolType)
+    schools = DjangoPaginatedListObjectField(
+        SchoolListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
 
     def resolve_school_query(parent, info):
         if info.context.user.user_type == User.UserType.SCHOOL_ADMIN:

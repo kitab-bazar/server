@@ -1,6 +1,7 @@
 import mock
 from django.contrib.auth.hashers import check_password
 from django.test import override_settings
+from django.core.cache import cache
 
 from utils.graphene.tests import GraphQLTestCase
 
@@ -285,6 +286,7 @@ class TestUser(GraphQLTestCase):
     )
     @mock.patch('apps.user.serializers.validate_hcaptcha')
     def test_too_many_logins_needs_captcha_and_more_will_throttle(self, validate):
+        cache.set('enable_captcha', True)
         User._reset_login_cache(self.user.email)
         validate.return_value = False
         self.query_check(
@@ -338,6 +340,7 @@ class TestUser(GraphQLTestCase):
     )
     @mock.patch('apps.user.serializers.validate_hcaptcha')
     def test_too_many_logins_with_valid_captcha(self, validate):
+        cache.set('enable_captcha', True)
         User._reset_login_cache(self.user.email)
         self.query_check(
             self.login_mutation,

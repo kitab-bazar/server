@@ -35,8 +35,7 @@ class CategoryType(DjangoObjectType):
     class Meta:
         model = Category
         fields = (
-            'id', 'name', 'parent_category', 'name_en', 'name_ne'
-            'id', 'name', 'parent_category', 'image',
+            'id', 'name', 'parent_category', 'name_en', 'name_ne', 'image',
         )
     image = graphene.Field(FileFieldType)
 

@@ -149,12 +149,90 @@ class SchoolPackage(models.Model):
         return str(self.package_id)
 
 
+class InstitutionPackageBook(models.Model):
+    quantity = models.PositiveIntegerField(verbose_name=_('Quantity'))
+    book = models.ForeignKey(
+        'book.Book',
+        on_delete=models.PROTECT,
+        related_name='institution_package_book',
+        verbose_name=_('Book'),
+    )
+    school_package = models.ForeignKey(
+        'package.InstitutionPackage',
+        related_name='institution_package',
+        on_delete=models.PROTECT,
+        verbose_name=_('Institution package')
+    )
+
+    class Meta:
+        verbose_name = _('Institution package related book')
+        verbose_name_plural = _('Institution package related books')
+
+    def __str__(self):
+        return f'{self.book.title} - {self.id}'
+
+
+class InstitutionPackage(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'pending', _('Pending')
+        IN_TRANSIT = 'in_transit', _('In transit')
+        ISSUE = 'issue', _('Issue')
+        DELIVERED = 'delivered', _('Delivered')
+
+    package_id = models.UUIDField(
+        primary_key=False,
+        default=uuid.uuid4,
+        editable=False
+    )
+    status = models.CharField(
+        max_length=40,
+        choices=Status.choices,
+        default=Status.PENDING,
+        verbose_name=_("Institution package status")
+    )
+    related_orders = models.ManyToManyField(
+        'order.Order', verbose_name=_('Institution related order'), related_name='institution_related_orders',
+    )
+    institution = models.ForeignKey(
+        'user.User',
+        on_delete=models.PROTECT,
+        related_name='institution_packages',
+        verbose_name=_('Institution')
+    )
+    order_window = models.ForeignKey(
+        'order.OrderWindow',
+        on_delete=models.PROTECT,
+        related_name='+',
+        verbose_name=_('Order window'),
+    )
+    total_price = models.IntegerField(verbose_name=_('Total price'), default=0)
+    total_quantity = models.IntegerField(verbose_name=_('Total quantity'), default=0)
+    courier_package = models.ForeignKey(
+        'package.CourierPackage',
+        on_delete=models.PROTECT,
+        related_name='institution_courier_package',
+        verbose_name=_('Courier package'),
+    )
+
+    class Meta:
+        unique_together = ('institution', 'order_window')
+        verbose_name = _('Institution package')
+        verbose_name_plural = _('Institution packages')
+
+    def __str__(self):
+        return str(self.package_id)
+
+
 class CourierPackage(models.Model):
     class Status(models.TextChoices):
         PENDING = 'pending', _('Pending')
         IN_TRANSIT = 'in_transit', _('In transit')
         ISSUE = 'issue', _('Issue')
         DELIVERED = 'delivered', _('Delivered')
+
+    class Type(models.TextChoices):
+        SCHOOL = 'school', _('School')
+        INSTITUTION = 'institution', _('Institution')
 
     package_id = models.UUIDField(
         primary_key=False,
@@ -180,6 +258,9 @@ class CourierPackage(models.Model):
         on_delete=models.PROTECT
     )
     is_eligible_for_incentive = models.BooleanField(default=False, verbose_name=_('Is eligible for incentive'),)
+    type = models.CharField(
+        choices=Type.choices, max_length=40, verbose_name=_('Package type'), blank=True
+    )
 
     class Meta:
         verbose_name = _('Courier Package')
@@ -203,5 +284,12 @@ class PublisherPackageLog(BaseActivityLog):
 class CourierPackageLog(BaseActivityLog):
     courier_package = models.ForeignKey(
         'package.CourierPackage', verbose_name=_('Courier package'), related_name='courier_package_logs',
+        on_delete=models.CASCADE
+    )
+
+
+class InstitutionPackageLog(BaseActivityLog):
+    school_package = models.ForeignKey(
+        'package.InstitutionPackage', verbose_name=_('Institution package'), related_name='institution_package_logs',
         on_delete=models.CASCADE
     )

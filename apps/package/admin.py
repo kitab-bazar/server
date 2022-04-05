@@ -5,7 +5,9 @@ from apps.package.models import (
     PublisherPackage,
     SchoolPackageBook,
     SchoolPackage,
-    CourierPackage
+    CourierPackage,
+    InstitutionPackage,
+    InstitutionPackageBook,
 )
 
 
@@ -29,6 +31,16 @@ class SchoolPackageAdmin(admin.ModelAdmin):
     autocomplete_fields = ['school', 'related_orders']
 
 
+class InstitutionPackageBookAdmin(admin.ModelAdmin):
+    search_fields = ['book__name', 'school_package__id']
+    autocomplete_fields = ['book',]
+
+
+class InstitutionPackageAdmin(admin.ModelAdmin):
+    search_fields = ['institution_name', 'related_orders__id']
+    autocomplete_fields = ['institution', 'related_orders']
+
+
 class CourierPackageAdmin(admin.ModelAdmin):
     pass
 
@@ -38,3 +50,5 @@ admin.site.register(PublisherPackage, PublisherPackageAdmin)
 admin.site.register(SchoolPackageBook, SchoolPackageBookAdmin)
 admin.site.register(SchoolPackage, SchoolPackageAdmin)
 admin.site.register(CourierPackage, CourierPackageAdmin)
+admin.site.register(InstitutionPackage, InstitutionPackageAdmin)
+admin.site.register(InstitutionPackageBook, InstitutionPackageBookAdmin)

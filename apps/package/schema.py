@@ -16,6 +16,9 @@ from apps.package.models import (
     PublisherPackageLog,
     SchoolPackageLog,
     CourierPackageLog,
+    InstitutionPackage,
+    InstitutionPackageBook,
+    InstitutionPackageLog,
 )
 from apps.user.models import User
 from apps.package.filters import (
@@ -25,11 +28,14 @@ from apps.package.filters import (
     PublisherPackageLogFilterSet,
     SchoolPackageLogFilterSet,
     CourierPackageLogFilterSet,
+    InstitutionPackageFilterSet,
+    InstitutionPackageLogFilterSet,
 )
 from apps.package.enums import (
     PublisherPackageStatusEnum,
     SchoolPackageStatusEnum,
-    CourierPackageStatusEnum
+    CourierPackageStatusEnum,
+    InstitutionPackageStatusEnum,
 )
 from utils.graphene.enums import EnumDescription
 from apps.common.schema import ActivityFileType
@@ -50,6 +56,14 @@ def school_package_qs(info):
     elif info.context.user.user_type == User.UserType.MODERATOR.value:
         return SchoolPackage.objects.all()
     return SchoolPackage.objects.none()
+
+
+def institution_package_qs(info):
+    if info.context.user.user_type == User.UserType.INSTITUTIONAL_USER.value:
+        return InstitutionPackage.objects.filter(institution=info.context.user)
+    elif info.context.user.user_type == User.UserType.MODERATOR.value:
+        return InstitutionPackage.objects.all()
+    return InstitutionPackage.objects.none()
 
 
 def courier_package_qs(info):
@@ -190,6 +204,72 @@ class SchoolPackageListType(CustomDjangoListObjectType):
         filterset_class = SchoolPackageFilterSet
 
 
+class InstitutionPackageBookType(DjangoObjectType):
+    class Meta:
+        model = InstitutionPackageBook
+        fields = (
+            'id', 'quantity', 'book'
+        )
+
+
+class InstitutionPackageBookListType(CustomDjangoListObjectType):
+    class Meta:
+        model = InstitutionPackageBook
+
+
+class InstitutionPackageLogType(DjangoObjectType):
+    files = CustomDjangoListField(ActivityFileType, required=False)
+
+    class Meta:
+        model = InstitutionPackageLog
+        fields = ('comment', 'snapshot', 'id')
+
+
+class InstitutionPackageLogListType(CustomDjangoListObjectType):
+    class Meta:
+        model = InstitutionPackageLog
+        filterset_class = InstitutionPackageLogFilterSet
+
+
+class InstitutionPackageType(DjangoObjectType):
+    status = graphene.Field(InstitutionPackageStatusEnum, required=True)
+    status_display = EnumDescription(source='get_status_display')
+
+    institution_package_books = DjangoPaginatedListObjectField(
+        InstitutionPackageBookListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+    logs = DjangoPaginatedListObjectField(
+        InstitutionPackageLogListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+
+    @staticmethod
+    def get_custom_queryset(queryset, info):
+        return institution_package_qs(info)
+
+    class Meta:
+        model = InstitutionPackage
+        fields = (
+            'id', 'package_id', 'status', 'related_orders', 'institution',
+            'total_price', 'total_quantity',
+        )
+
+    @staticmethod
+    def resolve_logs(root, info, **kwargs) -> QuerySet:
+        return root.institution_package_logs
+
+
+class InstitutionPackageListType(CustomDjangoListObjectType):
+    class Meta:
+        model = InstitutionPackage
+        filterset_class = InstitutionPackageFilterSet
+
+
 class CourierPackageLogType(DjangoObjectType):
     files = CustomDjangoListField(ActivityFileType, required=False)
 
@@ -233,12 +313,18 @@ class CourierPackageType(DjangoObjectType):
     @staticmethod
     def resolve_courier_package_books(root, info, **kwargs) -> QuerySet:
         # TODO: Use dataloader
-        return root.courier_package.first().school_package.all()
+        if root.type == CourierPackage.Type.SCHOOL.value:
+            return root.courier_package.first().school_package.all()
+        elif root.type == CourierPackage.Type.INSTITUTION.value:
+            return root.institution_courier_package.first().institution_package.all()
 
     @staticmethod
     def resolve_related_orders(root, info, **kwargs) -> QuerySet:
         # TODO: use dataloader
-        return root.courier_package.first().related_orders
+        if root.type == CourierPackage.Type.SCHOOL.value:
+            return root.courier_package.first().related_orders.all()
+        elif root.type == CourierPackage.Type.INSTITUTION.value:
+            return root.institution_courier_package.first().institution_related_orders.all()
 
     class Meta:
         model = CourierPackage
@@ -276,6 +362,13 @@ class Query(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    institution_package = DjangoObjectField(InstitutionPackageType)
+    institution_packages = DjangoPaginatedListObjectField(
+        InstitutionPackageListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
 
     @staticmethod
     def resolve_publisher_packages(root, info, **kwargs) -> QuerySet:
@@ -288,3 +381,7 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_courier_packages(root, info, **kwargs) -> QuerySet:
         return courier_package_qs(info)
+
+    @staticmethod
+    def resolve_institution_packages(root, info, **kwargs) -> QuerySet:
+        return institution_package_qs(info)

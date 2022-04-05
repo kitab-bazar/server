@@ -6,13 +6,15 @@ from utils.graphene.enums import (
 from apps.package.models import (
     PublisherPackage,
     SchoolPackage,
-    CourierPackage
+    CourierPackage,
+    InstitutionPackage,
 )
 
 
 PublisherPackageStatusEnum = convert_enum_to_graphene_enum(PublisherPackage.Status, name='PublisherPackageStatusEnum')
 SchoolPackageStatusEnum = convert_enum_to_graphene_enum(SchoolPackage.Status, name='SchoolPackageStatusEnum')
 CourierPackageStatusEnum = convert_enum_to_graphene_enum(CourierPackage.Status, name='CourierPackageStatusEnum')
+InstitutionPackageStatusEnum = convert_enum_to_graphene_enum(InstitutionPackage.Status, name='InstitutionPackageStatusEnum')
 
 enum_map = {
     get_enum_name_from_django_field(field): enum
@@ -20,5 +22,6 @@ enum_map = {
         (PublisherPackage.status, PublisherPackageStatusEnum),
         (SchoolPackage.status, SchoolPackageStatusEnum),
         (CourierPackage.status, CourierPackageStatusEnum),
+        (InstitutionPackage.status, InstitutionPackageStatusEnum),
     )
 }

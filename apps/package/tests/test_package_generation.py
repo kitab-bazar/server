@@ -17,6 +17,7 @@ from apps.order.factories import (
 )
 from apps.package.models import SchoolPackage, PublisherPackage, CourierPackage
 from apps.school.factories import SchoolFactory
+from apps.institution.factories import InstitutionFactory
 from apps.common.factories import MunicipalityFactory
 from apps.payment.factories import PaymentFactory
 
@@ -105,22 +106,43 @@ class TestPackageGeneration(GraphQLTestCase):
         self.s_2 = UserFactory.create(
             user_type=User.UserType.SCHOOL_ADMIN, is_verified=True, school=SchoolFactory.create(municipality=m2)
         )
+        self.i_1 = UserFactory.create(
+            user_type=User.UserType.INSTITUTIONAL_USER, is_verified=True,
+            institution=InstitutionFactory.create(municipality=m3)
+        )
+        self.i_2 = UserFactory.create(
+            user_type=User.UserType.INSTITUTIONAL_USER, is_verified=True,
+            institution=InstitutionFactory.create(municipality=m4)
+        )
 
         # Create books
         self.p_1_b_1, self.p_1_b_2, self.p_1_b_3 = BookFactory.create_batch(3, publisher=self.p_1, price=100)
         self.p_2_b_1, self.p_2_b_2, self.p_2_b_3 = BookFactory.create_batch(3, publisher=self.p_2, price=100)
 
-        order_window = OrderWindowFactory.create(
+        school_order_window = OrderWindowFactory.create(
             start_date=timezone.now() - timezone.timedelta(5),
             end_date=timezone.now() + timezone.timedelta(5),
             type=OrderWindow.OrderWindowType.SCHOOL
         )
+        institution_order_window = OrderWindowFactory.create(
+            start_date=timezone.now() - timezone.timedelta(5),
+            end_date=timezone.now() + timezone.timedelta(5),
+            type=OrderWindow.OrderWindowType.INSTITUTION
+        )
         # Create orders for each school
         self.s_1_o_1, self.s_1_o_2, self.s_1_o_3 = OrderFactory.create_batch(
-            3, created_by=self.s_1, status=Order.Status.PENDING, assigned_order_window=order_window
+            3, created_by=self.s_1, status=Order.Status.PENDING, assigned_order_window=school_order_window
         )
         self.s_2_o_1, self.s_2_o_2 = OrderFactory.create_batch(
-            2, created_by=self.s_2, status=Order.Status.PENDING, assigned_order_window=order_window
+            2, created_by=self.s_2, status=Order.Status.PENDING, assigned_order_window=school_order_window
+        )
+        self.i_1_o_1, self.i_1_o_2, self.i_1_o_3, self.i_1_o_4 = OrderFactory.create_batch(
+            4, created_by=self.i_1, status=Order.Status.PENDING,
+            assigned_order_window=institution_order_window
+        )
+        self.i_2_o_1, self.i_2_o_2, self.i_2_o_3, self.i_2_o_4 = OrderFactory.create_batch(
+            4, created_by=self.i_2, status=Order.Status.PENDING,
+            assigned_order_window=institution_order_window
         )
 
         # Create book order for first school
@@ -132,8 +154,20 @@ class TestPackageGeneration(GraphQLTestCase):
         BookOrderFactory.create(order=self.s_2_o_1, book=self.p_2_b_1, quantity=40)
         BookOrderFactory.create(order=self.s_2_o_2, book=self.p_2_b_2, quantity=40)
 
-        # Create payment for each school
-        for school in [self.s_1, self.s_2]:
+        # Create book order for first institution
+        BookOrderFactory.create(order=self.i_1_o_1, book=self.p_1_b_1, quantity=10)
+        BookOrderFactory.create(order=self.i_1_o_2, book=self.p_2_b_2, quantity=10)
+        BookOrderFactory.create(order=self.i_1_o_3, book=self.p_2_b_3, quantity=10)
+        BookOrderFactory.create(order=self.i_1_o_4, book=self.p_2_b_1, quantity=10)
+
+        # Create book order for second institution
+        BookOrderFactory.create(order=self.i_2_o_1, book=self.p_1_b_1, quantity=10)
+        BookOrderFactory.create(order=self.i_2_o_2, book=self.p_2_b_2, quantity=10)
+        BookOrderFactory.create(order=self.i_2_o_3, book=self.p_2_b_3, quantity=10)
+        BookOrderFactory.create(order=self.i_2_o_4, book=self.p_2_b_1, quantity=10)
+
+        # Create payment for each schools and institutions
+        for school in [self.s_1, self.s_2, self.i_1, self.i_2]:
             PaymentFactory.create(
                 created_by=self.moderator,
                 modified_by=self.moderator,
@@ -145,7 +179,8 @@ class TestPackageGeneration(GraphQLTestCase):
             )
 
         # Generate packages
-        call_command('generate_packages', order_window.id)
+        call_command('generate_packages', school_order_window.id)
+        call_command('generate_packages', institution_order_window.id)
 
         super().setUp()
 

@@ -7,11 +7,14 @@ from apps.package.models import (
     PublisherPackageLog,
     SchoolPackageLog,
     CourierPackageLog,
+    InstitutionPackage,
+    InstitutionPackageLog,
 )
 from apps.package.enums import (
     PublisherPackageStatusEnum,
     SchoolPackageStatusEnum,
-    CourierPackageStatusEnum
+    CourierPackageStatusEnum,
+    InstitutionPackageStatusEnum,
 )
 
 
@@ -109,6 +112,40 @@ class CourierPackageLogFilterSet(django_filters.FilterSet):
 
     class Meta:
         model = CourierPackageLog
+        fields = ()
+
+    def filter_search(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(comment__icontains=value)
+
+
+class InstitutionPackageFilterSet(django_filters.FilterSet):
+
+    status = MultipleInputFilter(InstitutionPackageStatusEnum, field_name='status')
+    institutions = IDListFilter(method='filter_institutions')
+    order_windows = IDListFilter(method='filter_order_windows')
+
+    class Meta:
+        model = InstitutionPackage
+        fields = ()
+
+    def filter_institutions(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(institution__in=value)
+
+    def filter_order_windows(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(order_window__in=value)
+
+
+class InstitutionPackageLogFilterSet(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='filter_search')
+
+    class Meta:
+        model = InstitutionPackageLog
         fields = ()
 
     def filter_search(self, queryset, name, value):

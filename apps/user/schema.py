@@ -153,7 +153,6 @@ class ModeratorQueryType(
 class Query(graphene.ObjectType):
     me = graphene.Field(UserMeType)
     moderator_query = graphene.Field(ModeratorQueryType)
-    get_captcha_status = graphene.Boolean()
 
     def resolve_me(parent, info):
         if info.context.user.is_authenticated:
@@ -163,7 +162,3 @@ class Query(graphene.ObjectType):
     def resolve_moderator_query(parent, info):
         if info.context.user.user_type == User.UserType.MODERATOR:
             return {}
-
-    def resolve_get_captcha_status(parent, info):
-        captcha_status = cache.get('enable_captcha', True)
-        return captcha_status

@@ -50,16 +50,33 @@ class OrderWindow(models.Model):
         )
         if self.pk:
             conflicting_order_window_qs = conflicting_order_window_qs.exclude(id=self.pk)
-        conflicting_order_window = conflicting_order_window_qs.first()
+        school_conflicting_order_window = conflicting_order_window_qs.filter(
+            type=OrderWindow.OrderWindowType.SCHOOL.value
+        ).first()
+        institution_conflicting_order_window = conflicting_order_window_qs.filter(
+            type=OrderWindow.OrderWindowType.INSTITUTION.value
+        ).first()
+
         if self.end_date < self.start_date:
             raise ValidationError(
                 gettext('Start date should not be greater than end date')
             )
-        elif conflicting_order_window:
+        elif not self.type:
+            raise ValidationError(
+                gettext("Order window type is required")
+            )
+        elif self.type == OrderWindow.OrderWindowType.SCHOOL.value and school_conflicting_order_window:
             raise ValidationError(
                 gettext(
-                    "This order window conflicts with another order window with id: %(id)d"
-                    % dict(id=conflicting_order_window.pk)
+                    "This school order window conflicts with another order window with id: %(id)d"
+                    % dict(id=school_conflicting_order_window.pk)
+                )
+            )
+        elif self.type == OrderWindow.OrderWindowType.INSTITUTION.value and institution_conflicting_order_window:
+            raise ValidationError(
+                gettext(
+                    "This institution order window conflicts with another order window with id: %(id)d"
+                    % dict(id=institution_conflicting_order_window.pk)
                 )
             )
         return super().clean()
