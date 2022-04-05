@@ -93,6 +93,8 @@ class LoginSerializer(serializers.Serializer):
             attempts = User._get_login_attempt(email)
             User._set_login_attempt(email, attempts + 1)
             raise serializers.ValidationError('Invalid Credentials')
+        elif not user:
+            raise serializers.ValidationError('Invalid Credentials')
         User._reset_login_cache(email)
         return dict(user=user)
 

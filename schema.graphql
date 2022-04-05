@@ -325,6 +325,7 @@ type CategoryType {
   id: ID!
   name: String!
   nameEn: String
+  nameNe: String
   parentCategory: CategoryType
   image: FileFieldType
 }
@@ -661,6 +662,7 @@ type FileFieldType {
 type GenerateResetPasswordToken {
   errors: [GenericScalar!]
   ok: Boolean
+  captchaRequired: Boolean
 }
 
 input GenerateResetPasswordTokenType {
@@ -702,6 +704,66 @@ type InstitutionListType {
   pageSize: Int
 }
 
+type InstitutionPackageBookListType {
+  results: [InstitutionPackageBookType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type InstitutionPackageBookType {
+  id: ID!
+  quantity: Int!
+  book: BookType!
+}
+
+type InstitutionPackageListType {
+  results: [InstitutionPackageType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type InstitutionPackageLogListType {
+  results: [InstitutionPackageLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type InstitutionPackageLogType {
+  id: ID!
+  comment: String
+  snapshot: GenericScalar
+  files: [ActivityFileType!]
+}
+
+enum InstitutionPackageStatusEnum {
+  PENDING
+  IN_TRANSIT
+  ISSUE
+  DELIVERED
+}
+
+type InstitutionPackageType {
+  id: ID!
+  packageId: UUID!
+  status: InstitutionPackageStatusEnum!
+  relatedOrders: [OrderType!]!
+  institution: UserType!
+  totalPrice: Int!
+  totalQuantity: Int!
+  statusDisplay: EnumDescription
+  institutionPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageBookListType
+  logs(search: String, page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageLogListType
+}
+
+type InstitutionQueryType {
+  payment(id: ID!): PaymentType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  paymentSummary: PaymentSummaryType
+}
+
 type InstitutionType {
   id: ID!
   name: String!
@@ -731,7 +793,7 @@ type Login {
   result: UserMeType
   errors: [GenericScalar!]
   ok: Boolean!
-  captchaRequired: Boolean!
+  captchaRequired: Boolean
 }
 
 input LoginInputType {
@@ -980,6 +1042,12 @@ type OrderWindowType {
   description: String!
   startDate: Date!
   endDate: Date!
+  type: OrderWindowTypeEnum
+}
+
+enum OrderWindowTypeEnum {
+  SCHOOL
+  INSTITUTION
 }
 
 input PaymentInputType {
@@ -1172,6 +1240,8 @@ type Query {
   schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
   courierPackage(id: ID!): CourierPackageType
   courierPackages(status: [CourierPackageStatusEnum!], municipalities: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
+  institutionPackage(id: ID!): InstitutionPackageType
+  institutionPackages(status: [InstitutionPackageStatusEnum!], institutions: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageListType
   blog(id: ID!): BlogType
   blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
   blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
@@ -1197,8 +1267,11 @@ type Query {
   categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
   wishList(createdBy: ID, book: ID, page: Int = 1, ordering: String, pageSize: Int): WishListListType
   schoolQuery: SchoolQueryType
+  school(id: ID!): SchoolType
+  schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
   publisher(id: ID!): PublisherType
   publishers(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): PublisherListType
+  institutionQuery: InstitutionQueryType
   institution(id: ID!): InstitutionType
   institutions(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): InstitutionListType
   province(id: ID!): ProvinceType
@@ -1209,14 +1282,13 @@ type Query {
   districts(name: String, provinces: [ID!], page: Int = 1, ordering: String, pageSize: Int): DistrictListType
   me: UserMeType
   moderatorQuery: ModeratorQueryType
-  getCaptchaStatus: Boolean
 }
 
 type Register {
   errors: [GenericScalar!]
   ok: Boolean
   result: UserMeType
-  captchaRequired: Boolean!
+  captchaRequired: Boolean
 }
 
 input RegisterInputType {
@@ -1337,8 +1409,6 @@ type SchoolQueryType {
   payment(id: ID!): PaymentType
   payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
-  school(id: ID!): SchoolType
-  schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
 }
 
 type SchoolType {
