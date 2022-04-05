@@ -401,10 +401,17 @@ type CourierPackageType {
   totalQuantity: Int!
   municipality: MunicipalityType!
   isEligibleForIncentive: Boolean!
+  type: CourierPackageTypeEnum!
   statusDisplay: EnumDescription
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
-  courierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
+  schoolCourierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
+  institutionCourierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageBookListType
   relatedOrders: [OrderType!]
+}
+
+enum CourierPackageTypeEnum {
+  SCHOOL
+  INSTITUTION
 }
 
 input CourierPackageUpdateInputType {
@@ -758,9 +765,15 @@ type InstitutionPackageType {
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageLogListType
 }
 
+input InstitutionPackageUpdateInputType {
+  status: InstitutionPackageStatusEnum
+  files: Upload
+  comment: String
+}
+
 type InstitutionQueryType {
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
 }
 
@@ -811,6 +824,7 @@ type ModeratorMutationType {
   updateSchoolPackage(data: SchoolPackageUpdateInputType!, id: ID!): UpdateSchoolPackage
   updatePublisherPackage(data: PublisherPackageUpdateInputType!, id: ID!): UpdatePublisherPackage
   updateCourierPackage(data: CourierPackageUpdateInputType!, id: ID!): UpdateCourierPackage
+  updateInstitutionPackage(data: InstitutionPackageUpdateInputType!, id: ID!): UpdateInstitutionPackage
   createPayment(data: PaymentInputType!): CreatePayment
   updatePayment(data: PaymentUpdateInputType!, id: ID!): UpdatePayment
   userVerify(id: ID!): VerifyUser
@@ -821,7 +835,7 @@ type ModeratorQueryType {
   orderActivityLog(id: ID!): OrderActivityLogType
   orderActivityLogs(createByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderActivityLogListType
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
   user(id: ID!): ModeratorQueryUserType
   users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
@@ -1239,7 +1253,7 @@ type Query {
   schoolPackage(id: ID!): SchoolPackageType
   schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
   courierPackage(id: ID!): CourierPackageType
-  courierPackages(status: [CourierPackageStatusEnum!], municipalities: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
+  courierPackages(status: [CourierPackageStatusEnum!], municipalities: [ID!], orderWindows: [ID!], type: [CourierPackageTypeEnum!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
   institutionPackage(id: ID!): InstitutionPackageType
   institutionPackages(status: [InstitutionPackageStatusEnum!], institutions: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageListType
   blog(id: ID!): BlogType
@@ -1407,7 +1421,7 @@ input SchoolPackageUpdateInputType {
 
 type SchoolQueryType {
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
 }
 
@@ -1538,6 +1552,12 @@ type UpdateInstitution {
   errors: [GenericScalar!]
   ok: Boolean
   result: InstitutionType
+}
+
+type UpdateInstitutionPackage {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: InstitutionPackageType
 }
 
 type UpdateOrder {
