@@ -143,7 +143,7 @@ class Command(BaseCommand):
                 total_price=courier_related_book_orders.aggregate(
                     grand_total_price=Sum('total_price'))['grand_total_price'],
                 is_eligible_for_incentive=False,
-                type=CourierPackage.Type.SCHOOL.value,
+                type=CourierPackage.Type.INSTITUTION.value,
             )
             courier_package_count += 1
         self.stdout.write(self.style.SUCCESS(f'{courier_package_count} municipality/courier packages created.'))

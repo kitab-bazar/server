@@ -36,6 +36,7 @@ from apps.package.enums import (
     SchoolPackageStatusEnum,
     CourierPackageStatusEnum,
     InstitutionPackageStatusEnum,
+    CourierPackageTypeEnum,
 )
 from utils.graphene.enums import EnumDescription
 from apps.common.schema import ActivityFileType
@@ -287,6 +288,8 @@ class CourierPackageLogListType(CustomDjangoListObjectType):
 class CourierPackageType(DjangoObjectType):
     status = graphene.Field(CourierPackageStatusEnum, required=True)
     status_display = EnumDescription(source='get_status_display')
+    type = graphene.Field(CourierPackageTypeEnum, required=True)
+    status_display = EnumDescription(source='get_type_display')
 
     logs = DjangoPaginatedListObjectField(
         PublisherPackageLogListType,
@@ -294,8 +297,14 @@ class CourierPackageType(DjangoObjectType):
             page_size_query_param='pageSize'
         )
     )
-    courier_package_books = DjangoPaginatedListObjectField(
+    school_courier_package_books = DjangoPaginatedListObjectField(
         SchoolPackageBookListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+    institution_courier_package_books = DjangoPaginatedListObjectField(
+        InstitutionPackageBookListType,
         pagination=PageGraphqlPagination(
             page_size_query_param='pageSize'
         )
@@ -311,12 +320,9 @@ class CourierPackageType(DjangoObjectType):
         return root.courier_package_logs
 
     @staticmethod
-    def resolve_courier_package_books(root, info, **kwargs) -> QuerySet:
+    def resolve_school_courier_package_books(root, info, **kwargs) -> QuerySet:
         # TODO: Use dataloader
-        if root.type == CourierPackage.Type.SCHOOL.value:
-            return root.courier_package.first().school_package.all()
-        elif root.type == CourierPackage.Type.INSTITUTION.value:
-            return root.institution_courier_package.first().institution_package.all()
+        return root.courier_package.first().school_package.all()
 
     @staticmethod
     def resolve_related_orders(root, info, **kwargs) -> QuerySet:
@@ -324,13 +330,14 @@ class CourierPackageType(DjangoObjectType):
         if root.type == CourierPackage.Type.SCHOOL.value:
             return root.courier_package.first().related_orders.all()
         elif root.type == CourierPackage.Type.INSTITUTION.value:
-            return root.institution_courier_package.first().institution_related_orders.all()
+            return root.institution_courier_package.first().related_orders.all()
+        return CourierPackage.objects.none()
 
     class Meta:
         model = CourierPackage
         fields = (
             'id', 'package_id', 'status', 'total_price', 'total_quantity', 'municipality',
-            'related_orders', 'is_eligible_for_incentive'
+            'related_orders', 'is_eligible_for_incentive', 'type'
         )
 
 

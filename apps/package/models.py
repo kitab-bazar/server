@@ -289,7 +289,7 @@ class CourierPackageLog(BaseActivityLog):
 
 
 class InstitutionPackageLog(BaseActivityLog):
-    school_package = models.ForeignKey(
+    institution_package = models.ForeignKey(
         'package.InstitutionPackage', verbose_name=_('Institution package'), related_name='institution_package_logs',
         on_delete=models.CASCADE
     )

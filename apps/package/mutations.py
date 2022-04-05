@@ -7,17 +7,20 @@ from utils.graphene.mutation import (
 from apps.package.serializers import (
     SchoolPackageUpdateSerializer,
     PublisherPackageUpdateSerializer,
-    CourierPackageUpdateSerializer
+    CourierPackageUpdateSerializer,
+    InstitutionPackageUpdateSerializer
 )
 from apps.package.models import (
     PublisherPackage,
     SchoolPackage,
     CourierPackage,
+    InstitutionPackage,
 )
 from apps.package.schema import (
     SchoolPackageType,
     PublisherPackageType,
-    CourierPackageType
+    CourierPackageType,
+    InstitutionPackageType,
 )
 
 
@@ -78,7 +81,23 @@ class UpdateCourierPackage(packageMixin, CreateUpdateGrapheneMutation):
     result = graphene.Field(CourierPackageType)
 
 
+InstitutionPackageUpdateInputType = generate_input_type_for_serializer(
+    'InstitutionPackageUpdateInputType',
+    serializer_class=InstitutionPackageUpdateSerializer
+)
+
+
+class UpdateInstitutionPackage(packageMixin, CreateUpdateGrapheneMutation):
+    class Arguments:
+        data = InstitutionPackageUpdateInputType(required=True)
+        id = graphene.ID(required=True)
+    model = InstitutionPackage
+    serializer_class = InstitutionPackageUpdateSerializer
+    result = graphene.Field(InstitutionPackageType)
+
+
 class Mutation(graphene.ObjectType):
     update_school_package = UpdateSchoolPackage.Field()
     update_publisher_package = UpdatePublisherPackage.Field()
     update_courier_package = UpdateCourierPackage.Field()
+    update_institution_package = UpdateInstitutionPackage.Field()

@@ -1,5 +1,4 @@
 import graphene
-from django.core.cache import cache
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 

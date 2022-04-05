@@ -8,6 +8,8 @@ from apps.package.models import (
     PublisherPackageLog,
     SchoolPackageLog,
     CourierPackageLog,
+    InstitutionPackage,
+    InstitutionPackageLog,
 )
 from config.serializers import CreatedUpdatedBaseSerializer
 
@@ -28,12 +30,14 @@ class UpdateLogMixin(metaclass=serializers.SerializerMetaclass):
             'PublisherPackage': PublisherPackageLog,
             'SchoolPackage': SchoolPackageLog,
             'CourierPackage': CourierPackageLog,
+            'InstitutionPackage': InstitutionPackageLog,
         }.get(instance.__class__.__name__)
 
         log_field = {
             'PublisherPackage': 'publisher_package',
             'SchoolPackage': 'school_package',
             'CourierPackage': 'courier_package',
+            'InstitutionPackage': 'institution_package',
         }.get(instance.__class__.__name__)
 
         comment = validated_data.get('comment', None)
@@ -84,6 +88,16 @@ class CourierPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer
 
     class Meta:
         model = CourierPackage
+        fields = ('id', 'status', 'files', 'comment')
+
+    def create(self, data):
+        raise Exception('Not allowed')
+
+
+class InstitutionPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer):
+
+    class Meta:
+        model = InstitutionPackage
         fields = ('id', 'status', 'files', 'comment')
 
     def create(self, data):

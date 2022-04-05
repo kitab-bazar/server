@@ -15,7 +15,9 @@ from apps.order.factories import (
     OrderFactory,
     OrderWindowFactory,
 )
-from apps.package.models import SchoolPackage, PublisherPackage, CourierPackage
+from apps.package.models import (
+    SchoolPackage, PublisherPackage, CourierPackage, InstitutionPackage
+)
 from apps.school.factories import SchoolFactory
 from apps.institution.factories import InstitutionFactory
 from apps.common.factories import MunicipalityFactory
@@ -67,12 +69,58 @@ class TestPackageGeneration(GraphQLTestCase):
         }
     '''
 
-    COURIER_PACKAGE = '''
+    SCHOOL_COURIER_PACKAGE_QUERY = '''
         query MyQuery {
           courierPackages {
             results {
               status
-              courierPackageBooks {
+              schoolCourierPackageBooks {
+                results {
+                  quantity
+                  id
+                }
+              }
+              relatedOrders {
+                totalPrice
+                totalQuantity
+              }
+              municipality {
+                id
+              }
+              totalPrice
+              totalQuantity
+            }
+          }
+        }
+    '''
+
+    INSTITUTION_PACKAGE_QUERY = '''
+        query MyQuery {
+          institutionPackages {
+            results {
+              status
+              relatedOrders {
+                totalPrice
+                totalQuantity
+              }
+              institutionPackageBooks {
+                results {
+                  quantity
+                }
+              }
+              totalPrice
+              totalQuantity
+            }
+          }
+        }
+    '''
+
+    INSTITUTION_COURIER_PACKAGE_QUERY = '''
+        query MyQuery {
+          courierPackages {
+            results {
+              status
+              institutionCourierPackageBooks {
                 results {
                   quantity
                   id
@@ -119,30 +167,30 @@ class TestPackageGeneration(GraphQLTestCase):
         self.p_1_b_1, self.p_1_b_2, self.p_1_b_3 = BookFactory.create_batch(3, publisher=self.p_1, price=100)
         self.p_2_b_1, self.p_2_b_2, self.p_2_b_3 = BookFactory.create_batch(3, publisher=self.p_2, price=100)
 
-        school_order_window = OrderWindowFactory.create(
+        self.school_order_window = OrderWindowFactory.create(
             start_date=timezone.now() - timezone.timedelta(5),
             end_date=timezone.now() + timezone.timedelta(5),
             type=OrderWindow.OrderWindowType.SCHOOL
         )
-        institution_order_window = OrderWindowFactory.create(
+        self.institution_order_window = OrderWindowFactory.create(
             start_date=timezone.now() - timezone.timedelta(5),
             end_date=timezone.now() + timezone.timedelta(5),
             type=OrderWindow.OrderWindowType.INSTITUTION
         )
         # Create orders for each school
         self.s_1_o_1, self.s_1_o_2, self.s_1_o_3 = OrderFactory.create_batch(
-            3, created_by=self.s_1, status=Order.Status.PENDING, assigned_order_window=school_order_window
+            3, created_by=self.s_1, status=Order.Status.PENDING, assigned_order_window=self.school_order_window
         )
         self.s_2_o_1, self.s_2_o_2 = OrderFactory.create_batch(
-            2, created_by=self.s_2, status=Order.Status.PENDING, assigned_order_window=school_order_window
+            2, created_by=self.s_2, status=Order.Status.PENDING, assigned_order_window=self.school_order_window
         )
         self.i_1_o_1, self.i_1_o_2, self.i_1_o_3, self.i_1_o_4 = OrderFactory.create_batch(
             4, created_by=self.i_1, status=Order.Status.PENDING,
-            assigned_order_window=institution_order_window
+            assigned_order_window=self.institution_order_window
         )
         self.i_2_o_1, self.i_2_o_2, self.i_2_o_3, self.i_2_o_4 = OrderFactory.create_batch(
             4, created_by=self.i_2, status=Order.Status.PENDING,
-            assigned_order_window=institution_order_window
+            assigned_order_window=self.institution_order_window
         )
 
         # Create book order for first school
@@ -178,13 +226,10 @@ class TestPackageGeneration(GraphQLTestCase):
                 status=Payment.Status.VERIFIED.value
             )
 
-        # Generate packages
-        call_command('generate_packages', school_order_window.id)
-        # call_command('generate_packages', institution_order_window.id)
-
         super().setUp()
 
     def test_school_packages(self):
+        call_command('generate_packages', self.school_order_window.id)
 
         # Test school 1
         self.force_login(self.s_1)
@@ -215,6 +260,7 @@ class TestPackageGeneration(GraphQLTestCase):
         self.assertEqual(content['schoolPackages']['results'][0]['totalQuantity'], 80)
 
     def test_publisher_packages(self):
+        call_command('generate_packages', self.school_order_window.id)
 
         # Test publisher 1
         self.force_login(self.u1_p1)
@@ -245,10 +291,10 @@ class TestPackageGeneration(GraphQLTestCase):
         self.assertEqual(content['publisherPackages']['results'][0]['totalQuantity'], 80)
 
     def test_courier_packages(self):
-
+        call_command('generate_packages', self.school_order_window.id)
         # Test publisher 1
         self.force_login(self.moderator)
-        content = self.query_check(self.COURIER_PACKAGE)['data']
+        content = self.query_check(self.SCHOOL_COURIER_PACKAGE_QUERY)['data']
         self.assertEqual(content['courierPackages']['results'][0]['status'], CourierPackage.Status.PENDING.name)
 
         # Test should list two schools packages
@@ -256,11 +302,85 @@ class TestPackageGeneration(GraphQLTestCase):
 
         # Test should create 3 related oorders and 3 courier package books
         self.assertEqual(len(content['courierPackages']['results'][0]['relatedOrders']), 3)
-        self.assertEqual(len(content['courierPackages']['results'][0]['courierPackageBooks']['results']), 3)
+        self.assertEqual(len(content['courierPackages']['results'][0]['schoolCourierPackageBooks']['results']), 3)
         self.assertEqual(len(content['courierPackages']['results'][1]['relatedOrders']), 2)
-        self.assertEqual(len(content['courierPackages']['results'][1]['courierPackageBooks']['results']), 2)
+        self.assertEqual(len(content['courierPackages']['results'][1]['schoolCourierPackageBooks']['results']), 2)
         self.assertEqual(content['courierPackages']['results'][0]['totalPrice'], 9000)
         self.assertEqual(content['courierPackages']['results'][0]['totalQuantity'], 90)
 
         self.assertEqual(content['courierPackages']['results'][1]['totalPrice'], 8000)
         self.assertEqual(content['courierPackages']['results'][1]['totalQuantity'], 80)
+
+    def test_institution_packages(self):
+        call_command('generate_packages', self.institution_order_window.id)
+
+        # Test school 1
+        self.force_login(self.i_1)
+        content = self.query_check(self.INSTITUTION_PACKAGE_QUERY)['data']
+        self.assertEqual(content['institutionPackages']['results'][0]['status'], InstitutionPackage.Status.PENDING.name)
+
+        # Test should create only one package for one school
+        self.assertEqual(len(content['institutionPackages']['results']), 1)
+
+        # Test should create 3 related oorders and 3 school package books
+        self.assertEqual(len(content['institutionPackages']['results'][0]['relatedOrders']), 4)
+        self.assertEqual(len(content['institutionPackages']['results'][0]['institutionPackageBooks']['results']), 4)
+        self.assertEqual(content['institutionPackages']['results'][0]['totalPrice'], 4000)
+        self.assertEqual(content['institutionPackages']['results'][0]['totalQuantity'], 40)
+
+        # Test school 2
+        self.force_login(self.i_2)
+        content = self.query_check(self.INSTITUTION_PACKAGE_QUERY)['data']
+        self.assertEqual(content['institutionPackages']['results'][0]['status'], InstitutionPackage.Status.PENDING.name)
+
+        # Test should create only one package for one school
+        self.assertEqual(len(content['institutionPackages']['results']), 1)
+
+        # Test should create 2 related oorders and 2 school package books
+        self.assertEqual(len(content['institutionPackages']['results'][0]['relatedOrders']), 4)
+        self.assertEqual(len(content['institutionPackages']['results'][0]['institutionPackageBooks']['results']), 4)
+        self.assertEqual(content['institutionPackages']['results'][0]['totalPrice'], 4000)
+        self.assertEqual(content['institutionPackages']['results'][0]['totalQuantity'], 40)
+
+    def test_institution_publisher_packages(self):
+        call_command('generate_packages', self.institution_order_window.id)
+
+        # Test publisher 1
+        self.force_login(self.u1_p1)
+        content = self.query_check(self.PUBLISHER_PACKAGE_QUERY)['data']
+        self.assertEqual(content['publisherPackages']['results'][0]['status'], PublisherPackage.Status.PENDING.name)
+        self.assertEqual(len(content['publisherPackages']['results']), 1)
+        self.assertEqual(len(content['publisherPackages']['results'][0]['relatedOrders']), 2)
+        self.assertEqual(len(content['publisherPackages']['results'][0]['publisherPackageBooks']['results']), 1)
+        self.assertEqual(content['publisherPackages']['results'][0]['totalPrice'], 2000)
+        self.assertEqual(content['publisherPackages']['results'][0]['totalQuantity'], 20)
+
+        # # Test publisher 2
+        self.force_login(self.u2_p2)
+        content = self.query_check(self.PUBLISHER_PACKAGE_QUERY)['data']
+        self.assertEqual(content['publisherPackages']['results'][0]['status'], PublisherPackage.Status.PENDING.name)
+
+        self.assertEqual(len(content['publisherPackages']['results']), 1)
+        self.assertEqual(len(content['publisherPackages']['results'][0]['relatedOrders']), 6)
+        self.assertEqual(len(content['publisherPackages']['results'][0]['publisherPackageBooks']['results']), 3)
+        self.assertEqual(content['publisherPackages']['results'][0]['totalPrice'], 6000)
+        self.assertEqual(content['publisherPackages']['results'][0]['totalQuantity'], 60)
+
+    def test_institution_courier_packages(self):
+        call_command('generate_packages', self.institution_order_window.id)
+        self.force_login(self.moderator)
+        content = self.query_check(self.INSTITUTION_COURIER_PACKAGE_QUERY)['data']
+        self.assertEqual(content['courierPackages']['results'][0]['status'], CourierPackage.Status.PENDING.name)
+
+        # Test should list two institution packages
+        self.assertEqual(len(content['courierPackages']['results']), 2)
+
+        # Test should create 4 related oorders and 8 courier package books
+        self.assertEqual(len(content['courierPackages']['results'][0]['relatedOrders']), 4)
+        self.assertEqual(len(content['courierPackages']['results'][0]['institutionCourierPackageBooks']['results']), 8)
+        self.assertEqual(len(content['courierPackages']['results'][1]['relatedOrders']), 4)
+        self.assertEqual(len(content['courierPackages']['results'][1]['institutionCourierPackageBooks']['results']), 8)
+        self.assertEqual(content['courierPackages']['results'][0]['totalPrice'], 4000)
+        self.assertEqual(content['courierPackages']['results'][0]['totalQuantity'], 40)
+        self.assertEqual(content['courierPackages']['results'][1]['totalPrice'], 4000)
+        self.assertEqual(content['courierPackages']['results'][1]['totalQuantity'], 40)

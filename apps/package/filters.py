@@ -15,6 +15,7 @@ from apps.package.enums import (
     SchoolPackageStatusEnum,
     CourierPackageStatusEnum,
     InstitutionPackageStatusEnum,
+    CourierPackageTypeEnum,
 )
 
 
@@ -65,6 +66,7 @@ class CourierPackageFilterSet(django_filters.FilterSet):
     status = MultipleInputFilter(CourierPackageStatusEnum, field_name='status')
     municipalities = IDListFilter(method='filter_municipalities')
     order_windows = IDListFilter(method='filter_order_windows')
+    type = MultipleInputFilter(CourierPackageTypeEnum, field_name='type')
 
     class Meta:
         model = CourierPackage
