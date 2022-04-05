@@ -89,7 +89,7 @@ class LoginSerializer(serializers.Serializer):
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             raise serializers.ValidationError('Invalid Credentials')
         user = authenticate(email=email, password=password)
-        if not user:
+        if not user and cache.get('enable_captcha'):
             attempts = User._get_login_attempt(email)
             User._set_login_attempt(email, attempts + 1)
             raise serializers.ValidationError('Invalid Credentials')

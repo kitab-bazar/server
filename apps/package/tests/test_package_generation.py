@@ -180,7 +180,7 @@ class TestPackageGeneration(GraphQLTestCase):
 
         # Generate packages
         call_command('generate_packages', school_order_window.id)
-        call_command('generate_packages', institution_order_window.id)
+        # call_command('generate_packages', institution_order_window.id)
 
         super().setUp()
 
