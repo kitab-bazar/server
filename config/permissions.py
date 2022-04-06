@@ -193,7 +193,11 @@ class UserPermissions():
         Permission.CAN_UPDATE_BOOK_AUTHOR,
     ]
 
-    INSTITUTIONAL_USER = [*INDIVIDUAL_USER, Permission.CAN_UPDATE_INSTITUTION]
+    INSTITUTIONAL_USER = [
+        *INDIVIDUAL_USER,
+        Permission.CAN_UPDATE_INSTITUTION,
+        Permission.UPDATE_ORDER,
+    ]
 
     MODERATOR = [
         *INDIVIDUAL_USER, *PUBLISHER, *INSTITUTIONAL_USER, *SCHOOL_ADMIN,

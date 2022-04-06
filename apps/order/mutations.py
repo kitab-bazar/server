@@ -76,6 +76,8 @@ class OrderMutationMixin():
             return qs
         elif user.user_type == User.UserType.SCHOOL_ADMIN.value:
             return qs.filter(created_by=user)
+        elif user.user_type == User.UserType.INSTITUTIONAL_USER.value:
+            return qs.filter(created_by=user)
         return qs.none()
 
 

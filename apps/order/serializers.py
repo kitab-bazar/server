@@ -125,6 +125,9 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
         User.UserType.SCHOOL_ADMIN: [
             (Order.Status.PENDING, Order.Status.CANCELLED),
         ],
+        User.UserType.INSTITUTIONAL_USER: [
+            (Order.Status.PENDING, Order.Status.CANCELLED),
+        ],
         User.UserType.MODERATOR: [
             (Order.Status.PENDING, Order.Status.CANCELLED),
             (Order.Status.IN_TRANSIT, Order.Status.COMPLETED),
