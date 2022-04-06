@@ -289,7 +289,7 @@ class CourierPackageType(DjangoObjectType):
     status = graphene.Field(CourierPackageStatusEnum, required=True)
     status_display = EnumDescription(source='get_status_display')
     type = graphene.Field(CourierPackageTypeEnum, required=True)
-    status_display = EnumDescription(source='get_type_display')
+    type_display = EnumDescription(source='get_type_display')
 
     logs = DjangoPaginatedListObjectField(
         PublisherPackageLogListType,

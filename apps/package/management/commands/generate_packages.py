@@ -243,7 +243,7 @@ class Command(BaseCommand):
             )
             institution_package_count += 1
 
-        self.stdout.write(self.style.SUCCESS(f'{institution_package_count} School packages created.'))
+        self.stdout.write(self.style.SUCCESS(f'{institution_package_count} Institution packages created.'))
 
     def _generate_school_packages(self, latest_order_window, orders):
         self._create_publihser_packages(latest_order_window, orders)
