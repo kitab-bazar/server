@@ -773,7 +773,7 @@ input InstitutionPackageUpdateInputType {
 
 type InstitutionQueryType {
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
 }
 
@@ -835,7 +835,7 @@ type ModeratorQueryType {
   orderActivityLog(id: ID!): OrderActivityLogType
   orderActivityLogs(createByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderActivityLogListType
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
   user(id: ID!): ModeratorQueryUserType
   users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
@@ -1421,7 +1421,7 @@ input SchoolPackageUpdateInputType {
 
 type SchoolQueryType {
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
 }
 

@@ -652,8 +652,8 @@
     "model": "common.municipality",
     "pk": 6001,
     "fields": {
-        "name": "Barah",
-        "name_en": "Barah",
+        "name": "Baraha kshetra",
+        "name_en": " Baraha kshetra ",
         "name_ne": "बराहक्षेत्र",
         "province": 1,
         "district": 6
