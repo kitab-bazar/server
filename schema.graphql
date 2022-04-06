@@ -403,6 +403,7 @@ type CourierPackageType {
   isEligibleForIncentive: Boolean!
   type: CourierPackageTypeEnum!
   statusDisplay: EnumDescription
+  typeDisplay: EnumDescription
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
   schoolCourierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
   institutionCourierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageBookListType
