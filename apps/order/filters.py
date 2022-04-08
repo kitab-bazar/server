@@ -1,5 +1,6 @@
 import django_filters
 from django.db import models
+from django.db.models import Q
 
 from utils.graphene.filters import (
     DateGteFilter,
@@ -29,6 +30,8 @@ class OrderFilterSet(django_filters.FilterSet):
     status = MultipleInputFilter(OrderStatusEnum)
     users = IDListFilter(method='filter_users')
     order_windows = IDListFilter(method='filter_order_windows')
+    districts = IDListFilter(method='filter_order_by_districts')
+    municipalities = IDListFilter(method='filter_order_by_municipalities')
 
     class Meta:
         model = Order
@@ -43,6 +46,18 @@ class OrderFilterSet(django_filters.FilterSet):
         if not value:
             return queryset
         return queryset.filter(assigned_order_window__in=value)
+
+    def filter_order_by_districts(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(Q(created_by__school__district__in=value) | Q(created_by__institution__district__in=value))
+
+    def filter_order_by_municipalities(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(
+            Q(created_by__school__municipality__in=value) | Q(created_by__institution__municipality__in=value)
+        )
 
 
 class OrderWindowFilterSet(django_filters.FilterSet):

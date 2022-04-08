@@ -194,25 +194,25 @@ class RegisterSerializer(serializers.ModelSerializer):
             instance.school = school
             instance.save()
 
-        subject = gettext("Activate your account.")
-        message = gettext("Please click on the link to confirm your registration")
-        uid = urlsafe_base64_encode(force_bytes(instance.pk))
-        token = default_token_generator.make_token(instance)
-        button_url = f'{settings.CLIENT_URL}/activate/{uid}/{token}/'
+        # subject = gettext("Activate your account.")
+        # message = gettext("Please click on the link to confirm your registration")
+        # uid = urlsafe_base64_encode(force_bytes(instance.pk))
+        # token = default_token_generator.make_token(instance)
+        # button_url = f'{settings.CLIENT_URL}/activate/{uid}/{token}/'
 
         # Prepare message for email
-        html_context = {
-            "heading": gettext("Activate your account"),
-            "message": message,
-            "button_text": gettext("Activate Account"),
-            "full_name": str(instance),
-        }
-        if button_url:
-            html_context["button_url"] = button_url
-        # Send an email for account activation to user
-        generic_email_sender.delay(
-            subject, message, [instance.email], html_context=html_context
-        )
+        # html_context = {
+        #     "heading": gettext("Activate your account"),
+        #     "message": message,
+        #     "button_text": gettext("Activate Account"),
+        #     "full_name": str(instance),
+        # }
+        # if button_url:
+        #     html_context["button_url"] = button_url
+        # # Send an email for account activation to user
+        # generic_email_sender.delay(
+        #     subject, message, [instance.email], html_context=html_context
+        # )
         return instance
 
 
