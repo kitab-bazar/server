@@ -11,6 +11,7 @@ from apps.package.models import (
     InstitutionPackage,
     InstitutionPackageLog,
 )
+from apps.order.models import Order
 from config.serializers import CreatedUpdatedBaseSerializer
 
 
@@ -25,7 +26,6 @@ class UpdateLogMixin(metaclass=serializers.SerializerMetaclass):
     comment = serializers.CharField(required=False)
 
     def update(self, instance, validated_data):
-        print(instance.__class__.__name__)
         log_model = {
             'PublisherPackage': PublisherPackageLog,
             'SchoolPackage': SchoolPackageLog,
@@ -83,6 +83,20 @@ class SchoolPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer)
     def create(self, data):
         raise Exception('Not allowed')
 
+    def update(self, instance, validated_data):
+        status = validated_data.get('status')
+        instance.related_orders.update(status=status)
+        _order_status_map = {
+            InstitutionPackage.Status.PENDING.value: Order.Status.PENDING.value,
+            InstitutionPackage.Status.IN_TRANSIT.value: Order.Status.IN_TRANSIT.value,
+            InstitutionPackage.Status.ISSUE.value: Order.Status.PENDING.value,
+            InstitutionPackage.Status.DELIVERED.value: Order.Status.COMPLETED.value,
+        }
+        Order.objects.filter(
+            order_code__in=instance.related_orders.all().values_list('order_code', flat=True)
+        ).update(status=_order_status_map.get(status))
+        return super().update(instance, validated_data)
+
 
 class CourierPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer):
 
@@ -102,3 +116,17 @@ class InstitutionPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerial
 
     def create(self, data):
         raise Exception('Not allowed')
+
+    def update(self, instance, validated_data):
+        status = validated_data.get('status')
+        instance.related_orders.update(status=status)
+        _order_status_map = {
+            InstitutionPackage.Status.PENDING.value: Order.Status.PENDING.value,
+            InstitutionPackage.Status.IN_TRANSIT.value: Order.Status.IN_TRANSIT.value,
+            InstitutionPackage.Status.ISSUE.value: Order.Status.PENDING.value,
+            InstitutionPackage.Status.DELIVERED.value: Order.Status.COMPLETED.value,
+        }
+        Order.objects.filter(
+            order_code__in=instance.related_orders.all().values_list('order_code', flat=True)
+        ).update(status=_order_status_map.get(status))
+        return super().update(instance, validated_data)
