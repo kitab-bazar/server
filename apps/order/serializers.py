@@ -16,7 +16,7 @@ from .models import (
     OrderActivityLog,
 )
 from .tasks import send_notification
-from apps.package.models import SchoolPackage
+from apps.package.models import SchoolPackage, InstitutionPackage
 
 
 class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
@@ -145,6 +145,10 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
         current_status = self.instance.status
         user = self.context['request'].user
         if SchoolPackage.objects.filter(school=self.instance.created_by, related_orders=self.instance).exists():
+            raise serializers.ValidationError(
+                gettext('Order is packed, you can not cancel order.')
+            )
+        if InstitutionPackage.objects.filter(institution=self.instance.created_by, related_orders=self.instance).exists():
             raise serializers.ValidationError(
                 gettext('Order is packed, you can not cancel order.')
             )
