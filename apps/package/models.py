@@ -64,6 +64,9 @@ class PublisherPackage(models.Model):
     total_price = models.IntegerField(verbose_name=_('Total price'), default=0)
     total_quantity = models.IntegerField(verbose_name=_('Total quantity'), default=0)
     incentive = models.IntegerField(verbose_name=_('Incentive'), default=0)
+    orders_export_file = models.FileField(
+        upload_to='publisher/exports/', max_length=255, null=True, blank=True, default=None,
+    )
 
     class Meta:
         unique_together = ('publisher', 'order_window')
