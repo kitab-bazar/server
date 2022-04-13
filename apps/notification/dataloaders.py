@@ -18,7 +18,10 @@ class OrderLoader(DataLoaderWithContext):
             content_type__model = item['content_type__model']
             orders[id] = None
             if content_type__model == Order.__name__.lower():
-                orders[id] = Order.objects.get(id=object_id)
+                try:
+                    orders[id] = Order.objects.get(id=object_id)
+                except Order.DoesNotExist:
+                    pass
         return Promise.resolve([orders.get(key, 0) for key in keys])
 
 
