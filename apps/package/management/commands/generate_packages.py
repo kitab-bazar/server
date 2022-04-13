@@ -1,3 +1,9 @@
+from django.conf import settings
+import tempfile
+from django.core.files.base import File
+import csv
+from django.db import transaction
+from django.contrib.postgres.aggregates import StringAgg
 from django.core.management.base import BaseCommand
 from django.db.models import Sum, F, Q
 from django.db import IntegrityError
@@ -39,6 +45,24 @@ class Command(BaseCommand):
                 user['id'], user['full_name']) for user in unverified_user_qs]
         )
 
+    def _generate_related_orders_export(self, package, related_book_orders):
+        filename = 'book_orders.csv'
+        with open(f'{settings.TEMP_DIR}/{filename}', 'w') as file:
+            writer = csv.writer(file)
+            writer.writerow([
+                'Package id', "Order code", "Book name", "Book author", "Book quantity", "Book Grade",
+                "Book ISBN", "Book edition", "Book language", "Book price"
+            ])
+            for book_order in related_book_orders:
+                writer.writerow([
+                    package.package_id, book_order['order__order_code'], book_order['book__title'],
+                    book_order['book_authors'], book_order['quantity'], book_order['book__grade'],
+                    book_order['isbn'], book_order['edition'], book_order['book__language'], book_order['price']
+                ])
+        csv_file = open(file.name, 'r')
+        package.orders_export_file.save('book_orders.csv', File(csv_file))
+        csv_file.close()
+
     def _create_publihser_packages(self, latest_order_window, orders):
         # ------------------------------------------------------------------
         # Create publihser packages
@@ -57,8 +81,12 @@ class Command(BaseCommand):
                 order__in=related_orders, publisher=publisher
             ).values('book').annotate(
                 total_quantity=Sum('quantity'),
-                total_price=Sum('quantity') * F('price')
-            ).values('book', 'total_quantity', 'total_price')
+                total_price=Sum('quantity') * F('price'),
+                book_authors=StringAgg('book__authors__name', distinct=True, delimiter=", "),
+            ).values(
+                'book', 'total_quantity', 'total_price', 'book_authors', 'book__title',
+                'quantity', 'book__grade', 'isbn', 'edition', 'book__language', 'price', 'order__order_code'
+            )
             package = PublisherPackage.objects.create(
                 status=PublisherPackage.Status.PENDING.value,
                 publisher=publisher,
@@ -69,6 +97,8 @@ class Command(BaseCommand):
                     grand_total_price=Sum('total_price'))['grand_total_price']
             )
             package.related_orders.set(related_orders)
+            # Generate related orders export file
+            self._generate_related_orders_export(package, related_book_orders)
             PublisherPackageBook.objects.bulk_create(
                 [
                     PublisherPackageBook(
@@ -255,6 +285,7 @@ class Command(BaseCommand):
         self._create_courier_packages_for_institution(latest_order_window, orders)
         self._create_institution_packages(latest_order_window, orders)
 
+    @transaction.atomic
     def handle(self, *args, **options):
 
         order_window_id = options['order_window_id']
