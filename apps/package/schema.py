@@ -5,7 +5,7 @@ from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
 
 from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoListField
-from utils.graphene.types import CustomDjangoListObjectType
+from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 
 from apps.package.models import (
     PublisherPackage,
@@ -116,6 +116,7 @@ class PublisherPackageType(DjangoObjectType):
             page_size_query_param='pageSize'
         )
     )
+    orders_export_file = graphene.Field(FileFieldType)
 
     @staticmethod
     def get_custom_queryset(queryset, info):
@@ -125,7 +126,7 @@ class PublisherPackageType(DjangoObjectType):
         model = PublisherPackage
         fields = (
             'id', 'package_id', 'status', 'related_orders', 'publisher',
-            'total_price', 'total_quantity', 'incentive'
+            'total_price', 'total_quantity', 'incentive', 'orders_export_file',
         )
 
     @staticmethod

@@ -1219,6 +1219,7 @@ type PublisherPackageType {
   totalPrice: Int!
   totalQuantity: Int!
   incentive: Int!
+  ordersExportFile: FileFieldType
   statusDisplay: EnumDescription
   publisherPackageBooks(quantity: Int, book: ID, publisherPackage: ID, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageBookListType
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
