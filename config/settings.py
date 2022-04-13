@@ -58,6 +58,7 @@ env = environ.Env(
     DEFAULT_FROM_EMAIL=(str, 'Kitab Bazar <kitabbazar@togglecorp.com>'),
     USE_LOCAL_STORATE=(bool, True),
     ENABLE_INTROSEPTION_SCHEMA=(bool, False),
+    HTTP_PROTOCOL=(str, 'http')
 )
 
 # Quick-start development settings - unsuitable for production
@@ -70,6 +71,16 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['server', env('DJANGO_ALLOWED_HOST')]
 
+HTTP_PROTOCOL = env('HTTP_PROTOCOL')
+
+if HTTP_PROTOCOL == 'https':
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    # SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 30  # TODO: Increase this slowly
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
