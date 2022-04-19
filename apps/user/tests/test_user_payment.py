@@ -3,6 +3,7 @@ from apps.user.models import User
 from apps.payment.models import Payment
 from apps.user.factories import UserFactory
 from apps.order.models import Order
+from apps.book.models import Book
 from apps.payment.factories import PaymentFactory
 from apps.order.factories import OrderFactory, BookOrderFactory
 from apps.publisher.factories import PublisherFactory
@@ -74,9 +75,15 @@ class UserPaymentTest(GraphQLTestCase):
         order_2 = OrderFactory.create(created_by=user, status=Order.Status.PENDING)
         order_3 = OrderFactory.create(created_by=user, status=Order.Status.PENDING)
 
-        BookOrderFactory.create(order=order_1, book=book1, quantity=10)
-        BookOrderFactory.create(order=order_2, book=book2, quantity=20)
-        BookOrderFactory.create(order=order_3, book=book3, quantity=30)
+        BookOrderFactory.create(
+            order=order_1, book=book1, quantity=10, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order_2, book=book2, quantity=20, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order_3, book=book3, quantity=30, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
 
     def test_debit_credit_and_order_for_school(self):
         self._create_orders_for_user(self.school_1)

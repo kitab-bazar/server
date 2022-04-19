@@ -5,6 +5,7 @@ from utils.graphene.tests import GraphQLTestCase
 
 from apps.user.models import User
 from apps.order.models import Order, OrderWindow
+from apps.book.models import Book
 
 from apps.user.factories import UserFactory
 from apps.book.factories import BookFactory, WishListFactory
@@ -255,23 +256,49 @@ class TestOrder(GraphQLTestCase):
         order5 = OrderFactory.create(created_by=user, status=Order.Status.IN_TRANSIT)
 
         # Order 1 (Pending)
-        BookOrderFactory.create(order=order1, book=book1, quantity=1)
-        BookOrderFactory.create(order=order1, book=book2, quantity=10)
+        BookOrderFactory.create(
+            order=order1, book=book1, quantity=1, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order1, book=book2, quantity=10, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
         # Order 2 (Pending)
-        BookOrderFactory.create(order=order2, book=book1, quantity=10)
-        BookOrderFactory.create(order=order2, book=book2, quantity=10)
-        BookOrderFactory.create(order=order2, book=book3, quantity=30)
+        BookOrderFactory.create(
+            order=order2, book=book1, quantity=10, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order2, book=book2, quantity=10, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+            )
+        BookOrderFactory.create(
+            order=order2, book=book3, quantity=30, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
         # Order 3 (CANCELLED)
-        BookOrderFactory.create(order=order3, book=book1, quantity=20)
-        BookOrderFactory.create(order=order3, book=book1, quantity=20)
+        BookOrderFactory.create(
+            order=order3, book=book1, quantity=20, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order3, book=book1, quantity=20, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
         # Order 4 (COMPLETED)
-        BookOrderFactory.create(order=order4, book=book1, quantity=20)
-        BookOrderFactory.create(order=order4, book=book2, quantity=5)
-        BookOrderFactory.create(order=order4, book=book3, quantity=2)
+        BookOrderFactory.create(
+            order=order4, book=book1, quantity=20, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order4, book=book2, quantity=5, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order4, book=book3, quantity=2, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
         # Order 5 (IN_TRANSIT)
-        BookOrderFactory.create(order=order5, book=book1, quantity=20)
-        BookOrderFactory.create(order=order5, book=book2, quantity=5)
-        BookOrderFactory.create(order=order5, book=book3, quantity=2)
+        BookOrderFactory.create(
+            order=order5, book=book1, quantity=20, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order5, book=book2, quantity=5, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order5, book=book3, quantity=2, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
 
         self.force_login(user)
         content = self.query_check(self.ORDER_SUMMARY_QUERY)['data']['orderSummary']

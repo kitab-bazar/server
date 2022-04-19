@@ -8,6 +8,7 @@ from apps.user.factories import UserFactory
 from apps.publisher.factories import PublisherFactory
 from apps.book.factories import BookFactory
 from apps.order.factories import BookOrderFactory, OrderFactory
+from apps.book.models import Book
 
 
 class TestNotificationForOrder(GraphQLTestCase):
@@ -56,7 +57,9 @@ class TestNotificationForOrder(GraphQLTestCase):
         self.publisher_user.save()
 
         self.order = OrderFactory(created_by=self.individual_user)
-        BookOrderFactory.create(book=self.book, order=self.order, quantity=1)
+        BookOrderFactory.create(
+            book=self.book, order=self.order, quantity=1, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
 
         super().setUp()
 
