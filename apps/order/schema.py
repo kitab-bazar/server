@@ -109,7 +109,10 @@ class BookOrderType(DjangoObjectType):
 
     class Meta:
         model = BookOrder
-        fields = ('id', 'title', 'price', 'quantity', 'isbn', 'edition', 'price', 'image', 'language', 'grade',)
+        fields = (
+            'id', 'title', 'price', 'quantity', 'isbn',
+            'edition', 'price', 'image', 'language', 'grade', 'publisher'
+        )
     image = graphene.Field(FileFieldType)
 
 
@@ -158,7 +161,7 @@ class OrderType(DjangoObjectType):
 
     @staticmethod
     def resolve_book_orders(root, info, **kwargs):
-        return root.book_order
+        return root.book_order.select_related('publisher')
 
     @staticmethod
     def resolve_total_quantity(root, info, **kwargs):

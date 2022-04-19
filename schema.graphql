@@ -236,6 +236,7 @@ type BookOrderType {
   isbn: String!
   edition: String!
   image: FileFieldType
+  publisher: PublisherType!
   language: BookLanguageEnum
   grade: BookGradeEnum
   gradeDisplay: EnumDescription
