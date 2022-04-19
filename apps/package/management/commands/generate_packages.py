@@ -1,5 +1,4 @@
 from django.conf import settings
-import tempfile
 from django.core.files.base import File
 import csv
 from django.db import transaction

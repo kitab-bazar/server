@@ -58,7 +58,8 @@ class TestNotificationForOrder(GraphQLTestCase):
 
         self.order = OrderFactory(created_by=self.individual_user)
         BookOrderFactory.create(
-            book=self.book, order=self.order, quantity=1, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+            book=self.book, order=self.order, quantity=1,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
         )
 
         super().setUp()
@@ -68,7 +69,9 @@ class TestNotificationForOrder(GraphQLTestCase):
         self.force_login(self.moderator_user)
         minput = {'status': Order.Status.CANCELLED.name}
         with self.captureOnCommitCallbacks(execute=True):
-            content = self.query_check(self.UPDATE_ORDER_QUERY, variables={'id': self.order.id}, minput=minput, okay=True)
+            content = self.query_check(
+                self.UPDATE_ORDER_QUERY, variables={'id': self.order.id}, minput=minput, okay=True
+            )
         self.assertEqual(content['data']['updateOrder']['result']['status'], Order.Status.CANCELLED.name)
 
         # Test publisher should not get notification

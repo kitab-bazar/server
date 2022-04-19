@@ -63,13 +63,16 @@ class TestOrderState(TestPermissions):
 
         # Create 4 book orders each having 5 quantity and 500 price
         BookOrderFactory.create(
-            order=order_1, book=self.book_1, quantity=5, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+            order=order_1, book=self.book_1, quantity=5,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
         )
         BookOrderFactory.create(
-            order=order_2, book=self.book_2, quantity=5, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+            order=order_2, book=self.book_2, quantity=5,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
         )
         BookOrderFactory.create(
-            order=order_3, book=self.book_3, quantity=5, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+            order=order_3, book=self.book_3, quantity=5,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
         )
         super().setUp()
 
@@ -117,7 +120,8 @@ class TestOrderState(TestPermissions):
     def test_school_admin_can_see_their_stat_only(self):
         order = OrderFactory.create(created_by=self.school_admin_user, status=Order.Status.COMPLETED)
         BookOrderFactory.create(
-            order=order, book=self.book_1, quantity=10, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+            order=order, book=self.book_1, quantity=10,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
         )
         self.force_login(self.school_admin_user)
         content = self.query_check(self.order_stat)
@@ -128,7 +132,8 @@ class TestOrderState(TestPermissions):
     def test_individual_user_can_see_their_stat_only(self):
         order = OrderFactory.create(created_by=self.individual_user, status=Order.Status.COMPLETED)
         BookOrderFactory.create(
-            order=order, book=self.book_1, quantity=30, grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+            order=order, book=self.book_1, quantity=30,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
         )
         self.force_login(self.individual_user)
         content = self.query_check(self.order_stat)
