@@ -29,6 +29,7 @@ from .filters import (
     OrderActivityLogFilterSet,
 )
 from .enums import OrderStatusEnum, OrderWindowTypeEnum
+from apps.book.enums import BookGradeEnum, BookLanguageEnum
 
 
 def get_cart_items_qs(info):
@@ -100,9 +101,15 @@ class CartType(CustomDjangoListObjectType, CartGrandTotalType):
 
 
 class BookOrderType(DjangoObjectType):
+    grade = graphene.Field(BookGradeEnum)
+    grade_display = EnumDescription(source='get_grade_display')
+
+    language = graphene.Field(BookLanguageEnum)
+    language_display = EnumDescription(source='get_language_display')
+
     class Meta:
         model = BookOrder
-        fields = ('id', 'title', 'price', 'quantity', 'isbn', 'edition', 'price', 'image')
+        fields = ('id', 'title', 'price', 'quantity', 'isbn', 'edition', 'price', 'image', 'language', 'grade',)
     image = graphene.Field(FileFieldType)
 
 
