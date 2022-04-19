@@ -2,7 +2,7 @@ import django_filters
 from apps.user.models import User
 from django.db.models import Q
 
-from utils.graphene.filters import MultipleInputFilter
+from utils.graphene.filters import MultipleInputFilter, IDListFilter
 
 from .enums import UserTypeEnum
 
@@ -13,9 +13,9 @@ class UserFilter(django_filters.FilterSet):
     order_mismatch_users = django_filters.rest_framework.BooleanFilter(
         method='filter_order_mismatch_users', initial=True
     )
-    provinces = django_filters.CharFilter(method='filter_provinces')
-    districts = django_filters.CharFilter(method='filter_districts')
-    municipalities = django_filters.CharFilter(method='filter_municipalities')
+    provinces = IDListFilter(method='filter_provinces')
+    districts = IDListFilter(method='filter_districts')
+    municipalities = IDListFilter(method='filter_municipalities')
 
     class Meta:
         model = User

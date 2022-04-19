@@ -844,8 +844,8 @@ type ModeratorQueryType {
   payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
   user(id: ID!): ModeratorQueryUserType
-  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, provinces: String, districts: String, municipalities: String, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
-  deactivatedUsers(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, provinces: String, districts: String, municipalities: String, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
+  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, provinces: [ID!], districts: [ID!], municipalities: [ID!], page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
+  deactivatedUsers(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, provinces: [ID!], districts: [ID!], municipalities: [ID!], page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
 }
 
 type ModeratorQueryUserListType {
