@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _, gettext
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.db import models
+from apps.book.models import Book
 
 
 class OrderWindow(models.Model):
@@ -140,6 +141,14 @@ class BookOrder(models.Model):
         related_name='publisher',
         verbose_name=_('Publisher')
     )
+    language = models.CharField(
+        choices=Book.LanguageType.choices, max_length=40,
+        verbose_name=_('Language'), blank=True, null=True
+    )
+    grade = models.CharField(
+        choices=Book.Grade.choices, max_length=40,
+        verbose_name=_('Grade'), blank=True, null=True
+    )
 
     class Meta:
         verbose_name = _('Book Order')
@@ -159,6 +168,8 @@ class BookOrder(models.Model):
             'isbn',
             'edition',
             'image',
+            'grade',
+            'language'
         ]:
             setattr(self, attr, getattr(self.book, attr))
         self.total_price = self.price * self.quantity
