@@ -13,6 +13,9 @@ class UserFilter(django_filters.FilterSet):
     order_mismatch_users = django_filters.rest_framework.BooleanFilter(
         method='filter_order_mismatch_users', initial=True
     )
+    provinces = django_filters.CharFilter(method='filter_provinces')
+    districts = django_filters.CharFilter(method='filter_districts')
+    municipalities = django_filters.CharFilter(method='filter_municipalities')
 
     class Meta:
         model = User
@@ -37,3 +40,30 @@ class UserFilter(django_filters.FilterSet):
             return queryset.filter(outstanding_balance__gte=0)
 
         return queryset.filter(outstanding_balance__lt=0).distinct()
+
+    def filter_provinces(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(
+            Q(school__province__in=value) |
+            Q(institution__province__in=value) |
+            Q(publisher__province__in=value)
+        )
+
+    def filter_districts(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(
+            Q(school__district__in=value) |
+            Q(institution__district__in=value) |
+            Q(publisher__district__in=value)
+        )
+
+    def filter_municipalities(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(
+            Q(school__municipality__in=value) |
+            Q(institution__municipality__in=value) |
+            Q(publisher__municipality__in=value)
+        )
