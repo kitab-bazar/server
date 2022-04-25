@@ -52,13 +52,13 @@ class Command(BaseCommand):
         total_school_book_quantity_list,
     ):
 
-        def _append_or_update_incentive(incentive_list, book, publisher_id):
+        def _append_or_update_incentive(incentive_list, book, internal_code):
             if incentive_list:
                 for kitab_incentive in incentive_list:
                     if (
                         book['book_name'] == kitab_incentive.get('book_name') and
                         book['publisher_name'] == kitab_incentive.get('publisher_name') and
-                        book['publisher_id'] == publisher_id
+                        book['internal_code'] == internal_code
                     ):
                         # Increment quantity by one
                         kitab_incentive['quantity'] += 1
@@ -110,12 +110,12 @@ class Command(BaseCommand):
 
                 incentive_key = f'book_list_{total_school_book_quantity}'
                 for book in INCENTIVE_BOOKS[incentive_key]:
-                    _append_or_update_incentive(incentive_list, book, package.publisher.id)
+                    _append_or_update_incentive(incentive_list, book, package.publisher.internal_code)
 
         # To add sum formula at bottom
         book_incentive_grand_total = 0
         for incentive in incentive_list:
-            if incentive['publisher_id'] == package.publisher.id:
+            if incentive['internal_code'] == package.publisher.internal_code:
                 sub_total = incentive['price'] * incentive['quantity']
                 ws2.append(
                     [

@@ -4,6 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 class Publisher(models.Model):
 
+    class InternalCodeType(models.TextChoices):
+        ENGLISH = 'parichaya', _('Parichaya')
+        NEPALI = 'bhundipuran', _('Bhundipuran')
+        MAITHALI = 'kathalaya', _('Kathalaya')
+        THARU = 'ekata', _('Ekata')
+
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name")
@@ -35,6 +41,11 @@ class Publisher(models.Model):
         blank=True,
         unique=True,
         verbose_name=_("Vat number")
+    )
+    # This is used for incentive generation only
+    internal_code = models.CharField(
+        choices=InternalCodeType.choices, max_length=40, verbose_name=_('Internal code'),
+        default=None, null=True
     )
 
     class Meta:
