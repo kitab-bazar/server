@@ -351,7 +351,7 @@ class TestPackageGeneration(GraphQLTestCase):
         self.assertEqual(content['publisherPackages']['results'][0]['status'], PublisherPackage.Status.PENDING.name)
         self.assertEqual(len(content['publisherPackages']['results']), 1)
         self.assertEqual(len(content['publisherPackages']['results'][0]['relatedOrders']), 2)
-        self.assertEqual(len(content['publisherPackages']['results'][0]['publisherPackageBooks']['results']), 2)
+        self.assertEqual(len(content['publisherPackages']['results'][0]['publisherPackageBooks']['results']), 1)
         self.assertEqual(content['publisherPackages']['results'][0]['totalPrice'], 2000)
         self.assertEqual(content['publisherPackages']['results'][0]['totalQuantity'], 20)
 
@@ -362,7 +362,7 @@ class TestPackageGeneration(GraphQLTestCase):
 
         self.assertEqual(len(content['publisherPackages']['results']), 1)
         self.assertEqual(len(content['publisherPackages']['results'][0]['relatedOrders']), 6)
-        self.assertEqual(len(content['publisherPackages']['results'][0]['publisherPackageBooks']['results']), 6)
+        self.assertEqual(len(content['publisherPackages']['results'][0]['publisherPackageBooks']['results']), 3)
         self.assertEqual(content['publisherPackages']['results'][0]['totalPrice'], 6000)
         self.assertEqual(content['publisherPackages']['results'][0]['totalQuantity'], 60)
 

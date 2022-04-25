@@ -99,7 +99,6 @@ class Command(BaseCommand):
         ws2.append([
             "Book Name", "Unit Price", "Quantity", "Sub Total Price"
         ])
-        self.stdout.write(self.style.SUCCESS(f'{list(total_school_book_quantity_list)} \n\n'))
         for total_school_book_quantity in total_school_book_quantity_list:
             # A school can can aximum 120 incentives
             if total_school_book_quantity >= INCENTIVE_LIMIT:
@@ -109,11 +108,9 @@ class Command(BaseCommand):
                     # If quantity is less then 30 school gets incentive in 1:4 ratio
                     total_school_book_quantity = total_school_book_quantity * 4
 
-                if total_school_book_quantity > 0:
-                    incentive_key = f'book_list_{total_school_book_quantity}'
-                if incentive_key:
-                    for book in INCENTIVE_BOOKS[incentive_key]:
-                        _append_or_update_incentive(incentive_list, book, package.publisher.id)
+                incentive_key = f'book_list_{total_school_book_quantity}'
+                for book in INCENTIVE_BOOKS[incentive_key]:
+                    _append_or_update_incentive(incentive_list, book, package.publisher.id)
 
         # To add sum formula at bottom
         book_incentive_grand_total = 0
