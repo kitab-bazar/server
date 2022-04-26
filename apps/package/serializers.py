@@ -87,10 +87,10 @@ class SchoolPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer)
         status = validated_data.get('status')
         instance.related_orders.update(status=status)
         _order_status_map = {
-            InstitutionPackage.Status.PENDING.value: Order.Status.PENDING.value,
-            InstitutionPackage.Status.IN_TRANSIT.value: Order.Status.IN_TRANSIT.value,
-            InstitutionPackage.Status.ISSUE.value: Order.Status.PENDING.value,
-            InstitutionPackage.Status.DELIVERED.value: Order.Status.COMPLETED.value,
+            SchoolPackage.Status.PENDING.value: Order.Status.PENDING.value,
+            SchoolPackage.Status.IN_TRANSIT.value: Order.Status.IN_TRANSIT.value,
+            SchoolPackage.Status.ISSUE.value: Order.Status.PENDING.value,
+            SchoolPackage.Status.DELIVERED.value: Order.Status.COMPLETED.value,
         }
         Order.objects.filter(
             order_code__in=instance.related_orders.all().values_list('order_code', flat=True)
@@ -106,6 +106,52 @@ class CourierPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer
 
     def create(self, data):
         raise Exception('Not allowed')
+
+    def update(self, instance, validated_data):
+        status = validated_data.get('status')
+        _order_status_map = {
+            CourierPackage.Status.PENDING.value: Order.Status.PENDING.value,
+            CourierPackage.Status.IN_TRANSIT.value: Order.Status.IN_TRANSIT.value,
+            CourierPackage.Status.ISSUE.value: Order.Status.PENDING.value,
+            CourierPackage.Status.DELIVERED.value: Order.Status.COMPLETED.value,
+        }
+
+        _school_packages_status_map = {
+            CourierPackage.Status.PENDING.value: SchoolPackage.Status.PENDING.value,
+            CourierPackage.Status.IN_TRANSIT.value: SchoolPackage.Status.IN_TRANSIT.value,
+            CourierPackage.Status.ISSUE.value: SchoolPackage.Status.ISSUE.value,
+            CourierPackage.Status.DELIVERED.value: SchoolPackage.Status.DELIVERED.value,
+        }
+
+        _update_institution_package_status_map = {
+            CourierPackage.Status.PENDING.value: InstitutionPackage.Status.PENDING.value,
+            CourierPackage.Status.IN_TRANSIT.value: InstitutionPackage.Status.IN_TRANSIT.value,
+            CourierPackage.Status.ISSUE.value: InstitutionPackage.Status.ISSUE.value,
+            CourierPackage.Status.DELIVERED.value: InstitutionPackage.Status.DELIVERED.value,
+        }
+
+        # Update school packages and orders
+        school_courier_package_ids = instance.courier_package.all().values_list('id', flat=True)
+        SchoolPackage.objects.filter(
+            id__in=school_courier_package_ids
+        ).update(
+            status=_school_packages_status_map.get(status),
+        )
+        Order.objects.filter(school_related_orders__in=school_courier_package_ids).update(
+            status=_order_status_map.get(status)
+        )
+
+        # Update institution packages and orders
+        institution_courier_package_ids = instance.institution_courier_package.all().values_list('id', flat=True)
+        InstitutionPackage.objects.filter(
+            id__in=institution_courier_package_ids
+        ).update(
+            status=_update_institution_package_status_map.get(status),
+        )
+        Order.objects.filter(institution_related_orders__in=institution_courier_package_ids).update(
+            status=_order_status_map.get(status)
+        )
+        return super().update(instance, validated_data)
 
 
 class InstitutionPackageUpdateSerializer(UpdateLogMixin, serializers.ModelSerializer):

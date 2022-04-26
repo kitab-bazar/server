@@ -410,6 +410,8 @@ type CourierPackageType {
   statusDisplay: EnumDescription
   typeDisplay: EnumDescription
   logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
+  schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
+  institutionPackages(status: [InstitutionPackageStatusEnum!], institutions: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageListType
   schoolCourierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
   institutionCourierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageBookListType
   relatedOrders: [OrderType!]
