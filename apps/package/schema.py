@@ -41,6 +41,7 @@ from apps.package.enums import (
 from utils.graphene.enums import EnumDescription
 from apps.common.schema import ActivityFileType
 from apps.order.schema import OrderType
+from apps.order.models import Order
 
 
 def publisher_package_qs(info):
@@ -298,6 +299,18 @@ class CourierPackageType(DjangoObjectType):
             page_size_query_param='pageSize'
         )
     )
+    school_packages = DjangoPaginatedListObjectField(
+        SchoolPackageListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+    institution_packages = DjangoPaginatedListObjectField(
+        InstitutionPackageListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
     school_courier_package_books = DjangoPaginatedListObjectField(
         SchoolPackageBookListType,
         pagination=PageGraphqlPagination(
@@ -323,15 +336,23 @@ class CourierPackageType(DjangoObjectType):
     @staticmethod
     def resolve_school_courier_package_books(root, info, **kwargs) -> QuerySet:
         # TODO: Use dataloader
-        return root.courier_package.first().school_package.all()
+        return SchoolPackageBook.objects.filter(school_package__courier_package=root.id)
 
     @staticmethod
     def resolve_related_orders(root, info, **kwargs) -> QuerySet:
         # TODO: use dataloader
+        school_package_ids = SchoolPackage.objects.filter(courier_package=root.id).values_list('id', flat=True)
         if root.type == CourierPackage.Type.SCHOOL.value:
-            return root.courier_package.first().related_orders.all()
+            return Order.objects.filter(
+                school_related_orders__in=school_package_ids
+            )
+            # return root.courier_package.first().related_orders.all()
         elif root.type == CourierPackage.Type.INSTITUTION.value:
+            institution_package_ids = InstitutionPackage.objects.filter(courier_package=root.id).values_list('id', flat=True)
             return root.institution_courier_package.first().related_orders.all()
+            return Order.objects.filter(
+                institution_related_orders__in=institution_package_ids
+            )
         return CourierPackage.objects.none()
 
     class Meta:

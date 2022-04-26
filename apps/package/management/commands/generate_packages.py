@@ -50,6 +50,7 @@ class Command(BaseCommand):
         self, package,
         related_book_orders,
         total_school_book_quantity_list,
+        for_school
     ):
 
         def _append_or_update_incentive(incentive_list, book, internal_code):
@@ -91,46 +92,48 @@ class Command(BaseCommand):
                 book_order['total_price'] if book_order['total_price'] else 0
             ])
             book_grand_total += book_order['total_quantity'] * book_order['book__price']
-        ws1.append([
-            "", "", "", "", "", "", "", "", "Grand Total Price", book_grand_total
-        ])
-        incentive_list = []
-        ws2 = wb.create_sheet("Incentive Orders")
-        ws2.append([
-            "Book Name", "Unit Price", "Quantity", "Sub Total Price"
-        ])
-        for total_school_book_quantity in total_school_book_quantity_list:
-            # A school can can aximum 120 incentives
-            if total_school_book_quantity >= INCENTIVE_LIMIT:
-                if total_school_book_quantity > 30:
-                    total_school_book_quantity = 120
-                else:
-                    # If quantity is less then 30 school gets incentive in 1:4 ratio
-                    total_school_book_quantity = total_school_book_quantity * 4
 
-                incentive_key = f'book_list_{total_school_book_quantity}'
-                for book in INCENTIVE_BOOKS[incentive_key]:
-                    _append_or_update_incentive(incentive_list, book, package.publisher.internal_code)
+        if for_school:
+            ws1.append([
+                "", "", "", "", "", "", "", "", "Grand Total Price", book_grand_total
+            ])
+            incentive_list = []
+            ws2 = wb.create_sheet("Incentive Orders")
+            ws2.append([
+                "Book Name", "Unit Price", "Quantity", "Sub Total Price"
+            ])
+            for total_school_book_quantity in total_school_book_quantity_list:
+                # A school can can aximum 120 incentives
+                if total_school_book_quantity >= INCENTIVE_LIMIT:
+                    if total_school_book_quantity > 30:
+                        total_school_book_quantity = 120
+                    else:
+                        # If quantity is less then 30 school gets incentive in 1:4 ratio
+                        total_school_book_quantity = total_school_book_quantity * 4
 
-        # To add sum formula at bottom
-        book_incentive_grand_total = 0
-        for incentive in incentive_list:
-            if incentive['internal_code'] == package.publisher.internal_code:
-                sub_total = incentive['price'] * incentive['quantity']
-                ws2.append(
-                    [
-                        incentive['book_name'], incentive['price'],
-                        incentive['quantity'], sub_total
-                    ]
-                )
-                book_incentive_grand_total += sub_total
-        ws2.append([
-            "", "", "Grand Total Price", book_incentive_grand_total
-        ])
+                    incentive_key = f'book_list_{total_school_book_quantity}'
+                    for book in INCENTIVE_BOOKS[incentive_key]:
+                        _append_or_update_incentive(incentive_list, book, package.publisher.internal_code)
+
+            # To add sum formula at bottom
+            book_incentive_grand_total = 0
+            for incentive in incentive_list:
+                if incentive['internal_code'] == package.publisher.internal_code:
+                    sub_total = incentive['price'] * incentive['quantity']
+                    ws2.append(
+                        [
+                            incentive['book_name'], incentive['price'],
+                            incentive['quantity'], sub_total
+                        ]
+                    )
+                    book_incentive_grand_total += sub_total
+            ws2.append([
+                "", "", "Grand Total Price", book_incentive_grand_total
+            ])
         fileToUpload = io.BytesIO(save_virtual_workbook(wb))
         package.orders_export_file.save(filename, File(fileToUpload))
 
-    def _create_publihser_packages(self, latest_order_window, orders):
+    def _create_publihser_packages(self, latest_order_window, orders, for_school=False):
         # ------------------------------------------------------------------
         # Create publihser packages
         # ------------------------------------------------------------------
@@ -175,7 +178,12 @@ class Command(BaseCommand):
             )
             package.related_orders.set(related_orders)
             # Generate related orders export file
-            self._generate_related_orders_export(package, related_book_orders, total_school_book_quantity_list)
+            self._generate_related_orders_export(
+                package,
+                related_book_orders,
+                total_school_book_quantity_list,
+                for_school,
+            )
             PublisherPackageBook.objects.bulk_create(
                 [
                     PublisherPackageBook(
@@ -354,12 +362,12 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'{institution_package_count} Institution packages created.'))
 
     def _generate_school_packages(self, latest_order_window, orders):
-        self._create_publihser_packages(latest_order_window, orders)
+        self._create_publihser_packages(latest_order_window, orders, for_school=True)
         self._create_courier_packages_for_school(latest_order_window, orders)
         self._create_school_packages(latest_order_window, orders)
 
     def _generate_institution_packages(self, latest_order_window, orders):
-        self._create_publihser_packages(latest_order_window, orders)
+        self._create_publihser_packages(latest_order_window, orders, for_school=False)
         self._create_courier_packages_for_institution(latest_order_window, orders)
         self._create_institution_packages(latest_order_window, orders)
 
