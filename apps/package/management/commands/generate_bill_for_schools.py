@@ -4,7 +4,7 @@ import os
 from django.db import transaction
 from django.db.models import Sum
 from django.core.management.base import BaseCommand
-from apps.order.models import OrderWindow
+from apps.order.models import OrderWindow, BookOrder
 from apps.package.models import SchoolPackage
 from apps.package.seed.incentive import INCENTIVE_BOOKS
 
@@ -37,50 +37,51 @@ class Command(BaseCommand):
             sheet.append([])
             sheet.append(['Book Name', 'Publisher Name', 'Quantity', 'Price', 'Sub Total', 'Total'])
 
-            for order in package.related_orders.all():
-                total_book_order_price = 0
-                total_book_order_quantity = 0
-                for book_order in order.book_order.all():
-                    sub_total = book_order.quantity * book_order.price
+            total_book_order_price = 0
+            total_book_order_quantity = 0
+            for book_order in BookOrder.objects.filter(order__in=package.related_orders.values_list('id', flat=True)):
+                sub_total = book_order.quantity * book_order.price
+                sheet.append([
+                    book_order.title,
+                    book_order.publisher.name,
+                    book_order.quantity,
+                    book_order.price,
+                    sub_total,
+                    book_order.total_price
+                ])
+                row += 1
+                total_book_order_price += sub_total
+                total_book_order_quantity += book_order.quantity
+
+            sheet.append([])
+            sheet.append(['', '', 'Total Quantity', total_book_order_quantity, 'Total Price', total_book_order_price])
+            sheet.append([])
+            sheet.append([])
+            sheet.append([])
+            incentive_detail = f'{package.school.school} / {package.school.school.district} / {package.school.school.municipality} Incentive books' # noqa
+            sheet.append([incentive_detail])
+            sheet.append([])
+
+            sheet.append(['Book Name', 'Publisher Name', 'Quantity', 'Price', 'Sub Total'])
+            incentive = package.related_orders.all().aggregate(
+                total_quantity=Sum('book_order__quantity')
+            )['total_quantity']
+            if incentive >= 10:
+                total_incentive_price = 0
+                total_incentive_quantity = 0
+                incentive_key = f'book_list_{incentive * 4}'
+                for book in INCENTIVE_BOOKS[incentive_key]:
                     sheet.append([
-                        book_order.title,
-                        book_order.publisher.name,
-                        book_order.quantity,
-                        book_order.price,
-                        sub_total,
-                        book_order.total_price
+                        book['book_name'],
+                        book['publisher_name'],
+                        book['quantity'],
+                        book['price'],
+                        book['quantity'] * book['price']
                     ])
-                    row += 1
-                    total_book_order_price += sub_total
-                    total_book_order_quantity += book_order.quantity
-
-                sheet.append([])
-                sheet.append(['', '', 'Total Quantity', total_book_order_quantity, 'Total Price', total_book_order_price])
-                sheet.append([])
-                sheet.append([])
-                sheet.append([])
-                incentive_detail = f'{package.school.school} / {package.school.school.district} / {package.school.school.municipality} Incentive books' # noqa
-                sheet.append([incentive_detail])
-                sheet.append([])
-
-                sheet.append(['Book Name', 'Publisher Name', 'Quantity', 'Price', 'Sub Total'])
-                incentive = order.book_order.all().aggregate(total_quantity=Sum('quantity'))['total_quantity']
-                if incentive >= 10:
-                    total_incentive_price = 0
-                    total_incentive_quantity = 0
-                    incentive_key = f'book_list_{incentive * 4}'
-                    for book in INCENTIVE_BOOKS[incentive_key]:
-                        sheet.append([
-                            book['book_name'],
-                            book['publisher_name'],
-                            book['quantity'],
-                            book['price'],
-                            book['quantity'] * book['price']
-                        ])
-                        total_incentive_price += book['quantity'] * book['price']
-                        total_incentive_quantity += book['quantity']
-                sheet.append([])
-                sheet.append(['', 'Total Quantity', total_incentive_quantity, 'Total Price', total_incentive_price])
+                    total_incentive_price += book['quantity'] * book['price']
+                    total_incentive_quantity += book['quantity']
+            sheet.append([])
+            sheet.append(['', 'Total Quantity', total_incentive_quantity, 'Total Price', total_incentive_price])
 
         # Make sure generated directory exists
         try:
