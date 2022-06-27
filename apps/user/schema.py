@@ -9,6 +9,7 @@ from utils.graphene.enums import EnumDescription
 
 from apps.payment.schema import Query as PaymentQuery
 from apps.order.schema import OrderActivityLogQuery
+from apps.common.schema import ReportQuery
 
 from .models import User
 from .filters import UserFilter
@@ -142,6 +143,7 @@ class ModeratorQueryType(
     # ---Start --Moderator scopped entities
     ModeratorUserQueryType,
     PaymentQuery,
+    ReportQuery,
     # ---End --Moderator scopped entities
     OrderActivityLogQuery,
     graphene.ObjectType
