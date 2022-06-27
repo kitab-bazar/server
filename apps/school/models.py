@@ -8,15 +8,15 @@ class School(models.Model):
         verbose_name=_("Name")
     )
     province = models.ForeignKey(
-        'common.Province', verbose_name=_('Province'), related_name='%(app_label)s_%(class)s_province',
+        'common.Province', verbose_name=_('Province'), related_name='schools',
         on_delete=models.PROTECT
     )
     district = models.ForeignKey(
-        'common.District', verbose_name=_('District'), related_name='%(app_label)s_%(class)s_district',
+        'common.District', verbose_name=_('District'), related_name='schools',
         on_delete=models.PROTECT
     )
     municipality = models.ForeignKey(
-        'common.Municipality', verbose_name=_('Municipality'), related_name='%(app_label)s_%(class)s_municipality',
+        'common.Municipality', verbose_name=_('Municipality'), related_name='schools',
         on_delete=models.PROTECT
     )
     ward_number = models.IntegerField(verbose_name=_('Ward Number'))

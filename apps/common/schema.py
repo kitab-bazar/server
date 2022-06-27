@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
-from django.db.models import Sum, Count, F
+from django.db.models import Sum, Count, F, Q
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
@@ -14,7 +14,8 @@ from apps.common.filters import (
 )
 from apps.user.models import User
 from apps.book.models import Book
-from apps.order.models import Order, BookOrder
+from apps.order.models import Order, BookOrder, OrderWindow
+from apps.package.models import SchoolPackage
 
 
 class ProvinceType(DjangoObjectType):
@@ -104,15 +105,51 @@ class TopSchoolType(graphene.ObjectType):
 
 
 class UserPerDistrictType(graphene.ObjectType):
-    district_name = graphene.String()
+    name = graphene.String()
     verified_users = graphene.Int()
     unverified_users = graphene.Int()
+
+
+class BooksOrderedAndIncentivesPerDistrict(graphene.ObjectType):
+    name = graphene.String()
+    no_of_books_ordered = graphene.Int()
+    no_of_incentive_books = graphene.Int()
+
+
+class DeliveriesPerDistrictType(graphene.ObjectType):
+    name = graphene.String()
+    school_deliveried = graphene.Int()
+
+
+class PaymentPerOrderWindowType(graphene.ObjectType):
+    title = graphene.String()
+    payment = graphene.Int()
+
+
+class BooksPerPublisherType(graphene.ObjectType):
+    publisher_name = graphene.String()
+    number_of_books = graphene.Int()
+
+
+class BooksPerCategoryType(graphene.ObjectType):
+    category = graphene.String()
+    number_of_books = graphene.Int()
+
+
+class BooksPerGradeType(graphene.ObjectType):
+    grade = graphene.String()
+    number_of_books = graphene.Int()
+
+
+class BooksPerLanguageType(graphene.ObjectType):
+    language = graphene.String()
+    number_of_books = graphene.Int()
 
 
 class ReportType(graphene.ObjectType):
     number_of_schools_registered = graphene.Int(description='Number of school registered')
     number_of_schools_verified = graphene.Int(description='Number of schools verified')
-    number_of_schools_unverfied = graphene.Int(description='Number of schools unVerfied')
+    number_of_schools_unverified = graphene.Int(description='Number of schools unVerfied')
     number_of_publishers = graphene.Int(description='Number of publishers')
     number_of_books_on_the_platform = graphene.Int(description='Number of books on the Platform')
     number_of_incentive_books = graphene.Int(description='Number of Incentive books')
@@ -125,6 +162,34 @@ class ReportType(graphene.ObjectType):
     users_per_district = graphene.List(
         UserPerDistrictType, description='Number of uverified users and verified users per district'
     )
+    books_ordered_and_incentives_per_district = graphene.List(
+        BooksOrderedAndIncentivesPerDistrict,
+        description='Number of books ordered and number of books incentive distributed per district'
+    )
+    deliveries_per_district = graphene.List(
+        DeliveriesPerDistrictType,
+        description='Number of school deliveries by district'
+    )
+    payment_per_order_window = graphene.List(
+        PaymentPerOrderWindowType,
+        description='Total payment per order window'
+    )
+    books_per_publisher = graphene.List(
+        BooksPerPublisherType,
+        description='Number of books per publisher'
+    )
+    books_per_category = graphene.List(
+        BooksPerCategoryType,
+        description='Number of books per category'
+    )
+    books_per_grade = graphene.List(
+        BooksPerGradeType,
+        description='Number of books per grade'
+    )
+    books_per_language = graphene.List(
+        BooksPerLanguageType,
+        description='Number of books per language'
+    )
 
 
 class ReportQuery(graphene.ObjectType):
@@ -135,6 +200,9 @@ class ReportQuery(graphene.ObjectType):
         user_qs = User.objects.all()
         book_qs = Book.objects.filter(is_published=True)
         order_qs = Order.objects.filter(status=Order.Status.COMPLETED.value)
+        school_package_qs = SchoolPackage.objects.filter(status=SchoolPackage.Status.DELIVERED.value)
+        district_qs = District.objects.all()
+        order_window_qs = OrderWindow.objects.filter(orders__status=Order.Status.COMPLETED.value)
 
         return {
             'number_of_schools_registered': user_qs.filter(user_type=User.UserType.SCHOOL_ADMIN.value).count(),
@@ -143,13 +211,17 @@ class ReportQuery(graphene.ObjectType):
                 user_type=User.UserType.SCHOOL_ADMIN.value, is_verified=True
             ).count(),
 
-            'number_of_schools_unverfied': user_qs.filter(
+            'number_of_schools_unverified': user_qs.filter(
                 user_type=User.UserType.SCHOOL_ADMIN.value, is_verified=False
             ).count(),
 
             'number_of_publishers': user_qs.filter(user_type=User.UserType.PUBLISHER.value).count(),
 
             'number_of_books_on_the_platform': book_qs.count(),
+
+            'number_of_incentive_books': school_package_qs.filter(total_quantity__gte=10).aggregate(
+                total_incentive_books=Sum(F('total_quantity') * 4)
+            )['total_incentive_books'],
 
             'number_of_books_ordered': order_qs.aggregate(total=Sum('book_order__quantity'))['total'],
 
@@ -179,4 +251,42 @@ class ReportQuery(graphene.ObjectType):
                 book_ordered_count=Sum('order__book_order__quantity'),
                 school_name=F('school__name')
             ).order_by('-book_ordered_count')[:5].values('school_name', 'book_ordered_count'),
+
+            'users_per_district': district_qs.filter(
+                schools__school_user__isnull=False
+            ).values('name').annotate(
+                verified_users=Count('schools__school_user', filter=Q(schools__school_user__is_verified=True)),
+                unverified_users=Count('schools__school_user', filter=Q(schools__school_user__is_verified=False)),
+            ),
+
+            'books_ordered_and_incentives_per_district': district_qs.filter(
+                schools__school_user__school_packages__isnull=False
+            ).values('name').annotate(
+                no_of_books_ordered=Sum('schools__school_user__school_packages__total_quantity'),
+                no_of_incentive_books=F('no_of_books_ordered') * 4,
+            ),
+
+            'deliveries_per_district': district_qs.filter(
+                schools__school_user__school_packages__isnull=False,
+            ).values('name').annotate(school_deliveried=Count('schools__school_user__school_packages')),
+
+            'payment_per_order_window': order_window_qs.values('title').annotate(
+                payment=Sum('orders__book_order__price')
+            ),
+
+            'books_per_publisher': book_qs.values('publisher__name').annotate(
+                number_of_books=Count('id'), publisher_name=F('publisher__name')
+            ),
+
+            'books_per_category': book_qs.values('categories__name').annotate(
+                number_of_books=Count('id'), category=F('categories__name')
+            ),
+
+            'books_per_grade': book_qs.values('grade').annotate(
+                number_of_books=Count('id')
+            ),
+
+            'books_per_language': book_qs.values('language').annotate(
+                number_of_books=Count('id')
+            ),
         }

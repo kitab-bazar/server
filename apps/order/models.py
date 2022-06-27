@@ -187,7 +187,10 @@ class Order(models.Model):
         COMPLETED = 'completed', _('Completed')
         CANCELLED = 'cancelled', _('Cancelled')
 
-    assigned_order_window = models.ForeignKey(OrderWindow, null=True, blank=True, on_delete=models.SET_NULL)
+    assigned_order_window = models.ForeignKey(
+        OrderWindow, related_name='orders',
+        null=True, blank=True, on_delete=models.SET_NULL
+    )
     total_price = models.BigIntegerField(verbose_name=_('Total Price'))
     order_code = models.UUIDField(
         primary_key=False,
