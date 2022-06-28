@@ -118,7 +118,7 @@ class BooksOrderedAndIncentivesPerDistrict(graphene.ObjectType):
 
 class DeliveriesPerDistrictType(graphene.ObjectType):
     name = graphene.String()
-    school_deliveried = graphene.Int()
+    school_delivered = graphene.Int()
 
 
 class PaymentPerOrderWindowType(graphene.ObjectType):
@@ -268,7 +268,7 @@ class ReportQuery(graphene.ObjectType):
 
             'deliveries_per_district': district_qs.filter(
                 schools__school_user__school_packages__isnull=False,
-            ).values('name').annotate(school_deliveried=Count('schools__school_user__school_packages')),
+            ).values('name').annotate(school_delivered=Count('schools__school_user__school_packages')),
 
             'payment_per_order_window': order_window_qs.values('title').annotate(
                 payment=Sum('orders__book_order__price')
