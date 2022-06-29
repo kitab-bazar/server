@@ -157,6 +157,11 @@ class BooksAndCostPerSchool(graphene.ObjectType):
     total_cost = graphene.Int()
 
 
+class BookCategoriesPerOrderWindowType(graphene.ObjectType):
+    title = graphene.String()
+    categories = graphene.List(BooksPerCategoryType)
+
+
 class ReportType(graphene.ObjectType):
     number_of_schools_registered = graphene.Int(description='Number of school registered')
     number_of_schools_verified = graphene.Int(description='Number of schools verified')
@@ -209,6 +214,10 @@ class ReportType(graphene.ObjectType):
         BooksAndCostPerSchool,
         description='Number of books and total cost per school'
     )
+    book_categories_per_order_window = graphene.List(
+        BookCategoriesPerOrderWindowType,
+        description='Number of categories books ordered per order window'
+    )
 
 
 class ReportQuery(graphene.ObjectType):
@@ -246,6 +255,27 @@ class ReportQuery(graphene.ObjectType):
                         )
             return result
 
+        def get_book_categories_per_order_window():
+            order_windows_qs = order_window_qs.values('title').annotate(
+                category=F('orders__book_order__book__categories__name'),
+                number_of_books=Count('orders__book_order__book__categories__name'),
+            )
+            order_windows = []
+            for item in order_windows_qs:
+                order_windows.append(item['title'])
+            result = []
+            for order_window in list(set(order_windows)):
+                result.append({'title': order_window, 'categories': []})
+            for order_window in result:
+                for item in order_windows_qs:
+                    if order_window['title'] == item['title']:
+                        order_window['categories'].append(
+                            {
+                                'number_of_books': item['number_of_books'],
+                                'category': item['category'],
+                            }
+                        )
+            return result
 
         return {
             'number_of_schools_registered': user_qs.filter(user_type=User.UserType.SCHOOL_ADMIN.value).count(),
@@ -343,4 +373,6 @@ class ReportQuery(graphene.ObjectType):
                 school_name=F('school__name'),
                 total_cost=Sum('order__book_order__price')
             ),
+
+            'book_categories_per_order_window': get_book_categories_per_order_window(),
         }
