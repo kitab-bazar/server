@@ -146,6 +146,11 @@ class BooksPerLanguageType(graphene.ObjectType):
     number_of_books = graphene.Int()
 
 
+class BooksPerPublisherPerCategory(graphene.ObjectType):
+    publisher_name = graphene.String()
+    categories = graphene.List(BooksPerCategoryType)
+
+
 class BooksAndCostPerSchool(graphene.ObjectType):
     school_name = graphene.String()
     number_of_books_ordered = graphene.Int()
@@ -196,6 +201,10 @@ class ReportType(graphene.ObjectType):
         BooksPerLanguageType,
         description='Number of books per language'
     )
+    books_per_publisher_per_category = graphene.List(
+        BooksPerPublisherPerCategory,
+        description='Number of books per category for each publisher',
+    )
     books_and_cost_per_school = graphene.List(
         BooksAndCostPerSchool,
         description='Number of books and total cost per school'
@@ -213,6 +222,30 @@ class ReportQuery(graphene.ObjectType):
         school_package_qs = SchoolPackage.objects.filter(status=SchoolPackage.Status.DELIVERED.value)
         district_qs = District.objects.all()
         order_window_qs = OrderWindow.objects.filter(orders__status=Order.Status.COMPLETED.value)
+
+        def get_books_per_publisher_per_category():
+            books_per_publishers = book_qs.values('publisher__name').annotate(
+                publisher_name=F('publisher__name'),
+                number_of_books=Count('id'),
+                category=F('categories__name')
+            )
+            publishers = []
+            for item in books_per_publishers:
+                publishers.append(item['publisher_name'])
+            result = []
+            for publisher in list(set(publishers)):
+                result.append({'publisher_name': publisher, 'categories': []})
+            for publisher in result:
+                for books_per_publisher in books_per_publishers:
+                    if publisher['publisher_name'] == books_per_publisher['publisher_name']:
+                        publisher['categories'].append(
+                            {
+                                'number_of_books': books_per_publisher['number_of_books'],
+                                'category': books_per_publisher['category'],
+                            }
+                        )
+            return result
+
 
         return {
             'number_of_schools_registered': user_qs.filter(user_type=User.UserType.SCHOOL_ADMIN.value).count(),
@@ -299,6 +332,8 @@ class ReportQuery(graphene.ObjectType):
             'books_per_language': book_qs.values('language').annotate(
                 number_of_books=Count('id')
             ),
+
+            'books_per_publisher_per_category': get_books_per_publisher_per_category(),
 
             'books_and_cost_per_school': user_qs.filter(
                 user_type=User.UserType.SCHOOL_ADMIN.value,
