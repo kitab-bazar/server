@@ -161,6 +161,11 @@ input BookAuthorInputType {
   aboutAuthorNe: String
 }
 
+type BookCategoriesPerOrderWindowType {
+  title: String
+  categories: [BooksPerCategoryType]
+}
+
 input BookCategoryInputType {
   nameEn: String
   nameNe: String
@@ -296,6 +301,43 @@ type BookType {
   cartDetails: CartItemType
   gradeDisplay: EnumDescription
   languageDisplay: EnumDescription
+}
+
+type BooksAndCostPerSchool {
+  schoolName: String
+  numberOfBooksOrdered: Int
+  totalCost: Int
+}
+
+type BooksOrderedAndIncentivesPerDistrict {
+  name: String
+  noOfBooksOrdered: Int
+  noOfIncentiveBooks: Int
+}
+
+type BooksPerCategoryType {
+  category: String
+  numberOfBooks: Int
+}
+
+type BooksPerGradeType {
+  grade: String
+  numberOfBooks: Int
+}
+
+type BooksPerLanguageType {
+  language: String
+  numberOfBooks: Int
+}
+
+type BooksPerPublisherPerCategory {
+  publisherName: String
+  categories: [BooksPerCategoryType]
+}
+
+type BooksPerPublisherType {
+  publisherName: String
+  numberOfBooks: Int
 }
 
 input CartItemInputType {
@@ -630,6 +672,11 @@ type DeleteWishList {
   result: WishListType
 }
 
+type DeliveriesPerDistrictType {
+  name: String
+  schoolDelivered: Int
+}
+
 type DistrictListType {
   results: [DistrictType!]
   totalCount: Int
@@ -842,6 +889,7 @@ type ModeratorMutationType {
 type ModeratorQueryType {
   orderActivityLog(id: ID!): OrderActivityLogType
   orderActivityLogs(createByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderActivityLogListType
+  reports: ReportType
   payment(id: ID!): PaymentType
   payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
@@ -1102,6 +1150,11 @@ type PaymentLogType {
   files: [ActivityFileType!]
 }
 
+type PaymentPerOrderWindowType {
+  title: String
+  payment: Int
+}
+
 type PaymentSummaryType {
   paymentCreditSum: Float
   paymentDebitSum: Float
@@ -1328,6 +1381,32 @@ input RegisterInputType {
   siteKey: String
 }
 
+type ReportType {
+  numberOfSchoolsRegistered: Int
+  numberOfSchoolsVerified: Int
+  numberOfSchoolsUnverified: Int
+  numberOfPublishers: Int
+  numberOfBooksOnThePlatform: Int
+  numberOfIncentiveBooks: Int
+  numberOfBooksOrdered: Int
+  numberOfDistrictsReached: Int
+  numberOfMunicipalities: Int
+  numberOfSchoolsReached: Int
+  topSellingBooks: [TopSellingBookType]
+  topSchools: [TopSchoolType]
+  usersPerDistrict: [UserPerDistrictType]
+  booksOrderedAndIncentivesPerDistrict: [BooksOrderedAndIncentivesPerDistrict]
+  deliveriesPerDistrict: [DeliveriesPerDistrictType]
+  paymentPerOrderWindow: [PaymentPerOrderWindowType]
+  booksPerPublisher: [BooksPerPublisherType]
+  booksPerCategory: [BooksPerCategoryType]
+  booksPerGrade: [BooksPerGradeType]
+  booksPerLanguage: [BooksPerLanguageType]
+  booksPerPublisherPerCategory: [BooksPerPublisherPerCategory]
+  booksAndCostPerSchool: [BooksAndCostPerSchool]
+  bookCategoriesPerOrderWindow: [BookCategoriesPerOrderWindowType]
+}
+
 type ResetPassword {
   errors: [GenericScalar!]
   ok: Boolean
@@ -1482,6 +1561,16 @@ type ToggleNotificationReadStatus {
   errors: [GenericScalar!]
   ok: Boolean
   result: NotificationType
+}
+
+type TopSchoolType {
+  schoolName: String
+  bookOrderedCount: Int
+}
+
+type TopSellingBookType {
+  title: String
+  soldCount: Int
 }
 
 enum TransactionTypeEnum {
@@ -1651,6 +1740,12 @@ type UserMeType {
   canonicalName: String!
   userTypeDisplay: EnumDescription!
   allowedPermissions: [UserPermissions!]!
+}
+
+type UserPerDistrictType {
+  name: String
+  verifiedUsers: Int
+  unverifiedUsers: Int
 }
 
 enum UserPermissions {
