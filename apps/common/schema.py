@@ -146,6 +146,12 @@ class BooksPerLanguageType(graphene.ObjectType):
     number_of_books = graphene.Int()
 
 
+class BooksAndCostPerSchool(graphene.ObjectType):
+    school_name = graphene.String()
+    number_of_books_ordered = graphene.Int()
+    total_cost = graphene.Int()
+
+
 class ReportType(graphene.ObjectType):
     number_of_schools_registered = graphene.Int(description='Number of school registered')
     number_of_schools_verified = graphene.Int(description='Number of schools verified')
@@ -189,6 +195,10 @@ class ReportType(graphene.ObjectType):
     books_per_language = graphene.List(
         BooksPerLanguageType,
         description='Number of books per language'
+    )
+    books_and_cost_per_school = graphene.List(
+        BooksAndCostPerSchool,
+        description='Number of books and total cost per school'
     )
 
 
@@ -288,5 +298,14 @@ class ReportQuery(graphene.ObjectType):
 
             'books_per_language': book_qs.values('language').annotate(
                 number_of_books=Count('id')
+            ),
+
+            'books_and_cost_per_school': user_qs.filter(
+                user_type=User.UserType.SCHOOL_ADMIN.value,
+                order__status=Order.Status.COMPLETED.value,
+            ).values('school__name').annotate(
+                number_of_books_ordered=Sum('order__book_order__quantity'),
+                school_name=F('school__name'),
+                total_cost=Sum('order__book_order__price')
             ),
         }
