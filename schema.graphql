@@ -330,9 +330,9 @@ type BooksPerLanguageType {
   numberOfBooks: Int
 }
 
-type BooksPerPublisherPerCategory {
+type BooksPerPublisherPerGrade {
   publisherName: String
-  categories: [BooksPerCategoryType]
+  grades: [BooksPerGradeType]
 }
 
 type BooksPerPublisherType {
@@ -1402,7 +1402,7 @@ type ReportType {
   booksPerCategory: [BooksPerCategoryType]
   booksPerGrade: [BooksPerGradeType]
   booksPerLanguage: [BooksPerLanguageType]
-  booksPerPublisherPerCategory: [BooksPerPublisherPerCategory]
+  booksPerPublisherPerGrade: [BooksPerPublisherPerGrade]
   booksAndCostPerSchool: [BooksAndCostPerSchool]
   bookCategoriesPerOrderWindow: [BookCategoriesPerOrderWindowType]
 }
