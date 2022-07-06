@@ -162,6 +162,7 @@ input BookAuthorInputType {
 }
 
 type BookCategoriesPerOrderWindowType {
+  orderWindowId: ID!
   title: String!
   categories: [BooksPerCategoryType!]
 }
@@ -304,18 +305,21 @@ type BookType {
 }
 
 type BooksAndCostPerSchool {
+  schoolId: ID!
   schoolName: String!
   numberOfBooksOrdered: Int!
   totalCost: Int!
 }
 
 type BooksOrderedAndIncentivesPerDistrict {
+  districtId: ID!
   name: String!
   noOfBooksOrdered: Int!
   noOfIncentiveBooks: Int!
 }
 
 type BooksPerCategoryType {
+  categoryId: ID!
   category: String!
   numberOfBooks: Int!
 }
@@ -331,11 +335,13 @@ type BooksPerLanguageType {
 }
 
 type BooksPerPublisherPerGrade {
+  publisherId: ID!
   publisherName: String!
   grades: [BooksPerGradeType!]
 }
 
 type BooksPerPublisherType {
+  publisherId: ID!
   publisherName: String!
   numberOfBooks: Int!
 }
@@ -673,6 +679,7 @@ type DeleteWishList {
 }
 
 type DeliveriesPerDistrictType {
+  districtId: ID!
   name: String!
   schoolDelivered: Int!
 }
@@ -1151,6 +1158,7 @@ type PaymentLogType {
 }
 
 type PaymentPerOrderWindowType {
+  orderWindowId: ID!
   title: String!
   payment: Int!
 }
@@ -1564,11 +1572,13 @@ type ToggleNotificationReadStatus {
 }
 
 type TopSchoolType {
+  schoolId: ID!
   schoolName: String!
   bookOrderedCount: Int!
 }
 
 type TopSellingBookType {
+  bookId: ID!
   title: String!
   soldCount: Int!
 }
@@ -1743,6 +1753,7 @@ type UserMeType {
 }
 
 type UserPerDistrictType {
+  districtId: ID!
   name: String!
   verifiedUsers: Int!
   unverifiedUsers: Int!
