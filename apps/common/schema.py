@@ -95,84 +95,84 @@ class Query(graphene.ObjectType):
 
 
 class TopSellingBookType(graphene.ObjectType):
-    title = graphene.String()
-    sold_count = graphene.Int()
+    title = graphene.NonNull(graphene.String)
+    sold_count = graphene.NonNull(graphene.Int)
 
 
 class TopSchoolType(graphene.ObjectType):
-    school_name = graphene.String()
-    book_ordered_count = graphene.Int()
+    school_name = graphene.NonNull(graphene.String)
+    book_ordered_count = graphene.NonNull(graphene.Int)
 
 
 class UserPerDistrictType(graphene.ObjectType):
-    name = graphene.String()
-    verified_users = graphene.Int()
-    unverified_users = graphene.Int()
+    name = graphene.NonNull(graphene.String)
+    verified_users = graphene.NonNull(graphene.Int)
+    unverified_users = graphene.NonNull(graphene.Int)
 
 
 class BooksOrderedAndIncentivesPerDistrict(graphene.ObjectType):
-    name = graphene.String()
-    no_of_books_ordered = graphene.Int()
-    no_of_incentive_books = graphene.Int()
+    name = graphene.NonNull(graphene.String)
+    no_of_books_ordered = graphene.NonNull(graphene.Int)
+    no_of_incentive_books = graphene.NonNull(graphene.Int)
 
 
 class DeliveriesPerDistrictType(graphene.ObjectType):
-    name = graphene.String()
-    school_delivered = graphene.Int()
+    name = graphene.NonNull(graphene.String)
+    school_delivered = graphene.NonNull(graphene.Int)
 
 
 class PaymentPerOrderWindowType(graphene.ObjectType):
-    title = graphene.String()
-    payment = graphene.Int()
+    title = graphene.NonNull(graphene.String)
+    payment = graphene.NonNull(graphene.Int)
 
 
 class BooksPerPublisherType(graphene.ObjectType):
-    publisher_name = graphene.String()
-    number_of_books = graphene.Int()
+    publisher_name = graphene.NonNull(graphene.String)
+    number_of_books = graphene.NonNull(graphene.Int)
 
 
 class BooksPerCategoryType(graphene.ObjectType):
-    category = graphene.String()
-    number_of_books = graphene.Int()
+    category = graphene.NonNull(graphene.String)
+    number_of_books = graphene.NonNull(graphene.Int)
 
 
 class BooksPerGradeType(graphene.ObjectType):
-    grade = graphene.String()
-    number_of_books = graphene.Int()
+    grade = graphene.NonNull(graphene.String)
+    number_of_books = graphene.NonNull(graphene.Int)
 
 
 class BooksPerLanguageType(graphene.ObjectType):
-    language = graphene.String()
-    number_of_books = graphene.Int()
+    language = graphene.NonNull(graphene.String)
+    number_of_books = graphene.NonNull(graphene.Int)
 
 
 class BooksPerPublisherPerGrade(graphene.ObjectType):
-    publisher_name = graphene.String()
-    grades = graphene.List(BooksPerGradeType)
+    publisher_name = graphene.NonNull(graphene.String)
+    grades = graphene.List(graphene.NonNull(BooksPerGradeType))
 
 
 class BooksAndCostPerSchool(graphene.ObjectType):
-    school_name = graphene.String()
-    number_of_books_ordered = graphene.Int()
-    total_cost = graphene.Int()
+    school_name = graphene.NonNull(graphene.String)
+    number_of_books_ordered = graphene.NonNull(graphene.Int)
+    total_cost = graphene.NonNull(graphene.Int)
 
 
 class BookCategoriesPerOrderWindowType(graphene.ObjectType):
-    title = graphene.String()
-    categories = graphene.List(BooksPerCategoryType)
+    title = graphene.NonNull(graphene.String)
+    categories = graphene.List(graphene.NonNull(BooksPerCategoryType))
 
 
 class ReportType(graphene.ObjectType):
-    number_of_schools_registered = graphene.Int(description='Number of school registered')
-    number_of_schools_verified = graphene.Int(description='Number of schools verified')
-    number_of_schools_unverified = graphene.Int(description='Number of schools unVerfied')
-    number_of_publishers = graphene.Int(description='Number of publishers')
-    number_of_books_on_the_platform = graphene.Int(description='Number of books on the Platform')
-    number_of_incentive_books = graphene.Int(description='Number of Incentive books')
-    number_of_books_ordered = graphene.Int(description='Number of books Ordered')
-    number_of_districts_reached = graphene.Int(description='Number of districts reached')
-    number_of_municipalities = graphene.Int(description='Number of municipalities')
-    number_of_schools_reached = graphene.Int(description='Number of schools reached')
+    number_of_schools_registered = graphene.NonNull(graphene.Int, description='Number of school registered')
+    number_of_schools_verified = graphene.NonNull(graphene.Int, description='Number of schools verified')
+    number_of_schools_unverified = graphene.NonNull(graphene.Int, description='Number of schools unVerfied')
+    number_of_publishers = graphene.NonNull(graphene.Int, description='Number of publishers')
+    number_of_books_on_the_platform = graphene.NonNull(graphene.Int, description='Number of books on the Platform')
+    number_of_incentive_books = graphene.NonNull(graphene.Int, description='Number of Incentive books')
+    number_of_books_ordered = graphene.NonNull(graphene.Int, description='Number of books Ordered')
+    number_of_districts_reached = graphene.NonNull(graphene.Int, description='Number of districts reached')
+    number_of_municipalities = graphene.NonNull(graphene.Int, description='Number of municipalities')
+    number_of_schools_reached = graphene.NonNull(graphene.Int, description='Number of schools reached')
     top_selling_books = graphene.List(TopSellingBookType, description='Top 5 selling books')
     top_schools = graphene.List(TopSchoolType, description='Top 5 schools/customers with the most books ordered')
     users_per_district = graphene.List(

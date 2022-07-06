@@ -162,8 +162,8 @@ input BookAuthorInputType {
 }
 
 type BookCategoriesPerOrderWindowType {
-  title: String
-  categories: [BooksPerCategoryType]
+  title: String!
+  categories: [BooksPerCategoryType!]
 }
 
 input BookCategoryInputType {
@@ -304,40 +304,40 @@ type BookType {
 }
 
 type BooksAndCostPerSchool {
-  schoolName: String
-  numberOfBooksOrdered: Int
-  totalCost: Int
+  schoolName: String!
+  numberOfBooksOrdered: Int!
+  totalCost: Int!
 }
 
 type BooksOrderedAndIncentivesPerDistrict {
-  name: String
-  noOfBooksOrdered: Int
-  noOfIncentiveBooks: Int
+  name: String!
+  noOfBooksOrdered: Int!
+  noOfIncentiveBooks: Int!
 }
 
 type BooksPerCategoryType {
-  category: String
-  numberOfBooks: Int
+  category: String!
+  numberOfBooks: Int!
 }
 
 type BooksPerGradeType {
-  grade: String
-  numberOfBooks: Int
+  grade: String!
+  numberOfBooks: Int!
 }
 
 type BooksPerLanguageType {
-  language: String
-  numberOfBooks: Int
+  language: String!
+  numberOfBooks: Int!
 }
 
 type BooksPerPublisherPerGrade {
-  publisherName: String
-  grades: [BooksPerGradeType]
+  publisherName: String!
+  grades: [BooksPerGradeType!]
 }
 
 type BooksPerPublisherType {
-  publisherName: String
-  numberOfBooks: Int
+  publisherName: String!
+  numberOfBooks: Int!
 }
 
 input CartItemInputType {
@@ -673,8 +673,8 @@ type DeleteWishList {
 }
 
 type DeliveriesPerDistrictType {
-  name: String
-  schoolDelivered: Int
+  name: String!
+  schoolDelivered: Int!
 }
 
 type DistrictListType {
@@ -1151,8 +1151,8 @@ type PaymentLogType {
 }
 
 type PaymentPerOrderWindowType {
-  title: String
-  payment: Int
+  title: String!
+  payment: Int!
 }
 
 type PaymentSummaryType {
@@ -1382,16 +1382,16 @@ input RegisterInputType {
 }
 
 type ReportType {
-  numberOfSchoolsRegistered: Int
-  numberOfSchoolsVerified: Int
-  numberOfSchoolsUnverified: Int
-  numberOfPublishers: Int
-  numberOfBooksOnThePlatform: Int
-  numberOfIncentiveBooks: Int
-  numberOfBooksOrdered: Int
-  numberOfDistrictsReached: Int
-  numberOfMunicipalities: Int
-  numberOfSchoolsReached: Int
+  numberOfSchoolsRegistered: Int!
+  numberOfSchoolsVerified: Int!
+  numberOfSchoolsUnverified: Int!
+  numberOfPublishers: Int!
+  numberOfBooksOnThePlatform: Int!
+  numberOfIncentiveBooks: Int!
+  numberOfBooksOrdered: Int!
+  numberOfDistrictsReached: Int!
+  numberOfMunicipalities: Int!
+  numberOfSchoolsReached: Int!
   topSellingBooks: [TopSellingBookType]
   topSchools: [TopSchoolType]
   usersPerDistrict: [UserPerDistrictType]
@@ -1564,13 +1564,13 @@ type ToggleNotificationReadStatus {
 }
 
 type TopSchoolType {
-  schoolName: String
-  bookOrderedCount: Int
+  schoolName: String!
+  bookOrderedCount: Int!
 }
 
 type TopSellingBookType {
-  title: String
-  soldCount: Int
+  title: String!
+  soldCount: Int!
 }
 
 enum TransactionTypeEnum {
@@ -1743,9 +1743,9 @@ type UserMeType {
 }
 
 type UserPerDistrictType {
-  name: String
-  verifiedUsers: Int
-  unverifiedUsers: Int
+  name: String!
+  verifiedUsers: Int!
+  unverifiedUsers: Int!
 }
 
 enum UserPermissions {
