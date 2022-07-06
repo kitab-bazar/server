@@ -154,10 +154,10 @@ class BooksPerLanguageType(graphene.ObjectType):
     number_of_books = graphene.NonNull(graphene.Int)
 
 
-class BooksPerPublisherPerGrade(graphene.ObjectType):
+class BooksPerPublisherPerCategory(graphene.ObjectType):
     publisher_id = graphene.NonNull(graphene.ID)
     publisher_name = graphene.NonNull(graphene.String)
-    grades = graphene.List(graphene.NonNull(BooksPerGradeType))
+    categories = graphene.List(graphene.NonNull(BooksPerCategoryType))
 
 
 class BooksAndCostPerSchool(graphene.ObjectType):
@@ -170,7 +170,7 @@ class BooksAndCostPerSchool(graphene.ObjectType):
 class BookCategoriesPerOrderWindowType(graphene.ObjectType):
     order_window_id = graphene.NonNull(graphene.ID)
     title = graphene.NonNull(graphene.String)
-    categories = graphene.List(graphene.NonNull(BooksPerCategoryType))
+    grades = graphene.List(graphene.NonNull(BooksPerGradeType))
 
 
 class ReportType(graphene.ObjectType):
@@ -217,17 +217,17 @@ class ReportType(graphene.ObjectType):
         BooksPerLanguageType,
         description='Number of books per language'
     )
-    books_per_publisher_per_grade = graphene.List(
-        BooksPerPublisherPerGrade,
-        description='Number of books per grade for each publisher',
+    books_per_publisher_per_category = graphene.List(
+        BooksPerPublisherPerCategory,
+        description='Number of books per category for each publisher',
     )
     books_and_cost_per_school = graphene.List(
         BooksAndCostPerSchool,
         description='Number of books and total cost per school'
     )
-    book_categories_per_order_window = graphene.List(
+    book_grades_per_order_window = graphene.List(
         BookCategoriesPerOrderWindowType,
-        description='Number of categories books ordered per order window'
+        description='Number of grades books ordered per order window'
     )
 
 
@@ -243,39 +243,37 @@ class ReportQuery(graphene.ObjectType):
         district_qs = District.objects.all()
         order_window_qs = OrderWindow.objects.filter(orders__status=Order.Status.COMPLETED.value)
 
-        def get_books_per_publisher_per_grade():
+        def get_books_per_publisher_per_category():
             books_per_publishers = book_qs.values('publisher__name').annotate(
                 publisher_name=F('publisher__name'),
-                publisher_id=F('publisher__id'),
                 number_of_books=Count('id'),
-                grade=F('grade')
-            ).order_by('grade')
+                category=F('categories__name'),
+                category_id=F('categories__id'),
+                publisher_id=F('publisher__id')
+            )
             publishers = []
             for item in books_per_publishers:
                 publishers.append(item['publisher_name'])
             result = []
             for publisher in list(set(publishers)):
-                result.append({'publisher_name': publisher, 'grades': []})
+                result.append({'publisher_name': publisher, 'categories': []})
             for publisher in result:
                 for books_per_publisher in books_per_publishers:
                     if publisher['publisher_name'] == books_per_publisher['publisher_name']:
                         publisher['publisher_id'] = books_per_publisher['publisher_id']
-                        publisher['grades'].append(
+                        publisher['categories'].append(
                             {
                                 'number_of_books': books_per_publisher['number_of_books'],
-                                'grade': Book.Grade(books_per_publisher['grade']).label,
+                                'category': books_per_publisher['category'],
+                                'category_id': books_per_publisher['category_id'],
                             }
                         )
-            for obj in result:
-                grades = obj['grades']
-                obj['grades'] = sorted(grades, key=lambda d: d['grade'])
             return result
 
-        def get_book_categories_per_order_window():
+        def get_book_grades_per_order_window():
             order_windows_qs = order_window_qs.values('title').annotate(
-                category=F('orders__book_order__book__categories__name'),
-                category_id=F('orders__book_order__book__categories__id'),
-                number_of_books=Count('orders__book_order__book__categories__name'),
+                grade=F('orders__book_order__book__grade'),
+                number_of_books=Count('orders__book_order__book'),
                 order_window_id=F('id')
             ).order_by('title')
             order_windows = []
@@ -283,16 +281,15 @@ class ReportQuery(graphene.ObjectType):
                 order_windows.append(item['title'])
             result = []
             for order_window in list(set(order_windows)):
-                result.append({'title': order_window, 'categories': []})
+                result.append({'title': order_window, 'grades': []})
             for order_window in result:
                 for item in order_windows_qs:
                     if order_window['title'] == item['title']:
                         order_window['order_window_id'] = item['order_window_id']
-                        order_window['categories'].append(
+                        order_window['grades'].append(
                             {
                                 'number_of_books': item['number_of_books'],
-                                'category': item['category'],
-                                'category_id': item['category_id'],
+                                'grade': Book.Grade(item['grade']).label,
                             }
                         )
             return result
@@ -403,7 +400,7 @@ class ReportQuery(graphene.ObjectType):
                 number_of_books=Count('id')
             ),
 
-            'books_per_publisher_per_grade': get_books_per_publisher_per_grade(),
+            'books_per_publisher_per_category': get_books_per_publisher_per_category(),
 
             'books_and_cost_per_school': user_qs.filter(
                 user_type=User.UserType.SCHOOL_ADMIN.value,
@@ -415,5 +412,5 @@ class ReportQuery(graphene.ObjectType):
                 total_cost=Sum('order__book_order__price')
             ),
 
-            'book_categories_per_order_window': get_book_categories_per_order_window(),
+            'book_grades_per_order_window': get_book_grades_per_order_window(),
         }

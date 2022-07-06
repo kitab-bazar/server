@@ -164,7 +164,7 @@ input BookAuthorInputType {
 type BookCategoriesPerOrderWindowType {
   orderWindowId: ID!
   title: String!
-  categories: [BooksPerCategoryType!]
+  grades: [BooksPerGradeType!]
 }
 
 input BookCategoryInputType {
@@ -334,10 +334,10 @@ type BooksPerLanguageType {
   numberOfBooks: Int!
 }
 
-type BooksPerPublisherPerGrade {
+type BooksPerPublisherPerCategory {
   publisherId: ID!
   publisherName: String!
-  grades: [BooksPerGradeType!]
+  categories: [BooksPerCategoryType!]
 }
 
 type BooksPerPublisherType {
@@ -1410,9 +1410,9 @@ type ReportType {
   booksPerCategory: [BooksPerCategoryType]
   booksPerGrade: [BooksPerGradeType]
   booksPerLanguage: [BooksPerLanguageType]
-  booksPerPublisherPerGrade: [BooksPerPublisherPerGrade]
+  booksPerPublisherPerCategory: [BooksPerPublisherPerCategory]
   booksAndCostPerSchool: [BooksAndCostPerSchool]
-  bookCategoriesPerOrderWindow: [BookCategoriesPerOrderWindowType]
+  bookGradesPerOrderWindow: [BookCategoriesPerOrderWindowType]
 }
 
 type ResetPassword {
