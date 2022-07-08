@@ -1395,7 +1395,7 @@ type ReportType {
   numberOfSchoolsUnverified: Int!
   numberOfPublishers: Int!
   numberOfBooksOnThePlatform: Int!
-  numberOfIncentiveBooks: Int!
+  numberOfIncentiveBooks: Int
   numberOfBooksOrdered: Int!
   numberOfDistrictsReached: Int!
   numberOfMunicipalities: Int!

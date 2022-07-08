@@ -179,7 +179,7 @@ class ReportType(graphene.ObjectType):
     number_of_schools_unverified = graphene.NonNull(graphene.Int, description='Number of schools unVerfied')
     number_of_publishers = graphene.NonNull(graphene.Int, description='Number of publishers')
     number_of_books_on_the_platform = graphene.NonNull(graphene.Int, description='Number of books on the Platform')
-    number_of_incentive_books = graphene.NonNull(graphene.Int, description='Number of Incentive books')
+    number_of_incentive_books = graphene.Int(description='Number of Incentive books')
     number_of_books_ordered = graphene.NonNull(graphene.Int, description='Number of books Ordered')
     number_of_districts_reached = graphene.NonNull(graphene.Int, description='Number of districts reached')
     number_of_municipalities = graphene.NonNull(graphene.Int, description='Number of municipalities')
