@@ -3,6 +3,7 @@ from factory import fuzzy
 from factory.django import DjangoModelFactory
 from apps.user.factories import UserFactory
 from apps.book.factories import BookFactory
+from apps.book.models import Book
 
 from .models import (
     BookOrder,
@@ -32,6 +33,8 @@ class OrderFactory(DjangoModelFactory):
 class BookOrderFactory(DjangoModelFactory):
     book = factory.SubFactory(BookFactory)
     order = factory.SubFactory(OrderFactory)
+    language = factory.Iterator(Book.LanguageType)
+    grade = factory.Iterator(Book.Grade)
 
     class Meta:
         model = BookOrder

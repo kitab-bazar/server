@@ -13,6 +13,8 @@ import os
 import environ
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+from utils import sentry
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +43,22 @@ env = environ.Env(
     # is not set otherwise these variables are not required
     AWS_S3_ACCESS_KEY_ID=(str, None),
     AWS_S3_SECRET_ACCESS_KEY=(str, None),
-    TEMP_DIR=(str, '/tmp')
+    TEMP_DIR=(str, '/tmp'),
+    HCAPTCHA_SECRET=(str, '0x0000000000000000000000000000000000000000'),
+    MAX_LOGIN_ATTEMPTS=(int, 3),
+    MAX_CAPTCHA_LOGIN_ATTEMPTS=(int, 10),
+    LOGIN_TIMEOUT=(int, 10 * 60),
+    # Sentry settings
+    SENTRY_DSN=(str, None),
+    ENVIRONMENT=(str, 'local'),
+    DJANGO_API_HOST=(str, 'localhost'),
+    SENTRY_SAMPLE_RATE=(float, 0.2),
+    AWS_ACCESS_KEY_ID=(str, 'AWS_ACCESS_KEY_ID'),
+    AWS_SECRET_ACCESS_KEY=(str, 'AWS_SECRET_ACCESS_KEY'),
+    DEFAULT_FROM_EMAIL=(str, 'Kitab Bazar <kitabbazar@togglecorp.com>'),
+    USE_LOCAL_STORATE=(bool, True),
+    ENABLE_INTROSEPTION_SCHEMA=(bool, False),
+    HTTP_PROTOCOL=(str, 'http')
 )
 
 # Quick-start development settings - unsuitable for production
@@ -54,6 +71,16 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['server', env('DJANGO_ALLOWED_HOST')]
 
+HTTP_PROTOCOL = env('HTTP_PROTOCOL')
+
+if HTTP_PROTOCOL == 'https':
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    # SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 30  # TODO: Increase this slowly
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
@@ -70,6 +97,7 @@ LOCAL_APPS = [
     'apps.helpdesk',
     'apps.blog',
     'apps.payment',
+    'apps.package',
 ]
 
 INSTALLED_APPS = [
@@ -170,7 +198,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-if DEBUG:
+if DEBUG or env('USE_LOCAL_STORATE'):
     STATIC_URL = env('DJANGO_STATIC_URL')
     MEDIA_URL = env('DJANGO_MEDIA_URL')
     STATIC_ROOT = env('DJANGO_STATIC_ROOT')
@@ -243,6 +271,7 @@ GRAPHENE = {
     'SCHEMA_INDENT': 2,
     'MIDDLEWARE': [
         'config.auth.WhiteListMiddleware',
+        'utils.sentry.SentryGrapheneMiddleware',
     ],
 }
 
@@ -251,6 +280,8 @@ GRAPHENE_DJANGO_EXTRAS = {
     'DEFAULT_PAGE_SIZE': 20,
     'MAX_PAGE_SIZE': 50
 }
+
+ENABLE_INTROSEPTION_SCHEMA = env('ENABLE_INTROSEPTION_SCHEMA')
 
 if not DEBUG:
     GRAPHENE['MIDDLEWARE'].append('utils.graphene.middleware.DisableIntrospectionSchemaMiddleware')
@@ -285,9 +316,14 @@ GRAPHENE_NODES_WHITELIST = (
 
 CLIENT_URL = env('CLIENT_URL')
 
+# Smtp settings
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    DEFAULT_FROM_EMAIL = "Kitab Bazar <kitabbazar@togglecorp.com>"
+else:
+    EMAIL_BACKEND = 'django_ses.SESBackend'
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 
 USE_I18N = True
 USE_L10N = True
@@ -330,3 +366,28 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 # Used to save og images temporarily
 TEMP_DIR = env('TEMP_DIR')
+
+# Hcaptcha
+HCAPTCHA_SECRET = env('HCAPTCHA_SECRET')
+MAX_LOGIN_ATTEMPTS = env('MAX_LOGIN_ATTEMPTS')
+MAX_CAPTCHA_LOGIN_ATTEMPTS = env('MAX_CAPTCHA_LOGIN_ATTEMPTS')
+LOGIN_TIMEOUT = env('LOGIN_TIMEOUT')
+
+# Sentry Config
+SENTRY_DSN = env('SENTRY_DSN')
+SENTRY_SAMPLE_RATE = env('SENTRY_SAMPLE_RATE')
+if SENTRY_DSN:
+    SENTRY_CONFIG = {
+        'dsn': env('SENTRY_DSN'),
+        'send_default_pii': True,
+        'release': sentry.fetch_git_sha(BASE_DIR),
+        'environment': env('ENVIRONMENT'),
+        'debug': DEBUG,
+        'tags': {
+            'site': env('DJANGO_API_HOST'),
+        },
+    }
+    sentry.init_sentry(
+        app_type='API',
+        **SENTRY_CONFIG,
+    )

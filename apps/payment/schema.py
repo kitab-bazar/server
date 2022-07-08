@@ -2,22 +2,23 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import PageGraphqlPagination, DjangoObjectField
 
-from django.db.models import QuerySet, Sum, Q, Count
+from django.db.models import QuerySet, Sum, F
 
 from utils.graphene.types import CustomDjangoListObjectType
-from utils.graphene.fields import DjangoPaginatedListObjectField
+from utils.graphene.fields import DjangoPaginatedListObjectField, CustomDjangoListField
 from utils.graphene.enums import EnumDescription
 
 from apps.user.models import User
-from apps.order.models import Order
 
-from .models import Payment
-from .filter_set import PaymentFilterSet
+from .models import Payment, PaymentLog
+from .filter_set import PaymentFilterSet, PaymentLogFilterSet
 from .enums import (
     StatusEnum,
     TransactionTypeEnum,
-    PaymentTypeEnum
+    PaymentTypeEnum,
 )
+from apps.common.schema import ActivityFileType
+from apps.order.models import Order
 
 
 def get_payment_qs(info):
@@ -25,9 +26,27 @@ def get_payment_qs(info):
     # MODERATOR can see all other payment
     if info.context.user.user_type == User.UserType.SCHOOL_ADMIN:
         return Payment.objects.filter(paid_by=info.context.user)
+    if info.context.user.user_type == User.UserType.INSTITUTIONAL_USER:
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        return Payment.objects.filter(paid_by=info.context.user)
     elif info.context.user.user_type == User.UserType.MODERATOR:
         return Payment.objects.all()
     return Payment.objects.none()
+
+
+class PaymentLogType(DjangoObjectType):
+    files = CustomDjangoListField(ActivityFileType, required=False)
+
+    class Meta:
+        model = PaymentLog
+        fields = ('comment', 'snapshot', 'id')
+
+
+class PaymentLogListType(CustomDjangoListObjectType):
+
+    class Meta:
+        model = PaymentLog
+        filterset_class = PaymentLogFilterSet
 
 
 class PaymentType(DjangoObjectType):
@@ -49,6 +68,12 @@ class PaymentType(DjangoObjectType):
     status_display = EnumDescription(source='get_status_display', required=True)
     transaction_type_display = EnumDescription(source='get_transaction_type_display', required=True)
     payment_type_display = EnumDescription(source='get_payment_type_display', required=True)
+    payment_log = DjangoPaginatedListObjectField(
+        PaymentLogListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
 
 
 class PaymentSummaryType(graphene.ObjectType):
@@ -87,42 +112,40 @@ class Query(graphene.ObjectType):
 
     @staticmethod
     def resolve_payment_summary(root, info, **kwargs):
-        payemnt_summary = get_payment_qs(info).aggregate(
-            payment_credit_sum=Sum('amount', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.VERIFIED.value
-            )),
-
-            payment_debit_sum=Sum('amount', filter=Q(
-                transaction_type=Payment.TransactionType.DEBIT.value,
-                status=Payment.Status.VERIFIED.value
-            )),
-
-            total_verified_payment=Sum('amount', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.VERIFIED.value,
-            )),
-
-            total_unverified_payment=Sum('amount', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.PENDING.value,
-            )),
-
-            total_unverified_payment_count=Count('id', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.PENDING.value,
-            )),
-
-            total_verified_payment_count=Count('id', filter=Q(
-                transaction_type=Payment.TransactionType.CREDIT.value,
-                status=Payment.Status.VERIFIED.value,
-            ))
+        payment_summary = get_payment_qs(info).annotate(
+            **User.annotate_user_payment_statement()
+        ).aggregate(
+            Sum('payment_credit_sum'),
+            Sum('payment_debit_sum'),
+            Sum('total_verified_payment'),
+            Sum('total_verified_payment_count'),
+            Sum('total_unverified_payment'),
+            Sum('total_unverified_payment_count'),
         )
-        order_price_total = Order.objects.filter(
-            created_by=info.context.user, status=Order.Status.IN_TRANSIT.value
-        ).aggregate(Sum('book_order__price'))['book_order__price__sum'] or 0
-        payment_credit_sum = payemnt_summary['payment_credit_sum'] or 0
-        payment_debit_sum = payemnt_summary['payment_debit_sum'] or 0
-        outstanding_balance = payment_credit_sum - payment_debit_sum - order_price_total
-        payemnt_summary['outstanding_balance'] = outstanding_balance
-        return payemnt_summary
+
+        total_order_pending_price = Order.objects.filter(
+            status=Order.Status.PENDING.value,
+            created_by=info.context.user
+        ).annotate(grand_total_price=F('book_order__price') * F('book_order__quantity')).aggregate(
+            Sum('grand_total_price')
+        )['grand_total_price__sum'] or 0
+
+        payment_credit_sum = payment_summary['payment_credit_sum__sum'] or 0
+        payment_debit_sum = payment_summary['payment_debit_sum__sum'] or 0
+
+        outstanding_balance = (
+            payment_credit_sum -
+            payment_debit_sum -
+            total_order_pending_price
+        )
+
+        return {
+            'payment_credit_sum': payment_summary['payment_credit_sum__sum'] or 0,
+            'payment_debit_sum': payment_summary['payment_debit_sum__sum'] or 0,
+            'total_verified_payment': payment_summary['total_verified_payment__sum'] or 0,
+            'total_verified_payment_count': payment_summary['total_verified_payment_count__sum'] or 0,
+            'total_unverified_payment': payment_summary['total_unverified_payment__sum'] or 0,
+            'total_unverified_payment_count': payment_summary['total_unverified_payment_count__sum'] or 0,
+            'total_order_pending_price': total_order_pending_price,
+            'outstanding_balance': outstanding_balance
+        }

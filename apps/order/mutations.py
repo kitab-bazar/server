@@ -1,7 +1,7 @@
 import graphene
 from django.db.models import F
 
-from utils.graphene.error_types import CustomErrorType, mutation_is_not_valid
+from utils.graphene.error_types import CustomErrorType
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
     CreateUpdateGrapheneMutation,
@@ -32,10 +32,6 @@ class CartItemMixin():
             total_price=F('book__price') * F('quantity')
         )
 
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
-
 
 class CreateCartItem(CartItemMixin, CreateUpdateGrapheneMutation):
     class Arguments:
@@ -43,6 +39,7 @@ class CreateCartItem(CartItemMixin, CreateUpdateGrapheneMutation):
     model = CartItem
     serializer_class = CartItemSerializer
     result = graphene.Field(CartItemType)
+    permissions = [UserPermissions.Permission.CAN_CRUD_CART_ITEM]
 
 
 class UpdateCartItem(CartItemMixin, CreateUpdateGrapheneMutation):
@@ -52,6 +49,7 @@ class UpdateCartItem(CartItemMixin, CreateUpdateGrapheneMutation):
     model = CartItem
     serializer_class = CartItemSerializer
     result = graphene.Field(CartItemType)
+    permissions = [UserPermissions.Permission.CAN_CRUD_CART_ITEM]
 
 
 class DeleteCartItem(CartItemMixin, DeleteMutation):
@@ -59,20 +57,15 @@ class DeleteCartItem(CartItemMixin, DeleteMutation):
         id = graphene.ID(required=True)
     model = CartItem
     result = graphene.Field(CartItemType)
+    permissions = [UserPermissions.Permission.CAN_CRUD_CART_ITEM]
 
 
-class CreateOrderFromCart(graphene.Mutation):
+class CreateOrderFromCart(CreateUpdateGrapheneMutation):
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
     result = graphene.Field(OrderType)
-
-    @staticmethod
-    def mutate(root, info):
-        serializer = CreateOrderFromCartSerializer(data=dict(), context={'request': info.context.request})
-        if errors := mutation_is_not_valid(serializer):
-            return CreateOrderFromCart(errors=errors, ok=False)
-        instance = serializer.save()
-        return CreateOrderFromCart(result=instance, errors=None, ok=True)
+    permissions = [UserPermissions.Permission.CREATE_ORDER]
+    serializer_class = CreateOrderFromCartSerializer
 
 
 class OrderMutationMixin():
@@ -82,6 +75,8 @@ class OrderMutationMixin():
         if user.user_type == User.UserType.MODERATOR.value:
             return qs
         elif user.user_type == User.UserType.SCHOOL_ADMIN.value:
+            return qs.filter(created_by=user)
+        elif user.user_type == User.UserType.INSTITUTIONAL_USER.value:
             return qs.filter(created_by=user)
         return qs.none()
 

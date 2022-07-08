@@ -9,6 +9,7 @@ from unittest.mock import patch
 from django.utils import timezone
 from django.conf import settings
 from django.test import override_settings
+from django.core.cache import cache
 
 from config.celery import app as celery_app
 from graphene_django.utils import GraphQLTestCase as BaseGraphQLTestCase
@@ -69,6 +70,9 @@ class GraphQLTestCase(CommonSetupClassMixin, BaseGraphQLTestCase):
             self.now_datetime = datetime.datetime(2021, 1, 1, 0, 0, 0, 123456, tzinfo=pytz.UTC)
             self.now_datetime_str = self.now_datetime.isoformat()
             self.now_patcher.start().return_value = self.now_datetime
+
+        # Disable captcha in test cases
+        cache.set('enable_captcha', False)
 
     def tearDown(self):
         if hasattr(self, 'now_patcher'):

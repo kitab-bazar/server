@@ -30,7 +30,8 @@ class BookFilter(django_filters.FilterSet):
         return queryset.filter(
             Q(title_en__icontains=value) |
             Q(title_ne__icontains=value) |
-            Q(authors__name__icontains=value)
+            Q(authors__name__icontains=value) |
+            Q(isbn__exact=value)
         )
 
     def filter_categories(self, queryset, name, value):

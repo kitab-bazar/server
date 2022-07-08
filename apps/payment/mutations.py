@@ -6,9 +6,10 @@ from utils.graphene.mutation import (
 )
 from config.permissions import UserPermissions
 
-from apps.payment.serializers import PaymentSerializer
+from apps.payment.serializers import PaymentSerializer, PaymentUpdateSerializer
 from apps.payment.models import Payment
 from apps.payment.schema import PaymentType
+from apps.user.models import User
 
 
 PaymentInputType = generate_input_type_for_serializer(
@@ -16,15 +17,18 @@ PaymentInputType = generate_input_type_for_serializer(
     serializer_class=PaymentSerializer
 )
 
+PaymentUpdateInputType = generate_input_type_for_serializer(
+    'PaymentUpdateInputType',
+    serializer_class=PaymentUpdateSerializer
+)
+
 
 class PaymentMixin():
     @classmethod
     def filter_queryset(cls, qs, info):
-        return qs.filter(created_by=info.context.user)
-
-    @classmethod
-    def check_permissions(cls, *args, **_):
-        return True
+        if info.context.user.user_type == User.UserType.MODERATOR.value:
+            return qs
+        return qs.none()
 
 
 class CreatePayment(PaymentMixin, CreateUpdateGrapheneMutation):
@@ -39,11 +43,11 @@ class CreatePayment(PaymentMixin, CreateUpdateGrapheneMutation):
 
 class UpdatePayment(PaymentMixin, CreateUpdateGrapheneMutation):
     class Arguments:
-        data = PaymentInputType(required=True)
+        data = PaymentUpdateInputType(required=True)
         id = graphene.ID(required=True)
 
     model = Payment
-    serializer_class = PaymentSerializer
+    serializer_class = PaymentUpdateSerializer
     result = graphene.Field(PaymentType)
     permissions = [UserPermissions.Permission.CAN_UPDATE_PAYMENT]
 

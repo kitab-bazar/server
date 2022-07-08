@@ -1,7 +1,9 @@
+from django.conf import settings
 import graphene
 
 from django.contrib.auth import login, logout
 from django.utils.translation import gettext
+from django.core.cache import cache
 
 from utils.graphene.mutation import (
     generate_input_type_for_serializer,
@@ -12,6 +14,7 @@ from config.permissions import UserPermissions
 from config.exceptions import PermissionDeniedException
 
 from apps.payment.mutations import Mutation as PaymentMutation
+from apps.package.mutations import Mutation as PackageMutation
 
 from .schema import ModeratorQueryUserType, UserMeType
 from .models import User
@@ -24,7 +27,9 @@ from .serializers import (
     GenerateResetPasswordTokenSerializer,
     ResetPasswordSerializer,
     UpdateProfileSerializer,
+    UserDeactivateToggleSerializer,
 )
+from utils.validations import MissingCaptchaException
 
 
 RegisterInputType = generate_input_type_for_serializer(
@@ -40,6 +45,7 @@ class Register(graphene.Mutation):
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
     result = graphene.Field(UserMeType)
+    captcha_required = graphene.Boolean(default_value=False)
 
     @staticmethod
     def mutate(root, info, data):
@@ -48,7 +54,7 @@ class Register(graphene.Mutation):
             context={'request': info.context.request}
         )
         if errors := mutation_is_not_valid(serializer):
-            return Register(errors=errors, ok=False)
+            return Register(errors=errors, ok=False, captcha_required=cache.get('enable_captcha'))
         instance = serializer.save()
         return Register(
             result=instance,
@@ -70,6 +76,7 @@ class Login(graphene.Mutation):
     result = graphene.Field(UserMeType)
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean(required=True)
+    captcha_required = graphene.Boolean(default_value=False)
 
     @staticmethod
     def mutate(root, info, data):
@@ -77,11 +84,16 @@ class Login(graphene.Mutation):
             data=data,
             context={'request': info.context.request}
         )
-        errors = mutation_is_not_valid(serializer)
+        try:
+            errors = mutation_is_not_valid(serializer)
+        except MissingCaptchaException:
+            return Login(ok=False, captcha_required=True)
         if errors:
+            attempts = User._get_login_attempt(data['email'])
             return Login(
                 errors=errors,
                 ok=False,
+                captcha_required=attempts >= settings.MAX_LOGIN_ATTEMPTS and True
             )
         if user := serializer.validated_data.get('user'):
             login(info.context.request, user)
@@ -125,7 +137,7 @@ class VerifyUser(CreateUpdateGrapheneMutation):
     serializer_class = UserVerifySerializer
     result = graphene.Field(ModeratorQueryUserType)
     ok = graphene.Boolean()
-    permissions = [UserPermissions.Permission.CAN_VERIFY_USER]
+    permissions = [UserPermissions.Permission.CAN_DEACTIVATE_TOGGLE_USER]
 
 
 ChangePasswordInputType = generate_input_type_for_serializer(
@@ -168,12 +180,13 @@ class GenerateResetPasswordToken(graphene.Mutation):
 
     errors = graphene.List(graphene.NonNull(CustomErrorType))
     ok = graphene.Boolean()
+    captcha_required = graphene.Boolean(default_value=False)
 
     @staticmethod
     def mutate(root, info, data):
         serializer = GenerateResetPasswordTokenSerializer(data=data)
         if errors := mutation_is_not_valid(serializer):
-            return GenerateResetPasswordToken(errors=errors, ok=False)
+            return GenerateResetPasswordToken(errors=errors, ok=False, captcha_required=cache.get('enable_captcha'))
         return GenerateResetPasswordToken(errors=None, ok=True)
 
 
@@ -239,13 +252,32 @@ class UpdateProfile(graphene.Mutation):
         )
 
 
+UserDeactivateToggleInputType = generate_input_type_for_serializer(
+    'UserDeactivateToggleInputType',
+    UserDeactivateToggleSerializer
+)
+
+
+class UserDeactivateToggle(CreateUpdateGrapheneMutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+        data = UserDeactivateToggleInputType(required=True)
+    model = User
+    serializer_class = UserDeactivateToggleSerializer
+    result = graphene.Field(ModeratorQueryUserType)
+    ok = graphene.Boolean()
+    permissions = [UserPermissions.Permission.CAN_VERIFY_USER]
+
+
 class ModeratorMutationType(
     # --- Start scopped entities
     PaymentMutation,
     # --- End scopped entities
-    graphene.Mutation
+    graphene.Mutation,
+    PackageMutation,
 ):
     user_verify = VerifyUser.Field()
+    user_deactivate_toggle = UserDeactivateToggle.Field()
 
     @staticmethod
     def mutate(root, info, *args, **kwargs):

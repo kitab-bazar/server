@@ -13,6 +13,16 @@ input ActivateInputType {
   token: String!
 }
 
+type ActivityFileType {
+  id: ID!
+  file: FileFieldType
+}
+
+input ActivityLogFileInputType {
+  type: type!
+  file: Upload!
+}
+
 type AuthorListType {
   results: [AuthorType!]
   totalCount: Int
@@ -23,14 +33,21 @@ type AuthorListType {
 type AuthorType {
   id: ID!
   name: String!
+  nameEn: String
+  nameNe: String
   aboutAuthor: String
+  aboutAuthorEn: String
+  aboutAuthorNe: String
+}
+
+enum BlogBlogPublishType {
+  PUBLISH
+  DRAFT
 }
 
 input BlogCategoryInputType {
-  name: String!
   nameEn: String
   nameNe: String
-  parentCategory: String
 }
 
 type BlogCategoryListType {
@@ -43,43 +60,34 @@ type BlogCategoryListType {
 type BlogCategoryType {
   id: ID!
   name: String!
-  parentCategory: BlogCategoryType
+  nameEn: String
+  nameNe: String
 }
 
 input BlogInputType {
-  title: String
-  titleEn: String
-  titleNe: String
-  description: String
-  descriptionEn: String
-  descriptionNe: String
   image: Upload
-  publishedDate: Date!
-  blogPublishType: blog_publish_type
-  metaTitle: String
-  metaTitleEn: String
-  metaTitleNe: String
-  metaKeywords: String
-  metaKeywordsEn: String
-  metaKeywordsNe: String
-  metaDescription: String
-  metaDescriptionEn: String
-  metaDescriptionNe: String
-  ogTitle: String
-  ogTitleEn: String
-  ogTitleNe: String
-  ogDescription: String
-  ogDescriptionEn: String
-  ogDescriptionNe: String
-  ogImage: Upload
-  ogLocale: String
-  ogLocaleEn: String
-  ogLocaleNe: String
-  ogType: String
-  ogTypeEn: String
-  ogTypeNe: String
   category: String!
   tags: [ID!]
+  publishedDate: Date!
+  blogPublishType: blog_publish_type
+  titleEn: String
+  descriptionEn: String
+  metaTitleEn: String
+  metaKeywordsEn: String
+  metaDescriptionEn: String
+  ogTitleEn: String
+  ogDescriptionEn: String
+  ogLocaleEn: String
+  ogTypeEn: String
+  titleNe: String
+  descriptionNe: String
+  metaTitleNe: String
+  metaKeywordsNe: String
+  metaDescriptionNe: String
+  ogTitleNe: String
+  ogDescriptionNe: String
+  ogLocaleNe: String
+  ogTypeNe: String
 }
 
 type BlogListType {
@@ -90,7 +98,6 @@ type BlogListType {
 }
 
 input BlogTagInputType {
-  name: String!
   nameEn: String
   nameNe: String
 }
@@ -105,140 +112,99 @@ type BlogTagListType {
 type BlogTagType {
   id: ID!
   name: String!
+  nameEn: String
+  nameNe: String
 }
 
 type BlogType {
   id: ID!
   title: String!
+  titleEn: String
+  titleNe: String
   description: String!
+  descriptionEn: String
+  descriptionNe: String
   image: FileFieldType
   category: BlogCategoryType!
   tags: [BlogTagType!]!
   publishedDate: Date!
+  blogPublishType: BlogBlogPublishType!
   metaTitle: String
+  metaTitleEn: String
+  metaTitleNe: String
   metaKeywords: String
+  metaKeywordsEn: String
+  metaKeywordsNe: String
   metaDescription: String
+  metaDescriptionEn: String
+  metaDescriptionNe: String
   ogTitle: String
+  ogTitleEn: String
+  ogTitleNe: String
   ogDescription: String
+  ogDescriptionEn: String
+  ogDescriptionNe: String
   ogImage: FileFieldType
   ogLocale: String
+  ogLocaleEn: String
+  ogLocaleNe: String
   ogType: String
+  ogTypeEn: String
+  ogTypeNe: String
   quantityInCart: Int!
 }
 
 input BookAuthorInputType {
-  name: String!
   nameEn: String
   nameNe: String
-  aboutAuthor: String
   aboutAuthorEn: String
   aboutAuthorNe: String
 }
 
+type BookCategoriesPerOrderWindowType {
+  orderWindowId: ID!
+  title: String!
+  grades: [BooksPerGradeType!]
+}
+
 input BookCategoryInputType {
-  name: String!
   nameEn: String
   nameNe: String
-  parentCategory: String
 }
 
 input BookCreateInputType {
-  title: String!
-  titleEn: String
-  titleNe: String
-  image: Upload
-  description: String
-  descriptionEn: String
-  descriptionNe: String
+  categories: [ID!]!
+  authors: [ID!]!
+  tags: [ID!]
   isbn: String
   numberOfPages: Int!
+  price: Int!
+  image: Upload
   language: BookLanguageEnum!
   weight: Int
   publishedDate: Date!
   edition: String
+  publisher: String!
   grade: BookGradeEnum
   isPublished: Boolean
-  price: Int!
-  metaTitle: String
-  metaTitleEn: String
-  metaTitleNe: String
-  metaKeywords: String
-  metaKeywordsEn: String
-  metaKeywordsNe: String
-  metaDescription: String
-  metaDescriptionEn: String
-  metaDescriptionNe: String
-  ogTitle: String
-  ogTitleEn: String
-  ogTitleNe: String
-  ogDescription: String
-  ogDescriptionEn: String
-  ogDescriptionNe: String
-  ogImage: Upload
-  ogLocale: String
-  ogLocaleEn: String
-  ogLocaleNe: String
-  ogType: String
-  ogTypeEn: String
-  ogTypeNe: String
-  publisher: String!
-  categories: [ID!]!
-  authors: [ID!]!
-  tags: [ID!]
-}
-
-type BookDetailType {
-  id: ID!
-  title: String!
-  image: FileFieldType
-  description: String
-  categories: [CategoryType!]!
-  authors: [AuthorType!]!
-  tags: [TagType!]!
-  isbn: String!
-  numberOfPages: Int!
-  language: BookLanguageEnum
-  weight: Int
-  publishedDate: Date!
-  edition: String
-  publisher: PublisherType!
-  grade: BookGradeEnum
-  isPublished: Boolean!
-  price: Int!
-  metaTitle: String
-  metaKeywords: String
-  metaDescription: String
-  ogTitle: String
-  ogDescription: String
-  ogImage: FileFieldType
-  ogLocale: String
-  ogType: String
   titleEn: String
-  titleNe: String
   descriptionEn: String
-  descriptionNe: String
-  createdBy: UserType
   metaTitleEn: String
-  metaTitleNe: String
   metaKeywordsEn: String
-  metaKeywordsNe: String
   metaDescriptionEn: String
-  metaDescriptionNe: String
   ogTitleEn: String
-  ogTitleNe: String
   ogDescriptionEn: String
-  ogDescriptionNe: String
   ogLocaleEn: String
-  ogLocaleNe: String
   ogTypeEn: String
+  titleNe: String
+  descriptionNe: String
+  metaTitleNe: String
+  metaKeywordsNe: String
+  metaDescriptionNe: String
+  ogTitleNe: String
+  ogDescriptionNe: String
+  ogLocaleNe: String
   ogTypeNe: String
-  bookWishList: [WishListType!]!
-  bookCartItem: [CartItemType!]!
-  bookOrderCartItem: [BookOrderType!]!
-  wishlistId: ID
-  cartDetails: CartItemType
-  gradeDisplay: EnumDescription
-  languageDisplay: EnumDescription
 }
 
 enum BookGradeEnum {
@@ -276,10 +242,14 @@ type BookOrderType {
   isbn: String!
   edition: String!
   image: FileFieldType
+  publisher: PublisherType!
+  language: BookLanguageEnum
+  grade: BookGradeEnum
+  gradeDisplay: EnumDescription
+  languageDisplay: EnumDescription
 }
 
 input BookTagInputType {
-  name: String!
   nameEn: String
   nameNe: String
 }
@@ -287,8 +257,12 @@ input BookTagInputType {
 type BookType {
   id: ID!
   title: String!
+  titleEn: String
+  titleNe: String
   image: FileFieldType
   description: String
+  descriptionEn: String
+  descriptionNe: String
   categories: [CategoryType!]!
   authors: [AuthorType!]!
   tags: [TagType!]!
@@ -303,17 +277,73 @@ type BookType {
   isPublished: Boolean!
   price: Int!
   metaTitle: String
+  metaTitleEn: String
+  metaTitleNe: String
   metaKeywords: String
+  metaKeywordsEn: String
+  metaKeywordsNe: String
   metaDescription: String
+  metaDescriptionEn: String
+  metaDescriptionNe: String
   ogTitle: String
+  ogTitleEn: String
+  ogTitleNe: String
   ogDescription: String
+  ogDescriptionEn: String
+  ogDescriptionNe: String
   ogImage: FileFieldType
   ogLocale: String
+  ogLocaleEn: String
+  ogLocaleNe: String
   ogType: String
+  ogTypeEn: String
+  ogTypeNe: String
   wishlistId: ID
   cartDetails: CartItemType
   gradeDisplay: EnumDescription
   languageDisplay: EnumDescription
+}
+
+type BooksAndCostPerSchool {
+  schoolId: ID!
+  schoolName: String!
+  numberOfBooksOrdered: Int!
+  totalCost: Int!
+}
+
+type BooksOrderedAndIncentivesPerDistrict {
+  districtId: ID!
+  name: String!
+  noOfBooksOrdered: Int!
+  noOfIncentiveBooks: Int!
+}
+
+type BooksPerCategoryType {
+  categoryId: ID!
+  category: String!
+  numberOfBooks: Int!
+}
+
+type BooksPerGradeType {
+  grade: String!
+  numberOfBooks: Int!
+}
+
+type BooksPerLanguageType {
+  language: String!
+  numberOfBooks: Int!
+}
+
+type BooksPerPublisherPerCategory {
+  publisherId: ID!
+  publisherName: String!
+  categories: [BooksPerCategoryType!]
+}
+
+type BooksPerPublisherType {
+  publisherId: ID!
+  publisherName: String!
+  numberOfBooks: Int!
 }
 
 input CartItemInputType {
@@ -347,7 +377,10 @@ type CategoryListType {
 type CategoryType {
   id: ID!
   name: String!
+  nameEn: String
+  nameNe: String
   parentCategory: CategoryType
+  image: FileFieldType
 }
 
 input ChangePasswordInputType {
@@ -397,6 +430,56 @@ type ContactMessageType {
   message: String!
   phoneNumber: String!
   messageType: ContactMessageMessageType!
+}
+
+type CourierPackageListType {
+  results: [CourierPackageType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+enum CourierPackageStatusEnum {
+  PENDING
+  IN_TRANSIT
+  ISSUE
+  DELIVERED
+}
+
+type CourierPackageType {
+  id: ID!
+  packageId: UUID!
+  status: CourierPackageStatusEnum!
+  totalPrice: Int!
+  totalQuantity: Int!
+  municipality: MunicipalityType!
+  isEligibleForIncentive: Boolean!
+  type: CourierPackageTypeEnum!
+  statusDisplay: EnumDescription
+  typeDisplay: EnumDescription
+  logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
+  schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
+  institutionPackages(status: [InstitutionPackageStatusEnum!], institutions: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageListType
+  schoolCourierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
+  institutionCourierPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageBookListType
+  relatedOrders: [OrderType!]
+}
+
+enum CourierPackageTypeEnum {
+  SCHOOL
+  INSTITUTION
+}
+
+input CourierPackageUpdateInputType {
+  status: CourierPackageStatusEnum
+  files: Upload
+  comment: String
+}
+
+type CreateActivityLogFile {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: ActivityFileType
 }
 
 type CreateBlog {
@@ -499,6 +582,12 @@ scalar Date
 
 scalar DateTime
 
+type DeleteActivityLogFile {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: ActivityFileType
+}
+
 type DeleteBlog {
   errors: [GenericScalar!]
   ok: Boolean
@@ -589,6 +678,12 @@ type DeleteWishList {
   result: WishListType
 }
 
+type DeliveriesPerDistrictType {
+  districtId: ID!
+  name: String!
+  schoolDelivered: Int!
+}
+
 type DistrictListType {
   results: [DistrictType!]
   totalCount: Int
@@ -605,13 +700,10 @@ type DistrictType {
 scalar EnumDescription
 
 input FaqCreateInputType {
-  question: String
   questionEn: String
-  questionNe: String
-  answer: String
   answerEn: String
+  questionNe: String
   answerNe: String
-  faqPublishType: faq_publish_type
 }
 
 type FaqListType {
@@ -624,7 +716,11 @@ type FaqListType {
 type FaqType {
   id: ID!
   question: String
+  questionEn: String
+  questionNe: String
   answer: String
+  answerEn: String
+  answerNe: String
 }
 
 type FileFieldType {
@@ -635,10 +731,13 @@ type FileFieldType {
 type GenerateResetPasswordToken {
   errors: [GenericScalar!]
   ok: Boolean
+  captchaRequired: Boolean
 }
 
 input GenerateResetPasswordTokenType {
   email: String!
+  captcha: String
+  siteKey: String
 }
 
 scalar GenericScalar
@@ -650,6 +749,9 @@ input InstitutionCreateInputType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  logoUrl: String
+  websiteUrl: String
+  libraryUrl: String
 }
 
 input InstitutionInputType {
@@ -659,6 +761,9 @@ input InstitutionInputType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  logoUrl: String
+  websiteUrl: String
+  libraryUrl: String
 }
 
 type InstitutionListType {
@@ -666,6 +771,72 @@ type InstitutionListType {
   totalCount: Int
   page: Int
   pageSize: Int
+}
+
+type InstitutionPackageBookListType {
+  results: [InstitutionPackageBookType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type InstitutionPackageBookType {
+  id: ID!
+  quantity: Int!
+  book: BookType!
+}
+
+type InstitutionPackageListType {
+  results: [InstitutionPackageType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type InstitutionPackageLogListType {
+  results: [InstitutionPackageLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type InstitutionPackageLogType {
+  id: ID!
+  comment: String
+  snapshot: GenericScalar
+  files: [ActivityFileType!]
+}
+
+enum InstitutionPackageStatusEnum {
+  PENDING
+  IN_TRANSIT
+  ISSUE
+  DELIVERED
+}
+
+type InstitutionPackageType {
+  id: ID!
+  packageId: UUID!
+  status: InstitutionPackageStatusEnum!
+  relatedOrders: [OrderType!]!
+  institution: UserType!
+  totalPrice: Int!
+  totalQuantity: Int!
+  statusDisplay: EnumDescription
+  institutionPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageBookListType
+  logs(search: String, page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageLogListType
+}
+
+input InstitutionPackageUpdateInputType {
+  status: InstitutionPackageStatusEnum
+  files: Upload
+  comment: String
+}
+
+type InstitutionQueryType {
+  payment(id: ID!): PaymentType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  paymentSummary: PaymentSummaryType
 }
 
 type InstitutionType {
@@ -676,6 +847,9 @@ type InstitutionType {
   localAddress: String
   panNumber: String
   vatNumber: String
+  logoUrl: String
+  websiteUrl: String
+  libraryUrl: String
 }
 
 input InstitutionUpdateInputType {
@@ -685,15 +859,23 @@ input InstitutionUpdateInputType {
   localAddress: String
 }
 
+input LogInputType {
+  comment: String
+  files: [ID!]
+}
+
 type Login {
   result: UserMeType
   errors: [GenericScalar!]
   ok: Boolean!
+  captchaRequired: Boolean
 }
 
 input LoginInputType {
   email: String!
   password: String!
+  captcha: String
+  siteKey: String
 }
 
 type Logout {
@@ -701,17 +883,26 @@ type Logout {
 }
 
 type ModeratorMutationType {
+  updateSchoolPackage(data: SchoolPackageUpdateInputType!, id: ID!): UpdateSchoolPackage
+  updatePublisherPackage(data: PublisherPackageUpdateInputType!, id: ID!): UpdatePublisherPackage
+  updateCourierPackage(data: CourierPackageUpdateInputType!, id: ID!): UpdateCourierPackage
+  updateInstitutionPackage(data: InstitutionPackageUpdateInputType!, id: ID!): UpdateInstitutionPackage
   createPayment(data: PaymentInputType!): CreatePayment
-  updatePayment(data: PaymentInputType!, id: ID!): UpdatePayment
+  updatePayment(data: PaymentUpdateInputType!, id: ID!): UpdatePayment
   userVerify(id: ID!): VerifyUser
+  userDeactivateToggle(data: UserDeactivateToggleInputType!, id: ID!): UserDeactivateToggle
 }
 
 type ModeratorQueryType {
+  orderActivityLog(id: ID!): OrderActivityLogType
+  orderActivityLogs(createByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderActivityLogListType
+  reports: ReportType
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
   user(id: ID!): ModeratorQueryUserType
-  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
+  users(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, provinces: [ID!], districts: [ID!], municipalities: [ID!], page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
+  deactivatedUsers(email: String, isActive: Boolean, isVerified: Boolean, userType: [UserTypeEnum!], search: String, orderMismatchUsers: Boolean, provinces: [ID!], districts: [ID!], municipalities: [ID!], page: Int = 1, ordering: String, pageSize: Int): ModeratorQueryUserListType
 }
 
 type ModeratorQueryUserListType {
@@ -734,9 +925,20 @@ type ModeratorQueryUserType {
   publisher: PublisherType
   school: SchoolType
   isVerified: Boolean!
+  dateJoined: DateTime!
   verifiedBy: UserType
+  isDeactivated: Boolean!
+  isDeactivatedBy: UserType
   canonicalName: String!
   userTypeDisplay: EnumDescription!
+  paymentCreditSum: Int
+  paymentDebitSum: Int
+  totalVerifiedPayment: Int
+  totalUnverifiedPayment: Int
+  totalUnverifiedPaymentCount: Int
+  totalVerifiedPaymentCount: Int
+  totalOrderPendingPrice: Int
+  outstandingBalance: Int
 }
 
 type MunicipalityListType {
@@ -799,6 +1001,8 @@ type Mutation {
   createInstitution(data: InstitutionCreateInputType!): CreateInstitution
   updateInstitution(data: InstitutionCreateInputType!, id: ID!): UpdateInstitution
   deleteInstitution(id: ID!): DeleteInstitution
+  createActivityLogFile(data: ActivityLogFileInputType!): CreateActivityLogFile
+  deleteActivityLogFile(id: ID!): DeleteActivityLogFile
   register(data: RegisterInputType!): Register
   login(data: LoginInputType!): Login
   activate(data: ActivateInputType!): Activate
@@ -834,6 +1038,13 @@ type NotificationType {
   read: Boolean!
   createdAt: DateTime!
   order: OrderType
+}
+
+type OrderActivityLogListType {
+  results: [OrderActivityLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
 }
 
 type OrderActivityLogType {
@@ -908,9 +1119,16 @@ type OrderWindowType {
   description: String!
   startDate: Date!
   endDate: Date!
+  type: OrderWindowTypeEnum
+}
+
+enum OrderWindowTypeEnum {
+  SCHOOL
+  INSTITUTION
 }
 
 input PaymentInputType {
+  paymentLog: LogInputType
   transactionType: TransactionTypeEnum!
   paymentType: PaymentTypeEnum!
   amount: Float!
@@ -923,6 +1141,26 @@ type PaymentListType {
   totalCount: Int
   page: Int
   pageSize: Int
+}
+
+type PaymentLogListType {
+  results: [PaymentLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PaymentLogType {
+  id: ID!
+  comment: String
+  snapshot: GenericScalar
+  files: [ActivityFileType!]
+}
+
+type PaymentPerOrderWindowType {
+  orderWindowId: ID!
+  title: String!
+  payment: Int!
 }
 
 type PaymentSummaryType {
@@ -948,11 +1186,18 @@ type PaymentType {
   statusDisplay: EnumDescription!
   transactionTypeDisplay: EnumDescription!
   paymentTypeDisplay: EnumDescription!
+  paymentLog(search: String, page: Int = 1, ordering: String, pageSize: Int): PaymentLogListType
 }
 
 enum PaymentTypeEnum {
   CASH
   CHEQUE
+}
+
+input PaymentUpdateInputType {
+  status: StatusEnum
+  amount: Float!
+  paymentLog: LogInputType
 }
 
 type ProvinceListType {
@@ -993,6 +1238,67 @@ type PublisherListType {
   pageSize: Int
 }
 
+type PublisherPackageBookListType {
+  results: [PublisherPackageBookType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PublisherPackageBookType {
+  id: ID!
+  quantity: Int!
+  book: BookType!
+}
+
+type PublisherPackageListType {
+  results: [PublisherPackageType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PublisherPackageLogListType {
+  results: [PublisherPackageLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type PublisherPackageLogType {
+  id: ID!
+  comment: String
+  snapshot: GenericScalar
+  files: [ActivityFileType!]
+}
+
+enum PublisherPackageStatusEnum {
+  PENDING
+  ISSUE
+  DELIVERED
+}
+
+type PublisherPackageType {
+  id: ID!
+  packageId: UUID!
+  status: PublisherPackageStatusEnum!
+  relatedOrders: [OrderType!]!
+  publisher: PublisherType!
+  totalPrice: Int!
+  totalQuantity: Int!
+  incentive: Int!
+  ordersExportFile: FileFieldType
+  statusDisplay: EnumDescription
+  publisherPackageBooks(quantity: Int, book: ID, publisherPackage: ID, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageBookListType
+  logs(search: String, page: Int = 1, ordering: String, pageSize: Int): PublisherPackageLogListType
+}
+
+input PublisherPackageUpdateInputType {
+  status: PublisherPackageStatusEnum
+  files: Upload
+  comment: String
+}
+
 type PublisherType {
   id: ID!
   name: String!
@@ -1012,6 +1318,14 @@ input PublisherUpdateInputType {
 }
 
 type Query {
+  publisherPackage(id: ID!): PublisherPackageType
+  publisherPackages(status: [PublisherPackageStatusEnum!], publishers: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): PublisherPackageListType
+  schoolPackage(id: ID!): SchoolPackageType
+  schoolPackages(status: [SchoolPackageStatusEnum!], schools: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): SchoolPackageListType
+  courierPackage(id: ID!): CourierPackageType
+  courierPackages(status: [CourierPackageStatusEnum!], municipalities: [ID!], orderWindows: [ID!], type: [CourierPackageTypeEnum!], page: Int = 1, ordering: String, pageSize: Int): CourierPackageListType
+  institutionPackage(id: ID!): InstitutionPackageType
+  institutionPackages(status: [InstitutionPackageStatusEnum!], institutions: [ID!], orderWindows: [ID!], page: Int = 1, ordering: String, pageSize: Int): InstitutionPackageListType
   blog(id: ID!): BlogType
   blogs(title: String, categories: [ID!], tags: [ID!], page: Int = 1, ordering: String, pageSize: Int): BlogListType
   blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
@@ -1022,7 +1336,7 @@ type Query {
   contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType
   order(id: ID!): OrderType
-  orders(status: [OrderStatusEnum!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
+  orders(status: [OrderStatusEnum!], users: [ID!], orderWindows: [ID!], districts: [ID!], municipalities: [ID!], page: Int = 1, ordering: String, pageSize: Int): OrderListType
   orderStat: OrderStatType
   orderSummary: OrderSummaryType
   orderWindowActive: OrderWindowType
@@ -1031,15 +1345,17 @@ type Query {
   notification(id: ID!): NotificationType
   notifications(title: String, page: Int = 1, ordering: String, pageSize: Int): NotificationListType
   book(id: ID!): BookType
-  bookDetail(id: ID!): BookDetailType
   books(categories: [ID!], authors: [ID!], tags: [ID!], publisher: ID, search: String, publishers: [ID!], isAddedInWishlist: Boolean, grade: [BookGradeEnum!], language: [BookLanguageEnum!], page: Int = 1, ordering: String, pageSize: Int): BookListType
   tags(name: String, page: Int = 1, ordering: String, pageSize: Int): TagListType
   authors(name: String, page: Int = 1, ordering: String, pageSize: Int): AuthorListType
   categories(name: String, page: Int = 1, ordering: String, pageSize: Int): CategoryListType
   wishList(createdBy: ID, book: ID, page: Int = 1, ordering: String, pageSize: Int): WishListListType
   schoolQuery: SchoolQueryType
+  school(id: ID!): SchoolType
+  schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
   publisher(id: ID!): PublisherType
   publishers(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): PublisherListType
+  institutionQuery: InstitutionQueryType
   institution(id: ID!): InstitutionType
   institutions(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): InstitutionListType
   province(id: ID!): ProvinceType
@@ -1056,6 +1372,7 @@ type Register {
   errors: [GenericScalar!]
   ok: Boolean
   result: UserMeType
+  captchaRequired: Boolean
 }
 
 input RegisterInputType {
@@ -1068,6 +1385,34 @@ input RegisterInputType {
   institution: InstitutionInputType
   publisher: PublisherInputType
   school: SchoolInputType
+  captcha: String
+  siteKey: String
+}
+
+type ReportType {
+  numberOfSchoolsRegistered: Int!
+  numberOfSchoolsVerified: Int!
+  numberOfSchoolsUnverified: Int!
+  numberOfPublishers: Int!
+  numberOfBooksOnThePlatform: Int!
+  numberOfIncentiveBooks: Int!
+  numberOfBooksOrdered: Int!
+  numberOfDistrictsReached: Int!
+  numberOfMunicipalities: Int!
+  numberOfSchoolsReached: Int!
+  topSellingBooks: [TopSellingBookType]
+  topSchools: [TopSchoolType]
+  usersPerDistrict: [UserPerDistrictType]
+  booksOrderedAndIncentivesPerDistrict: [BooksOrderedAndIncentivesPerDistrict]
+  deliveriesPerDistrict: [DeliveriesPerDistrictType]
+  paymentPerOrderWindow: [PaymentPerOrderWindowType]
+  booksPerPublisher: [BooksPerPublisherType]
+  booksPerCategory: [BooksPerCategoryType]
+  booksPerGrade: [BooksPerGradeType]
+  booksPerLanguage: [BooksPerLanguageType]
+  booksPerPublisherPerCategory: [BooksPerPublisherPerCategory]
+  booksAndCostPerSchool: [BooksAndCostPerSchool]
+  bookGradesPerOrderWindow: [BookCategoriesPerOrderWindowType]
 }
 
 type ResetPassword {
@@ -1109,12 +1454,71 @@ type SchoolListType {
   pageSize: Int
 }
 
+type SchoolPackageBookListType {
+  results: [SchoolPackageBookType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type SchoolPackageBookType {
+  id: ID!
+  quantity: Int!
+  book: BookType!
+}
+
+type SchoolPackageListType {
+  results: [SchoolPackageType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type SchoolPackageLogListType {
+  results: [SchoolPackageLogType!]
+  totalCount: Int
+  page: Int
+  pageSize: Int
+}
+
+type SchoolPackageLogType {
+  id: ID!
+  comment: String
+  snapshot: GenericScalar
+  files: [ActivityFileType!]
+}
+
+enum SchoolPackageStatusEnum {
+  PENDING
+  IN_TRANSIT
+  ISSUE
+  DELIVERED
+}
+
+type SchoolPackageType {
+  id: ID!
+  packageId: UUID!
+  status: SchoolPackageStatusEnum!
+  relatedOrders: [OrderType!]!
+  school: UserType!
+  totalPrice: Int!
+  totalQuantity: Int!
+  isEligibleForIncentive: Boolean!
+  statusDisplay: EnumDescription
+  schoolPackageBooks(quantity: Int, book: ID, schoolPackage: ID, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageBookListType
+  logs(search: String, page: Int = 1, ordering: String, pageSize: Int): SchoolPackageLogListType
+}
+
+input SchoolPackageUpdateInputType {
+  status: SchoolPackageStatusEnum
+  files: Upload
+  comment: String
+}
+
 type SchoolQueryType {
   payment(id: ID!): PaymentType
-  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, page: Int = 1, ordering: String, pageSize: Int): PaymentListType
+  payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
-  school(id: ID!): SchoolType
-  schools(name: String, provinces: String, districts: String, municipalities: String, wardNumber: String, localAddress: String, panNumber: String, vatNumber: String, page: Int = 1, ordering: String, pageSize: Int): SchoolListType
 }
 
 type SchoolType {
@@ -1153,6 +1557,8 @@ type TagListType {
 type TagType {
   id: ID!
   name: String!
+  nameEn: String
+  nameNe: String
 }
 
 input ToggleNotificationInputType {
@@ -1163,6 +1569,18 @@ type ToggleNotificationReadStatus {
   errors: [GenericScalar!]
   ok: Boolean
   result: NotificationType
+}
+
+type TopSchoolType {
+  schoolId: ID!
+  schoolName: String!
+  bookOrderedCount: Int!
+}
+
+type TopSellingBookType {
+  bookId: ID!
+  title: String!
+  soldCount: Int!
 }
 
 enum TransactionTypeEnum {
@@ -1226,6 +1644,12 @@ type UpdateContactMessage {
   result: ContactMessageType
 }
 
+type UpdateCourierPackage {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: CourierPackageType
+}
+
 type UpdateFaq {
   errors: [GenericScalar!]
   ok: Boolean
@@ -1236,6 +1660,12 @@ type UpdateInstitution {
   errors: [GenericScalar!]
   ok: Boolean
   result: InstitutionType
+}
+
+type UpdateInstitutionPackage {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: InstitutionPackageType
 }
 
 type UpdateOrder {
@@ -1272,13 +1702,35 @@ type UpdatePublisher {
   result: PublisherType
 }
 
+type UpdatePublisherPackage {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: PublisherPackageType
+}
+
 type UpdateSchool {
   errors: [GenericScalar!]
   ok: Boolean
   result: SchoolType
 }
 
+type UpdateSchoolPackage {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: SchoolPackageType
+}
+
 scalar Upload
+
+type UserDeactivateToggle {
+  errors: [GenericScalar!]
+  ok: Boolean
+  result: ModeratorQueryUserType
+}
+
+input UserDeactivateToggleInputType {
+  isDeactivated: Boolean!
+}
 
 type UserMeType {
   id: ID!
@@ -1298,6 +1750,13 @@ type UserMeType {
   canonicalName: String!
   userTypeDisplay: EnumDescription!
   allowedPermissions: [UserPermissions!]!
+}
+
+type UserPerDistrictType {
+  districtId: ID!
+  name: String!
+  verifiedUsers: Int!
+  unverifiedUsers: Int!
 }
 
 enum UserPermissions {
@@ -1356,6 +1815,9 @@ enum UserPermissions {
   CAN_VERIFY_USER
   CAN_CREATE_PAYMENT
   CAN_UPDATE_PAYMENT
+  CAN_DEACTIVATE_TOGGLE_USER
+  ACTIVITY_LOG_FILE
+  CAN_CRUD_CART_ITEM
 }
 
 type UserType {
@@ -1402,11 +1864,6 @@ enum blog_publish_type {
   DRAFT
 }
 
-enum faq_publish_type {
-  PUBLISH
-  DRAFT
-}
-
 enum message_type {
   PAYMENT_RELATED
   ORDER_RELATED
@@ -1415,6 +1872,12 @@ enum message_type {
   BUSINESS_RELATED
   FEATURE_SUGGESTIONS_FEEDBACK
   OTHER
+}
+
+enum type {
+  PAYMENT
+  ORDER
+  PACKAGE
 }
 
 enum user_type {

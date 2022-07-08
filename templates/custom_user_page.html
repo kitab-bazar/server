@@ -1,0 +1,12 @@
+{% extends 'admin/change_list.html' %}
+
+{% block object-tools %}
+    <ul class="object-tools">
+      <li>
+        <a href="{% url 'user:enable_disable_captcha' %}">Enable/Disable Captcha</a>
+      </li>
+    </ul>
+    <br style="clear:both"/>
+    <br style="clear:both"/>
+    {{ block.super }}
+{% endblock %}

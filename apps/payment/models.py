@@ -51,7 +51,8 @@ class Payment(models.Model):
     )
     paid_by = models.ForeignKey(
         User, on_delete=models.PROTECT,
-        verbose_name='payment_paid_by'
+        verbose_name='payment_paid_by',
+        related_name='payment_paid_by',
     )
 
     def __str__(self):

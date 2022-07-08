@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from django.core.cache import cache
 from phonenumber_field.modelfields import PhoneNumberField
+from django.db.models.functions import Coalesce
 
 
 class UserManager(BaseUserManager):
@@ -104,6 +106,11 @@ class User(AbstractUser):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='verified_by_user',
         null=True, blank=True, verbose_name=_('Verified by')
     )
+    is_deactivated = models.BooleanField(default=False)
+    is_deactivated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='is_deactivated_by_user',
+        null=True, blank=True, verbose_name=_('Deactivated by')
+    )
 
     class Meta:
         verbose_name = _("User")
@@ -121,6 +128,181 @@ class User(AbstractUser):
             else self.email
         )
 
+    @staticmethod
+    def _reset_login_cache(email: str):
+        cache.delete_many([
+            User._last_login_attempt_cache_key(email),
+            User._login_attempt_cache_key(email),
+        ])
+
+    # login attempts related stuff
+
+    @staticmethod
+    def _set_login_attempt(email: str, value: int):
+        return cache.set(User._login_attempt_cache_key(email), value)
+
+    @staticmethod
+    def _get_login_attempt(email: str):
+        return cache.get(User._login_attempt_cache_key(email), 0)
+
+    @staticmethod
+    def _set_last_login_attempt(email: str, value: float):
+        return cache.set(User._last_login_attempt_cache_key(email), value)
+
+    @staticmethod
+    def _get_last_login_attempt(email: str):
+        return cache.get(User._last_login_attempt_cache_key(email), 0)
+
+    @staticmethod
+    def _last_login_attempt_cache_key(email: str) -> str:
+        return f'{email}_lga_time'
+
+    @staticmethod
+    def _login_attempt_cache_key(email: str) -> str:
+        return f'{email}_lga'
+
     def save(self, *args, **kwargs):
         self.full_name = self.get_full_name()
         super().save(*args, **kwargs)
+
+    @classmethod
+    def annotate_user_payment_statement(cls):
+        from apps.payment.models import Payment
+        return {
+            'payment_credit_sum': Coalesce(models.Subquery(
+                User.objects.filter(
+                    payment_paid_by=models.OuterRef('pk'),
+                    payment_paid_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                    payment_paid_by__status=Payment.Status.VERIFIED.value
+                ).order_by().values('id').annotate(
+                    payment_credit_sum=models.Sum('payment_paid_by__amount')
+                ).values('payment_credit_sum')
+            ), 0, output_field=models.FloatField()),
+
+            'payment_debit_sum': Coalesce(models.Subquery(
+                User.objects.filter(
+                    payment_paid_by=models.OuterRef('pk'),
+                    payment_paid_by__transaction_type=Payment.TransactionType.DEBIT.value,
+                    payment_paid_by__status=Payment.Status.VERIFIED.value
+                ).order_by().values('id').annotate(
+                    payment_debit_sum=models.Sum('payment_paid_by__amount')
+                ).values('payment_debit_sum')
+            ), 0, output_field=models.FloatField()),
+
+            'total_verified_payment': Coalesce(models.Subquery(
+                User.objects.filter(
+                    payment_paid_by=models.OuterRef('pk'),
+                    payment_paid_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                    payment_paid_by__status=Payment.Status.VERIFIED.value
+                ).order_by().values('id').annotate(
+                    payment_credit_sum=models.Sum('payment_paid_by__amount')
+                ).values('payment_credit_sum')
+            ), 0, output_field=models.FloatField()),
+
+            'total_unverified_payment': Coalesce(models.Subquery(
+                User.objects.filter(
+                    payment_paid_by=models.OuterRef('pk'),
+                    payment_paid_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                    payment_paid_by__status=Payment.Status.PENDING.value
+                ).order_by().values('id')[:1].annotate(
+                    total_unverified_payment=models.Sum('payment_paid_by__amount')
+                ).values('total_unverified_payment')
+            ), 0, output_field=models.FloatField()),
+
+            'total_unverified_payment_count': Coalesce(models.Subquery(
+                User.objects.filter(
+                    payment_paid_by=models.OuterRef('pk'),
+                    payment_paid_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                    payment_paid_by__status=Payment.Status.PENDING.value
+                ).order_by().values('id').annotate(
+                    total_count=models.Count('payment_paid_by')).values('total_count')
+            ), 0, output_field=models.FloatField()),
+
+            'total_verified_payment_count': Coalesce(models.Subquery(
+                User.objects.filter(
+                    payment_paid_by=models.OuterRef('pk'),
+                    payment_paid_by__transaction_type=Payment.TransactionType.CREDIT.value,
+                    payment_paid_by__status=Payment.Status.VERIFIED.value
+                ).order_by().values('id').annotate(
+                    total_count=models.Count('payment_paid_by')).values('total_count')
+            ), 0, output_field=models.FloatField()),
+        }
+
+    @classmethod
+    def annotate_mismatch_order_statements(cls):
+        # NOTE: Try to move this login in dataloaders
+        from apps.payment.models import Payment
+        from apps.order.models import Order
+        return {
+            'payment_credit_sum': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.VERIFIED.value
+                ).order_by().values('paid_by').annotate(
+                    payment_credit_sum=models.Sum('amount')
+                ).values('payment_credit_sum')
+            ), 0, output_field=models.FloatField()),
+
+            'payment_debit_sum': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.DEBIT.value,
+                    status=Payment.Status.VERIFIED.value
+                ).order_by().values('paid_by').annotate(
+                    payment_debit_sum=models.Sum('amount')
+                ).values('payment_debit_sum')
+            ), 0, output_field=models.FloatField()),
+
+            'total_verified_payment': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.VERIFIED.value
+                ).order_by().values('paid_by').annotate(
+                    payment_credit_sum=models.Sum('amount')
+                ).values('payment_credit_sum')
+            ), 0, output_field=models.FloatField()),
+
+            'total_unverified_payment': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.PENDING.value
+                ).order_by().values('paid_by')[:1].annotate(
+                    payment_credit_sum=models.Sum('amount')
+                ).values('payment_credit_sum')
+            ), 0, output_field=models.FloatField()),
+
+            'total_unverified_payment_count': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.PENDING.value
+                ).order_by().values('paid_by').annotate(total_count=models.Count('paid_by')).values('total_count')
+            ), 0, output_field=models.FloatField()),
+
+            'total_verified_payment_count': Coalesce(models.Subquery(
+                Payment.objects.filter(
+                    paid_by=models.OuterRef('pk'),
+                    transaction_type=Payment.TransactionType.CREDIT.value,
+                    status=Payment.Status.VERIFIED.value
+                ).order_by().values('paid_by').annotate(total_count=models.Count('paid_by')).values('total_count')
+            ), 0, output_field=models.FloatField()),
+
+            'total_order_pending_price': Coalesce(models.Subquery(
+                Order.objects.filter(
+                    created_by=models.OuterRef('pk'),
+                    status=Order.Status.PENDING.value,
+                ).order_by().values('created_by').annotate(
+                    grand_total_price=models.ExpressionWrapper(
+                        models.Sum(models.F('book_order__price') * models.F('book_order__quantity')),
+                        output_field=models.FloatField()
+                    )
+                ).values('grand_total_price')
+            ), 0, output_field=models.FloatField()),
+
+            'outstanding_balance': (
+                models.F('payment_credit_sum') - models.F('payment_debit_sum') - models.F('total_order_pending_price')
+            )
+        }

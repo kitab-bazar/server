@@ -26,8 +26,10 @@ from .filters import (
     BookOrderFilterSet,
     OrderFilterSet,
     OrderWindowFilterSet,
+    OrderActivityLogFilterSet,
 )
-from .enums import OrderStatusEnum
+from .enums import OrderStatusEnum, OrderWindowTypeEnum
+from apps.book.enums import BookGradeEnum, BookLanguageEnum
 
 
 def get_cart_items_qs(info):
@@ -39,18 +41,22 @@ def get_cart_items_qs(info):
 def get_orders_qs(info):
     def _qs():
         if info.context.user.user_type == User.UserType.PUBLISHER.value:
-            return Order.objects.filter(book_order__publisher=info.context.user.publisher)
+            return Order.objects.filter(
+                book_order__publisher=info.context.user.publisher, created_by__is_deactivated=False
+            )
         elif info.context.user.user_type == User.UserType.MODERATOR.value:
-            return Order.objects.all()
+            return Order.objects.filter(created_by__is_deactivated=False)
         return Order.objects.filter(created_by=info.context.user)
     # Making sure only distinct orders are fetched
     return _qs().distinct()
 
 
 class OrderWindowType(DjangoObjectType):
+    type = graphene.Field(OrderWindowTypeEnum)
+
     class Meta:
         model = OrderWindow
-        fields = ('id', 'title', 'description', 'start_date', 'end_date')
+        fields = ('id', 'title', 'description', 'start_date', 'end_date', 'type')
 
 
 class OrderWindowListType(CustomDjangoListObjectType):
@@ -95,9 +101,18 @@ class CartType(CustomDjangoListObjectType, CartGrandTotalType):
 
 
 class BookOrderType(DjangoObjectType):
+    grade = graphene.Field(BookGradeEnum)
+    grade_display = EnumDescription(source='get_grade_display')
+
+    language = graphene.Field(BookLanguageEnum)
+    language_display = EnumDescription(source='get_language_display')
+
     class Meta:
         model = BookOrder
-        fields = ('id', 'title', 'price', 'quantity', 'isbn', 'edition', 'price', 'image')
+        fields = (
+            'id', 'title', 'price', 'quantity', 'isbn',
+            'edition', 'price', 'image', 'language', 'grade', 'publisher'
+        )
     image = graphene.Field(FileFieldType)
 
 
@@ -110,6 +125,12 @@ class BookOrderListType(CustomDjangoListObjectType):
 class OrderActivityLogType(DjangoObjectType):
     class Meta:
         model = OrderActivityLog
+
+
+class OrderActivityLogListType(CustomDjangoListObjectType):
+    class Meta:
+        model = OrderActivityLog
+        filterset_class = OrderActivityLogFilterSet
 
 
 class OrderType(DjangoObjectType):
@@ -140,7 +161,7 @@ class OrderType(DjangoObjectType):
 
     @staticmethod
     def resolve_book_orders(root, info, **kwargs):
-        return root.book_order
+        return root.book_order.select_related('publisher')
 
     @staticmethod
     def resolve_total_quantity(root, info, **kwargs):
@@ -273,7 +294,7 @@ class Query(graphene.ObjectType):
 
     @staticmethod
     def resolve_order_window_active(root, info, **kwargs) -> Union[None, OrderWindow]:
-        return OrderWindow.get_active_window()
+        return OrderWindow.get_active_window(info.context.user)
 
     @staticmethod
     def resolve_cart_grand_total_price(root, info, **kwargs) -> QuerySet:
@@ -291,3 +312,13 @@ class Query(graphene.ObjectType):
         if info.context.user.is_authenticated:
             return get_orders_qs(info)
         return None
+
+
+class OrderActivityLogQuery(graphene.ObjectType):
+    order_activity_log = DjangoObjectField(OrderActivityLogType)
+    order_activity_logs = DjangoPaginatedListObjectField(
+        OrderActivityLogListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )

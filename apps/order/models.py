@@ -5,24 +5,43 @@ from django.utils.translation import gettext_lazy as _, gettext
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.db import models
+from apps.book.models import Book
 
 
 class OrderWindow(models.Model):
+
+    class OrderWindowType(models.TextChoices):
+        SCHOOL = 'school', _('School')
+        INSTITUTION = 'institution', _('Institution')
+
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
+    type = models.CharField(
+        choices=OrderWindowType.choices, max_length=40, verbose_name=_('Order window type'), blank=True
+    )
 
     def __str__(self):
         return f'{self.title} :: {self.start_date} - {self.end_date}'
 
     @classmethod
-    def get_active_window(cls):
+    def get_active_window(cls, user):
+        from apps.user.models import User
         now_date = timezone.now().date()
-        return cls.objects.filter(
-            start_date__lte=now_date,
-            end_date__gte=now_date,
-        ).first()
+        if user.user_type == User.UserType.SCHOOL_ADMIN:
+            return cls.objects.filter(
+                start_date__lte=now_date,
+                end_date__gte=now_date,
+                type=cls.OrderWindowType.SCHOOL
+            ).first()
+        elif user.user_type == User.UserType.INSTITUTIONAL_USER:
+            return cls.objects.filter(
+                start_date__lte=now_date,
+                end_date__gte=now_date,
+                type=cls.OrderWindowType.INSTITUTION
+            ).first()
+        return None
 
     def clean(self):
         conflicting_order_window_qs = OrderWindow.objects.filter(
@@ -32,16 +51,33 @@ class OrderWindow(models.Model):
         )
         if self.pk:
             conflicting_order_window_qs = conflicting_order_window_qs.exclude(id=self.pk)
-        conflicting_order_window = conflicting_order_window_qs.first()
+        school_conflicting_order_window = conflicting_order_window_qs.filter(
+            type=OrderWindow.OrderWindowType.SCHOOL.value
+        ).first()
+        institution_conflicting_order_window = conflicting_order_window_qs.filter(
+            type=OrderWindow.OrderWindowType.INSTITUTION.value
+        ).first()
+
         if self.end_date < self.start_date:
             raise ValidationError(
                 gettext('Start date should not be greater than end date')
             )
-        elif conflicting_order_window:
+        elif not self.type:
+            raise ValidationError(
+                gettext("Order window type is required")
+            )
+        elif self.type == OrderWindow.OrderWindowType.SCHOOL.value and school_conflicting_order_window:
             raise ValidationError(
                 gettext(
-                    "This order window conflicts with another order window with id: %(id)d"
-                    % dict(id=conflicting_order_window.pk)
+                    "This school order window conflicts with another order window with id: %(id)d"
+                    % dict(id=school_conflicting_order_window.pk)
+                )
+            )
+        elif self.type == OrderWindow.OrderWindowType.INSTITUTION.value and institution_conflicting_order_window:
+            raise ValidationError(
+                gettext(
+                    "This institution order window conflicts with another order window with id: %(id)d"
+                    % dict(id=institution_conflicting_order_window.pk)
                 )
             )
         return super().clean()
@@ -105,6 +141,14 @@ class BookOrder(models.Model):
         related_name='publisher',
         verbose_name=_('Publisher')
     )
+    language = models.CharField(
+        choices=Book.LanguageType.choices, max_length=40,
+        verbose_name=_('Language'), blank=True, null=True
+    )
+    grade = models.CharField(
+        choices=Book.Grade.choices, max_length=40,
+        verbose_name=_('Grade'), blank=True, null=True
+    )
 
     class Meta:
         verbose_name = _('Book Order')
@@ -124,6 +168,8 @@ class BookOrder(models.Model):
             'isbn',
             'edition',
             'image',
+            'grade',
+            'language'
         ]:
             setattr(self, attr, getattr(self.book, attr))
         self.total_price = self.price * self.quantity
@@ -141,7 +187,10 @@ class Order(models.Model):
         COMPLETED = 'completed', _('Completed')
         CANCELLED = 'cancelled', _('Cancelled')
 
-    assigned_order_window = models.ForeignKey(OrderWindow, null=True, blank=True, on_delete=models.SET_NULL)
+    assigned_order_window = models.ForeignKey(
+        OrderWindow, related_name='orders',
+        null=True, blank=True, on_delete=models.SET_NULL
+    )
     total_price = models.BigIntegerField(verbose_name=_('Total Price'))
     order_code = models.UUIDField(
         primary_key=False,

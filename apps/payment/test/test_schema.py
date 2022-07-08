@@ -132,7 +132,7 @@ class TestPaymentQuery(GraphQLTestCase):
         '''
 
         update_mutation = '''
-            mutation MyMutation ($id: ID!, $input: PaymentInputType!) {
+            mutation MyMutation ($id: ID!, $input: PaymentUpdateInputType!) {
                 moderatorMutation {
                     updatePayment(id: $id, data: $input) {
                         errors
@@ -191,9 +191,6 @@ class TestPaymentQuery(GraphQLTestCase):
 
         minput = dict(
             amount=123.72,
-            paidBy=other_user.pk,
-            paymentType=self.genum(Payment.PaymentType.CHEQUE),
-            transactionType=self.genum(Payment.TransactionType.DEBIT),
             status=self.genum(Payment.Status.CANCELLED),
         )
 

@@ -1,13 +1,15 @@
 import django_filters
 from django.db import models
+from django.db.models import Q
 
 from utils.graphene.filters import (
     DateGteFilter,
     DateLteFilter,
     MultipleInputFilter,
+    IDListFilter,
 )
 
-from .models import BookOrder, Order, OrderWindow
+from .models import BookOrder, Order, OrderWindow, OrderActivityLog
 from .enums import OrderStatusEnum
 
 
@@ -26,10 +28,36 @@ class BookOrderFilterSet(django_filters.FilterSet):
 
 class OrderFilterSet(django_filters.FilterSet):
     status = MultipleInputFilter(OrderStatusEnum)
+    users = IDListFilter(method='filter_users')
+    order_windows = IDListFilter(method='filter_order_windows')
+    districts = IDListFilter(method='filter_order_by_districts')
+    municipalities = IDListFilter(method='filter_order_by_municipalities')
 
     class Meta:
         model = Order
-        fields = ('status',)
+        fields = ('status', 'users')
+
+    def filter_users(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(created_by__in=value)
+
+    def filter_order_windows(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(assigned_order_window__in=value)
+
+    def filter_order_by_districts(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(Q(created_by__school__district__in=value) | Q(created_by__institution__district__in=value))
+
+    def filter_order_by_municipalities(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(
+            Q(created_by__school__municipality__in=value) | Q(created_by__institution__municipality__in=value)
+        )
 
 
 class OrderWindowFilterSet(django_filters.FilterSet):
@@ -50,3 +78,16 @@ class OrderWindowFilterSet(django_filters.FilterSet):
                 models.Q(description__icontains=value)
             )
         return qs
+
+
+class OrderActivityLogFilterSet(django_filters.FilterSet):
+    create_by_users = IDListFilter(method='filter_create_by_users')
+
+    class Meta:
+        model = OrderActivityLog
+        fields = ()
+
+    def filter_create_by_users(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(created_by__in=value)

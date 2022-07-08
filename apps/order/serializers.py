@@ -16,6 +16,7 @@ from .models import (
     OrderActivityLog,
 )
 from .tasks import send_notification
+from apps.package.models import SchoolPackage, InstitutionPackage
 
 
 class CartItemSerializer(CreatedUpdatedBaseSerializer, serializers.ModelSerializer):
@@ -69,7 +70,7 @@ class CreateOrderFromCartSerializer(CreatedUpdatedBaseSerializer, serializers.Mo
                 gettext('Your cart is empty.')
             )
 
-        active_order_window = OrderWindow.get_active_window()
+        active_order_window = OrderWindow.get_active_window(created_by)
         if active_order_window is None:
             raise serializers.ValidationError(
                 gettext('No active order window available right now.')
@@ -124,6 +125,9 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
         User.UserType.SCHOOL_ADMIN: [
             (Order.Status.PENDING, Order.Status.CANCELLED),
         ],
+        User.UserType.INSTITUTIONAL_USER: [
+            (Order.Status.PENDING, Order.Status.CANCELLED),
+        ],
         User.UserType.MODERATOR: [
             (Order.Status.PENDING, Order.Status.CANCELLED),
             (Order.Status.IN_TRANSIT, Order.Status.COMPLETED),
@@ -140,6 +144,14 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
     def validate_status(self, status):
         current_status = self.instance.status
         user = self.context['request'].user
+        if SchoolPackage.objects.filter(school=self.instance.created_by, related_orders=self.instance).exists():
+            raise serializers.ValidationError(
+                gettext('Order is packed, you can not cancel order.')
+            )
+        if InstitutionPackage.objects.filter(institution=self.instance.created_by, related_orders=self.instance).exists():
+            raise serializers.ValidationError(
+                gettext('Order is packed, you can not cancel order.')
+            )
         if (
             # If user is SCHOOL_ADMIN, then the order should be created by that user
             user.user_type == User.UserType.SCHOOL_ADMIN and self.instance.created_by != user

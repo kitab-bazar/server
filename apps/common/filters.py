@@ -1,6 +1,5 @@
 import django_filters
 from django.db.models import Q
-
 from apps.common.models import Province, Municipality, District
 from utils.graphene.filters import IDListFilter
 

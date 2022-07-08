@@ -40,7 +40,7 @@ class TestBookCategoryPermissions(TestPermissions):
             }
         '''
         self.book_category_minput = {
-            'name': 'Test category'
+            'nameEn': 'Test category'
         }
         super().setUp()
 
@@ -48,7 +48,7 @@ class TestBookCategoryPermissions(TestPermissions):
         # Admin case
         self.force_login(self.super_admin)
         content = self.query_check(self.create_book_category, minput=self.book_category_minput, okay=True)
-        self.assertEqual(content['data']['createBookCategory']['result']['name'], self.book_category_minput['name'])
+        self.assertEqual(content['data']['createBookCategory']['result']['name'], self.book_category_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
@@ -87,14 +87,14 @@ class TestBookCategoryPermissions(TestPermissions):
 
         # Admin case
         updated_name = 'updated name'
-        self.book_category_minput['name'] = updated_name
+        self.book_category_minput['nameEn'] = updated_name
 
         self.force_login(self.super_admin)
         content = self.query_check(
             self.update_book_category, minput=self.book_category_minput,
             variables={'id': book_category.id}, okay=True
         )
-        self.assertEqual(content['data']['updateBookCategory']['result']['name'], self.book_category_minput['name'])
+        self.assertEqual(content['data']['updateBookCategory']['result']['name'], self.book_category_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
@@ -217,7 +217,7 @@ class TestBookTagPermissions(TestPermissions):
             }
         '''
         self.book_tag_minput = {
-            'name': 'Test category'
+            'nameEn': 'Test category'
         }
         super().setUp()
 
@@ -225,7 +225,7 @@ class TestBookTagPermissions(TestPermissions):
         # Admin case
         self.force_login(self.super_admin)
         content = self.query_check(self.create_book_tag, minput=self.book_tag_minput, okay=True)
-        self.assertEqual(content['data']['createBookTag']['result']['name'], self.book_tag_minput['name'])
+        self.assertEqual(content['data']['createBookTag']['result']['name'], self.book_tag_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
@@ -264,14 +264,14 @@ class TestBookTagPermissions(TestPermissions):
 
         # Admin case
         updated_name = 'updated name'
-        self.book_tag_minput['name'] = updated_name
+        self.book_tag_minput['nameEn'] = updated_name
 
         self.force_login(self.super_admin)
         content = self.query_check(
             self.update_book_tag, minput=self.book_tag_minput,
             variables={'id': book_tag.id}, okay=True
         )
-        self.assertEqual(content['data']['updateBookTag']['result']['name'], self.book_tag_minput['name'])
+        self.assertEqual(content['data']['updateBookTag']['result']['name'], self.book_tag_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
@@ -394,7 +394,7 @@ class TestBookAuthorPermissions(TestPermissions):
             }
         '''
         self.book_author_minput = {
-            'name': 'Test category'
+            'nameEn': 'Test category'
         }
         super().setUp()
 
@@ -402,12 +402,12 @@ class TestBookAuthorPermissions(TestPermissions):
         # Admin case
         self.force_login(self.super_admin)
         content = self.query_check(self.create_book_author, minput=self.book_author_minput, okay=True)
-        self.assertEqual(content['data']['createBookAuthor']['result']['name'], self.book_author_minput['name'])
+        self.assertEqual(content['data']['createBookAuthor']['result']['name'], self.book_author_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
         content = self.query_check(self.create_book_author, minput=self.book_author_minput, okay=True)
-        self.assertEqual(content['data']['createBookAuthor']['result']['name'], self.book_author_minput['name'])
+        self.assertEqual(content['data']['createBookAuthor']['result']['name'], self.book_author_minput['nameEn'])
 
         # School admin case
         self.force_login(self.school_admin_user)
@@ -438,14 +438,14 @@ class TestBookAuthorPermissions(TestPermissions):
 
         # Admin case
         updated_name = 'updated name'
-        self.book_author_minput['name'] = updated_name
+        self.book_author_minput['nameEn'] = updated_name
 
         self.force_login(self.super_admin)
         content = self.query_check(
             self.update_book_author, minput=self.book_author_minput,
             variables={'id': book_author.id}, okay=True
         )
-        self.assertEqual(content['data']['updateBookAuthor']['result']['name'], self.book_author_minput['name'])
+        self.assertEqual(content['data']['updateBookAuthor']['result']['name'], self.book_author_minput['nameEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
@@ -453,7 +453,7 @@ class TestBookAuthorPermissions(TestPermissions):
             self.update_book_author, minput=self.book_author_minput,
             variables={'id': book_author.id}, okay=True
         )
-        self.assertEqual(content['data']['updateBookAuthor']['result']['name'], self.book_author_minput['name'])
+        self.assertEqual(content['data']['updateBookAuthor']['result']['name'], self.book_author_minput['nameEn'])
 
         # School admin case
         self.force_login(self.school_admin_user)

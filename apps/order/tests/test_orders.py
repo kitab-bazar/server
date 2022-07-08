@@ -4,7 +4,8 @@ from django.core.exceptions import ValidationError
 from utils.graphene.tests import GraphQLTestCase
 
 from apps.user.models import User
-from apps.order.models import Order
+from apps.order.models import Order, OrderWindow
+from apps.book.models import Book
 
 from apps.user.factories import UserFactory
 from apps.book.factories import BookFactory, WishListFactory
@@ -105,7 +106,7 @@ class TestOrder(GraphQLTestCase):
     '''
 
     def setUp(self):
-        self.user = UserFactory.create()
+        self.user = UserFactory.create(user_type=User.UserType.SCHOOL_ADMIN)
         publisher = PublisherFactory.create()
         self.book1, self.book2 = BookFactory.create_batch(2, publisher=publisher)
         self.cart_item_1 = CartItemFactory.create(book=self.book1, created_by=self.user)
@@ -135,6 +136,7 @@ class TestOrder(GraphQLTestCase):
         OrderWindowFactory.create(
             start_date=self.now_datetime.date() - timezone.timedelta(20),
             end_date=self.now_datetime.date() - timezone.timedelta(10),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         self.query_check(self.CREATE_ORDER_FROM_CART_MUTATION, okay=False)
 
@@ -142,6 +144,7 @@ class TestOrder(GraphQLTestCase):
         active_order_window = OrderWindowFactory.create(
             start_date=self.now_datetime.date() - timezone.timedelta(9),
             end_date=self.now_datetime.date() + timezone.timedelta(10),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         self.query_check(self.CREATE_ORDER_FROM_CART_MUTATION, okay=True)
 
@@ -160,7 +163,9 @@ class TestOrder(GraphQLTestCase):
         resp_orders = content['data']['orders']['results']
         total_price = 0
         for order in resp_orders:
-            self.assertEqual(Order.objects.get(pk=order['id']).assigned_order_window.pk, active_order_window.pk)
+            self.assertEqual(
+                Order.objects.get(pk=order['id']).assigned_order_window.pk, active_order_window.pk
+            )
             for book in order['bookOrders']['results']:
                 total_price += book['quantity'] * book['price']
 
@@ -253,23 +258,62 @@ class TestOrder(GraphQLTestCase):
         order5 = OrderFactory.create(created_by=user, status=Order.Status.IN_TRANSIT)
 
         # Order 1 (Pending)
-        BookOrderFactory.create(order=order1, book=book1, quantity=1)
-        BookOrderFactory.create(order=order1, book=book2, quantity=10)
+        BookOrderFactory.create(
+            order=order1, book=book1, quantity=1,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order1, book=book2, quantity=10,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
         # Order 2 (Pending)
-        BookOrderFactory.create(order=order2, book=book1, quantity=10)
-        BookOrderFactory.create(order=order2, book=book2, quantity=10)
-        BookOrderFactory.create(order=order2, book=book3, quantity=30)
+        BookOrderFactory.create(
+            order=order2, book=book1, quantity=10,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order2, book=book2, quantity=10,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order2, book=book3, quantity=30,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
         # Order 3 (CANCELLED)
-        BookOrderFactory.create(order=order3, book=book1, quantity=20)
-        BookOrderFactory.create(order=order3, book=book1, quantity=20)
+        BookOrderFactory.create(
+            order=order3, book=book1, quantity=20,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order3, book=book1, quantity=20,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
         # Order 4 (COMPLETED)
-        BookOrderFactory.create(order=order4, book=book1, quantity=20)
-        BookOrderFactory.create(order=order4, book=book2, quantity=5)
-        BookOrderFactory.create(order=order4, book=book3, quantity=2)
+        BookOrderFactory.create(
+            order=order4, book=book1, quantity=20,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order4, book=book2, quantity=5,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order4, book=book3, quantity=2,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
         # Order 5 (IN_TRANSIT)
-        BookOrderFactory.create(order=order5, book=book1, quantity=20)
-        BookOrderFactory.create(order=order5, book=book2, quantity=5)
-        BookOrderFactory.create(order=order5, book=book3, quantity=2)
+        BookOrderFactory.create(
+            order=order5, book=book1, quantity=20,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order5, book=book2, quantity=5,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
+        BookOrderFactory.create(
+            order=order5, book=book3, quantity=2,
+            grade=Book.Grade.GRADE_1.value, language=Book.LanguageType.ENGLISH.value
+        )
 
         self.force_login(user)
         content = self.query_check(self.ORDER_SUMMARY_QUERY)['data']['orderSummary']
@@ -296,7 +340,7 @@ class OrderWindowTest(GraphQLTestCase):
     '''
 
     def test_query(self):
-        user = UserFactory.create()
+        user = UserFactory.create(user_type=User.UserType.SCHOOL_ADMIN)
         self.force_login(user)
         content = self.query_check(self.ORDER_WINDOW_QUERY)
         self.assertEqual(content['data']['orderWindowActive'], None)
@@ -306,27 +350,32 @@ class OrderWindowTest(GraphQLTestCase):
             OrderWindowFactory.create(
                 start_date=self.now_datetime.date() + timezone.timedelta(10),
                 end_date=self.now_datetime.date() - timezone.timedelta(10),
+                type=OrderWindow.OrderWindowType.SCHOOL,
             )
         # In different window -20 -10
         OrderWindowFactory.create(
             start_date=self.now_datetime.date() - timezone.timedelta(20),
             end_date=self.now_datetime.date() - timezone.timedelta(10),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         # Current -9 +10
         order_window = OrderWindowFactory.create(
             start_date=self.now_datetime.date() - timezone.timedelta(9),
             end_date=self.now_datetime.date() + timezone.timedelta(10),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         # In different window +10 +30 (This should throw error)
         with self.assertRaises(ValidationError):
             OrderWindowFactory.create(
                 start_date=self.now_datetime.date() + timezone.timedelta(10),
                 end_date=self.now_datetime.date() + timezone.timedelta(30),
+                type=OrderWindow.OrderWindowType.SCHOOL,
             )
         # In different window +11 +30 (this shouldn't throw any error)
         OrderWindowFactory.create(
             start_date=self.now_datetime.date() + timezone.timedelta(11),
             end_date=self.now_datetime.date() + timezone.timedelta(30),
+            type=OrderWindow.OrderWindowType.SCHOOL,
         )
         # Updating this shouldn't throw any error. (Exclude itself while validating)
         order_window.save()

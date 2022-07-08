@@ -21,7 +21,7 @@ class TagType(DjangoObjectType):
     class Meta:
         model = Tag
         fields = (
-            'id', 'name'
+            'id', 'name', 'name_en', 'name_ne'
         )
 
 
@@ -35,8 +35,9 @@ class CategoryType(DjangoObjectType):
     class Meta:
         model = Category
         fields = (
-            'id', 'name', 'parent_category'
+            'id', 'name', 'parent_category', 'name_en', 'name_ne', 'image',
         )
+    image = graphene.Field(FileFieldType)
 
 
 class CategoryListType(CustomDjangoListObjectType):
@@ -50,6 +51,8 @@ class AuthorType(DjangoObjectType):
         model = Author
         fields = (
             'id', 'name', 'about_author',
+            'name_en', 'name_ne',
+            'about_author_en', 'about_author_ne'
         )
 
 
@@ -76,7 +79,16 @@ class BookType(DjangoObjectType):
             'image', 'language', 'weight', 'published_date', 'edition', 'publisher',
             'meta_title', 'meta_keywords', 'meta_description', 'og_title',
             'og_description', 'og_image', 'og_locale', 'og_type', 'title', 'description',
-            'grade', 'is_published'
+            'grade', 'is_published',
+
+            # English fields
+            'title_en', 'description_en', 'meta_title_en', 'meta_keywords_en', 'meta_description_en',
+            'og_title_en', 'og_description_en', 'og_locale_en', 'og_type_en',
+
+            # Nepali fields
+            'title_ne', 'description_ne', 'meta_title_ne', 'meta_keywords_ne', 'meta_description_ne',
+            'og_title_ne', 'og_description_ne', 'og_locale_ne', 'og_type_ne',
+
         )
 
     image = graphene.Field(FileFieldType)
@@ -95,18 +107,6 @@ class BookType(DjangoObjectType):
         if info.context.user.is_anonymous:
             return None
         return root.book_cart_item.all().filter(created_by=info.context.user).first()
-
-
-class BookDetailType(BookType):
-    cart_details = graphene.Field(CartItemType)
-
-    class Meta:
-        model = Book
-        skip_registry = True
-
-    @staticmethod
-    def resolve_cart_details(root, info, **kwargs) -> QuerySet:
-        return root.book_cart_item.first()
 
 
 class BookListType(CustomDjangoListObjectType):
@@ -136,7 +136,6 @@ class WishListListType(CustomDjangoListObjectType):
 
 class Query(graphene.ObjectType):
     book = DjangoObjectField(BookType)
-    book_detail = DjangoObjectField(BookDetailType)
     books = DjangoPaginatedListObjectField(
         BookListType,
         pagination=PageGraphqlPagination(

@@ -8,6 +8,8 @@ from utils.graphene.fields import DjangoPaginatedListObjectField
 from utils.graphene.enums import EnumDescription
 
 from apps.payment.schema import Query as PaymentQuery
+from apps.order.schema import OrderActivityLogQuery
+from apps.common.schema import ReportQuery
 
 from .models import User
 from .filters import UserFilter
@@ -70,6 +72,15 @@ class UserMeType(UserTypeMixin, DjangoObjectType):
 
 
 class ModeratorQueryUserType(UserTypeMixin, DjangoObjectType):
+    payment_credit_sum = graphene.Int()
+    payment_debit_sum = graphene.Int()
+    total_verified_payment = graphene.Int()
+    total_unverified_payment = graphene.Int()
+    total_unverified_payment_count = graphene.Int()
+    total_verified_payment_count = graphene.Int()
+    total_order_pending_price = graphene.Int()
+    outstanding_balance = graphene.Int()
+
     class Meta:
         model = User
         skip_registry = True
@@ -87,6 +98,9 @@ class ModeratorQueryUserType(UserTypeMixin, DjangoObjectType):
             'publisher',  # TODO: Add dataloader
             'school',  # TODO: Add dataloader
             'verified_by',  # TODO: Add dataloader
+            'date_joined',
+            'is_deactivated',
+            'is_deactivated_by'
         )
 
 
@@ -105,13 +119,33 @@ class ModeratorUserQueryType(graphene.ObjectType):
             page_size_query_param='pageSize'
         )
     )
+    deactivated_users = DjangoPaginatedListObjectField(
+        ModeratorQueryUserListType,
+        pagination=PageGraphqlPagination(
+            page_size_query_param='pageSize'
+        )
+    )
+
+    @staticmethod
+    def resolve_users(root, info, **kwargs):
+        return User.objects.filter(is_deactivated=False).annotate(
+            **User.annotate_mismatch_order_statements()
+        )
+
+    @staticmethod
+    def resolve_deactivated_users(root, info, **kwargs):
+        return User.objects.filter(is_deactivated=True).annotate(
+            **User.annotate_mismatch_order_statements()
+        )
 
 
 class ModeratorQueryType(
     # ---Start --Moderator scopped entities
     ModeratorUserQueryType,
     PaymentQuery,
+    ReportQuery,
     # ---End --Moderator scopped entities
+    OrderActivityLogQuery,
     graphene.ObjectType
 ):
     pass

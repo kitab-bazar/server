@@ -42,7 +42,7 @@ class TestFaqPermissions(TestPermissions):
             }
         '''
         self.faq = FaqFactory.create()
-        self.faq_minput = {'question': 'Test question?', 'answer': 'Test answer'}
+        self.faq_minput = {'questionEn': 'Test question?', 'answerEn': 'Test answer'}
 
         super().setUp()
 
@@ -50,7 +50,7 @@ class TestFaqPermissions(TestPermissions):
         # Admin case
         self.force_login(self.super_admin)
         content = self.query_check(self.create_faq, minput=self.faq_minput, okay=True)
-        self.assertEqual(content['data']['createFaq']['result']['question'], self.faq_minput['question'])
+        self.assertEqual(content['data']['createFaq']['result']['question'], self.faq_minput['questionEn'])
 
         # Publisher case
         self.force_login(self.publisher_user)
@@ -89,7 +89,7 @@ class TestFaqPermissions(TestPermissions):
 
         # Admin case
         updated_question = 'updated question'
-        self.faq_minput['question'] = updated_question
+        self.faq_minput['questionEn'] = updated_question
 
         self.force_login(self.super_admin)
         content = self.query_check(
