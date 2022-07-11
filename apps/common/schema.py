@@ -292,18 +292,32 @@ class ReportQuery(graphene.ObjectType):
                                 'grade': Book.Grade(item['grade']).label,
                             }
                         )
+                        order_window['grades'] = sorted(order_window['grades'], key=lambda x: x['grade'])
             return result
 
         def get_book_grade_qs():
             grade_data = book_qs.values('grade').annotate(
                 number_of_books=Count('id')
             )
-            return [
+            formatted_grade_data = [
                 {
                     'grade': Book.Grade(record['grade']).label,
                     'number_of_books': record['number_of_books']
                 } for record in grade_data
             ]
+            return sorted(formatted_grade_data, key=lambda x: x['grade'])
+
+        def get_book_languages():
+            languages_data = book_qs.values('language').annotate(
+                number_of_books=Count('id')
+            )
+            formatted_languages_data = [
+                {
+                    'language': Book.LanguageType(record['language']).label,
+                    'number_of_books': record['number_of_books']
+                } for record in languages_data
+            ]
+            return sorted(formatted_languages_data, key=lambda x: x['language'])
 
         return {
             'number_of_schools_registered': user_qs.filter(user_type=User.UserType.SCHOOL_ADMIN.value).count(),
@@ -396,10 +410,7 @@ class ReportQuery(graphene.ObjectType):
 
             'books_per_grade': get_book_grade_qs(),
 
-            'books_per_language': book_qs.values('language').annotate(
-                number_of_books=Count('id')
-            ),
-
+            'books_per_language': get_book_languages(),
             'books_per_publisher_per_category': get_books_per_publisher_per_category(),
 
             'books_and_cost_per_school': user_qs.filter(
@@ -409,7 +420,7 @@ class ReportQuery(graphene.ObjectType):
                 number_of_books_ordered=Sum('order__book_order__quantity'),
                 school_name=F('school__name'),
                 school_id=F('school__id'),
-                total_cost=Sum('order__book_order__price')
+                total_cost=Sum(F('order__book_order__price') * F('order__book_order__quantity'))
             ),
 
             'book_grades_per_order_window': get_book_grades_per_order_window(),
