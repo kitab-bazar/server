@@ -236,7 +236,7 @@ class ReportQuery(graphene.ObjectType):
 
     @staticmethod
     def resolve_reports(root, info, **kwargs):
-        user_qs = User.objects.all()
+        user_qs = User.objects.filter(is_deactivated=False)
         book_qs = Book.objects.filter(is_published=True)
         order_qs = Order.objects.filter(status=Order.Status.COMPLETED.value)
         school_package_qs = SchoolPackage.objects.filter(status=SchoolPackage.Status.DELIVERED.value)
