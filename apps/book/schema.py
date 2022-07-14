@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Count
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
@@ -14,7 +14,9 @@ from apps.order.schema import CartItemType
 
 
 def book_qs(info):
-    return Book.objects.filter(is_published=True)
+    return Book.objects.filter(is_published=True).annotate(
+        ordered_count=Count('ordered_book', distinct=True)
+    )
 
 
 class TagType(DjangoObjectType):
