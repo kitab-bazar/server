@@ -1516,9 +1516,21 @@ input SchoolPackageUpdateInputType {
 }
 
 type SchoolQueryType {
+  reports: SchoolReportType
   payment(id: ID!): PaymentType
   payments(status: StatusEnum, transactionType: TransactionTypeEnum, paymentType: PaymentTypeEnum, paidByUsers: [ID!], page: Int = 1, ordering: String, pageSize: Int): PaymentListType
   paymentSummary: PaymentSummaryType
+}
+
+type SchoolReportType {
+  numberOfBooksOrdered: Int
+  numberOfIncentiveBooks: Int
+  paymentPerOrderWindow: [PaymentPerOrderWindowType]
+  booksPerPublisher: [BooksPerPublisherType]
+  booksPerCategory: [BooksPerCategoryType]
+  booksPerGrade: [BooksPerGradeType]
+  booksPerLanguage: [BooksPerLanguageType]
+  booksPerPublisherPerCategory: [BooksPerPublisherPerCategory]
 }
 
 type SchoolType {
