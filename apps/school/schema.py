@@ -9,6 +9,7 @@ from apps.school.models import School
 from apps.user.models import User
 from apps.school.filters import SchoolFilter
 from apps.payment.schema import Query as PaymentQuery
+from apps.common.schema import ScholReportQuery
 
 
 class SchoolType(DjangoObjectType):
@@ -31,7 +32,8 @@ class SchoolListType(CustomDjangoListObjectType):
 
 
 class SchoolQueryType(
-    PaymentQuery
+    PaymentQuery,
+    ScholReportQuery,
 ):
     pass
 

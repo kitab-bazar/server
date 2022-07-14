@@ -231,6 +231,15 @@ class ReportType(graphene.ObjectType):
     )
 
 
+class SchoolReportType(graphene.ObjectType):
+    number_of_books_ordered = graphene.Int(description='Number of books Ordered')
+    number_of_incentive_books = graphene.Int(description='Number of Incentive books')
+    payment_per_order_window = graphene.List(
+        PaymentPerOrderWindowType,
+        description='Total payment per order window'
+    )
+
+
 class ReportQuery(graphene.ObjectType):
     reports = graphene.Field(ReportType)
 
@@ -424,4 +433,30 @@ class ReportQuery(graphene.ObjectType):
             ),
 
             'book_grades_per_order_window': get_book_grades_per_order_window(),
+        }
+
+
+class ScholReportQuery(graphene.ObjectType):
+    reports = graphene.Field(SchoolReportType)
+
+    @staticmethod
+    def resolve_reports(root, info, **kwargs):
+        order_qs = Order.objects.filter(created_by=info.context.user)
+        school_package_qs = SchoolPackage.objects.filter(
+            status=SchoolPackage.Status.DELIVERED.value,
+            school=info.context.user
+        )
+        order_window_qs = OrderWindow.objects.filter(
+            orders__status=Order.Status.COMPLETED.value,
+            orders__created_by=info.context.user
+        )
+        return {
+            'number_of_books_ordered': order_qs.aggregate(total=Sum('book_order__quantity'))['total'],
+            'number_of_incentive_books': school_package_qs.filter(total_quantity__gte=10).aggregate(
+                total_incentive_books=Sum(F('total_quantity') * 4)
+            )['total_incentive_books'],
+            'payment_per_order_window': order_window_qs.values('title').annotate(
+                payment=Sum('orders__book_order__price'),
+                order_window_id=F('id')
+            ),
         }

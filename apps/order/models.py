@@ -124,7 +124,7 @@ class BookOrder(models.Model):
     book = models.ForeignKey(
         'book.Book',
         on_delete=models.SET_NULL,
-        related_name='book_order_cart_item',
+        related_name='ordered_book',
         verbose_name=_('Book'),
         null=True,
         blank=True
