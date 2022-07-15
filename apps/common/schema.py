@@ -5,6 +5,7 @@ from django.db.models import Sum, Count, F, Q
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
+from django.db.models.functions import Coalesce
 
 from apps.common.models import District, Province, Municipality, ActivityLogFile
 from apps.common.filters import (
@@ -263,7 +264,7 @@ class SchoolReportType(graphene.ObjectType):
 def get_books_per_publisher_per_category(book_qs):
     books_per_publishers = book_qs.values('publisher__name').annotate(
         publisher_name=F('publisher__name'),
-        number_of_books=Sum('ordered_book__quantity'),
+        number_of_books=Coalesce(Sum('ordered_book__quantity'), 0),
         category=F('categories__name'),
         category_id=F('categories__id'),
         publisher_id=F('publisher__id')
@@ -465,7 +466,7 @@ class ScholReportQuery(graphene.ObjectType):
 
     @staticmethod
     def resolve_reports(root, info, **kwargs):
-        order_qs = Order.objects.filter(created_by=info.context.user)
+        order_qs = Order.objects.filter(created_by=info.context.user, status=Order.Status.COMPLETED.value)
         school_package_qs = SchoolPackage.objects.filter(
             status=SchoolPackage.Status.DELIVERED.value,
             school=info.context.user
