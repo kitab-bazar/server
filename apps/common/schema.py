@@ -263,7 +263,7 @@ class SchoolReportType(graphene.ObjectType):
 def get_books_per_publisher_per_category(book_qs):
     books_per_publishers = book_qs.values('publisher__name').annotate(
         publisher_name=F('publisher__name'),
-        number_of_books=Count('id'),
+        number_of_books=Sum('ordered_book__quantity'),
         category=F('categories__name'),
         category_id=F('categories__id'),
         publisher_id=F('publisher__id')
@@ -291,7 +291,7 @@ def get_books_per_publisher_per_category(book_qs):
 def get_book_grades_per_order_window(order_window_qs):
     order_windows_qs = order_window_qs.values('title').annotate(
         grade=F('orders__book_order__book__grade'),
-        number_of_books=Count('orders__book_order__book'),
+        number_of_books=Sum('orders__book_order__quantity'),
         order_window_id=F('id')
     ).order_by('title')
     order_windows = []
@@ -316,7 +316,7 @@ def get_book_grades_per_order_window(order_window_qs):
 
 def get_book_grade_qs(book_qs):
     grade_data = book_qs.values('grade').annotate(
-        number_of_books=Count('id')
+        number_of_books=Sum('ordered_book__quantity')
     )
     formatted_grade_data = [
         {
@@ -329,7 +329,7 @@ def get_book_grade_qs(book_qs):
 
 def get_book_languages(book_qs):
     languages_data = book_qs.values('language').annotate(
-        number_of_books=Count('id')
+        number_of_books=Sum('ordered_book__quantity')
     )
     formatted_languages_data = [
         {
@@ -425,7 +425,7 @@ class ReportQuery(graphene.ObjectType):
             ),
 
             'payment_per_order_window': order_window_qs.values('title').annotate(
-                payment=Sum('orders__book_order__price'),
+                payment=Sum(F('orders__book_order__price') * F('orders__book_order__quantity')),
                 order_window_id=F('id')
             ),
 
@@ -486,17 +486,17 @@ class ScholReportQuery(graphene.ObjectType):
                 total_incentive_books=Sum(F('total_quantity') * 4)
             )['total_incentive_books'],
             'payment_per_order_window': order_window_qs.values('title').annotate(
-                payment=Sum('orders__book_order__price'),
+                payment=Sum(F('orders__book_order__price') * F('orders__book_order__quantity')),
                 order_window_id=F('id')
             ),
             'books_per_publisher': book_qs.values('publisher__name').annotate(
-                number_of_books=Count('id'),
+                number_of_books=Sum('ordered_book__quantity'),
                 publisher_name=F('publisher__name'),
                 publisher_id=F('publisher__id')
             ),
 
             'books_per_category': book_qs.values('categories__name').annotate(
-                number_of_books=Count('id'),
+                number_of_books=Sum('ordered_book__quantity'),
                 category=F('categories__name'),
                 category_id=F('categories__id'),
             ),
