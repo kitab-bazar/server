@@ -1,11 +1,10 @@
 import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
-from django.db.models import Sum, Count, F, Q
+from django.db.models import Sum, Count, F, Q, Case, When
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
-from django.db.models.functions import Coalesce
 
 from apps.common.models import District, Province, Municipality, ActivityLogFile
 from apps.common.filters import (
@@ -264,7 +263,7 @@ class SchoolReportType(graphene.ObjectType):
 def get_books_per_publisher_per_category(book_qs):
     books_per_publishers = book_qs.values('publisher__name').annotate(
         publisher_name=F('publisher__name'),
-        number_of_books=Coalesce(Sum('ordered_book__quantity'), 0),
+        number_of_books=Sum('ordered_book__quantity'),
         category=F('categories__name'),
         category_id=F('categories__id'),
         publisher_id=F('publisher__id')
@@ -369,7 +368,13 @@ class ReportQuery(graphene.ObjectType):
             'number_of_books_on_the_platform': book_qs.count(),
 
             'number_of_incentive_books': school_package_qs.filter(total_quantity__gte=10).aggregate(
-                total_incentive_books=Sum(F('total_quantity') * 4)
+                total_incentive_books=Sum(
+                    Case(
+
+                        When(total_quantity__lte=30, then=F('total_quantity') * 4),
+                        When(total_quantity__gt=30, then=120)
+                    )
+                )
             )['total_incentive_books'],
 
             'number_of_books_ordered': order_qs.aggregate(total=Sum('book_order__quantity'))['total'],
@@ -414,7 +419,10 @@ class ReportQuery(graphene.ObjectType):
                 schools__school_user__school_packages__isnull=False
             ).values('name').annotate(
                 no_of_books_ordered=Sum('schools__school_user__school_packages__total_quantity'),
-                no_of_incentive_books=F('no_of_books_ordered') * 4,
+                no_of_incentive_books=Case(
+                    When(no_of_books_ordered__lte=30, then=F('no_of_books_ordered') * 4),
+                    When(no_of_books_ordered__gt=30, then=120),
+                ),
                 district_id=F('id')
             ),
 
