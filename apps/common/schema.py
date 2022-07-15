@@ -356,11 +356,11 @@ class ReportQuery(graphene.ObjectType):
             'number_of_schools_registered': user_qs.filter(user_type=User.UserType.SCHOOL_ADMIN.value).count(),
 
             'number_of_schools_verified': user_qs.filter(
-                user_type=User.UserType.SCHOOL_ADMIN.value, is_verified=True
+                user_type=User.UserType.SCHOOL_ADMIN.value, is_verified=True, is_deactivated=False
             ).count(),
 
             'number_of_schools_unverified': user_qs.filter(
-                user_type=User.UserType.SCHOOL_ADMIN.value, is_verified=False
+                user_type=User.UserType.SCHOOL_ADMIN.value, is_verified=False, is_deactivated=False
             ).count(),
 
             'number_of_publishers': user_qs.filter(user_type=User.UserType.PUBLISHER.value).count(),
@@ -412,7 +412,7 @@ class ReportQuery(graphene.ObjectType):
             ).order_by('-book_ordered_count')[:5].values('school_name', 'school_id', 'book_ordered_count'),
 
             'users_per_district': district_qs.filter(
-                schools__school_user__isnull=False
+                schools__school_user__isnull=False, schools__school_user__is_deactivated=False
             ).values('name').annotate(
                 district_id=F('id'),
                 verified_users=Count('schools__school_user', filter=Q(schools__school_user__is_verified=True)),
@@ -423,10 +423,7 @@ class ReportQuery(graphene.ObjectType):
                 schools__school_user__school_packages__isnull=False
             ).values('name').annotate(
                 no_of_books_ordered=Sum('schools__school_user__school_packages__total_quantity'),
-                no_of_incentive_books=Case(
-                    When(no_of_books_ordered__lte=30, then=F('no_of_books_ordered') * 4),
-                    When(no_of_books_ordered__gt=30, then=120),
-                ),
+                no_of_incentive_books=F('no_of_books_ordered') * 4,
                 district_id=F('id')
             ),
 
