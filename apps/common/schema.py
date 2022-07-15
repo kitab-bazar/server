@@ -261,7 +261,7 @@ class SchoolReportType(graphene.ObjectType):
 
 
 def get_books_per_publisher_per_category(book_qs):
-    books_per_publishers = book_qs.values('publisher__name').annotate(
+    books_per_publishers = book_qs.filter(categories__isnull=False).values('publisher__name').annotate(
         publisher_name=F('publisher__name'),
         number_of_books=Sum('ordered_book__quantity'),
         category=F('categories__name'),
@@ -289,7 +289,7 @@ def get_books_per_publisher_per_category(book_qs):
 
 
 def get_book_grades_per_order_window(order_window_qs):
-    order_windows_qs = order_window_qs.values('title').annotate(
+    order_windows_qs = order_window_qs.filter(orders__book_order__book__grade__isnull=False).values('title').annotate(
         grade=F('orders__book_order__book__grade'),
         number_of_books=Sum('orders__book_order__quantity'),
         order_window_id=F('id')
@@ -315,7 +315,7 @@ def get_book_grades_per_order_window(order_window_qs):
 
 
 def get_book_grade_qs(book_qs):
-    grade_data = book_qs.values('grade').annotate(
+    grade_data = book_qs.filter(grade__isnull=False).values('grade').annotate(
         number_of_books=Sum('ordered_book__quantity')
     )
     formatted_grade_data = [
@@ -328,7 +328,7 @@ def get_book_grade_qs(book_qs):
 
 
 def get_book_languages(book_qs):
-    languages_data = book_qs.values('language').annotate(
+    languages_data = book_qs.filter(language__isnull=False).values('language').annotate(
         number_of_books=Sum('ordered_book__quantity')
     )
     formatted_languages_data = [
@@ -384,13 +384,17 @@ class ReportQuery(graphene.ObjectType):
             ).values('school__district').annotate(total=Count('school__district')).order_by('total').count(),
 
             'number_of_municipalities': user_qs.filter(
-                user_type=User.UserType.SCHOOL_ADMIN.value, order__isnull=False
-            ).values('school__municipality').annotate(total=Count('school__municipality')).order_by('total').count(),
+                user_type=User.UserType.SCHOOL_ADMIN.value,
+                order__isnull=False,
+                order__status=Order.Status.COMPLETED.value
+            ).values('school__municipality').order_by().count(),
 
 
             'number_of_schools_reached': user_qs.filter(
-                user_type=User.UserType.SCHOOL_ADMIN.value, order__isnull=False
-            ).values('school__municipality').annotate(total=Count('school__municipality')).order_by('total').count(),
+                user_type=User.UserType.SCHOOL_ADMIN.value,
+                order__isnull=False,
+                order__status=Order.Status.COMPLETED.value
+            ).count(),
 
             'top_selling_books': BookOrder.objects.filter(
                 order__status=Order.Status.COMPLETED.value
