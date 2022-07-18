@@ -479,10 +479,11 @@ class ReportQuery(graphene.ObjectType):
                 district_id=F('id')
             ),
 
-            'payment_per_order_window': order_window_qs.values('title').annotate(
-                payment=Sum(F('orders__book_order__price') * F('orders__book_order__quantity')),
-                order_window_id=F('id')
-            ),
+            'payment_per_order_window': order_qs.values('assigned_order_window__title').annotate(
+                payment=Sum(F('book_order__price') * F('book_order__quantity')),
+                order_window_id=F('assigned_order_window__id'),
+                title=F('assigned_order_window__title'),
+            ).order_by('assigned_order_window__id'),
 
             'books_per_publisher': book_qs.values('publisher__name').annotate(
                 number_of_books=Count('id'),
