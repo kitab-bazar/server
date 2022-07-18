@@ -260,14 +260,23 @@ class SchoolReportType(graphene.ObjectType):
     )
 
 
-def get_books_per_publisher_per_category(book_qs):
-    books_per_publishers = book_qs.filter(categories__isnull=False).values('publisher__name').annotate(
-        publisher_name=F('publisher__name'),
-        number_of_books=Sum('ordered_book__quantity'),
-        category=F('categories__name'),
-        category_id=F('categories__id'),
-        publisher_id=F('publisher__id')
-    )
+def get_books_per_publisher_per_category(book_qs, school_report=False):
+    if school_report:
+        books_per_publishers = book_qs.values('publisher__name').annotate(
+            publisher_name=F('publisher__name'),
+            number_of_books=Sum('ordered_book__quantity'),
+            category=F('categories__name'),
+            category_id=F('categories__id'),
+            publisher_id=F('publisher__id')
+        )
+    else:
+        books_per_publishers = book_qs.values('publisher__name').annotate(
+            publisher_name=F('publisher__name'),
+            number_of_books=Count('id'),
+            category=F('categories__name'),
+            category_id=F('categories__id'),
+            publisher_id=F('publisher__id')
+        )
     publishers = []
     for item in books_per_publishers:
         publishers.append(item['publisher_name'])
@@ -314,10 +323,15 @@ def get_book_grades_per_order_window(order_window_qs):
     return result
 
 
-def get_book_grade_qs(book_qs):
-    grade_data = book_qs.filter(grade__isnull=False).values('grade').annotate(
-        number_of_books=Sum('ordered_book__quantity')
-    )
+def get_book_grade_qs(book_qs, school_report=False):
+    if school_report:
+        grade_data = book_qs.filter(grade__isnull=False).values('grade').annotate(
+            number_of_books=Sum('ordered_book__quantity')
+        )
+    else:
+        grade_data = book_qs.filter(grade__isnull=False).values('grade').annotate(
+            number_of_books=Count('id')
+        )
     formatted_grade_data = [
         {
             'grade': Book.Grade(record['grade']).label,
@@ -327,10 +341,15 @@ def get_book_grade_qs(book_qs):
     return sorted(formatted_grade_data, key=lambda x: x['grade'])
 
 
-def get_book_languages(book_qs):
-    languages_data = book_qs.filter(language__isnull=False).values('language').annotate(
-        number_of_books=Sum('ordered_book__quantity')
-    )
+def get_book_languages(book_qs, school_report=False):
+    if school_report:
+        languages_data = book_qs.filter(language__isnull=False).values('language').annotate(
+            number_of_books=Sum('ordered_book__quantity')
+        )
+    else:
+        languages_data = book_qs.filter(language__isnull=False).values('language').annotate(
+            number_of_books=Count('id')
+        )
     formatted_languages_data = [
         {
             'language': Book.LanguageType(record['language']).label,
@@ -370,7 +389,6 @@ class ReportQuery(graphene.ObjectType):
             'number_of_incentive_books': school_package_qs.filter(total_quantity__gte=10).aggregate(
                 total_incentive_books=Sum(
                     Case(
-
                         When(total_quantity__lte=30, then=F('total_quantity') * 4),
                         When(total_quantity__gt=30, then=120)
                     )
@@ -387,14 +405,13 @@ class ReportQuery(graphene.ObjectType):
                 user_type=User.UserType.SCHOOL_ADMIN.value,
                 order__isnull=False,
                 order__status=Order.Status.COMPLETED.value
-            ).values('school__municipality').order_by().count(),
+            ).values('school__municipality').distinct().count(),
 
 
             'number_of_schools_reached': user_qs.filter(
                 user_type=User.UserType.SCHOOL_ADMIN.value,
-                order__isnull=False,
                 order__status=Order.Status.COMPLETED.value
-            ).count(),
+            ).distinct().count(),
 
             'top_selling_books': BookOrder.objects.filter(
                 order__status=Order.Status.COMPLETED.value
@@ -423,7 +440,18 @@ class ReportQuery(graphene.ObjectType):
                 schools__school_user__school_packages__isnull=False
             ).values('name').annotate(
                 no_of_books_ordered=Sum('schools__school_user__school_packages__total_quantity'),
-                no_of_incentive_books=F('no_of_books_ordered') * 4,
+                no_of_incentive_books=Sum(
+                    Case(
+                        When(
+                            schools__school_user__school_packages__total_quantity__lte=30,
+                            then=F('schools__school_user__school_packages__total_quantity') * 4
+                        ),
+                        When(
+                            schools__school_user__school_packages__total_quantity__gt=30,
+                            then=120
+                        ),
+                    )
+                ),
                 district_id=F('id')
             ),
 
@@ -493,7 +521,12 @@ class ScholReportQuery(graphene.ObjectType):
         return {
             'number_of_books_ordered': order_qs.aggregate(total=Sum('book_order__quantity'))['total'],
             'number_of_incentive_books': school_package_qs.filter(total_quantity__gte=10).aggregate(
-                total_incentive_books=Sum(F('total_quantity') * 4)
+                total_incentive_books=Sum(
+                    Case(
+                        When(total_quantity__lte=30, then=F('total_quantity') * 4),
+                        When(total_quantity__gt=30, then=120)
+                    )
+                )
             )['total_incentive_books'],
             'payment_per_order_window': order_window_qs.values('title').annotate(
                 payment=Sum(F('orders__book_order__price') * F('orders__book_order__quantity')),
@@ -511,9 +544,9 @@ class ScholReportQuery(graphene.ObjectType):
                 category_id=F('categories__id'),
             ),
 
-            'books_per_grade': get_book_grade_qs(book_qs),
+            'books_per_grade': get_book_grade_qs(book_qs, school_report=True),
 
-            'books_per_language': get_book_languages(book_qs),
+            'books_per_language': get_book_languages(book_qs, school_report=True),
 
-            'books_per_publisher_per_category': get_books_per_publisher_per_category(book_qs),
+            'books_per_publisher_per_category': get_books_per_publisher_per_category(book_qs, school_report=True),
         }
