@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
@@ -297,30 +299,45 @@ def get_books_per_publisher_per_category(book_qs, school_report=False):
     return result
 
 
-def get_book_grades_per_order_window(order_window_qs):
-    order_windows_qs = order_window_qs.filter(orders__book_order__book__grade__isnull=False).values('title').annotate(
-        grade=F('orders__book_order__book__grade'),
-        number_of_books=Sum('orders__book_order__quantity'),
-        order_window_id=F('id')
-    ).order_by('title')
-    order_windows = []
-    for item in order_windows_qs:
-        order_windows.append(item['title'])
-    result = []
-    for order_window in list(set(order_windows)):
-        result.append({'title': order_window, 'grades': []})
-    for order_window in result:
-        for item in order_windows_qs:
-            if order_window['title'] == item['title']:
-                order_window['order_window_id'] = item['order_window_id']
-                order_window['grades'].append(
-                    {
-                        'number_of_books': item['number_of_books'],
-                        'grade': Book.Grade(item['grade']).label,
-                    }
-                )
-                order_window['grades'] = sorted(order_window['grades'], key=lambda x: x['grade'])
-    return result
+def get_book_grades_per_order_window(order_qs, order_window_qs):
+    order_window_title_by_id = {
+        _id: title
+        for _id, title in order_window_qs.values_list('id', 'title').order_by('id')
+    }
+
+    order_qs = order_qs.filter(
+        book_order__book__grade__isnull=False,
+    ).values(
+        'assigned_order_window',
+        'book_order__book__grade',
+    ).annotate(
+        number_of_books=Sum('book_order__quantity'),
+    ).values_list(
+        'assigned_order_window',
+        'book_order__book__grade',
+        'number_of_books',
+    ).order_by(
+        'assigned_order_window',
+        'book_order__book__grade',
+    )
+
+    # Group grades by order_window (Grades are sorted from db)
+    grades_by_order_window_id = defaultdict(list)
+    for od_id, grade, number_of_books in order_qs:
+        grades_by_order_window_id[od_id].append(dict(
+            grade=Book.Grade(grade).label,  # Sending label instead of ENUM value
+            number_of_books=number_of_books,
+        ))
+
+    return [
+        # Order Window
+        dict(
+            order_window_id=order_window_id,
+            title=order_window_title,
+            grades=grades_by_order_window_id.get(order_window_id, []),
+        )
+        for order_window_id, order_window_title in order_window_title_by_id.items()
+    ]
 
 
 def get_book_grade_qs(book_qs, school_report=False):
@@ -369,7 +386,7 @@ class ReportQuery(graphene.ObjectType):
         order_qs = Order.objects.filter(status=Order.Status.COMPLETED.value)
         school_package_qs = SchoolPackage.objects.filter(status=SchoolPackage.Status.DELIVERED.value)
         district_qs = District.objects.all()
-        order_window_qs = OrderWindow.objects.filter(orders__status=Order.Status.COMPLETED.value)
+        order_window_qs = OrderWindow.objects.all()
 
         return {
             'number_of_schools_registered': user_qs.filter(user_type=User.UserType.SCHOOL_ADMIN.value).count(),
@@ -494,7 +511,7 @@ class ReportQuery(graphene.ObjectType):
                 total_cost=Sum(F('order__book_order__price') * F('order__book_order__quantity'))
             ),
 
-            'book_grades_per_order_window': get_book_grades_per_order_window(order_window_qs),
+            'book_grades_per_order_window': get_book_grades_per_order_window(order_qs, order_window_qs),
         }
 
 

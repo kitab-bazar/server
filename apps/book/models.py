@@ -64,9 +64,9 @@ class Book(models.Model):
         THARU = 'Tharu', _('Tharu')
 
     class Grade(models.TextChoices):
-        GRADE_1 = 'grade_one', _('Grade 1')
-        GRADE_2 = 'grade_two', _('Grade 2')
-        GRADE_3 = 'grade_three', _('Grade 3')
+        GRADE_1 = 'grade_1', _('Grade 1')
+        GRADE_2 = 'grade_2', _('Grade 2')
+        GRADE_3 = 'grade_3', _('Grade 3')
 
     # Basic Fields
     title = models.CharField(max_length=255, verbose_name=_('Title'))
