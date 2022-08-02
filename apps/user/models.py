@@ -293,7 +293,7 @@ class User(AbstractUser):
             'total_order_pending_price': Coalesce(models.Subquery(
                 Order.objects.filter(
                     created_by=models.OuterRef('pk'),
-                    status=Order.Status.PENDING.value,
+                    status__in=[Order.Status.PENDING.value, Order.Status.COMPLETED.value]
                 ).order_by().values('created_by').annotate(
                     grand_total_price=models.ExpressionWrapper(
                         models.Sum(models.F('book_order__price') * models.F('book_order__quantity')),
