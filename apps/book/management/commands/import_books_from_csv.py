@@ -5,7 +5,7 @@ import requests
 from sys import stdin
 from argparse import FileType
 
-from django.utils import timezone
+from datetime import datetime
 from django.core.management.base import BaseCommand
 from django.db import transaction, models
 
@@ -57,6 +57,7 @@ def fetch_image_from_url(url):
 
 # Use provided values
 GRADE_MAP = {
+    'ECD': Book.Grade.ECD,
     '1': Book.Grade.GRADE_1,
     '2': Book.Grade.GRADE_2,
     '3': Book.Grade.GRADE_3,
@@ -67,6 +68,7 @@ LANGUAGE_MAP = {
     'Nepali': Book.LanguageType.NEPALI,
     'Maithali': Book.LanguageType.MAITHALI,
     'Tharu': Book.LanguageType.THARU,
+    'Bilingual': Book.LanguageType.BILINGUAL,
 }
 
 
@@ -108,16 +110,17 @@ class Command(BaseCommand):
 
         reader = csv.DictReader(input_file)
         for row in reader:
-            # This is in nepali eg: 2077, convert to english
-            published_date = timezone.datetime(
-                year=int(row['Published date']) - 57,
-                month=1,
-                day=1,
-            ).date()
             publisher_name = row['Publisher']
-
-            isbn = row['ISBN no'].replace('-', '')
-            title_en = row['Title of the book']
+            if row.get('published_date'):
+                # Assuming published date should be in AD not BS
+                published_date = datetime.strptime(row['published_date'], '%Y-%m-%d')
+            else:
+                self.stdout.write(
+                    self.style.WARNING('Published date is not provied, default published date will be today.')
+                )
+                published_date = datetime.now()
+            isbn = row['isbn'].replace('-', '')
+            title_en = row['title_en']
             if Book.objects.filter(
                 # models.Q(isbn=isbn) |
                 models.Q(title_en=title_en, publisher__name=publisher_name)
@@ -128,37 +131,34 @@ class Command(BaseCommand):
 
             new_book = Book.objects.create(
                 title_en=title_en,
-                title_ne=row['Title of the book (Nepali)'],
-                edition=row['Edition'],
-                grade=GRADE_MAP[str(row['Grade'])],
                 published_date=published_date,
-                description_en=row['About the book'],
-                description_ne=row['About the book (Nepali)'],
+                title_ne=row['title_en'],
+                edition=row['edition'],
+                grade=GRADE_MAP[str(row['grade'])],
+                description_en=row['description_en'],
+                description_ne=row['description_ne'],
                 isbn=isbn,
-                price=row['Price of the book'] or 0,
-                number_of_pages=(row['Number of pages'] or '0').replace('+', ''),
-                language=LANGUAGE_MAP[str(row['Language'])],
-                publisher_id=publisher_lookup.get_id_by_name(publisher_name, ne=row['Publisher (Nepali)']),
+                price=int(float(row['price'])) or 0,
+                number_of_pages=(row['number_of_pages'] or '0').replace('+', ''),
+                language=LANGUAGE_MAP[str(row['language'].strip())],
+                publisher_id=publisher_lookup.get_id_by_name(publisher_name, ne=row['Publisher']),
                 is_published=True,
             )
             new_book.categories.set([
                 category_lookup.get_id_by_name(
-                    row['Category'],
-                    ne=row['Category (Nepali)'],
+                    row['categories_en'],
+                    ne=row['categories_ne'],
                 ),
             ])
             new_book.authors.set([
                 author_lookup.get_id_by_name(
-                    row["Author's name"],
-                    ne=row['Author’s name (Nepali)']
+                    row["author_name_en"],
+                    ne=row['author_name_ne']
                 )
             ])
-            s_n = row['S.N']
             new_book.image.save(
-                f'{new_book.title}.jpg',
-                fetch_image_from_url(
-                    f'{images_source_uri}/{publisher_name}/{s_n}.jpg'
-                )
+                row['image'],
+                fetch_image_from_url(f"{images_source_uri}/{row['image']}")
             )
             self.stdout.write(f'- {new_book}')
             new_book.full_clean()
