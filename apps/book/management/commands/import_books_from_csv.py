@@ -130,13 +130,13 @@ class Command(BaseCommand):
                 )
 
             new_book = Book.objects.create(
-                title_en=title_en,
+                title_en=title_en.strip(),
                 published_date=published_date,
-                title_ne=row['title_en'],
+                title_ne=row['title_en'].strip(),
                 edition=row['edition'],
                 grade=GRADE_MAP[str(row['grade'])],
-                description_en=row['description_en'],
-                description_ne=row['description_ne'],
+                description_en=row['description_en'].strip(),
+                description_ne=row['description_ne'].strip(),
                 isbn=isbn,
                 price=int(float(row['price'])) or 0,
                 number_of_pages=(row['number_of_pages'] or '0').replace('+', ''),
@@ -146,14 +146,14 @@ class Command(BaseCommand):
             )
             new_book.categories.set([
                 category_lookup.get_id_by_name(
-                    row['categories_en'],
-                    ne=row['categories_ne'],
+                    row['categories_en'].strip(),
+                    ne=row['categories_ne'].strip(),
                 ),
             ])
             new_book.authors.set([
                 author_lookup.get_id_by_name(
-                    row["author_name_en"],
-                    ne=row['author_name_ne']
+                    row["author_name_en"].strip(),
+                    ne=row['author_name_ne'].strip()
                 )
             ])
             new_book.image.save(
