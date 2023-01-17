@@ -61,6 +61,8 @@ GRADE_MAP = {
     '1': Book.Grade.GRADE_1,
     '2': Book.Grade.GRADE_2,
     '3': Book.Grade.GRADE_3,
+    '4': Book.Grade.GRADE_4,
+    '5': Book.Grade.GRADE_5,
 }
 
 LANGUAGE_MAP = {
