@@ -16,7 +16,7 @@ if [ "$CI" == "true" ]; then
     ./manage.py test -v 2 config.tests.test_fake
 
     # Finally run test
-    COVERAGE_PROCESS_START=`pwd`/.coveragerc COVERAGE_FILE=`pwd`/.coverage PYTHONPATH=`pwd` coverage run -m py.test --reuse-db --durations=10
+    COVERAGE_PROCESS_START=`pwd`/.coveragerc COVERAGE_FILE=`pwd`/.coverage PYTHONPATH=`pwd` coverage run -m pytest --reuse-db --durations=10
 
     # Collect/Generate reports
     coverage report -i

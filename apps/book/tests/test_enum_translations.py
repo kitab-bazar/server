@@ -1,4 +1,6 @@
 from utils.graphene.tests import GraphQLTestCase
+from apps.book.models import Book
+
 from apps.publisher.factories import PublisherFactory
 from apps.book.factories import BookFactory
 
@@ -26,11 +28,19 @@ class TestBookEnumTranslation(GraphQLTestCase):
             variables={'id': district.id},
             headers={'HTTP_ACCEPT_LANGUAGE': 'ne'}
         )
-        self.assertEqual(response['data']['gradeList']['enumValues'][0]['description'], 'कक्षा १')
+        grade_1_translated_text = None
+        for enum in response['data']['gradeList']['enumValues']:
+            if enum['name'] == Book.Grade.GRADE_1.name:
+                grade_1_translated_text = enum['description']
+
+        self.assertEqual(grade_1_translated_text, 'कक्षा १')
 
         response = self.query_check(
             self.book_query,
             variables={'id': district.id},
             headers={'HTTP_ACCEPT_LANGUAGE': 'en'}
         )
-        self.assertEqual(response['data']['gradeList']['enumValues'][0]['description'], 'Grade 1')
+        for enum in response['data']['gradeList']['enumValues']:
+            if enum['name'] == Book.Grade.GRADE_1.name:
+                grade_1_translated_text = enum['description']
+        self.assertEqual(grade_1_translated_text, 'Grade 1')
