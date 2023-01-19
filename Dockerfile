@@ -22,6 +22,6 @@ RUN pip install --upgrade --no-cache-dir pip poetry \
     && poetry config virtualenvs.create false \
     && poetry install --no-root \
     # Remove installer
-    && pip uninstall -y poetry virtualenv-clone virtualenv
+    && pip uninstall -y poetry virtualenv-clone virtualenv \
 
 COPY . /code/
