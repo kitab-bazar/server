@@ -62,15 +62,15 @@ class Book(models.Model):
         NEPALI = 'nepali', _('Nepali')
         MAITHALI = 'Maithali', _('Maithali')
         THARU = 'Tharu', _('Tharu')
-        BILINGUAL = 'bilingual', _('BILINGUAL')
+        BILINGUAL = 'bilingual', _('Bilingual')
 
     class Grade(models.TextChoices):
         ECD = 'ecd', _('ECD')
         GRADE_1 = 'grade_1', _('Grade 1')
         GRADE_2 = 'grade_2', _('Grade 2')
         GRADE_3 = 'grade_3', _('Grade 3')
-        GRADE_4 = 'grade_4', _('Grade 4')
-        GRADE_5 = 'grade_5', _('Grade 5')
+        # GRADE_4 = 'grade_4', _('Grade 4')
+        # GRADE_5 = 'grade_5', _('Grade 5')
 
     # Basic Fields
     title = models.CharField(max_length=255, verbose_name=_('Title'))
