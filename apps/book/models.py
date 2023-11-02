@@ -62,7 +62,7 @@ class Book(models.Model):
         NEPALI = 'nepali', _('Nepali')
         MAITHALI = 'Maithali', _('Maithali')
         THARU = 'Tharu', _('Tharu')
-        BILINGUAL = 'bilingual', _('BILINGUAL')
+        BILINGUAL = 'bilingual', _('Bilingual')
 
     class Grade(models.TextChoices):
         ECD = 'ecd', _('ECD')
