@@ -116,7 +116,12 @@ class BookOrder(models.Model):
     price = models.BigIntegerField(verbose_name=_('Price'))
     quantity = models.PositiveIntegerField(verbose_name=_('Quantity'))
     isbn = models.CharField(max_length=13, verbose_name=_('ISBN'))
-    edition = models.CharField(max_length=255, verbose_name=_('Edition'))
+    edition = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_('Edition')
+    )
     total_price = models.BigIntegerField(verbose_name=_('Total Price'))
     image = models.FileField(
         upload_to='orders/books/images/', max_length=255, null=True, blank=True, default=None,
