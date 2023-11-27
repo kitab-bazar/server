@@ -55,5 +55,5 @@ class Command(BaseCommand):
             publisher_en=models.F('publisher__name_en'),
             publisher_ne=models.F('publisher__name_ne'),
         ).values(*headers).distinct():
-            row['image'] = f"https://{settings.DJANGO_API_HOST}{settings.DJANGO_STATIC_URL}{row['image']}"
+            row['image'] = f"https://{settings.DJANGO_API_HOST}{settings.STATIC_URL}{row['image']}"
             writer.writerow(row)
