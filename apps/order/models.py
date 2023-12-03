@@ -21,6 +21,17 @@ class OrderWindow(models.Model):
     type = models.CharField(
         choices=OrderWindowType.choices, max_length=40, verbose_name=_('Order window type'), blank=True
     )
+    # Incentive options
+    enable_incentive = models.BooleanField()
+    incentive_multiplier = models.PositiveSmallIntegerField(
+        help_text='Generate incentive count by multiplying with. eg: 4'
+    )
+    incentive_quantity_threshold = models.PositiveSmallIntegerField(
+        help_text='Least quantity count required for incentive. eg: 10'
+    )
+    incentive_max = models.PositiveSmallIntegerField(
+        help_text='Max incentive count value. eg: 120'
+    )
 
     def __str__(self):
         return f'{self.title} :: {self.start_date} - {self.end_date}'

@@ -18,9 +18,7 @@ from apps.package.models import (
 )
 from apps.user.models import User
 from apps.common.models import Municipality
-from apps.package.seed.incentive import INCENTIVE_BOOKS
-
-INCENTIVE_LIMIT = 10
+# from apps.package.seed.incentive import INCENTIVE_BOOKS
 
 
 class Command(BaseCommand):
@@ -47,28 +45,28 @@ class Command(BaseCommand):
         )
 
     def _generate_related_orders_export(
-        self, package,
+        self,
+        package,
         related_book_orders,
-        total_school_book_quantity_list,
+        # total_school_book_quantity_list,
         for_school
     ):
 
-        def _append_or_update_incentive(incentive_list, book, internal_code):
-            if incentive_list:
-                for kitab_incentive in incentive_list:
-                    if (
-                        book['book_name'] == kitab_incentive.get('book_name') and
-                        book['publisher_name'] == kitab_incentive.get('publisher_name') and
-                        book['internal_code'] == internal_code
-                    ):
-                        # Increment quantity by one
-                        kitab_incentive['quantity'] += 1
-                        return kitab_incentive
-            return incentive_list.append(book)
+        # def _append_or_update_incentive(incentive_list, book, internal_code):
+        #     if incentive_list:
+        #         for kitab_incentive in incentive_list:
+        #             if (
+        #                 book['book_name'] == kitab_incentive.get('book_name') and
+        #                 book['publisher_name'] == kitab_incentive.get('publisher_name') and
+        #                 book['internal_code'] == internal_code
+        #             ):
+        #                 # Increment quantity by one
+        #                 kitab_incentive['quantity'] += 1
+        #                 return kitab_incentive
+        #     return incentive_list.append(book)
 
         filename = f'{package.publisher.name}book_orders.xlsx'
-        wb = Workbook(filename)
-        ws = wb.active # noqa
+        wb = Workbook(write_only=True)
         ws1 = wb.create_sheet("Book orders")
         ws1.append([
             "Package Id", "Book Name", "Book Author/Authors", "Book Grade", "Book ISBN",
@@ -94,6 +92,7 @@ class Command(BaseCommand):
             book_grand_total += book_order['total_quantity'] * book_order['book__price']
 
         if for_school:
+            # XXX: Why is ws1 Grand total price here?
             ws1.append([
                 "", "", "", "", "", "", "", "", "Grand Total Price", book_grand_total
             ])
@@ -102,18 +101,20 @@ class Command(BaseCommand):
             ws2.append([
                 "Book Name", "Unit Price", "Quantity", "Sub Total Price"
             ])
-            for total_school_book_quantity in total_school_book_quantity_list:
-                # A school can can aximum 120 incentives
-                if total_school_book_quantity >= INCENTIVE_LIMIT:
-                    if total_school_book_quantity > 30:
-                        total_school_book_quantity = 120
-                    else:
-                        # If quantity is less then 30 school gets incentive in 1:4 ratio
-                        total_school_book_quantity = total_school_book_quantity * 4
 
-                    incentive_key = f'book_list_{total_school_book_quantity}'
-                    for book in INCENTIVE_BOOKS[incentive_key]:
-                        _append_or_update_incentive(incentive_list, book, package.publisher.internal_code)
+            # order_window = package.order_window
+            # for total_school_book_quantity in total_school_book_quantity_list:
+            #     # A school can can maximum 120 incentives
+            #     if latest_order_window.enable_incentive and (
+            #         total_school_book_quantity >= order_window.incentive_quantity_threshold
+            #     ):
+            #         incentive_quantity = min(
+            #             total_school_book_quantity * order_window.incentive_multiplier,
+            #             order_window.incentive_max,
+            #         )
+
+            #         for book in INCENTIVE_BOOKS[f'book_list_{incentive_quantity}']:
+            #             _append_or_update_incentive(incentive_list, book, package.publisher.internal_code)
 
             # To add sum formula at bottom
             book_incentive_grand_total = 0
@@ -130,19 +131,21 @@ class Command(BaseCommand):
             ws2.append([
                 "", "", "Grand Total Price", book_incentive_grand_total
             ])
+
         fileToUpload = io.BytesIO(save_virtual_workbook(wb))
         package.orders_export_file.save(filename, File(fileToUpload))
 
-    def _create_publihser_packages(self, latest_order_window, orders, for_school=False):
+    def _create_publisher_packages(self, latest_order_window, orders, for_school=False):
         # ------------------------------------------------------------------
-        # Create publihser packages
+        # Create publisher packages
         # ------------------------------------------------------------------
 
         # Incentive calculation should be done before filtering publishers
         # We calculate incentives based on school orders
-        total_school_book_quantity_list = orders.values('created_by').annotate(
-            grand_total_quantity=Sum('book_order__quantity')
-        ).values_list('grand_total_quantity', flat=True)
+
+        # total_school_book_quantity_list = orders.values('created_by').annotate(
+        #     grand_total_quantity=Sum('book_order__quantity')
+        # ).values_list('grand_total_quantity', flat=True)
 
         # Get unique publishers in order
         publisher_ids = orders.values_list('book_order__publisher', flat=True).distinct()
@@ -181,7 +184,7 @@ class Command(BaseCommand):
             self._generate_related_orders_export(
                 package,
                 related_book_orders,
-                total_school_book_quantity_list,
+                # total_school_book_quantity_list,
                 for_school,
             )
             PublisherPackageBook.objects.bulk_create(
@@ -225,7 +228,9 @@ class Command(BaseCommand):
                     grand_total_price=Sum('total_price'))['grand_total_price'],
                 type=CourierPackage.Type.SCHOOL.value
             )
-            if courier_package.total_quantity >= INCENTIVE_LIMIT:
+            if latest_order_window.enable_incentive and (
+                courier_package.total_quantity >= latest_order_window.incentive_quantity_threshold
+            ):
                 courier_package.is_eligible_for_incentive = True
                 courier_package.save()
             courier_package_count += 1
@@ -294,7 +299,9 @@ class Command(BaseCommand):
                     grand_total_price=Sum('total_price'))['grand_total_price']
             )
             school_package.related_orders.set(related_orders)
-            if school_package.total_quantity >= INCENTIVE_LIMIT:
+            if latest_order_window.enable_incentive and (
+                school_package.total_quantity >= latest_order_window.incentive_quantity_threshold
+            ):
                 school_package.is_eligible_for_incentive = True
                 school_package.save()
 
@@ -362,18 +369,17 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'{institution_package_count} Institution packages created.'))
 
     def _generate_school_packages(self, latest_order_window, orders):
-        self._create_publihser_packages(latest_order_window, orders, for_school=True)
+        self._create_publisher_packages(latest_order_window, orders, for_school=True)
         self._create_courier_packages_for_school(latest_order_window, orders)
         self._create_school_packages(latest_order_window, orders)
 
     def _generate_institution_packages(self, latest_order_window, orders):
-        self._create_publihser_packages(latest_order_window, orders, for_school=False)
+        self._create_publisher_packages(latest_order_window, orders, for_school=False)
         self._create_courier_packages_for_institution(latest_order_window, orders)
         self._create_institution_packages(latest_order_window, orders)
 
     @transaction.atomic
     def handle(self, *args, **options):
-
         order_window_id = options['order_window_id']
         # Check if order window exists
         try:
@@ -385,7 +391,7 @@ class Command(BaseCommand):
         # Get orders belongs to order window
         orders = Order.objects.filter(
             book_order__publisher__isnull=False,
-            assigned_order_window__id=latest_order_window.id,
+            assigned_order_window__id=latest_order_window.pk,
             status=Order.Status.PENDING.value,
             created_by__is_deactivated=False
         )
@@ -413,6 +419,9 @@ class Command(BaseCommand):
             unverified_users_qs = orders.filter(
                 Q(created_by__is_verified=False) | Q(created_by__institution__isnull=True)
             ).distinct()
+        else:
+            raise Exception(f'Unknown order window type: {latest_order_window.type}')
+
         if unverified_users_qs.exists():
             unverified_users = unverified_users_qs.values('created_by__id', 'created_by__full_name')
             formated_unverified_users = self._format_unverified_users(unverified_users)
