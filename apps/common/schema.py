@@ -3,7 +3,7 @@ from collections import defaultdict
 import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
-from django.db.models import Sum, Count, F, Q, Case, When, Max, Value
+from django.db.models import Sum, Count, F, Q
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField

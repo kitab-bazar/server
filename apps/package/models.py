@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.db.models.functions import Greatest
+from django.db.models.functions import Least
 
 from apps.common.models import BaseActivityLog
 
@@ -164,7 +164,7 @@ class SchoolPackage(models.Model):
                     f'{prefix}total_quantity__gte': models.F(
                         f'{prefix}order_window__incentive_quantity_threshold'
                     ),
-                    'then': Greatest(
+                    'then': Least(
                         (
                             models.F(f'{prefix}total_quantity') *
                             models.F(f'{prefix}order_window__incentive_multiplier')
