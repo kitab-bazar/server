@@ -43,6 +43,10 @@ class BookOrderFactory(DjangoModelFactory):
 class OrderWindowFactory(DjangoModelFactory):
     title = fuzzy.FuzzyText(length=15)
     description = fuzzy.FuzzyText(length=200)
+    enable_incentive = True
+    incentive_multiplier = 3
+    incentive_quantity_threshold = 10
+    incentive_max = 120
 
     class Meta:
         model = OrderWindow
