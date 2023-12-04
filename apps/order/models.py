@@ -21,6 +21,17 @@ class OrderWindow(models.Model):
     type = models.CharField(
         choices=OrderWindowType.choices, max_length=40, verbose_name=_('Order window type'), blank=True
     )
+    # Incentive options
+    enable_incentive = models.BooleanField()
+    incentive_multiplier = models.PositiveSmallIntegerField(
+        help_text='Generate incentive count by multiplying with. eg: 4'
+    )
+    incentive_quantity_threshold = models.PositiveSmallIntegerField(
+        help_text='Least quantity count required for incentive. eg: 10'
+    )
+    incentive_max = models.PositiveSmallIntegerField(
+        help_text='Max incentive count value. eg: 120'
+    )
 
     def __str__(self):
         return f'{self.title} :: {self.start_date} - {self.end_date}'
@@ -116,7 +127,12 @@ class BookOrder(models.Model):
     price = models.BigIntegerField(verbose_name=_('Price'))
     quantity = models.PositiveIntegerField(verbose_name=_('Quantity'))
     isbn = models.CharField(max_length=13, verbose_name=_('ISBN'))
-    edition = models.CharField(max_length=255, verbose_name=_('Edition'))
+    edition = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_('Edition')
+    )
     total_price = models.BigIntegerField(verbose_name=_('Total Price'))
     image = models.FileField(
         upload_to='orders/books/images/', max_length=255, null=True, blank=True, default=None,

@@ -70,6 +70,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['server', env('DJANGO_ALLOWED_HOST')]
+DJANGO_API_HOST = env('DJANGO_API_HOST')
 
 HTTP_PROTOCOL = env('HTTP_PROTOCOL')
 
@@ -277,7 +278,7 @@ GRAPHENE = {
 
 GRAPHENE_DJANGO_EXTRAS = {
     'DEFAULT_PAGINATION_CLASS': 'graphene_django_extras.paginations.PageGraphqlPagination',
-    'DEFAULT_PAGE_SIZE': 20,
+    'DEFAULT_PAGE_SIZE': 25,
     'MAX_PAGE_SIZE': 50
 }
 
@@ -384,7 +385,7 @@ if SENTRY_DSN:
         'environment': env('ENVIRONMENT'),
         'debug': DEBUG,
         'tags': {
-            'site': env('DJANGO_API_HOST'),
+            'site': DJANGO_API_HOST,
         },
     }
     sentry.init_sentry(

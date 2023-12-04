@@ -62,7 +62,7 @@ class Book(models.Model):
         NEPALI = 'nepali', _('Nepali')
         MAITHALI = 'Maithali', _('Maithali')
         THARU = 'Tharu', _('Tharu')
-        BILINGUAL = 'bilingual', _('BILINGUAL')
+        BILINGUAL = 'bilingual', _('Bilingual')
 
     class Grade(models.TextChoices):
         ECD = 'ecd', _('ECD')
@@ -100,7 +100,8 @@ class Book(models.Model):
     published_date = models.DateField(verbose_name=_('Published Date'))
     edition = models.CharField(
         max_length=255,
-        null=True, blank=True,
+        null=True,
+        blank=True,
         verbose_name=_('Edition')
     )
     publisher = models.ForeignKey(

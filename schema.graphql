@@ -244,7 +244,7 @@ type BookOrderType {
   price: Int!
   quantity: Int!
   isbn: String!
-  edition: String!
+  edition: String
   image: FileFieldType
   publisher: PublisherType!
   language: BookLanguageEnum
@@ -1335,7 +1335,7 @@ type Query {
   blogCategories(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogCategoryListType
   blogTags(name: String, page: Int = 1, ordering: String, pageSize: Int): BlogTagListType
   faq(id: ID!): FaqType
-  faqs(page: Int = 1, ordering: String, pageSize: Int): FaqListType
+  faqs(search: String, page: Int = 1, ordering: String, pageSize: Int): FaqListType
   contactMessage(id: ID!): ContactMessageType
   contactMessages(fullName: String, email: String, municipality: ID, address: String, message: String, phoneNumber: String, messageType: String, page: Int = 1, ordering: String, pageSize: Int): ContactMessageListType
   cartItems(book: ID, createdBy: ID, quantity: Int, page: Int = 1, ordering: String, pageSize: Int): CartType

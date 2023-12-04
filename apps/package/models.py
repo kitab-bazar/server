@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.db.models.functions import Least
 
 from apps.common.models import BaseActivityLog
 
@@ -150,6 +151,31 @@ class SchoolPackage(models.Model):
 
     def __str__(self):
         return str(self.package_id)
+
+    @staticmethod
+    def incentive_query_generator(prefix=''):
+        return models.Case(
+            models.When(**{
+                f'{prefix}order_window__enable_incentive': models.Value(False),
+                'then': models.Value(0),
+            }),
+            models.When(
+                **{
+                    f'{prefix}total_quantity__gte': models.F(
+                        f'{prefix}order_window__incentive_quantity_threshold'
+                    ),
+                    'then': Least(
+                        (
+                            models.F(f'{prefix}total_quantity') *
+                            models.F(f'{prefix}order_window__incentive_multiplier')
+                        ),
+                        models.F(f'{prefix}order_window__incentive_max'),
+                    ),
+                },
+            ),
+            default=models.Value(0),
+            output_field=models.IntegerField(),
+        )
 
 
 class InstitutionPackageBook(models.Model):

@@ -167,7 +167,7 @@ class GraphQLTestCase(CommonSetupClassMixin, BaseGraphQLTestCase):
             assert _filter_by_keys(excepted, keys=only_keys) == _filter_by_keys(real, keys=only_keys), message
         elif ignore_keys:
             assert _filter_by_keys(excepted, keys=ignore_keys, exclude=True) \
-                == _filter_by_keys(real, keys=ignore_keys, exclude=True),\
+                == _filter_by_keys(real, keys=ignore_keys, exclude=True), \
                 message
         else:
             assert excepted == real, message

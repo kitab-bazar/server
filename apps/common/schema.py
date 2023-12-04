@@ -3,7 +3,7 @@ from collections import defaultdict
 import graphene
 from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoObjectField, PageGraphqlPagination
-from django.db.models import Sum, Count, F, Q, Case, When
+from django.db.models import Sum, Count, F, Q
 
 from utils.graphene.types import CustomDjangoListObjectType, FileFieldType
 from utils.graphene.fields import DjangoPaginatedListObjectField
@@ -403,12 +403,9 @@ class ReportQuery(graphene.ObjectType):
 
             'number_of_books_on_the_platform': book_qs.count(),
 
-            'number_of_incentive_books': school_package_qs.filter(total_quantity__gte=10).aggregate(
+            'number_of_incentive_books': school_package_qs.aggregate(
                 total_incentive_books=Sum(
-                    Case(
-                        When(total_quantity__lte=30, then=F('total_quantity') * 4),
-                        When(total_quantity__gt=30, then=120)
-                    )
+                    SchoolPackage.incentive_query_generator()
                 )
             )['total_incentive_books'],
 
@@ -458,16 +455,7 @@ class ReportQuery(graphene.ObjectType):
             ).values('name').annotate(
                 no_of_books_ordered=Sum('schools__school_user__school_packages__total_quantity'),
                 no_of_incentive_books=Sum(
-                    Case(
-                        When(
-                            schools__school_user__school_packages__total_quantity__lte=30,
-                            then=F('schools__school_user__school_packages__total_quantity') * 4
-                        ),
-                        When(
-                            schools__school_user__school_packages__total_quantity__gt=30,
-                            then=120
-                        ),
-                    )
+                    SchoolPackage.incentive_query_generator(prefix='schools__school_user__school_packages__')
                 ),
                 district_id=F('id')
             ),
@@ -538,13 +526,10 @@ class ScholReportQuery(graphene.ObjectType):
 
         return {
             'number_of_books_ordered': order_qs.aggregate(total=Sum('book_order__quantity'))['total'],
-            'number_of_incentive_books': school_package_qs.filter(total_quantity__gte=10).aggregate(
+            'number_of_incentive_books': school_package_qs.aggregate(
                 total_incentive_books=Sum(
-                    Case(
-                        When(total_quantity__lte=30, then=F('total_quantity') * 4),
-                        When(total_quantity__gt=30, then=120)
-                    )
-                )
+                    SchoolPackage.incentive_query_generator()
+                ),
             )['total_incentive_books'],
             'payment_per_order_window': order_window_qs.values('title').annotate(
                 payment=Sum(F('orders__book_order__price') * F('orders__book_order__quantity')),

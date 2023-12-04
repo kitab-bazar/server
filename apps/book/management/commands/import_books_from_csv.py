@@ -60,6 +60,8 @@ GRADE_MAP = {
     '1': Book.Grade.GRADE_1,
     '2': Book.Grade.GRADE_2,
     '3': Book.Grade.GRADE_3,
+    '4': Book.Grade.GRADE_4,
+    '5': Book.Grade.GRADE_5,
 }
 
 LANGUAGE_MAP = {
@@ -67,6 +69,7 @@ LANGUAGE_MAP = {
     'Nepali': Book.LanguageType.NEPALI,
     'Maithali': Book.LanguageType.MAITHALI,
     'Tharu': Book.LanguageType.THARU,
+    'BILINGUAL': Book.LanguageType.BILINGUAL,
 }
 
 
@@ -110,7 +113,7 @@ class Command(BaseCommand):
         for row in reader:
             # This is in nepali eg: 2077, convert to english
             published_date = timezone.datetime(
-                year=int(row['Published date']) - 57,
+                year=int(row.get('Published date') or 2080) - 57,
                 month=1,
                 day=1,
             ).date()
@@ -123,7 +126,7 @@ class Command(BaseCommand):
                 models.Q(title_en=title_en, publisher__name=publisher_name)
             ).exists():
                 self.stdout.write(
-                    self.style.WARNING(f' - Book {title_en}/{isbn} already exists for publisher: {publisher_name}')
+                    self.style.WARNING(f' - Book: {title_en}/{isbn} already exists for publisher: {publisher_name}')
                 )
 
             new_book = Book.objects.create(
@@ -135,10 +138,11 @@ class Command(BaseCommand):
                 description_en=row['About the book'],
                 description_ne=row['About the book (Nepali)'],
                 isbn=isbn,
-                price=row['Price of the book'] or 0,
+                price=int(float(row['Price of the book'])) or 0,
                 number_of_pages=(row['Number of pages'] or '0').replace('+', ''),
                 language=LANGUAGE_MAP[str(row['Language'])],
-                publisher_id=publisher_lookup.get_id_by_name(publisher_name, ne=row['Publisher (Nepali)']),
+                # publisher_id=publisher_lookup.get_id_by_name(publisher_name, ne=row['Publisher (Nepali)']),
+                publisher_id=publisher_lookup.get_id_by_name(publisher_name),
                 is_published=True,
             )
             new_book.categories.set([
@@ -153,11 +157,13 @@ class Command(BaseCommand):
                     ne=row['Author’s name (Nepali)']
                 )
             ])
-            s_n = row['S.N']
+            # s_n = row['S.N']
+            image = row['image']
             new_book.image.save(
                 f'{new_book.title}.jpg',
                 fetch_image_from_url(
-                    f'{images_source_uri}/{publisher_name}/{s_n}.jpg'
+                    # f'{images_source_uri}/{publisher_name}/{s_n}.jpg'
+                    f'{images_source_uri}/{image}'
                 )
             )
             self.stdout.write(f'- {new_book}')
